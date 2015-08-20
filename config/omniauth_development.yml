@@ -1,0 +1,17 @@
+wunderlist:
+  key: '435fc6434b75925159bd'
+  secret: 'fe80b2ed67ea1abea8743ea7b80b4c57b123613c353abf24a3d17c6c108f'
+  opts:
+    :provider_ignores_state: true
+
+github:
+  key: 'a15c806de4bfc44d2322'
+  secret: '62382601fdfecbc7206fbeead01af185b3cd86b7'
+  opts:
+    scope: "repo,notifications,read:repo_hook,write:repo_hook,admin:repo_hook,admin:org_hook"
+
+slack:
+  key: '2704456044.8874641459'
+  secret: '8a51813be403e455c0f220ddee8634d3'
+  opts:
+    scope: 'client'
