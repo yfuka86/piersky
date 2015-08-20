@@ -1,0 +1,9 @@
+@mixin icon ($area-size, $font-size) {
+  display: inline-block;
+  height: $area-size;
+  width: $area-size;
+  padding: 0 ($area-size - $font-size)/2;
+  line-height: $area-size;
+  font-size: $font-size;
+  vertical-align: middle;
+}

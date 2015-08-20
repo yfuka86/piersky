@@ -1,0 +1,121 @@
+@import "globals/config-loader";
+
+@include keyframes(notification-message) {
+  0% {@include transform(translateY(-115px));}
+  10% {@include transform(translateY(0px));}
+  90% {@include transform(translateY(0px));}
+  100% {@include transform(translateY(-115px));}
+}
+
+@mixin message-base {
+  box-sizing: border-box;
+  min-width: 320px;
+  width: 100%;
+  margin: 0 auto;
+  padding-bottom: 3px;
+  @include transform(translateY(-120px));
+  max-height: 60px;
+  overflow: hidden;
+
+  background-color: $grey50;
+
+  @include animation(notification-message 4s ease 0.1s 1);
+
+  .notification-message-box {
+    line-height: 20px;
+    font-size: 18px;
+    @include lato-normal;
+    color: $grey900;
+    vertical-align: middle;
+    text-align: center;
+    word-wrap: break-word;
+
+    position: relative;
+    margin: auto;
+    padding: 5px 10px;
+
+    width: 100%;
+  }
+
+  .close-btn {
+    font-size: 16px;
+    color: $white;
+    position: absolute;
+    right: 4px;
+    top: 3px;
+    cursor: pointer;
+  }
+}
+
+.notification-container {
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 0;
+
+  z-index: $NOTIFICATION_MESSAGE_Z;
+
+  .infos {
+    @include message-base;
+    background-color: $green400;
+    .notification-message-box {
+      color: $white;
+    }
+  }
+
+  .errors {
+    @include message-base;
+    background-color: $red800;
+    .notification-message-box {
+      color: $white;
+    }
+  }
+
+  .successes {
+    @include message-base;
+    background-color: $blue700;
+    .notification-message-box {
+      color: $white;
+    }
+  }
+
+}
+
+
+@mixin form-notification-container {
+  .form-notification-inner {
+    list-style-type: none;
+    margin: 0 20px 10px 0;
+    padding: 8px 50px 8px 8px;
+    display: inline-block;
+    border: 1px solid $grey300;
+    border-radius: 5px;
+    .icon {
+      font-size: 20px;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    &.errors {
+      border-color: $red100;
+      .icon { color: $red400; }
+    }
+    &.successes {
+      border-color: $green100;
+      .icon { color: $green400; }
+    }
+    &.infos {
+      border-color: $blue100;
+      .icon { color: $blue400; }
+    }
+    li.message {
+      @include lato-thin;
+      font-size: 18px;
+      padding: 5px 0;
+    }
+  }
+}
+
+.form-notification-container {
+  @include form-notification-container;
+}

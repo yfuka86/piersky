@@ -1,0 +1,122 @@
+@import "globals/config-loader";
+
+@include keyframes(open-overlay) {
+  0% {
+    @include opacity(0);
+  }
+  100% {
+    @include opacity(1);
+  }
+}
+
+@include keyframes(close-overlay) {
+  0% {
+    @include opacity(1);
+  }
+  100% {
+    @include opacity(0);
+  }
+}
+
+@include keyframes(open-modal) {
+  0% {
+    @include transform(translateY(-1000px));
+  }
+  100% {
+    @include transform(translateY(0px));
+  }
+}
+
+@include keyframes(close-modal) {
+  0% {
+    @include transform(translateY(1000px));
+  }
+  100% {
+    @include transform(translateY(0px));
+  }
+}
+
+.sky-modal-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $MODAL_OVERLAY;
+  background-color: rgba(20, 20, 20, 0.5);
+  &.open {
+    @include animation(open-overlay 0.5s ease-in-out 0s 1);
+  }
+  &.closing {
+    @include opacity(0);
+    @include animation(close-overlay 0.5s ease-in-out 0s 1);
+  }
+  &.closed {
+    display: none;
+  }
+}
+
+$MODAL_HEADER: 40px;
+$MODAL_FOOTER: 50px;
+
+.sky-modal-wrapper {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: $MODAL;
+  height: 0px;
+  .sky-modal {
+    @include box-shadow(0, 0, 5px, 1px, $grey600);
+    @include user-select-none;
+    position: relative;
+    margin: 0 auto;
+    width: 540px;
+    background-color: $white;
+    border-radius: 5px;
+    &.open {
+      margin-top: 100px;
+      @include animation(open-modal 0.5s ease-in-out 0s 1);
+    }
+    &.closing {
+      margin-top: -900px;
+      @include animation(close-modal 0.5s ease-in-out 0s 1);
+    }
+    &.closed {
+      display: none;
+    }
+    .modal-content {
+      min-height: 360px;
+      padding-top: $MODAL_HEADER + 20px;
+      padding-bottom: $MODAL_FOOTER;
+      .modal-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        text-align: center;
+        width: 100%;
+        height: $MODAL_HEADER;
+        color: $brown800;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+        background-color: $grey100;
+        line-height: $MODAL_HEADER;
+        font-size: 20px;
+        vertical-align: middle;
+        @include lato-normal;
+      }
+      .modal-scroll-area {
+        max-height: 360px;
+        overflow: scroll;
+      }
+      .modal-footer {
+        position: absolute;
+        width: 100%;
+        height: $MODAL_FOOTER;
+        bottom: 0;
+        left: 0;
+        padding-top: 10px;
+        border-top: 1px solid $grey400;
+      }
+    }
+  }
+}
