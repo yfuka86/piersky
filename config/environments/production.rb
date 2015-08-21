@@ -102,7 +102,7 @@ end
 
 Piersky::Application.config.middleware.use ExceptionNotification::Rack,
   email: {
-    email_prefix: '[sky][error] ',
+    email_prefix: '[piersky][error] ',
     sender_address: %{"PierSky Error" <mail@piersky.com>},
     exception_recipients: %w{yuta@piersky.com},
     smtp_settings: {
