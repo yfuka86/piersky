@@ -13,6 +13,13 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
 
+  resources :integrations, only: [] do
+    collection do
+      get 'establish', to: 'integrations#establish'
+      post '/:team_id/:webhook_uid', to: 'integrations#incoming_webhook'
+    end
+  end
+
   namespace :api, defaults: { format: :json } do
   end
 end
