@@ -1,0 +1,32 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:600,400,300);
+@import url(https://fonts.googleapis.com/css?family=Lato:900,700,400,300);
+
+@mixin lato-thin {
+  font-weight: 300;
+  font-family: 'Lato',sans-serif;
+}
+
+@mixin lato-normal {
+  font-weight: 400;
+  font-family: 'Lato',sans-serif;
+}
+
+@mixin lato-bold {
+  font-weight: 700;
+  font-family: 'Lato',sans-serif;
+}
+
+@mixin lato-ultrabold {
+  font-weight: 900;
+  font-family: 'Lato',sans-serif;
+}
+
+@mixin open-sans-normal {
+  font-weight: 400;
+  font-family: 'Open Sans',Helvetica,Tahoma,Arial,sans-serif;
+}
+
+@mixin open-sans-thin {
+  font-weight: 300;
+  font-family: 'Open Sans',Helvetica,Tahoma,Arial,sans-serif;
+}

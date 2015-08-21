@@ -1,0 +1,103 @@
+@import "globals/config-loader";
+@import "modules/sky_flat_button";
+
+@mixin standard-form {
+  .field {
+    padding: 0 0 10px 0;
+    label {
+      position: relative;
+      padding: 5px;
+      @include lato-normal;
+      line-height: 24px;
+      font-size: 18px;
+    }
+    input, textarea, {
+      position: relative;
+      padding: 4px 8px;
+      border: 1px solid $grey300;
+      border-radius: 4px;
+      min-width: 170px; /* please override */
+
+      @include open-sans-thin;
+      line-height: 20px;
+      font-size: 16px;
+      &:hover {
+        border-color: $blue500;
+      }
+      &:focus {
+        outline: none;
+        border-color: $blue500;
+        @include box-shadow(0, 0, 3px, 0, $blue200 inset);
+      }
+      &[type='submit'] {
+        @include flat-button-identity;
+        font-weight: 300;
+      }
+    }
+    textarea {
+      resize: none;
+      overflow: hidden;
+    }
+    select {
+      position: relative;
+      padding: 0px 8px;
+      border: 1px solid $grey300;
+      border-radius: 2px;
+      height: 30px;
+      min-width: 240px; /* please override */
+      background-color: $white;
+
+      @include open-sans-normal;
+      font-size: 13px;
+      &:hover {
+        border-color: $blue500;
+      }
+      &:focus {
+        outline: none;
+        border-color: $blue500;
+        @include box-shadow(0, 0, 3px, 0, $blue200 inset);
+      }
+    }
+    button {
+      @include flat-button-normal;
+      &[type='submit'] {
+        @include flat-button-identity;
+        font-weight: 300;
+      }
+    }
+  }
+}
+
+.standard-form {
+  @include standard-form;
+}
+
+@mixin standard-form-vertical {
+  @include standard-form;
+  .field {
+    input, textarea {
+      width: 100%;
+    }
+  }
+}
+
+.standard-form-vertical {
+  @include standard-form-vertical;
+}
+
+@mixin standard-form-horizontal {
+  @include standard-form;
+  .field {
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: 20px;
+    margin-bottom: 0;
+    label {
+      margin-right: 10px;
+    }
+  }
+}
+
+.standard-form-horizontal {
+  @include standard-form-horizontal;
+}

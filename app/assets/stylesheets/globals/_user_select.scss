@@ -1,0 +1,13 @@
+@mixin user-select-none {
+  user-select: none; /* CSS3 */
+  -moz-user-select: none; /* Firefox */
+  -webkit-user-select: none; /* Safari、Chromeなど */
+  -ms-user-select: none; /* IE10~ */
+}
+
+@mixin user-select-all {
+  user-select: all; /* CSS3 */
+  -moz-user-select: all; /* Firefox */
+  -webkit-user-select: all; /* Safari、Chromeなど */
+  -ms-user-select: all; /* IE10~ */
+}
