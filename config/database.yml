@@ -21,7 +21,7 @@ test:
 
 production:
   <<: *default
-  adapter: mysql2
+  adapter: pg
   database: <%= ENV['RDS_DB_NAME'] %>
   username: <%= ENV['RDS_USERNAME'] %>
   password: <%= ENV['RDS_PASSWORD'] %>
