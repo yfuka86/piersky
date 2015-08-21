@@ -26,9 +26,10 @@ keep going
 
 
     When following error occured,
-    > browserify app/assets/javascripts/application_main.js -t reactify --extension=".js.jsx" -o app/assets/javascripts/application.js
+    > piersky@ build /Volumes/c-fo/work/piersky
+    > browserify app/assets/javascripts/src/application.js -t babelify --extension=".js.jsx" -o app/assets/javascripts/dist/application.js
 
-    Error: EMFILE, open '.../work/sky/node_modules/react/package.json'
+    Error: EMFILE, open '/Volumes/c-fo/work/piersky/node_modules/react/package.json'
     npm ERR! weird error 1
     npm ERR! not ok code 0
 

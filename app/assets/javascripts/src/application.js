@@ -1,9 +1,12 @@
 import React from 'react';
 import Router from 'react-router';
-import routes from './routes';
 import Loading from './components/common/loading';
-import RouteActionCreators from './actions/route'
+import RouteAction from './actions/route'
 
+import routes from './routes';
+
+window.PierSky = {}
+window.PierSky.Router = Router;
 
 React.render(
   <Loading />,
@@ -15,5 +18,5 @@ Router.run(routes, Router.HistoryLocation, (Handler, state) => {
     <Handler path={window.location.pathname} />,
     document.getElementById('react_container')
   );
-  RouteActionCreators.transition(Handler, state);
+  RouteAction.transition(Handler, state);
 });
