@@ -21,7 +21,7 @@
 
   @include animation(notification-message 4s ease 0.1s 1);
 
-  .notification-message-box {
+  .message {
     line-height: 20px;
     font-size: 18px;
     @include lato-normal;
@@ -59,7 +59,7 @@
   .infos {
     @include message-base;
     background-color: $green400;
-    .notification-message-box {
+    .message {
       color: $white;
     }
   }
@@ -67,7 +67,7 @@
   .errors {
     @include message-base;
     background-color: $red800;
-    .notification-message-box {
+    .message {
       color: $white;
     }
   }
@@ -75,7 +75,7 @@
   .successes {
     @include message-base;
     background-color: $blue700;
-    .notification-message-box {
+    .message {
       color: $white;
     }
   }
