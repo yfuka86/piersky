@@ -1,0 +1,7 @@
+@mixin linear-gradient($start, $end) {
+  background: -moz-linear-gradient(top, $start, $end); /* FF3.6+ */
+  background: -webkit-linear-gradient(top, $start, $end); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, $start, $end); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, $start, $end); /* IE10+ */
+  background: linear-gradient(to bottom, $start, $end); /* W3C */
+}

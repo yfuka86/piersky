@@ -1,0 +1,22 @@
+<div class='notification-container'>
+  <% if devise_error_messages? || flash[:alert].present? %>
+    <div class='errors'>
+      <%= devise_error_messages! %>
+      <div class='message'>
+        <%= flash[:alert] %>
+      </div>
+    </div>
+  <% elsif flash[:success].present? %>
+    <div class='successes'>
+      <div class='message'>
+        <%= flash[:success] %>
+      </div>
+    </div>
+  <% elsif flash[:notice].present? %>
+    <div class='infos'>
+      <div class='message'>
+        <%= flash[:notice] %>
+      </div>
+    </div>
+  <% end %>
+</div>

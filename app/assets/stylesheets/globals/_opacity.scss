@@ -1,0 +1,7 @@
+@mixin opacity($variable) {
+  -moz-opacity: $variable;
+  -webkit-opacity: $variable;
+  -o-opacity: $variable;
+  -ms-opacity: $variable;
+  opacity: $variable;
+}

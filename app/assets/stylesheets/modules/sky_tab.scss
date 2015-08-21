@@ -1,0 +1,52 @@
+@import "globals/config-loader";
+
+@mixin sky-tab {
+  $BORDER_COLOR: $grey200;
+  $TAB_MIN_WIDTH: 720px;
+  ul.sky-tab-list {
+    min-width: $TAB_MIN_WIDTH;
+    list-style-type: none;
+    margin: 0;
+    margin-bottom: -1px;
+    padding: 0;
+    li.sky-tab {
+      position: relative;
+      z-index: $TAB;
+      display: inline-block;
+      padding: 6px 24px;
+      font-size: 18px;
+      vertical-align: middle;
+      @include lato-normal;
+      &:hover {
+        text-decoration: underline;
+      }
+
+      margin: 0 1px;
+      &.active {
+        margin: 0;
+        border-top: 1px solid $BORDER_COLOR;
+        border-right: 1px solid $BORDER_COLOR;
+        border-left: 1px solid $BORDER_COLOR;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+        background-color: $white;
+        color: $grey800;
+        &:hover {
+          color: $grey800;
+          text-decoration: none;
+        }
+        cursor: default;
+      }
+    }
+  }
+  .sky-tab-panel {
+    width: 100%;
+    min-width: $TAB_MIN_WIDTH;
+    background-color: $white;
+    border: 1px solid $BORDER_COLOR;
+  }
+}
+
+.sky-tab-area {
+  @include sky-tab;
+}
