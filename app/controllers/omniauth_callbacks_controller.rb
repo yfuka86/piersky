@@ -45,10 +45,10 @@ class OmniauthCallbacksController < WebBaseController
 
   private
 
-  def after_callback_path(action, integration)
-    anchor = '/' + integration.team.name + '/' + integration.team.external_cid + '/integrations'
-    webapp_path(anchor: anchor)
-  end
+  # def after_callback_path(action, integration)
+  #   anchor = '/' + integration.team.name + '/' + integration.team.external_cid + '/integrations'
+  #   webapp_path(anchor: anchor)
+  # end
 
   # def after_sign_in_path_for(resource)
   #   if true #resource.email_verified? (todo make finish_signup_display)
