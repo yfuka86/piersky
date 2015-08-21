@@ -1,0 +1,80 @@
+@import "globals/config-loader";
+
+#loading_container {
+  padding: 100px 0;
+}
+
+.spinner {
+  text-align: center;
+  p {
+    @include lato-thin;
+    font-size: 36px;
+    padding: 20px;
+  }
+}
+
+.spinner > div {
+  width: 70px;
+  height: 70px;
+  background-color: $blue700;
+
+  border-radius: 100%;
+  display: inline-block;
+  @include animation(bouncedelay 1.4s ease-in-out 0s infinite);
+  @include animation-fill-mode(both);
+}
+
+@include keyframes(bouncedelay) {
+  0%, 100% {@include transform(scale(0.2));}
+  50% {@include transform(scale(1));}
+}
+
+
+
+.icon.icon-ic_sync_24px.spin {
+  display: inline-block;
+  font-size: 18px;
+  line-height: 16px;
+  vertical-align: middle;
+  margin-right: 8px !important;
+  @include animation(spin-sync 1s linear 0s infinite);
+}
+
+@include keyframes(spin-sync) {
+  0% {@include transform(rotate(0));}
+  50% {@include transform(rotate(-180deg));}
+  100% {@include transform(rotate(-360deg));}
+}
+
+
+
+
+.spinner-little {
+  text-align: center;
+}
+
+.spinner-little > div {
+  width: 15px;
+  height: 15px;
+  background-color: $white;
+  @include opacity(0.2);
+
+  border-radius: 100%;
+  display: inline-block;
+  margin-right: 20px;
+  $animation-length: 1.5s;
+  &.first {
+    @include animation(bouncedelay-little $animation-length ease-in-out 0s infinite);
+  }
+  &.second {
+    @include animation(bouncedelay-little $animation-length ease-in-out $animation-length/3 infinite);
+  }
+  &.third {
+    @include animation(bouncedelay-little $animation-length ease-in-out $animation-length*2/3 infinite);
+  }
+}
+
+@include keyframes(bouncedelay-little) {
+  0%, 60% {@include opacity(0.2);}
+  30% {@include opacity(1);}
+}

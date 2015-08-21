@@ -1,0 +1,13 @@
+@mixin box-shadow($horizontal, $vertical, $blur, $spread, $color-inset) {
+  -webkit-box-shadow: $horizontal $vertical $blur $spread $color-inset;
+  -moz-box-shadow: $horizontal $vertical $blur $spread $color-inset;
+  -o-box-shadow: $horizontal $vertical $blur $spread $color-inset;
+  box-shadow: $horizontal $vertical $blur $spread $color-inset;
+}
+
+@mixin text-shadow($horizontal, $vertical, $blur, $spread) {
+  -webkit-text-shadow: $horizontal $vertical $blur $spread;
+  -moz-text-shadow: $horizontal $vertical $blur $spread;
+  -o-text-shadow: $horizontal $vertical $blur $spread;
+  text-shadow: $horizontal $vertical $blur $spread;
+}
