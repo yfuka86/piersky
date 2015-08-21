@@ -18,6 +18,8 @@ keep going
     When develop around js
     npm run-script watch
 
+    put export PIERSKY_MAIL_PASSWORD=[ask someone] in settingfile
+
 # How to develop `Integration`
 
     $ brew install ngrok
