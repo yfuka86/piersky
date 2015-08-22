@@ -23,5 +23,7 @@ Rails.application.routes.draw do
   end
 
   namespace :api, defaults: { format: :json } do
+    get 'slack_wrapper', to: 'slack_wrapper#index'
+    get 'slack_wrapper/show/:id(/:ts)', to: 'slack_wrapper#show'
   end
 end
