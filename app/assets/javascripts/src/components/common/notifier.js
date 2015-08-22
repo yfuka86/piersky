@@ -20,7 +20,7 @@ class Notifier extends React.Component {
         messages[str] = (
           <div className={str}>
             {
-              notifications.map((notification, index) => {
+              _.map(notifications, (notification, index) => {
                 return (
                   <div className='notification-message-box' key={str + '-' +index}>
                     {notification}
@@ -48,7 +48,7 @@ class Notifier extends React.Component {
       </div>
     );
   }
-});
+}
 
 export default Notifier;
 
