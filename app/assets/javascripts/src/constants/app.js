@@ -33,6 +33,15 @@ export default {
     USERS:          APIRoot + '/users'
   },
 
+  IntegrationEndpoint: function (params) {
+    return Root + '/integrations/establish?provider=' + params.provider
+  },
+
+  Integrations: keyMirror({
+    github: null,
+    slack: null
+  }),
+
   PayloadSources: keyMirror({
     SERVER_ACTION: null,
     VIEW_ACTION: null
@@ -41,7 +50,10 @@ export default {
   ActionTypes: keyMirror({
     // route
     TRANSITION: null,
-    REDIRECT: null
+    REDIRECT: null,
+
+    //integration
+    LOADED_INTEGRATIONS: null
   }),
 
   KeyCodes: {

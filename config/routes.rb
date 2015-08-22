@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
 
-  get 'webapp', to: 'webapp#index', as: 'webapp'
+  get 'webapp(/*path)', to: 'webapp#index', as: 'webapp'
 
   resources :integrations, only: [] do
     collection do
@@ -23,5 +23,12 @@ Rails.application.routes.draw do
   end
 
   namespace :api, defaults: { format: :json } do
+    resources :users, only: [] do
+      collection do
+        get 'me'
+      end
+    end
+
+    resources :inregrations, only: [:index]
   end
 end

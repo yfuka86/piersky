@@ -7,11 +7,9 @@ import Constants from '../constants/app';
 const CHANGE_EVENT = 'change';
 const MAX_LISTENER_DEFAULT = 20;
 
-class BaseStore extends EventEmitter.prototype {
+const BaseStore = assign(EventEmitter.prototype, {
 
   _storage: null,
-
-  _hasInitialized: false,
 
   emitChange() {
     this.emit(CHANGE_EVENT);
@@ -50,6 +48,6 @@ class BaseStore extends EventEmitter.prototype {
   reset(obj={}) {
     this.setStorage(obj);
   }
-}
+});
 
 export default BaseStore;

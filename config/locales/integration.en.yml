@@ -1,0 +1,12 @@
+en:
+  integration:
+    general:
+      connect: 'Connect'
+    wunderlist:
+      name: 'Wunderlist'
+    asana:
+      name: 'Asana'
+    slack:
+      name: 'Slack'
+    github:
+      name: 'Github'

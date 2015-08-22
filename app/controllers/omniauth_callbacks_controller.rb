@@ -34,7 +34,7 @@ class OmniauthCallbacksController < WebBaseController
         klass = "Integration::#{provider.classify}".constantize
         integration = klass.accomplish(auth, current_user)
 
-        redirect_to after_callback_path
+        redirect_to after_callback_path(integration.id)
       end
     }
   end
@@ -45,8 +45,8 @@ class OmniauthCallbacksController < WebBaseController
 
   private
 
-  def after_callback_path
-    webapp_path
+  def after_callback_path(id)
+    webapp_path(path: "integrations/#{id}")
   end
 
   # def after_sign_in_path_for(resource)

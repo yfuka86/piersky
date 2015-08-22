@@ -1,0 +1,20 @@
+@import 'globals/config-loader';
+@import 'modules/center_container';
+
+.integration-board {
+  height: 100%;
+  position: relative;
+  padding: 0;
+  .container-left {
+    border-right: 1px solid $grey300;
+    width: 240px;
+    float: left;
+  }
+  .container-main {
+    float: right;
+    width: -webkit-calc(100% - 250px);
+    width: -moz-calc(100% - 250px);
+    width: calc(100% - 250px);
+  }
+}
+
