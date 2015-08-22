@@ -1,15 +1,15 @@
-<h2>Resend confirmation instructions</h2>
+<div class='title'>
+  <%= t('auth.title.resend_confirmation') %>
+</div>
 
 <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
-
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+    <%= f.label :email, t('auth.label.email') %>
+    <%= f.email_field :email, autofocus: true, placeholder: DeviseHelper::EMAIL_EXAMPLE %>
   </div>
 
   <div class="actions">
-    <%= f.submit "Resend confirmation instructions" %>
+    <%= f.submit t('auth.submit.normal') %>
   </div>
 <% end %>
 

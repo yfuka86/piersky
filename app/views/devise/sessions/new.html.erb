@@ -1,25 +1,27 @@
-<h2>Log in</h2>
+<div class='title'>
+  <%= t('auth.title.sign_in') %>
+</div>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+    <%= f.label :email, t('auth.label.email') %>
+    <%= f.email_field :email, autofocus: true, placeholder: DeviseHelper::EMAIL_EXAMPLE %>
   </div>
 
   <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
+    <%= f.label :password, t('auth.label.password') %>
+    <%= f.password_field :password, autocomplete: "off", placeholder: DeviseHelper::PASSWORD_EXAMPLE %>
   </div>
 
-  <% if devise_mapping.rememberable? -%>
+ <!--  <% if devise_mapping.rememberable? -%>
     <div class="field">
       <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+      <%= f.label :remember_me, t('auth.label.remember_me') %>
     </div>
-  <% end -%>
+  <% end -%> -->
 
   <div class="actions">
-    <%= f.submit "Log in" %>
+    <%= f.submit t('auth.submit.normal') %>
   </div>
 <% end %>
 

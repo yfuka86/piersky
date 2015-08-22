@@ -1,4 +1,6 @@
-class User::UnlocksController < Devise::UnlocksController
+class Users::UnlocksController < Devise::UnlocksController
+  layout 'welcome_auth'
+
   # GET /resource/unlock/new
   # def new
   #   super

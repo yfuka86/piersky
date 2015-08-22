@@ -1,4 +1,6 @@
-class User::SessionsController < Devise::SessionsController
+class Users::SessionsController < Devise::SessionsController
+  layout 'welcome_auth'
+
 # before_filter :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
