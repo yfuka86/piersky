@@ -2,6 +2,9 @@ $IDENTITY_COLOR: #1976d2; /* blue700 */
 
 $SELECTED: lighten(#e1f5fe, 2);
 
+$LINK: #2196f3; /* blue 500 */
+$LINK_ACTIVE: darken($LINK, 10);
+
 $red50:    #ffebee;
 $red100:   #ffcdd2;
 $red200:   #ef9a9a;

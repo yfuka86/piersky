@@ -34,7 +34,7 @@ class OmniauthCallbacksController < WebBaseController
         klass = "Integration::#{provider.classify}".constantize
         integration = klass.accomplish(auth, current_user)
 
-        redirect_to after_callback_path(params[:action], integration)
+        redirect_to after_callback_path
       end
     }
   end
@@ -45,10 +45,9 @@ class OmniauthCallbacksController < WebBaseController
 
   private
 
-  # def after_callback_path(action, integration)
-  #   anchor = '/' + integration.team.name + '/' + integration.team.external_cid + '/integrations'
-  #   webapp_path(anchor: anchor)
-  # end
+  def after_callback_path
+    webapp_path
+  end
 
   # def after_sign_in_path_for(resource)
   #   if true #resource.email_verified? (todo make finish_signup_display)

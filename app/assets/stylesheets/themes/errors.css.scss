@@ -1,0 +1,27 @@
+@import "globals/config-loader";
+
+#main_container {
+  padding: 0 20px 150px 20px;
+  height: 100%;
+  position: relative;
+  .not-found, .internal-server-error {
+    .code {
+      padding: 20px;
+      font-size: 48px;
+      @include lato-bold;
+      color: $brown800;
+    }
+    .title {
+      padding: 20px;
+      font-size: 36px;
+      @include lato-bold;
+      color: $brown800;
+    }
+    .explanation {
+      padding: 20px;
+      font-size: 24px;
+      @include lato-thin;
+      color: $brown800;
+    }
+  }
+}
