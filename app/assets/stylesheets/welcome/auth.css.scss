@@ -1,0 +1,96 @@
+@import "globals/config-loader";
+@import "modules/sky_flat_button";
+@import "modules/standard_form";
+
+.auth-content {
+  width: 100%;
+  padding: 50px + $HEADER_HEIGHT 0 50px;
+  color: $grey800;
+  .auth-container {
+    margin: 0 auto;
+    max-width: 600px;
+    min-width: 320px;
+    width: 70%;
+    .auth-inner {
+      padding: 20px 15%;
+      background-color: $white;
+      border-radius: 5px;
+      .title {
+        @include lato-normal;
+        font-size: 26px;
+        color: $grey600;
+        padding: 0 0 20px 0;
+        text-align: center;
+      }
+      form {
+        @include standard-form-vertical;
+        .field {
+          .field_with_errors {
+            display: inline;
+            color: $red500;
+          }
+          label {
+            display: inline-block;
+            padding: 5px;
+            @include lato-normal;
+            font-size: 18px;
+            color: $grey700;
+          }
+          .explanation {
+            margin: 0;
+            padding: 0 5px 5px 5px;
+            @include lato-thin;
+            color: $grey600;
+            font-size: 18px;
+            span.attention {
+              display: inline-block;
+              font-size: 16px;
+              font-weight: bold;
+              color: $grey900;
+              padding: 0 3px;
+            }
+          }
+          input[type='email'], input[type='password'], input[type='text'] {
+            @include lato-normal;
+            font-size: 18px;
+            width: 100%;
+            position: relative;
+          }
+          select {
+            width: 70%;
+            font-size: 18px;
+          }
+        }
+        .actions {
+          margin: 0 0 10px 0;
+        }
+        input[type='submit'] {
+          @include flat-button-identity;
+          @include lato-normal;
+          font-size: 18px;
+          width: 100%;
+          margin: 20px 0;
+          padding: 8px 0;
+          &.destructive {
+            @include flat-button-red;
+          }
+        }
+      }
+      .auth-links {
+        a {
+          display: block;
+          @include lato-normal;
+          font-size: 16px;
+          padding-bottom: 5px;
+          color: $grey900;
+          &:hover {
+            text-decoration: underline;
+          }
+          &.skip-instruction {
+            text-align: right;
+          }
+        }
+      }
+    }
+  }
+}

@@ -10,7 +10,7 @@ class IntegrationsController < WebBaseController
   end
 
   def incoming_webhook
-    webhook = IntegrationWebhook.find_by(uid: params[:webhook_uid])
+    webhook = IntegrationWebhook.find_by(uid: params[:webhook_uid]git a
     if webhook.try(:execute, JSON.parse(params[:payload]))
       render json: { status: :ok }
     else

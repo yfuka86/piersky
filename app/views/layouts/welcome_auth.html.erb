@@ -9,8 +9,13 @@
 <body id='page-top'>
   <%= render 'shared/welcome_header' %>
   <%= render 'shared/notification_message'%>
-
-  <%= yield %>
+  <div class='auth-content'>
+    <div class='auth-container'>
+      <div class='auth-inner'>
+        <%= yield %>
+      </div>
+    </div>
+  </div>
   <%= render 'shared/welcome_footer' %>
   <%= javascript_include_tag 'welcome/jquery', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'welcome/bootstrap.min', 'data-turbolinks-track' => true %>
