@@ -2,7 +2,7 @@ class IntegrationsController < WebBaseController
   skip_before_filter :verify_authenticity_token, :authenticate_user!, only: :incoming_webhook
 
   def establish
-    return if !params[:provider] || !params[:team_id] || !current_user
+    return if !params[:provider] || !current_user
     klass = "Integration::#{params[:provider].classify}".constantize
     klass.establish(current_user, params[:options])
     redirect_to "/auth/#{params[:provider]}"
