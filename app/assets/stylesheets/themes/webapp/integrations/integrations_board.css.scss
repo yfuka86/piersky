@@ -11,9 +11,24 @@
   }
   .container-main {
     float: right;
-    width: -webkit-calc(100% - 250px);
-    width: -moz-calc(100% - 250px);
-    width: calc(100% - 250px);
+    width: -webkit-calc(100% - 280px);
+    width: -moz-calc(100% - 280px);
+    width: calc(100% - 280px);
+    p{
+      &.title {
+        padding: 20px 0;
+        @include lato-thin;
+        font-size: 36px;
+      }
+      &.subtitle {
+        padding: 5px 0;
+        @include lato-thin;
+        font-size: 24px;
+        span {
+          margin-right: 10px;
+        }
+      }
+    }
   }
 }
 

@@ -15,19 +15,10 @@ class IntegrationsNew extends React.Component {
     });
   }
 
-  componentDidMount() {
-  }
-
-  componentWillUnmount() {
-  }
-
-  onChange(e) {
-    this.setState(this.InitialState);
-  }
-
   render() {
     return (
       <div className='container-main'>
+        <p className='title'>{I18n.t('integration.board.new')}</p>
         <div className='row-list-selector'>
           {_.map(Constants.Integrations, (name) => {
             return (

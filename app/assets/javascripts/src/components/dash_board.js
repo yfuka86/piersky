@@ -29,12 +29,12 @@ class DashBoard extends React.Component {
         <ul className='sky-tab-list container'>
           <Link to='integrations'>
             <li className='sky-tab'>
-              {I18n.t('webapp.dash_board.integrations')}
+              {I18n.t('webapp.tab.integrations')}
             </li>
           </Link>
           <Link to='users'>
             <li className='sky-tab'>
-              {I18n.t('webapp.dash_board.users')}
+              {I18n.t('webapp.tab.users')}
             </li>
           </Link>
         </ul>

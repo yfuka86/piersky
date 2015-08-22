@@ -5,34 +5,41 @@ import _ from 'lodash';
 import IntegrationStore from '../../stores/integration';
 
 class IntegrationsList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = this.initialState;
+  static get defaultProps() {
+    return {
+      integrations: []
+    };
   }
 
-  get initialState() {
-    return _.extend({
-    });
-  }
-
-  componentDidMount() {
-  }
-
-  componentWillUnmount() {
-  }
-
-  onChange(e) {
-    this.setState(this.InitialState);
+  static get propTypes() {
+    return {
+      integrations: React.PropTypes.array
+    };
   }
 
   render() {
     return (
       <ul className='integrations-list'>
-        <li>
-          <Link to='integrations-new'>
+        <Link to='integrations-new'>
+          <li>
+            <div className='icon-area'>
+              <span className='icon icon-ic_add_24px' />
+            </div>
             {I18n.t('integration.general.add')}
-          </Link>
-        </li>
+          </li>
+        </Link>
+        {_.map(this.props.integrations, (integration) => {
+          return (
+            <Link to='integrations-show' params={{id: integration.id}} key={integration.id}>
+              <li>
+                <div className='icon-area'>
+                  <span className={['icon', integration.type + '-logo'].join(' ')} />
+                </div>
+                {integration.type}
+              </li>
+            </Link>
+          )
+        })}
       </ul>
     );
   }

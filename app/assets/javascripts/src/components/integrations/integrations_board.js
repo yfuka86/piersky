@@ -10,6 +10,7 @@ class IntegrationsBoard extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.initialState;
+    this.onChangeHandler = this.onChange.bind(this);
   }
 
   get initialState() {
@@ -19,16 +20,16 @@ class IntegrationsBoard extends React.Component {
   }
 
   componentDidMount() {
-    IntegrationStore.onChange(this.onChange);
+    IntegrationStore.onChange(this.onChangeHandler);
     IntegrationAction.load();
   }
 
   componentWillUnmount() {
-    IntegrationStore.offChange(this.onChange);
+    IntegrationStore.offChange(this.onChangeHandler);
   }
 
   onChange(e) {
-    this.setState(this.InitialState);
+    this.setState(this.initialState);
   }
 
   render() {

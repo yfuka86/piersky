@@ -28,12 +28,11 @@ export default {
   },
 
   Root: Root,
-
+  APIRoot: APIRoot,
   APIEndpoints: {
     USERS:          APIRoot + '/users',
     INTEGRATIONS:   APIRoot + '/integrations'
   },
-
   IntegrationEndpoint: function (params) {
     return Root + '/integrations/establish?provider=' + params.provider
   },
@@ -54,7 +53,8 @@ export default {
     REDIRECT: null,
 
     //integration
-    LOAD_INTEGRATIONS: null
+    LOAD_INTEGRATIONS: null,
+    LOAD_INTEGRATION_STATS: null
   }),
 
   KeyCodes: {
@@ -68,5 +68,4 @@ export default {
     RIGHT: 39,
     DOWN: 40
   }
-
 };

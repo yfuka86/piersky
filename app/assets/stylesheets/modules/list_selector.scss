@@ -4,7 +4,7 @@
 @mixin option-common {
   display: block;
   background-color: $white;
-  border: 1px solid $white;
+  border: 1px solid $grey300;
   border-radius: 5px;
   vertical-align: middle;
   cursor: pointer;
@@ -13,7 +13,7 @@
 
   &:hover {
     background-color: $grey50;
-    border-color: $grey400;
+    border-color: $grey600;
   }
   &.disabled {
     cursor: default;
@@ -49,12 +49,12 @@
 @mixin row-list-selector {
   $normal-height: 30px;
   width: 100%;
-  padding: 20px;
+  padding: 20px 0;
   .option, .option-expandable {
     @include option-common;
     position: relative;
     width: 100%;
-    margin: 0 0 3px 0;
+    margin: 0 0 10px 0;
     padding: 4px 12px;
 
     .icon-area, .right-area {
@@ -80,6 +80,8 @@
       @include text-ellipsis;
       width: 90%;
       padding-left: 40px;
+      padding-top: 3px;
+      height: $normal-height;
       p {
         display: inline;
         line-height: $normal-height;

@@ -3,6 +3,6 @@ en:
     header:
       team: 'Team'
       account: 'Account'
-    dash_board:
+    tab:
       integrations: 'Integrations'
       users: 'Users'

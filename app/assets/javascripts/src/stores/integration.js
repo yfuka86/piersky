@@ -1,6 +1,7 @@
 import Dispatcher from '../dispatcher';
 import assign from 'object-assign';
 import _ from 'lodash';
+import changeCase from 'change-case';
 import { ActionTypes } from '../constants/app';
 
 import BaseStore from '../stores/base';
@@ -16,10 +17,16 @@ const IntegrationStore = assign({}, BaseStore, {
     this.set('integrations', integrations);
   },
 
+  getIntegrationById(id) {
+    return _.find(this.getIntegrations(), (integration) => {
+      return integration.id === parseInt(id, 10);
+    }) || {};
+  },
+
   parse(json) {
     return {
       id: json.id,
-      type: json.type,
+      type: changeCase.snakeCase(json.type.split('::')[1]),
       user: json.user,
       createdAt: json.created_at
     }
@@ -34,9 +41,15 @@ IntegrationStore.dispatchToken = Dispatcher.register(payload => {
 
   switch(action.type) {
     case ActionTypes.LOAD_INTEGRATIONS:
-      IntegrationStore.setIntegrations(_.map(action.json, (integrationJson) => {
+      IntegrationStore.setIntegrations(_.map(action.json.integrations, (integrationJson) => {
         return IntegrationStore.parse(integrationJson);}
       ));
+      IntegrationStore.emitChange();
+      break;
+
+    case ActionTypes.LOAD_INTEGRATION_STATS:
+      debugger
+      IntegrationStore.emitChange();
       break;
 
     default:
