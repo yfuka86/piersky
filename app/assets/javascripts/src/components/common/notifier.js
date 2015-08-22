@@ -1,6 +1,5 @@
 import React from 'react';
 import _ from 'lodash';
-import Notifier from '../components/common/notifier';
 
 class Notifier extends React.Component {
   propTypes: {
@@ -20,8 +19,8 @@ class Notifier extends React.Component {
       if (notifications && notifications.length > 0) {
         messages[str] = (
           <div className={str}>
-            {notifications.map((notification, index) =>
-              return(
+            {notifications.map(notification, index) => {
+              return (
                 <div className='notification-message-box' key={str + '-' +index}>
                   {notification}
                 </div>
