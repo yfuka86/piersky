@@ -19,13 +19,15 @@ class Notifier extends React.Component {
       if (notifications && notifications.length > 0) {
         messages[str] = (
           <div className={str}>
-            {notifications.map(notification, index) => {
-              return (
-                <div className='notification-message-box' key={str + '-' +index}>
-                  {notification}
-                </div>
-              );
-            })}
+            {
+              notifications.map((notification, index) => {
+                return (
+                  <div className='notification-message-box' key={str + '-' +index}>
+                    {notification}
+                  </div>
+                );
+              })
+            }
           </div>
         );
       }
