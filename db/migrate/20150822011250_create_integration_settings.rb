@@ -1,4 +1,4 @@
-class CreateIntegrationSetting < ActiveRecord::Migration
+class CreateIntegrationSettings < ActiveRecord::Migration
   def change
     create_table :integration_settings do |t|
       t.belongs_to :integration, index: true
