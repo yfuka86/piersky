@@ -23,5 +23,6 @@ Rails.application.routes.draw do
   end
 
   namespace :api, defaults: { format: :json } do
+    get 'github', to: 'github_wrapper#index'
   end
 end
