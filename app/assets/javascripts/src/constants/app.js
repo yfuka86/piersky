@@ -30,7 +30,8 @@ export default {
   Root: Root,
 
   APIEndpoints: {
-    USERS:          APIRoot + '/users'
+    USERS:          APIRoot + '/users',
+    INTEGRATIONS:   APIRoot + '/integrations'
   },
 
   IntegrationEndpoint: function (params) {
@@ -53,7 +54,7 @@ export default {
     REDIRECT: null,
 
     //integration
-    LOADED_INTEGRATIONS: null
+    LOAD_INTEGRATIONS: null
   }),
 
   KeyCodes: {

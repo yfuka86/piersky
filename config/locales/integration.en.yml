@@ -2,6 +2,7 @@ en:
   integration:
     general:
       connect: 'Connect'
+      add: 'Add new integration'
     wunderlist:
       name: 'Wunderlist'
     asana:

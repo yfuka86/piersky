@@ -27,7 +27,7 @@ const BaseStore = assign(EventEmitter.prototype, {
     if (this._storage) {
       return this._storage;
     } else {
-      newObj = {};
+      let newObj = {};
       this._storage = newObj;
       return newObj;
     }

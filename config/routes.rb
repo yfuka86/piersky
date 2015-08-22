@@ -29,7 +29,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :inregrations, only: [:index]
+    resources :integrations, only: [:index]
     get 'slack_wrapper', to: 'slack_wrapper#index'
     get 'slack_wrapper/show/:id(/:ts)', to: 'slack_wrapper#show'
   end

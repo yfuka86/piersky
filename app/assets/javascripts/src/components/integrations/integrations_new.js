@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link, RouteHandler} from 'react-router';
 import _ from 'lodash';
 import Constants from '../../constants/app';
 
@@ -11,7 +10,7 @@ class IntegrationsNew extends React.Component {
     this.state = this.initialState;
   }
 
-  get InitialState() {
+  get initialState() {
     return _.extend({
     });
   }

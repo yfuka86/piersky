@@ -9,7 +9,7 @@ class Header extends React.Component {
     this.state = this.initialState;
   }
 
-  get InitialState() {
+  get initialState() {
     return _.extend({
       user: SessionStore.getUser()
     });

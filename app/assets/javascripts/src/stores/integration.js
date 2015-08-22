@@ -1,13 +1,14 @@
 import Dispatcher from '../dispatcher';
 import assign from 'object-assign';
 import _ from 'lodash';
-import Constants from '../constants/app';
+import { ActionTypes } from '../constants/app';
 
 import BaseStore from '../stores/base';
 
 const IntegrationStore = assign({}, BaseStore, {
 
   getIntegrations() {
+    if (!this.get('integrations')) this.set('integrations', []);
     return this.get('integrations');
   },
 
@@ -19,6 +20,7 @@ const IntegrationStore = assign({}, BaseStore, {
     return {
       id: json.id,
       type: json.type,
+      user: json.user,
       createdAt: json.created_at
     }
   }
@@ -31,7 +33,7 @@ IntegrationStore.dispatchToken = Dispatcher.register(payload => {
   ]);
 
   switch(action.type) {
-    case ActionTypes.LOADED_INTEGRATIONS:
+    case ActionTypes.LOAD_INTEGRATIONS:
       IntegrationStore.setIntegrations(_.map(action.json, (integrationJson) => {
         return IntegrationStore.parse(integrationJson);}
       ));
@@ -43,5 +45,5 @@ IntegrationStore.dispatchToken = Dispatcher.register(payload => {
   return true;
 });
 
-export default SessionStore;
+export default IntegrationStore;
 

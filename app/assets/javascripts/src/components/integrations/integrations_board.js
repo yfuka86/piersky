@@ -2,7 +2,9 @@ import React from 'react';
 import {Link, RouteHandler} from 'react-router';
 import _ from 'lodash';
 
-import IntegrationsList from '../integrations/integrations_list';
+import IntegrationAction from '../../actions/integration';
+import IntegrationStore from '../../stores/integration';
+import IntegrationsList from '../../components/integrations/integrations_list';
 
 class IntegrationsBoard extends React.Component {
   constructor(props) {
@@ -10,15 +12,19 @@ class IntegrationsBoard extends React.Component {
     this.state = this.initialState;
   }
 
-  get InitialState() {
+  get initialState() {
     return _.extend({
+      integrations: IntegrationStore.getIntegrations()
     });
   }
 
   componentDidMount() {
+    IntegrationStore.onChange(this.onChange);
+    IntegrationAction.load();
   }
 
   componentWillUnmount() {
+    IntegrationStore.offChange(this.onChange);
   }
 
   onChange(e) {
@@ -29,7 +35,7 @@ class IntegrationsBoard extends React.Component {
     return (
       <div className='integration-board container'>
         <div className='container-left'>
-          <IntegrationsList />
+          <IntegrationsList integrations={this.state.integrations} />
         </div>
         <RouteHandler />
         <div className='clear-fix' />

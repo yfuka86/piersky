@@ -1,11 +1,15 @@
 import Dispatcher from '../dispatcher';
 import assign from 'object-assign';
 import _ from 'lodash';
-import Constants from '../constants/app';
+import { ActionTypes } from '../constants/app';
 
 import BaseStore from '../stores/base';
 
 const SessionStore = assign({}, BaseStore, {
+
+  getUser() {
+    return this.get('user');
+  }
 
 });
 

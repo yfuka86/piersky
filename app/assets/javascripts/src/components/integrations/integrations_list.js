@@ -1,6 +1,8 @@
 import React from 'react';
-import {Link, RouteHandler} from 'react-router';
+import {Link} from 'react-router';
 import _ from 'lodash';
+
+import IntegrationStore from '../../stores/integration';
 
 class IntegrationsList extends React.Component {
   constructor(props) {
@@ -8,7 +10,7 @@ class IntegrationsList extends React.Component {
     this.state = this.initialState;
   }
 
-  get InitialState() {
+  get initialState() {
     return _.extend({
     });
   }
@@ -25,8 +27,13 @@ class IntegrationsList extends React.Component {
 
   render() {
     return (
-      <div>
-      </div>
+      <ul className='integrations-list'>
+        <li>
+          <Link to='integrations-new'>
+            {I18n.t('integration.general.add')}
+          </Link>
+        </li>
+      </ul>
     );
   }
 }

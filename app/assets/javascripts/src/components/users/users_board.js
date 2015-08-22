@@ -8,7 +8,7 @@ class UsersBoard extends React.Component {
     this.state = this.initialState;
   }
 
-  get InitialState() {
+  get initialState() {
     return _.extend({
     });
   }

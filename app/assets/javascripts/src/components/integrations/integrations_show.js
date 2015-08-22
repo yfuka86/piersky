@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link, RouteHandler} from 'react-router';
 import _ from 'lodash';
 
 class IntegrationsShow extends React.Component {
@@ -8,7 +7,7 @@ class IntegrationsShow extends React.Component {
     this.state = this.initialState;
   }
 
-  get InitialState() {
+  get initialState() {
     return _.extend({
     });
   }
