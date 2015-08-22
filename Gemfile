@@ -7,7 +7,7 @@ gem 'active_model_serializers', '0.8.3'
 gem 'kaminari'
 
 gem 'mysql2'
-gem 'pg'
+gem 'pg', group: :production
 gem 'arproxy', '0.2.0'
 
 gem 'sdoc', '~> 0.4.0', group: :doc
