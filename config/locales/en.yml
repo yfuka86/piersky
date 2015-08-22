@@ -21,3 +21,5 @@
 
 en:
   identity: 'PierSky'
+  general:
+    loading: 'Loading . . .'
