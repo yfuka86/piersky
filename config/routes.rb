@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
 
+  get 'webapp', to: 'webapp#index', as: 'webapp'
+
   resources :integrations, only: [] do
     collection do
       get 'establish', to: 'integrations#establish'

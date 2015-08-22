@@ -64,6 +64,7 @@ a:focus {
     border-bottom: 1px solid rgba(255,255,255,.3);
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     background-color: transparent;
+    z-index: $HEADER_Z;
 }
 
 .navbar-custom .navbar-brand {
