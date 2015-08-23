@@ -3,7 +3,6 @@ class Api::GithubWrapperController < ApplicationController
       integration = Integration::Github.find_by(user: current_user)
       pull_requests = integration.gh_client.pull_requests
       if params[:user] && params[:name]
-          binding.pry
           response = pull_requests.all(params[:user],params[:name]).body
       else
         response = integration.fetch_syncables.map{|str| str.split("/")}.map{ |user,name|
