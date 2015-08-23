@@ -9,8 +9,8 @@ class Integration < ActiveRecord::Base
   validates_associated :setting
 
   class << self
-    def establish(team, user, options={})
-      self.new(team: team, user: user).tap do |integration|
+    def establish(user, options={})
+      self.new(user: user).tap do |integration|
         integration.save!
       end
     end

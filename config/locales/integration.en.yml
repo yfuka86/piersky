@@ -1,0 +1,19 @@
+en:
+  integration:
+    board:
+      index: 'Integration Dashboard'
+      new: 'Add New Integration'
+      show: 'Statistics for %{name}'
+    general:
+      connect: 'Connect'
+      add: 'Add new integration'
+      no_integrations: 'No integrations to show.'
+      setup: 'Would you like to setup?'
+    wunderlist:
+      name: 'Wunderlist'
+    asana:
+      name: 'Asana'
+    slack:
+      name: 'Slack'
+    github:
+      name: 'Github'

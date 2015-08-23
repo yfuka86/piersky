@@ -1,7 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
 
-
 class Loading extends React.Component {
   render() {
     return (
