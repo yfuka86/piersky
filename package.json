@@ -25,7 +25,8 @@
     "react": "0.13.3",
     "react-modal": "0.2.0",
     "react-tooltip": "0.3.0",
-    "d3": "3.5.6"
+    "d3": "3.5.6",
+    "react-d3-components": "0.4.8"
   },
   "engines": {
     "node": "0.10.x",

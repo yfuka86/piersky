@@ -5,6 +5,14 @@ import changeCase from 'change-case';
 import IntegrationAction from '../../actions/integration';
 import IntegrationStore from '../../stores/integration';
 
+import Slack from '../../components/statistics/slack';
+import Github from '../../components/statistics/github';
+
+const Statistics = {
+  Slack: Slack,
+  Github: Github
+}
+
 class IntegrationsShow extends React.Component {
 
   constructor(props) {
@@ -21,7 +29,6 @@ class IntegrationsShow extends React.Component {
 
   componentDidMount() {
     IntegrationStore.onChange(this.onChangeHandler);
-    IntegrationAction.loadStats();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -37,9 +44,12 @@ class IntegrationsShow extends React.Component {
   }
 
   render() {
+    let integrationClass = changeCase.pascalCase(this.state.integration.type);
+    let Integration = Statistics[integrationClass];
     return (
       <div className='container-main'>
-        <p className='title'>{I18n.t('integration.board.show', {name: changeCase.pascalCase(this.state.integration.type)})}</p>
+        <p className='title'>{I18n.t('integration.board.show', {name: integrationClass})}</p>
+        {Integration ? <Integration integration={this.state.integration} /> : <span/> }
       </div>
     );
   }

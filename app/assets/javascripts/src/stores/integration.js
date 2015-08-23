@@ -47,11 +47,6 @@ IntegrationStore.dispatchToken = Dispatcher.register(payload => {
       IntegrationStore.emitChange();
       break;
 
-    case ActionTypes.LOAD_INTEGRATION_STATS:
-      debugger
-      IntegrationStore.emitChange();
-      break;
-
     default:
   }
 

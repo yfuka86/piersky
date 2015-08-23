@@ -54,7 +54,6 @@ export default {
 
     //integration
     LOAD_INTEGRATIONS: null,
-    LOAD_INTEGRATION_STATS: null
   }),
 
   KeyCodes: {
