@@ -17,3 +17,5 @@ en:
       name: 'Slack'
     github:
       name: 'Github'
+    piersky:
+      add: 'Add new Piersky object'

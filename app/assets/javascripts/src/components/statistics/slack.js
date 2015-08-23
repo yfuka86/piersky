@@ -111,6 +111,8 @@ class Slack extends React.Component {
       <div className='statistics-slack'>
         <div id='graph' />
         <div id='graph2' />
+        <div className='slack-channels-container'>
+        <h2> Channels </h2>
         <ul>
         {this.state.channels.map(function(channel){
           console.log(channel);
@@ -126,6 +128,7 @@ class Slack extends React.Component {
             );
         })}
         </ul>
+        </div>
       </div>
     );
   }
