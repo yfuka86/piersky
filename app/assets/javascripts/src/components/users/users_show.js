@@ -11,89 +11,47 @@ class UsersShow extends React.Component {
 
   get initialState() {
     return {
-      data: [
-        {label: 'Github', values: [
-          {x: new Date(2015, 2, 5), y: 1},
-          {x: new Date(2015, 2, 6), y: 2},
-          {x: new Date(2015, 2, 7), y: 0},
-          {x: new Date(2015, 2, 8), y: 3},
-          {x: new Date(2015, 2, 9), y: 2},
-          {x: new Date(2015, 2, 10), y: 3},
-          {x: new Date(2015, 2, 11), y: 4},
-          {x: new Date(2015, 2, 12), y: 4},
-          {x: new Date(2015, 2, 13), y: 1},
-          {x: new Date(2015, 2, 14), y: 5},
-          {x: new Date(2015, 2, 15), y: 0},
-          {x: new Date(2015, 2, 16), y: 1},
-          {x: new Date(2015, 2, 16), y: 1},
-          {x: new Date(2015, 2, 18), y: 4},
-          {x: new Date(2015, 2, 19), y: 4},
-          {x: new Date(2015, 2, 20), y: 5},
-          {x: new Date(2015, 2, 21), y: 5},
-          {x: new Date(2015, 2, 22), y: 5},
-          {x: new Date(2015, 2, 23), y: 1},
-          {x: new Date(2015, 2, 24), y: 0},
-          {x: new Date(2015, 2, 25), y: 1},
-          {x: new Date(2015, 2, 26), y: 1}
-        ]},
-        {label: 'Slack', values: [
-          {x: new Date(2015, 2, 5), y: 5},
-          {x: new Date(2015, 2, 6), y: 6},
-          {x: new Date(2015, 2, 7), y: 4.4},
-          {x: new Date(2015, 2, 8), y: 3.3},
-          {x: new Date(2015, 2, 9), y: 2.8},
-          {x: new Date(2015, 2, 10), y: 4.2},
-          {x: new Date(2015, 2, 11), y: 5.1},
-          {x: new Date(2015, 2, 12), y: 4.2},
-          {x: new Date(2015, 2, 13), y: 3.5},
-          {x: new Date(2015, 2, 14), y: 3.6},
-          {x: new Date(2015, 2, 15), y: 1.9},
-          {x: new Date(2015, 2, 16), y: 3.1},
-          {x: new Date(2015, 2, 16), y: 3.0},
-          {x: new Date(2015, 2, 18), y: 3.0},
-          {x: new Date(2015, 2, 19), y: 4.5},
-          {x: new Date(2015, 2, 20), y: 5.2},
-          {x: new Date(2015, 2, 21), y: 3.8},
-          {x: new Date(2015, 2, 22), y: 3.7},
-          {x: new Date(2015, 2, 23), y: 4.3},
-          {x: new Date(2015, 2, 24), y: 3.1},
-          {x: new Date(2015, 2, 25), y: 0},
-          {x: new Date(2015, 2, 26), y: 1.2}
-        ]},
-        {label: 'Slack', values: [
-          {x: new Date(2015, 2, 5), y: 1.2},
-          {x: new Date(2015, 2, 6), y: 1.7},
-          {x: new Date(2015, 2, 7), y: 1.4},
-          {x: new Date(2015, 2, 8), y: 1.3},
-          {x: new Date(2015, 2, 9), y: 1.8},
-          {x: new Date(2015, 2, 10), y: 1.2},
-          {x: new Date(2015, 2, 11), y: 1.1},
-          {x: new Date(2015, 2, 12), y: 1.2},
-          {x: new Date(2015, 2, 13), y: 1.5},
-          {x: new Date(2015, 2, 14), y: 1.6},
-          {x: new Date(2015, 2, 15), y: 1.9},
-          {x: new Date(2015, 2, 16), y: 1.1},
-          {x: new Date(2015, 2, 16), y: 1.0},
-          {x: new Date(2015, 2, 18), y: 1.0},
-          {x: new Date(2015, 2, 19), y: 1.5},
-          {x: new Date(2015, 2, 20), y: 1.2},
-          {x: new Date(2015, 2, 21), y: 1.8},
-          {x: new Date(2015, 2, 22), y: 1.7},
-          {x: new Date(2015, 2, 23), y: 1.3},
-          {x: new Date(2015, 2, 24), y: 1.1},
-          {x: new Date(2015, 2, 25), y: 0.7},
-          {x: new Date(2015, 2, 26), y: 1.2}
-        ]}
-      ],
-      xScale: d3.time.scale().domain([new Date(2015, 2, 5), new Date(2015, 2, 26)]).range([0, 890 - 70]),
-      xScaleBrush: d3.time.scale().domain([new Date(2015, 2, 5), new Date(2015, 2, 26)]).range([0, 890 - 70])
     };
   }
 
   componentDidMount() {
+    this.drawChart();
   }
 
   componentWillUnmount() {
+  }
+
+  drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['date', 'Slack', 'Github'],
+      ['2015/08/07',  1000,      400],
+      ['2015/08/08',  1170,      460],
+      ['2015/08/09',  1660,       1120],
+      ['2015/08/10',  1030,      540],
+      ['2015/08/11',  1200,      400],
+      ['2015/08/12',  117,      260],
+      ['2015/08/13',  360,       100],
+      ['2015/08/14',  1030,      540],
+      ['2015/08/15',  900,      400],
+      ['2015/08/16',  1170,      460],
+      ['2015/08/17',  660,       1120],
+      ['2015/08/18',  1030,      540],
+      ['2015/08/19',  200,      100],
+      ['2015/08/20',  370,      60],
+      ['2015/08/21',  660,       1120],
+      ['2015/08/22',  1000,      400],
+      ['2015/08/23',  1170,      460]
+    ]);
+
+    var options = {
+      title: 'activity',
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('graph'));
+
+    chart.draw(data, options);
   }
 
   render() {
@@ -102,15 +60,7 @@ class UsersShow extends React.Component {
     return (
       <div className='container-main'>
         <p className='title'>{I18n.t('webapp.users.show', {name: 'yfuka86'})}</p>
-        <LineChart
-          data={this.state.data}
-          width={890}
-          height={300}
-          margin={{top: 10, bottom: 50, left: 50, right: 20}}
-          xScale={this.state.xScale}
-          xAxis={{tickValues: this.state.xScale.ticks(d3.time.day, 2), tickFormat: d3.time.format("%m/%d")}}
-          stroke={{strokeLinecap: 'round'}}
-        />
+        <div id='graph' />
       </div>
     );
   }
