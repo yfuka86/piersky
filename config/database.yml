@@ -1,5 +1,5 @@
 default: &default
-  adapter: mysql2
+  adapter: mysql
   encoding: utf8
   reconnect: true
   pool: 5
@@ -8,15 +8,15 @@ default: &default
 development:
   <<: *default
   database: piersky_development
-  username: mysql
-  password: 'root'
+  username: root
+  password: seiya4418
   host: localhost
 
 test:
   <<: *default
   database: piersky_test
-  username: mysql
-  password: 'root'
+  username: root
+  password: seiya4418
   host: localhost
 
 production:
@@ -26,4 +26,4 @@ production:
   username: <%= ENV['RDS_USERNAME'] %>
   password: <%= ENV['RDS_PASSWORD'] %>
   host: <%= ENV['RDS_HOSTNAME'] %>
-  port: <%= ENV['RDS_PORT'] %>
+  port: <%= ENV['RDS_PORT'] %>n
