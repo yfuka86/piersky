@@ -1,8 +1,8 @@
 @import 'globals/config-loader';
 @import 'modules/center_container';
 
-.integrations-board .container-left {
-  ul.integrations-list {
+.users-board .container-left {
+  ul.users-list {
     padding-top: 30px;
     padding-bottom: 200px;
     border-right: 1px solid $grey300;
@@ -26,9 +26,6 @@
         position: absolute;
         top: 11px;
         left: 10px;
-        span.icon {
-          @include icon(20px, 20px);
-        }
       }
     }
   }

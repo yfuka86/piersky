@@ -19,6 +19,8 @@ SessionStore.dispatchToken = Dispatcher.register(payload => {
   ]);
 
   switch(action.type) {
+    case ActionTypes.AUTHENTICATE
+      action.json
 
     default:
   }
