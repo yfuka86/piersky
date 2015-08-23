@@ -16,7 +16,7 @@ module Api
         next if message["type"]!= "message" || message["text"].blank?
         activity = SlackActivity.find_by(channel: params[:id], ts: message["ts"])
         if activity.blank?
-          activity_params = { user_id: current_user.id, channel: params[:id], ts: message["ts"], message: message["text"].slice(1, 100)}
+          activity_params = { user_id: message["user"], channel: params[:id], ts: message["ts"], message: message["text"].slice(1, 100)}
           activity = SlackActivity.create(activity_params)
           activity.save!
         end
