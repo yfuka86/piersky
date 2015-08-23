@@ -1,0 +1,33 @@
+@import 'globals/config-loader';
+@import 'modules/center_container';
+
+.users-board .container-left {
+  ul.users-list {
+    padding-top: 30px;
+    padding-bottom: 200px;
+    border-right: 1px solid $grey300;
+    a.active {
+      li {
+        background-color: $blue50;
+      }
+    }
+    li {
+      position: relative;
+      padding: 10px 15px 10px 55px;
+      color: $grey700;
+      cursor: pointer;
+      @include lato-normal;
+      font-size: 17px;
+      line-height: 36px;
+
+      &:hover {
+        background-color: $grey50;
+      }
+      .icon-area {
+        position: absolute;
+        top: 11px;
+        left: 10px;
+      }
+    }
+  }
+}

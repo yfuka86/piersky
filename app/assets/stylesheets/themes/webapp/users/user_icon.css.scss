@@ -1,0 +1,17 @@
+@import "globals/config-loader";
+
+.simple-user-icon {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  text-align: center;
+  line-height: 36px;
+  font-size: 24px;
+  border-radius: 4px;
+  @include lato-normal;
+  vertical-align: baseline;
+  color: $white;
+  cursor: pointer;
+
+  @include coloring-back;
+}

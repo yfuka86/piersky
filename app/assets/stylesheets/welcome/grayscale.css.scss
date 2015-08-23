@@ -149,16 +149,24 @@ a:focus {
 .intro {
     display: table;
     width: 100%;
-    height: 450px;
+    height: 600px;
     padding: 200px 0 100px;
     text-align: center;
     color: #fff;
-    background: image-url('welcome_bg.png') no-repeat bottom center scroll;
-    background-color: transparent;
+    background: image-url('piersky.jpeg') no-repeat bottom center scroll;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+}
+
+.intro-overlay {
+    position: absolute;
+    top:0;
+    z-index: 100;
+    height: 600px;
+    width: 100%;
+    background-color: rgba(25, 118, 211, 0.4);
 }
 
 .intro .intro-body {
@@ -171,8 +179,10 @@ a:focus {
 }
 
 .intro .intro-body .intro-text {
-    font-size: 24px;
-    @include lato-thin;
+    font-size: 30px;
+    @include lato-bold;
+    position: relative;
+    z-index: 150;
 }
 
 @media(min-width:768px) {
@@ -200,6 +210,8 @@ a:focus {
     font-size: 40px;
     color: #fff;
     background: 0 0;
+    position: relative;
+    z-index: 150;
     -webkit-transition: background .3s ease-in-out;
     -moz-transition: background .3s ease-in-out;
     transition: background .3s ease-in-out;
@@ -268,8 +280,25 @@ a:focus {
     padding-top: 100px;
     color: $grey800;
     @include lato-thin;
-}
 
+}
+.about-section {
+    display: table;
+    width: 100%;
+    height: 400px;
+    text-align: center;
+    color: $grey800;
+    background: image-url('about.jpeg') no-repeat bottom center scroll ;
+    background-color: transparent;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+.about-section p {
+    color: #8990A3;
+    font-size: 18px;
+}
 .download-section {
     color: $white;
     background: image-url('welcome_bg.png') no-repeat bottom center scroll;

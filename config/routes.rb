@@ -30,7 +30,11 @@ Rails.application.routes.draw do
     end
 
     resources :integrations, only: [:index]
-    get 'slack_wrapper', to: 'slack_wrapper#index'
-    get 'slack_wrapper/show/:id(/:ts)', to: 'slack_wrapper#show'
+    get 'github_wrapper', to: 'github_wrapper#index'
+    get 'github_wrapper/show/:user/:name', to: 'github_wrapper#index'
+    get 'slack_wrapper(/:integration_id)', to: 'slack_wrapper#index'
+    get 'slack_wrapper/:integration_id/show/:id(/:ts)', to: 'slack_wrapper#show'
+
+    resources :slack_gathers, only: [:index, :create, :show ]
   end
 end
