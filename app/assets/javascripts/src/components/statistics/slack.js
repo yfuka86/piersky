@@ -59,14 +59,14 @@ class Slack extends React.Component {
   }
 
   drawChart(){
-    var data = google.visualization.arrayToDataTable([
+    let data = google.visualization.arrayToDataTable([
       ['Channel', 'number', { role: 'style' }]
     ].concat(this.state.channels.map(function(channel){
       return [channel.name, channel.messages.length, Constants.colorHexByKey(channel.name)];
     })));
 
-    var options = {
-      title: 'number messages of channels',
+    let options = {
+      title: 'number of messages of channels',
       chartArea: {width: '890px'},
       hAxis: {
         title: 'number',
@@ -77,15 +77,41 @@ class Slack extends React.Component {
       }
     };
 
-    var chart = new google.visualization.BarChart(React.findDOMNode(this).querySelector('#graph'));
+    let chart = new google.visualization.BarChart(React.findDOMNode(this).querySelector('#graph'));
 
     chart.draw(data, options);
+
+    let messages = _.reduce(this.state.channels, function(memo, channel){return memo.concat(channel.messages)}, []);
+    let group = _.groupBy(messages, 'user_id');
+    debugger
+    let ary = _.map(group, function(v,k) {return [k, v.length, Constants.colorHexByKey(k)]});
+
+    let data2 = google.visualization.arrayToDataTable([
+      ['User', 'number', { role: 'style' }]
+    ].concat(ary));
+
+    let options2 = {
+      title: 'number of messages of each user',
+      chartArea: {width: '890px'},
+      hAxis: {
+        title: 'number',
+        minValue: 0
+      },
+      vAxis: {
+        title: 'Channel'
+      }
+    };
+
+    let chart2 = new google.visualization.BarChart(React.findDOMNode(this).querySelector('#graph2'));
+
+    chart2.draw(data2, options2);
   }
 
   render() {
     return (
       <div className='statistics-slack'>
         <div id='graph' />
+        <div id='graph2' />
         <ul>
         {this.state.channels.map(function(channel){
           console.log(channel);
