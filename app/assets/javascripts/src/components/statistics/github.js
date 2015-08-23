@@ -16,38 +16,42 @@ class Github extends React.Component {
   }
 
   loadStats() {
-    return new Promise((resolve, reject) => {
-      request
-      .get(APIRoot + '/slack_wrapper')
-      .end((error, res) => {
-        if (res.status === 200){
-          let json = JSON.parse(res.text);
-          resolve();
-          this.setState({
-            json: json
-          });
-        } else {
-          reject();
-        }
-      })
-    });
+    request
+    .get(APIRoot + '/github_wrapper')
+    .end(function(error, res) {
+      if (res.status === 200){
+        let json = JSON.parse(res.text);
+        this.setState({
+          json: json
+        });
+      }
+    }.bind(this));
   }
 
   render() {
     let BarChart = ReactD3.BarChart;
-
     let data = [{
         label: 'somethingA',
-        values: [{x: 'SomethingA', y: 10}, {x: 'SomethingB', y: 4}, {x: 'SomethingC', y: 3}]
+        values: [{x: 'Loading', y: 5}, {x: 'data...', y: 4}, {x: '...', y: 3}]
     }];
-
+    if (this.state){
+      data = [{
+        label: 'pull_requests',
+        values: this.state.json.filter(function(obj){
+          return obj.pull_requests.length!=0;
+        }).map(function(obj){
+          return  {x: obj.user + "/" + obj.name,y: obj.pull_requests.length}
+        })
+      }];
+    }
     return (
       <div className='statistics-github'>
         <BarChart
             data={data}
             width={400}
             height={400}
-            margin={{top: 10, bottom: 50, left: 50, right: 10}}/>
+            margin={{top: 10, bottom: 50, left: 50, right: 10}}
+            />
       </div>
     );
   }
