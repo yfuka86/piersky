@@ -69,6 +69,7 @@ class IntegrationsIndex extends React.Component {
     google.setOnLoadCallback(this.drawChart);
     return (
       <div className='container-main'>
+        <p className='title'>{I18n.t('integration.board.index')}</p>
         <div className='objs-container'>
           <div className='add-button'>
             <div className='icon-area'>
@@ -100,7 +101,6 @@ class IntegrationsIndex extends React.Component {
           );
         })}
         </div>
-        <p className='title'>{I18n.t('integration.board.index')}</p>
         <p className='subtitle'>
           {I18n.t('integration.general.no_integrations')}
           <Link to='integrations-new'>
