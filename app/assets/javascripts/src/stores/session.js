@@ -8,7 +8,20 @@ import BaseStore from '../stores/base';
 const SessionStore = assign({}, BaseStore, {
 
   getUser() {
+    if (!this.get('user')) this.set('user', {});
     return this.get('user');
+  },
+
+  setUser(user) {
+    this.set('user', user);
+  },
+
+  parse(json) {
+    return {
+      id: json.id,
+      email: json.email,
+      userName: json.email
+    }
   }
 
 });
