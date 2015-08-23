@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import request from 'superagent';
 import ReactD3 from 'react-d3-components'
+import Constants from '../../constants/app';
 import {APIRoot} from '../../constants/app';
 
 class Slack extends React.Component {
@@ -59,9 +60,9 @@ class Slack extends React.Component {
 
   drawChart(){
     var data = google.visualization.arrayToDataTable([
-      ['Channel', 'number']
+      ['Channel', 'number', { role: 'style' }]
     ].concat(this.state.channels.map(function(channel){
-      return [channel.name, channel.messages.length];
+      return [channel.name, channel.messages.length, Constants.colorHexByKey(channel.name)];
     })));
 
     var options = {
