@@ -13,10 +13,10 @@ module Api
       oldest_ts = nil
       messages["messages"].each do |message|
         oldest_ts = message["ts"] || oldest_ts
-        next if message["type"]!= "message" || message["text"].blank?
+        next if message["type"]!= "message" || message["text"].blank? || message["user"].blank?
         activity = SlackActivity.find_by(channel: params[:id], ts: message["ts"])
         if activity.blank?
-          activity_params = { user_id: message["user"], channel: params[:id], ts: message["ts"], message: message["text"].slice(1, 100)}
+          activity_params = { user_id: message["user"], channel: params[:id], ts: message["ts"], message: message["text"].slice(0, 100)}
           activity = SlackActivity.create(activity_params)
           activity.save!
         end
