@@ -13,16 +13,26 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
 
-  get 'webapp', to: 'webapp#index', as: 'webapp'
+  get 'webapp(/*path)', to: 'webapp#index', as: 'webapp'
 
   resources :integrations, only: [] do
     collection do
       get 'establish', to: 'integrations#establish'
-      post '/:team_id/:webhook_uid', to: 'integrations#incoming_webhook'
+      post '/:user_id/:webhook_uid', to: 'integrations#incoming_webhook'
     end
   end
 
   namespace :api, defaults: { format: :json } do
-    get 'github', to: 'github_wrapper#index'
+    resources :users, only: [] do
+      collection do
+        get 'me'
+      end
+    end
+
+    resources :integrations, only: [:index]
+    get 'github_wrapper', to: 'github_wrapper#index'
+    get 'github_wrapper/show/:user/:name', to: 'github_wrapper#index'
+    get 'slack_wrapper', to: 'slack_wrapper#index'
+    get 'slack_wrapper/show/:id(/:ts)', to: 'slack_wrapper#show'
   end
 end

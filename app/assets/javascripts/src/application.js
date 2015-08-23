@@ -8,11 +8,6 @@ import routes from './routes';
 window.PierSky = {}
 window.PierSky.Router = Router;
 
-React.render(
-  <Loading />,
-  document.getElementById('loading_container')
-);
-
 Router.run(routes, Router.HistoryLocation, (Handler, state) => {
   React.render(
     <Handler path={window.location.pathname} />,

@@ -1,0 +1,114 @@
+@import "globals/config-loader";
+@import "modules/sky_flat_button";
+
+@mixin option-common {
+  display: block;
+  background-color: $white;
+  border: 1px solid $grey300;
+  border-radius: 5px;
+  vertical-align: middle;
+  cursor: pointer;
+  color: $grey700;
+  @include user-select-none;
+
+  &:hover {
+    background-color: $grey50;
+    border-color: $grey600;
+  }
+  &.disabled {
+    cursor: default;
+    &:hover {
+      background-color: $white;
+      border-color: $white;
+    }
+  }
+  .content-area, .right-area {
+    button {
+      line-height: inherit;
+      font-size: inherit;
+      &.button-normal {
+        @include flat-button-normal;
+        &:hover {
+          background-color: $grey50;
+        }
+      }
+      &.button-identity {
+        @include flat-button-identity;
+      }
+      &.button-red {
+        @include flat-button-red;
+      }
+      &.button-normal, &.button-identity, &.button-red {
+        line-height: inherit;
+        font-size: inherit;
+      }
+    }
+  }
+}
+
+@mixin row-list-selector {
+  $normal-height: 30px;
+  width: 100%;
+  padding: 20px 0;
+  .option, .option-expandable {
+    @include option-common;
+    position: relative;
+    width: 100%;
+    margin: 0 0 10px 0;
+    padding: 4px 12px;
+
+    .icon-area, .right-area {
+      position: absolute;
+      top: 6px;
+      span.icon {
+        @include icon($normal-height, $normal-height);
+      }
+    }
+    .icon-area {
+      left: 10px;
+    }
+    .right-area {
+      right: 12px;
+      height: $normal-height;
+      padding: 0;
+      line-height: 20px;
+      font-size: 18px;
+    }
+
+    .content-area {
+      display: inline-block;
+      @include text-ellipsis;
+      width: 90%;
+      padding-left: 40px;
+      padding-top: 3px;
+      height: $normal-height;
+      p {
+        display: inline;
+        line-height: $normal-height;
+        &.title {
+          @include lato-normal;
+          font-size: 18px;
+          color: $grey800;
+          margin-right: 15px;
+        }
+        &.description {
+          @include lato-thin;
+          font-size: 16px;
+          color: $grey500;
+        }
+        &.description-block {
+          display: block;
+          @include lato-thin;
+          font-size: 16px;
+          line-height: 20px;
+          color: $grey500;
+          white-space: normal;
+        }
+      }
+    }
+  }
+}
+
+.row-list-selector {
+  @include row-list-selector;
+}
