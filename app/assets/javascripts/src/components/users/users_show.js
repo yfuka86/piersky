@@ -61,6 +61,7 @@ class UsersShow extends React.Component {
       <div className='container-main'>
         <p className='title'>{I18n.t('webapp.users.show', {name: 'yfuka86'})}</p>
         <div id='graph' />
+        <p className='title'>contribution score<br/>1.12<br/>rank: 2nd</p>
       </div>
     );
   }
