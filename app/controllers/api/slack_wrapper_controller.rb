@@ -9,7 +9,10 @@ module Api
 
     def show
       messages = @slack.show_messages(params[:id], params[:ts])
+      activities = []
+      oldest_ts = nil
       messages["messages"].each do |message|
+        oldest_ts = message["ts"] || oldest_ts
         next if message["type"]!= "message" || message["text"].blank?
         activity = SlackActivity.find_by(channel: params[:id], ts: message["ts"])
         if activity.blank?
@@ -17,8 +20,9 @@ module Api
           activity = SlackActivity.create(activity_params)
           activity.save!
         end
+        activities.push(activity)
       end
-      render json: { success: true, messages: messages }.to_json
+      render json: { success: true, messages: activities, oldest_ts: oldest_ts  }.to_json
     end
 
     private
