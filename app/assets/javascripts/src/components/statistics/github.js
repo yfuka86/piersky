@@ -69,6 +69,7 @@ class Github extends React.Component {
         </div>
       );
     }
+    
     return (
       <div className='statistics-github'>
         <BarChart
