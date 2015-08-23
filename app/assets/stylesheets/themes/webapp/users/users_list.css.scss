@@ -13,11 +13,12 @@
     }
     li {
       position: relative;
-      padding: 10px 15px 10px 45px;
+      padding: 10px 15px 10px 55px;
       color: $grey700;
       cursor: pointer;
       @include lato-normal;
       font-size: 17px;
+      line-height: 36px;
 
       &:hover {
         background-color: $grey50;

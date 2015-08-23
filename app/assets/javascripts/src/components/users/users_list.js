@@ -2,6 +2,8 @@ import React from 'react';
 import {Link} from 'react-router';
 import _ from 'lodash';
 
+import UserIcon from '../../components/users/user_icon';
+
 class UsersList extends React.Component {
   static get defaultProps() {
     return {
@@ -18,14 +20,14 @@ class UsersList extends React.Component {
   render() {
     return (
       <ul className='users-list'>
-        {_.map(this.props.users, (integration) => {
+        {_.map(this.props.users, (user) => {
           return (
-            <Link to='users-show' params={{id: integration.id}} key={integration.id}>
+            <Link to='users-show' params={{id: user.id}} key={user.id}>
               <li>
                 <div className='icon-area'>
-                  <span className={['icon', integration.type + '-logo'].join(' ')} />
+                  <UserIcon user={user} />
                 </div>
-                {integration.type}
+                {user.userName}
               </li>
             </Link>
           )
@@ -35,4 +37,4 @@ class UsersList extends React.Component {
   }
 }
 
-export default IntegrationsList;
+export default UsersList;

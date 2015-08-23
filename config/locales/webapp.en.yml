@@ -6,3 +6,6 @@ en:
     tab:
       integrations: 'Integrations'
       users: 'Users'
+    users:
+      index: 'Users Dashboard'
+      show: 'Statistics for %{name}'

@@ -2,13 +2,13 @@ import React from 'react';
 import {Link, RouteHandler} from 'react-router';
 import _ from 'lodash';
 
-import SessionStore from '../../stores/session';
 import UsersList from '../../components/users/users_list';
 
 class UsersBoard extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.initialState;
+    this.onChangeHandler = this.onChange.bind(this);
   }
 
   get initialState() {
@@ -30,7 +30,7 @@ class UsersBoard extends React.Component {
     return (
       <div className='users-board container'>
         <div className='container-left'>
-          <UsersList users={[SessionStore.getUser()]} />
+          <UsersList users={[{id: 1, email:'yfuka86@gmail.com', userName: 'yfuka86'}]} />
         </div>
         <RouteHandler />
         <div className='clear-fix' />

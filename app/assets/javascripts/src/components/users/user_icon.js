@@ -1,27 +1,29 @@
-var React = require('react');
-var SkyConstants = require('../../constants/SkyConstants');
+import React from 'react';
+import _ from 'lodash';
+import Constants from '../../constants/app';
 
-var UserIcon = React.createClass({
-
-  propTypes: {
-    user: React.PropTypes.object
-  },
-
-  getDefaultProps: function() {
+class UserIcon extends React.Component {
+  static get defaultProps() {
     return {
       user: {}
-    }
-  },
+    };
+  }
 
-  render: function() {
-    var user = this.props.user;
+  static get propTypes() {
+    return {
+      user: React.PropTypes.object
+    };
+  }
+
+  render() {
+    let user = this.props.user;
     return (
-      <span className={'simple-user-icon ' + SkyConstants.colorByKey(user.userName)}>
+      <span className={'simple-user-icon ' + Constants.colorByKey(user.userName)}>
         {user.userName[0].toUpperCase()}
       </span>
     );
   }
 
-});
+}
 
-module.exports = UserIcon;
+export default UserIcon;
