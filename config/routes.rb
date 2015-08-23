@@ -34,5 +34,7 @@ Rails.application.routes.draw do
     get 'github_wrapper/show/:user/:name', to: 'github_wrapper#index'
     get 'slack_wrapper', to: 'slack_wrapper#index'
     get 'slack_wrapper/show/:id(/:ts)', to: 'slack_wrapper#show'
+
+    resources :slack_gathers, only: [:index, :create, :show ]
   end
 end
