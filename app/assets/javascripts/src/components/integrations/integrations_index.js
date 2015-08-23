@@ -4,6 +4,8 @@ import {Link} from 'react-router';
 import Constants from '../../constants/app';
 import ReactD3 from 'react-d3-components'
 
+import IntegrationStore from '../../stores/integration';
+
 import IntegrationAction from '../../actions/integration';
 
 class IntegrationsIndex extends React.Component {
@@ -14,7 +16,7 @@ class IntegrationsIndex extends React.Component {
 
   get initialState() {
     return _.extend({
-      objects: [ 
+      objects: [
         {id: 1, name: "Scalaへの移行", elems: [
           {id: 1, type: "github", title: "Fix block device naming on Xen when kv_ro_of_fs by samoht · Pull Request #439", url: "https://github.com/mirage/mirage/pull/441"},
           {id: 2, type: "slack", title: "chat", url: "https://piersky.slack.com/archives/development/p1440218832000020"}]
@@ -70,43 +72,44 @@ class IntegrationsIndex extends React.Component {
     return (
       <div className='container-main'>
         <p className='title'>{I18n.t('integration.board.index')}</p>
-        <div className='objs-container'>
-          <div className='add-button'>
-            <div className='icon-area'>
-              <span className='icon icon-ic_add_24px' />
+        {IntegrationStore.getIntegrations.length > 0 ? (
+          <div className='objs-container'>
+            <div className='add-button'>
+              <div className='icon-area'>
+                <span className='icon icon-ic_add_24px' />
+              </div>
+              {I18n.t('integration.piersky.add')}
             </div>
-            {I18n.t('integration.piersky.add')}
-          </div>
-        {this.state.objects.map(function(obj){
-          let graph = 'graph'+obj.id;
-          return (
-            <div className='obj'>
-              <h3> {obj.name} </h3>
-              <ul>
-              {obj.elems.map(function(elem){
-                return (
-                    <a href={elem.url}>
-                    <li id={elem.id}>
-                      <div className='icon-area'>
-                        <span className={['icon', elem.type + '-logo'].join(' ')} />
-                      </div>
-                      {elem.title}
-                    </li>
-                    </a>
-                    );
-              })}
-              </ul>
-              <div id={graph} />
-            </div>
-          );
-        })}
-        </div>
-        <p className='subtitle'>
-          {I18n.t('integration.general.no_integrations')}
-          <Link to='integrations-new'>
-            {I18n.t('integration.general.setup')}
-          </Link>
-        </p>
+          {this.state.objects.map(function(obj){
+            let graph = 'graph'+obj.id;
+            return (
+              <div className='obj'>
+                <h3> {obj.name} </h3>
+                <ul>
+                {obj.elems.map(function(elem){
+                  return (
+                      <a href={elem.url}>
+                      <li id={elem.id}>
+                        <div className='icon-area'>
+                          <span className={['icon', elem.type + '-logo'].join(' ')} />
+                        </div>
+                        {elem.title}
+                      </li>
+                      </a>
+                      );
+                })}
+                </ul>
+                <div id={graph} />
+              </div>
+            );
+          })}
+          </div>) : (
+            <p className='subtitle'>
+            {I18n.t('integration.general.no_integrations')}
+            <Link to='integrations-new'>
+              {I18n.t('integration.general.setup')}
+            </Link>
+          </p>)}
       </div>
     );
   }
