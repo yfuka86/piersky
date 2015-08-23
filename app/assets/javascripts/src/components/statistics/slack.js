@@ -83,7 +83,6 @@ class Slack extends React.Component {
 
     let messages = _.reduce(this.state.channels, function(memo, channel){return memo.concat(channel.messages)}, []);
     let group = _.groupBy(messages, 'user_id');
-    debugger
     let ary = _.map(group, function(v,k) {return [k, v.length, Constants.colorHexByKey(k)]});
 
     let data2 = google.visualization.arrayToDataTable([
