@@ -62,6 +62,7 @@ group :development, :test do
   gem 'pry'
   gem 'pry-remote'
   gem 'pry-byebug'
+  gem 'pry-rails'
   gem 'byebug'
   gem 'web-console', '~> 2.0'
   gem 'http-dump'

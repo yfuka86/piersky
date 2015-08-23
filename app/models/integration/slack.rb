@@ -19,6 +19,14 @@ class Integration::Slack < Integration
     slack_client.channels_list["channels"].map {|x| "#" + x["name"] }
   end
 
+  def show_channels
+    slack_client.channels_list["channels"]
+  end
+
+  def show_messages(channel_id, ts)
+    slack_client.channels_history(channel: channel_id, latest: ts)
+  end
+
   def post_message(channel:, pretext:, title:, title_link:, text:, color:)
     slack_client.chat_postMessage(
       channel: channel,
