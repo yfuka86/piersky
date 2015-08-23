@@ -34,7 +34,7 @@ class IntegrationsBoard extends React.Component {
 
   render() {
     return (
-      <div className='integration-board container'>
+      <div className='integrations-board container'>
         <div className='container-left'>
           <IntegrationsList integrations={this.state.integrations} />
         </div>

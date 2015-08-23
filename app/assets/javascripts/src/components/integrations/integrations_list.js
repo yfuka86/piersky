@@ -2,8 +2,6 @@ import React from 'react';
 import {Link} from 'react-router';
 import _ from 'lodash';
 
-import IntegrationStore from '../../stores/integration';
-
 class IntegrationsList extends React.Component {
   static get defaultProps() {
     return {
