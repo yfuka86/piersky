@@ -1,0 +1,8 @@
+en:
+  webapp:
+    header:
+      team: 'Team'
+      account: 'Account'
+    tab:
+      integrations: 'Integrations'
+      users: 'Users'

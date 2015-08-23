@@ -11,6 +11,7 @@
     "watchify": "3.3.0"
   },
   "dependencies": {
+    "eventemitter2": "^0.4.14",
     "flux": "^2.0.0",
     "superagent": "^0.21.0",
     "react-router": "0.13.3",
@@ -24,7 +25,8 @@
     "react": "0.13.3",
     "react-modal": "0.2.0",
     "react-tooltip": "0.3.0",
-    "d3": "3.5.6"
+    "d3": "3.5.6",
+    "react-d3-components": "0.4.8"
   },
   "engines": {
     "node": "0.10.x",

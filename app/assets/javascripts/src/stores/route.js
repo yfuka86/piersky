@@ -1,11 +1,11 @@
 import Dispatcher from '../dispatcher';
 import assign from 'object-assign';
 import _ from 'lodash';
-import Constants from '../constants/app';
+import { ActionTypes } from '../constants/app';
 
-import BaseStore from '../stores/BaseStore';
+import BaseStore from '../stores/base';
 
-const RouteStore = assign({}, new BaseStore, {
+const RouteStore = assign({}, BaseStore, {
 
   getRouter: function() {
     window.PierSky.Router;
@@ -23,11 +23,10 @@ const RouteStore = assign({}, new BaseStore, {
   }
 });
 
-RouteStore.dispatchToken = Dispatcher.register(function(payload) {
+RouteStore.dispatchToken = Dispatcher.register(payload => {
+  const action = payload.action;
   Dispatcher.waitFor([
   ]);
-
-  var action = payload.action;
 
   switch(action.type) {
 

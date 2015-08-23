@@ -4,7 +4,7 @@ class WelcomeController < WebBaseController
 
   def index
     if current_user
-      redirect_to webapp_path
+      redirect_to webapp_path(path: 'integrations')
     end
   end
 

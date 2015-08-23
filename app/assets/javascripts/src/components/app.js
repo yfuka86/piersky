@@ -1,21 +1,21 @@
 import React from 'react';
 import {Link, RouteHandler} from 'react-router';
 import _ from 'lodash';
-import Notifier from '../components/common/notifier';
 
+import Header from '../components/header';
+import Notifier from '../components/common/notifier';
+import DashBoard from '../components/dash_board';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.state = this.initialState;
   }
 
-  get stateFromStore() {
+  get initialState() {
     return _.extend({
+      hasAppInitialized: true
     });
-  }
-
-  getInitialState() {
-    this.stateFromStore;
   }
 
   componentDidMount() {
@@ -32,9 +32,12 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className='app' id='container'>
-        <RouteHandler/>
-      </div>
+      this.state.hasAppInitialized ?
+        <div className='app' id='container'>
+          <Header />
+          <DashBoard />
+        </div> :
+        <Loading />
     );
   }
 }

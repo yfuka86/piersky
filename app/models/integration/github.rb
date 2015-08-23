@@ -1,9 +1,6 @@
 class Integration::Github < Integration
   def update_setting(params)
-    return unless project = Project.find_by_id(params.try(:[], :project_id))
     ActiveRecord::Base.transaction do
-      self.setting.update_attribute(:project_id, project.id)
-
       if repositories = params[:repositories].map{|repository| repository[:name]}
         repositories.each do |repository|
           self.setting.webhooks.create(uid: SecureRandom.hex, name: repository) unless self.setting.webhooks.exists?(name: repository)
