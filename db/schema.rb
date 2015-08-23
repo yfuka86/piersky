@@ -63,6 +63,32 @@ ActiveRecord::Schema.define(version: 20150822205650) do
 
   add_index "integrations", ["team_id"], name: "index_integrations_on_team_id", unique: true, using: :btree
 
+  create_table "slack_activities", force: :cascade do |t|
+    t.string   "user_id",    limit: 50,  default: "", null: false
+    t.string   "channel",    limit: 50,               null: false
+    t.string   "ts",         limit: 50,  default: "", null: false
+    t.string   "message",    limit: 100, default: "", null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
+  create_table "slack_activity_gathers", force: :cascade do |t|
+    t.integer  "slack_activity_id", limit: 4, null: false
+    t.integer  "slack_gather_id",   limit: 4, null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "slack_activity_gathers", ["slack_activity_id"], name: "index_slack_activity_gathers_on_slack_activity_id", using: :btree
+  add_index "slack_activity_gathers", ["slack_gather_id"], name: "index_slack_activity_gathers_on_slack_gather_id", using: :btree
+
+  create_table "slack_gathers", force: :cascade do |t|
+    t.integer  "own_id",     limit: 4,               null: false
+    t.string   "title",      limit: 50, default: "", null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string   "name",         limit: 50, default: "", null: false
     t.string   "external_cid", limit: 50
@@ -109,4 +135,6 @@ ActiveRecord::Schema.define(version: 20150822205650) do
 
   add_foreign_key "integration_settings", "integrations"
   add_foreign_key "integration_webhooks", "integrations"
+  add_foreign_key "slack_activity_gathers", "slack_activities"
+  add_foreign_key "slack_activity_gathers", "slack_gathers"
 end
