@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import {Link} from 'react-router';
 import Constants from '../../constants/app';
+import ReactD3 from 'react-d3-components'
 
 import IntegrationAction from '../../actions/integration';
 
@@ -56,13 +57,16 @@ class IntegrationsIndex extends React.Component {
       legend: { position: 'bottom' }
     };
 
-    var chart = new google.visualization.LineChart(document.getElementById('graph'));
+    var chart1 = new google.visualization.LineChart(document.getElementById('graph1'));
 
-    chart.draw(data, options);
+    chart1.draw(data, options);
+    var chart2 = new google.visualization.LineChart(document.getElementById('graph2'));
+
+    chart2.draw(data, options);
   }
 
   render() {
-    //this.drawChart();
+    google.setOnLoadCallback(this.drawChart);
     return (
       <div className='container-main'>
         <div className='objs-container'>
@@ -73,6 +77,7 @@ class IntegrationsIndex extends React.Component {
             {I18n.t('integration.piersky.add')}
           </div>
         {this.state.objects.map(function(obj){
+          let graph = 'graph'+obj.id;
           return (
             <div className='obj'>
               <h3> {obj.name} </h3>
@@ -90,7 +95,7 @@ class IntegrationsIndex extends React.Component {
                     );
               })}
               </ul>
-              <div />
+              <div id={graph} />
             </div>
           );
         })}
