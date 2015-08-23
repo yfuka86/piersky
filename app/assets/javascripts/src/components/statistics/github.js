@@ -43,6 +43,31 @@ class Github extends React.Component {
           return  {x: obj.user + "/" + obj.name,y: obj.pull_requests.length}
         })
       }];
+      return (
+        <div className='statistics-github'>
+          <BarChart
+              data={data}
+              width={400}
+              height={400}
+              margin={{top: 10, bottom: 50, left: 50, right: 10}}
+              />
+              <ul>
+              {this.state.json.map(function(obj){
+                console.log(obj);
+                return (
+                  <li id={obj.user + "/" + obj.name} className='slack-channel'>
+                    <h3> {obj.user + "/" + obj.name} </h3>
+                    <ul>
+                    {obj.pull_requests.map(function(pl){
+                      return <li> {pl.title} </li>
+                    })}
+                    </ul>
+                  </li>
+                  );
+              })}
+              </ul>
+        </div>
+      );
     }
     return (
       <div className='statistics-github'>
