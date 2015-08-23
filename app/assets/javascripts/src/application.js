@@ -8,6 +8,8 @@ import routes from './routes';
 window.PierSky = {}
 window.PierSky.Router = Router;
 
+google.load("visualization", "1", {packages:["corechart"]});
+
 Router.run(routes, Router.HistoryLocation, (Handler, state) => {
   React.render(
     <Handler path={window.location.pathname} />,

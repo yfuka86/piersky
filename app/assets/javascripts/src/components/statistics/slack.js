@@ -38,6 +38,7 @@ class Slack extends React.Component {
                 if(res.status == 200) {
                   channel.messages = JSON.parse(res.text).messages;
                   this.setState(this.state);
+                  this.drawChart();
                 } else {
                   reject();
                 }
@@ -49,44 +50,56 @@ class Slack extends React.Component {
           this.setState({
             channels: json.channels
           });
+          this.drawChart();
         } else {
           reject();
         }
       }.bind(this));
   }
 
+  drawChart(){
+    var data = google.visualization.arrayToDataTable([
+      ['Channel', 'number']
+    ].concat(this.state.channels.map(function(channel){
+      return [channel.name, channel.messages.length];
+    })));
+
+    var options = {
+      title: 'number messages of channels',
+      chartArea: {width: '890px'},
+      hAxis: {
+        title: 'number',
+        minValue: 0
+      },
+      vAxis: {
+        title: 'Channel'
+      }
+    };
+
+    var chart = new google.visualization.BarChart(React.findDOMNode(this).querySelector('#graph'));
+
+    chart.draw(data, options);
+  }
+
   render() {
-    let BarChart = ReactD3.BarChart;
-
-    let data = [{
-        label: 'somethingA',
-        values: [{x: 'SomethingA', y: 10}, {x: 'SomethingB', y: 4}, {x: 'SomethingC', y: 3}]
-    }];
-
-    console.log(this);
-
     return (
       <div className='statistics-slack'>
+        <div id='graph' />
         <ul>
         {this.state.channels.map(function(channel){
           console.log(channel);
           return (
-            <li id={channel.id} className='slack-channel'> 
-            <h3> {channel.name} </h3>
-            <ul>
-            {channel.messages.map(function(message){
-              return <li> {message.message} </li>
-            })}
-            </ul>
+            <li id={channel.id} className='slack-channel'>
+              <h3> {channel.name} </h3>
+              <ul>
+              {channel.messages.map(function(message){
+                return <li> {message.message} </li>
+              })}
+              </ul>
             </li>
             );
         })}
         </ul>
-        <BarChart
-            data={data}
-            width={400}
-            height={400}
-            margin={{top: 10, bottom: 50, left: 50, right: 10}}/>
       </div>
     );
   }
