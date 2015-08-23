@@ -12,6 +12,7 @@
   <%= render 'shared/notification_message' %>
 
   <%= yield %>
+  <%= javascript_include_tag 'https://www.google.com/jsapi' %>
   <%= javascript_include_tag 'dist/application', 'data-turbolinks-track' => true %>
 </body>
 </html>
