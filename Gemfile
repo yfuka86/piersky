@@ -6,7 +6,6 @@ gem 'rails', '4.2.3'
 gem 'active_model_serializers', '0.8.3'
 gem 'kaminari'
 
-gem 'mysql'
 gem 'mysql2'
 gem 'pg', group: :production
 gem 'arproxy', '0.2.0'

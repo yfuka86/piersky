@@ -8,15 +8,15 @@ default: &default
 development:
   <<: *default
   database: piersky_development
-  username: root
-  password: seiya4418
+  username: mysql
+  password: 'root'
   host: localhost
 
 test:
   <<: *default
   database: piersky_test
-  username: root
-  password: seiya4418
+  username: mysql
+  password: 'root'
   host: localhost
 
 production:
