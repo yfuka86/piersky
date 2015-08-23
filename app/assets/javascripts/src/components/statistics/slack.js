@@ -8,6 +8,13 @@ class Slack extends React.Component {
 
   // this.props.integrationにわたってきてます
 
+  constructor(props){
+    super(props);
+    this.state= {
+      channels: []
+    };
+  }
+
   componentDidMount() {
     this.loadStats();
   }
@@ -16,21 +23,36 @@ class Slack extends React.Component {
   }
 
   loadStats() {
-    return new Promise((resolve, reject) => {
+      let integ_id = this.props.integration.id;
       request
-      .get(APIRoot + '/slack_wrapper')
-      .end((error, res) => {
+      .get(APIRoot + '/slack_wrapper/' + integ_id)
+      .end(function(error, res) {
         if (res.status === 200){
           let json = JSON.parse(res.text);
-          resolve();
+          console.log("java");
+          let channels = _.map(json.channels, function(channel) {
+            channel.messages = [];
+            request
+              .get(APIRoot + '/slack_wrapper/' + integ_id + '/show/' + channel.id)
+              .end(function(error, res){
+                if(res.status == 200) {
+                  channel.messages = JSON.parse(res.text).messages;
+                  this.setState(this.state);
+                } else {
+                  reject();
+                }
+
+              }.bind(this)
+              );
+            return channel;
+          }.bind(this));
           this.setState({
-            json: json
+            channels: json.channels
           });
         } else {
           reject();
         }
-      })
-    });
+      }.bind(this));
   }
 
   render() {
@@ -41,8 +63,25 @@ class Slack extends React.Component {
         values: [{x: 'SomethingA', y: 10}, {x: 'SomethingB', y: 4}, {x: 'SomethingC', y: 3}]
     }];
 
+    console.log(this);
+
     return (
       <div className='statistics-slack'>
+        <ul>
+        {this.state.channels.map(function(channel){
+          console.log(channel);
+          return (
+            <li id={channel.id} className='slack-channel'> 
+            <h3> {channel.name} </h3>
+            <ul>
+            {channel.messages.map(function(message){
+              return <li> {message.message} </li>
+            })}
+            </ul>
+            </li>
+            );
+        })}
+        </ul>
         <BarChart
             data={data}
             width={400}
