@@ -32,7 +32,7 @@ class OmniauthCallbacksController < WebBaseController
         return unless current_user
         auth = env["omniauth.auth"]
         klass = "Integration::#{provider.classify}".constantize
-        integration = klass.accomplish(auth, current_user)
+        integration = klass.create_with_user(auth, current_user)
 
         redirect_to after_callback_path(integration.id)
       end

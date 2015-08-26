@@ -9,14 +9,8 @@ class Integration < ActiveRecord::Base
   validates_associated :setting
 
   class << self
-    def establish(user, options={})
-      self.new(user: user).tap do |integration|
-        integration.save!
-      end
-    end
-
-    def accomplish(auth, user)
-      self.find_by(user: user, token: nil).tap do |integration|
+    def create_with_user(auth, user)
+      self.new(user: user, team: user.current_team).tap do |integration|
         raise ActiveRecordNotFound unless integration
 
         integration.assign_attributes(

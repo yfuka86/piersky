@@ -17,7 +17,6 @@ Rails.application.routes.draw do
 
   resources :integrations, only: [] do
     collection do
-      get 'establish', to: 'integrations#establish'
       post '/:user_id/:webhook_uid', to: 'integrations#incoming_webhook'
     end
   end

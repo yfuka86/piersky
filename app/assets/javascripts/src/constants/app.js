@@ -34,8 +34,8 @@ export default {
     USERS:          APIRoot + '/users',
     INTEGRATIONS:   APIRoot + '/integrations'
   },
-  IntegrationEndpoint: function (params) {
-    return Root + '/integrations/establish?provider=' + params.provider
+  IntegrationEndpoint: function (provider) {
+    return Root + `/auth/${provider}`
   },
 
   Integrations: keyMirror({
