@@ -46,7 +46,7 @@ class OmniauthCallbacksController < WebBaseController
   private
 
   def after_callback_path(id)
-    webapp_path(path: "integrations/#{id}")
+    webapp_path(path: "integrations/#{id}/setting")
   end
 
   # def after_sign_in_path_for(resource)

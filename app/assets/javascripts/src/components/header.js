@@ -41,7 +41,7 @@ class Header extends React.Component {
             <ul className="nav navbar-nav">
               <li>
                 <Link to="app" className="navbar-brand">
-                  {I18n.t('webapp.header.team')}
+                  {I18n.t('webapp.header.teams')}
                 </Link>
               </li>
               <li>

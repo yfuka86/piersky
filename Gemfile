@@ -21,7 +21,7 @@ gem 'omniauth'
 gem 'omniauth-github'
 gem "github_api"
 gem 'omniauth-slack'
-gem 'slack-api', require: false
+gem 'slack-api'
 gem 'omniauth-wunderlist'
 gem 'wunderlist-api'
 

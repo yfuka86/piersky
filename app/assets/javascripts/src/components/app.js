@@ -33,7 +33,7 @@ class App extends React.Component {
   render() {
     return (
       this.state.hasAppInitialized ?
-        <div className='app' id='container'>
+        <div className='app'>
           <Header />
           <DashBoard />
         </div> :

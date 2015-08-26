@@ -25,20 +25,22 @@ class DashBoard extends React.Component {
 
   render() {
     return (
-      <div className='sky-tab-area'>
-        <ul className='sky-tab-list container'>
-          <Link to='integrations'>
-            <li className='sky-tab'>
-              {I18n.t('webapp.tab.integrations')}
-            </li>
-          </Link>
-          <Link to='users'>
-            <li className='sky-tab'>
-              {I18n.t('webapp.tab.users')}
-            </li>
-          </Link>
+      <div className='dash-board'>
+        <ul className='main-menu'>
+          <div className='container'>
+            <Link to='integrations'>
+              <li className='menu'>
+                {I18n.t('webapp.tab.integrations')}
+              </li>
+            </Link>
+            <Link to='users'>
+              <li className='menu'>
+                {I18n.t('webapp.tab.users')}
+              </li>
+            </Link>
+          </div>
         </ul>
-        <div className='sky-tab-panel'>
+        <div className='main-panel'>
           <RouteHandler />
         </div>
       </div>

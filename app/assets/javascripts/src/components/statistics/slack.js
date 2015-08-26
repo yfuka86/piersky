@@ -6,8 +6,6 @@ import {APIRoot} from '../../constants/app';
 
 class Slack extends React.Component {
 
-  // this.props.integrationにわたってきてます
-
   constructor(props){
     super(props);
     this.state= {

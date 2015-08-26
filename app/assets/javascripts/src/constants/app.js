@@ -55,6 +55,10 @@ export default {
 
     //integration
     LOAD_INTEGRATIONS: null,
+
+    //balloon
+    SHOW_BALLOON: null,
+    CLOSE_BALLOON: null
   }),
 
   KeyCodes: {

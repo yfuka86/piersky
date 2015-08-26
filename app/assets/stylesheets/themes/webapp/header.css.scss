@@ -15,6 +15,10 @@ $WEBAPP_HEADER_HEIGHT: $HEADER_HEIGHT;
   border-bottom: 1px solid rgba(255,255,255,.3);
   letter-spacing: 1px;
 
+  .container {
+    padding: 0 15px;
+  }
+
   .navbar-header {
     float: left;
     height: $WEBAPP_HEADER_HEIGHT;

@@ -11,17 +11,15 @@
     padding: 0;
     a {
       li.sky-tab {
+        height: 33px;
+        box-sizing: content-box;
         position: relative;
         z-index: $TAB;
         display: inline-block;
-        padding: 0 15px;
-        font-size: 17px;
-        line-height: 50px;
-        vertical-align: middle;
+        padding: 15px 15px 0;
+        font-size: 15px;
         @include lato-normal;
         color: $grey500;
-
-        border-top: 1px solid $grey300;
 
         &:hover {
           text-decoration: underline;
@@ -30,9 +28,9 @@
 
       &.active {
         li.sky-tab {
-          background-color: $white;
           color: $grey800;
           cursor: default;
+          border-bottom: 2px solid $blue500;
           &:hover {
             text-decoration: none;
           }

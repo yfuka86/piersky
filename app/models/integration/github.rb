@@ -20,6 +20,10 @@ class Integration::Github < Integration
     gh_client.repos.list.map(&:full_name)
   end
 
+  def pull_requests
+    gh_client.pull_requests
+  end
+
   private
 
   def gh_client
