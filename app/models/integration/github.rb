@@ -20,6 +20,8 @@ class Integration::Github < Integration
     gh_client.repos.list.map(&:full_name)
   end
 
+  private
+
   def gh_client
     @gh_client ||= ::Github.new(oauth_token: self.token)
   end

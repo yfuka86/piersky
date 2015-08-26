@@ -3,16 +3,14 @@ class Integration::Slack < Integration
   USERNAME = "Piersky"
   ICON_URL = "https://www.blueskyexhibits.com/website/wp-content/uploads/sky-home.jpg"
 
+  def create_identity
+    info = slack_client.auth_test
+    super(info["user_id"], info["team_id"])
+  end
+
   def update_setting(setting)
     return unless project = Project.find_by_id(setting[:project_id])
     self.setting.update_attributes(project_id: project.id, synced_object: setting[:channel])
-  end
-
-  def slack_client
-    ::Slack.configure do |config|
-      config.token = self.token
-    end
-    @slack_client ||= ::Slack.client
   end
 
   def channel_names
@@ -44,5 +42,14 @@ class Integration::Slack < Integration
         }
       ].to_json
     )
+  end
+
+  private
+
+  def slack_client
+    ::Slack.configure do |config|
+      config.token = self.token
+    end
+    @slack_client ||= ::Slack.client
   end
 end

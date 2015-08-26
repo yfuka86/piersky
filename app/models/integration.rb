@@ -24,11 +24,11 @@ class Integration < ActiveRecord::Base
     end
   end
 
-  def create_identity(key)
+  def create_identity(primary_key, secondary_key="")
+    #please override
     user_team = UserTeam.find_by(user: self.user, team: self.team)
-    binding.pry
     klass = ('Identity::' + self.class.name.split('::')[1]).constantize
-    klass.create(user_team: user_team, is_verified: true, primary_key: key)
+    klass.create(user_team: user_team, is_verified: true, primary_key: primary_key, secondary_key: secondary_key)
   end
 
   def update_setting(setting)

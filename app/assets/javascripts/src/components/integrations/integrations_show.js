@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import changeCase from 'change-case';
+import {Link} from 'react-router';
 
 import IntegrationAction from '../../actions/integration';
 import IntegrationStore from '../../stores/integration';
@@ -49,6 +50,9 @@ class IntegrationsShow extends React.Component {
     return (
       <div className='container-main'>
         <p className='title'>{I18n.t('integration.board.show', {name: integrationClass})}</p>
+        <Link to='integration-setting' params={{id: 1}}>
+          setting
+        </Link>
         {Integration ? <Integration integration={this.state.integration} /> : <span/> }
       </div>
     );
