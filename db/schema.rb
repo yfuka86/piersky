@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 20150825170018) do
     t.datetime "updated_at",             null: false
   end
 
-  add_index "integrations", ["team_id"], name: "index_integrations_on_team_id", unique: true, using: :btree
+  add_index "integrations", ["team_id"], name: "index_integrations_on_team_id", using: :btree
 
   create_table "invitations", force: :cascade do |t|
     t.integer  "invitee_id",  limit: 4,   null: false

@@ -1,6 +1,6 @@
 class Api::UserSerializer < ActiveModel::Serializer
 
-  attributes :email, :external_cid, :user_teams
+  attributes :email, :id, :user_teams
 
   def user_teams
     current_user = options[:current_user]
