@@ -17,12 +17,13 @@ gem 'devise', '~> 3.4.1'
 # for integrations
 gem 'faraday', '0.9.1'
 gem 'omniauth'
-gem 'omniauth-wunderlist'
-gem 'wunderlist-api'
+
 gem 'omniauth-github'
 gem "github_api"
 gem 'omniauth-slack'
 gem 'slack-api', require: false
+gem 'omniauth-wunderlist'
+gem 'wunderlist-api'
 
 # go international
 gem 'i18n'

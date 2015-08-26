@@ -1,4 +1,8 @@
 class Integration::Github < Integration
+  def create_identity
+    super(gh_client.users.get.id)
+  end
+
   def update_setting(params)
     ActiveRecord::Base.transaction do
       if repositories = params[:repositories].map{|repository| repository[:name]}

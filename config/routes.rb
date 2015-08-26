@@ -29,6 +29,8 @@ Rails.application.routes.draw do
     end
 
     resources :integrations, only: [:index]
+    resources :invitations, only: [:index, :create, :update, :destroy]
+
     get 'github_wrapper', to: 'github_wrapper#index'
     get 'github_wrapper/show/:user/:name', to: 'github_wrapper#index'
     get 'slack_wrapper(/:integration_id)', to: 'slack_wrapper#index'

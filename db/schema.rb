@@ -25,16 +25,15 @@ ActiveRecord::Schema.define(version: 20150825170018) do
   add_index "activities", ["integration_id"], name: "index_activities_on_integration_id", using: :btree
 
   create_table "identities", force: :cascade do |t|
-    t.integer  "user_id",     limit: 4
-    t.integer  "team_id",     limit: 4
-    t.string   "type",        limit: 255, null: false
-    t.string   "primary_key", limit: 255, null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "user_team_id", limit: 4
+    t.string   "type",         limit: 255,                 null: false
+    t.string   "primary_key",  limit: 255,                 null: false
+    t.boolean  "is_verified",              default: false, null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
   end
 
-  add_index "identities", ["team_id"], name: "index_identities_on_team_id", using: :btree
-  add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
+  add_index "identities", ["user_team_id"], name: "index_identities_on_user_team_id", using: :btree
 
   create_table "integration_settings", force: :cascade do |t|
     t.integer "integration_id", limit: 4
