@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import BalloonAction from '../../actions/balloon';
 import BalloonStore from '../../stores/balloon';
-import BalloonAnchor from '../../components/common/BalloonAnchor';
+import BalloonAnchor from '../../components/common/balloon_anchor';
 
 class DropDown extends React.Component {
   /*
@@ -53,7 +53,7 @@ class DropDown extends React.Component {
       <BalloonAnchor defaultContent={this.props.defaultContent} balloonContent={detailContent} isBottom={true} />
     );
   }
-});
+}
 
 export default DropDown;
 

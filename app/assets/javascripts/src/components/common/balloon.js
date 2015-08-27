@@ -22,36 +22,36 @@ class Balloon extends React.Component {
     };
   }
 
-  componentDidMount: function() {
+  componentDidMount() {
     React.findDOMNode(this).addEventListener('click', this._handleClick);
-    BalloonStore.addChangeListener(this.onChangeHandler);
+    BalloonStore.onChange(this.onChangeHandler);
   }
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     React.findDOMNode(this).removeEventListener('click', this._handleClick);
-    BalloonStore.removeChangeListener(this.onChangeHandler);
+    BalloonStore.offChange(this.onChangeHandler);
   }
 
-  onChange: function () {
+  onChange() {
     this.setState(this.initialState);
   }
 
-  componentDidUpdate: function() {
+  componentDidUpdate() {
     if (this.state.element) {
-      var balloon = this._getBalloonElement();
+      let balloon = this._getBalloonElement();
 
       balloon.style.left = this._balloonStyleLeft() + 'px';
       balloon.style.top = this._balloonStyleTop() + 'px';
     }
   }
 
-  _getBalloonElement: function() {
+  _getBalloonElement() {
     return React.findDOMNode(this).querySelector('.sky-balloon');
   }
 
-  _balloonStyleLeft: function() {
-    var left = this.state.x;
-    var balloon = this._getBalloonElement();
+  _balloonStyleLeft() {
+    let left = this.state.x;
+    let balloon = this._getBalloonElement();
 
     if (this.state.isButtom) {
       left -= this.state.anchorWidth / 2;
@@ -62,10 +62,10 @@ class Balloon extends React.Component {
     return left;
   }
 
-  _balloonStyleTop: function() {
-    var top = this.state.y;
-    var balloon = this._getBalloonElement();
-    var protrusion = top + balloon.clientHeight - window.innerHeight;
+  _balloonStyleTop() {
+    let top = this.state.y;
+    let balloon = this._getBalloonElement();
+    let protrusion = top + balloon.clientHeight - window.innerHeight;
 
     if (this.state.isButtom) {
       top += (this.state.anchorHeight - 10);
@@ -77,11 +77,11 @@ class Balloon extends React.Component {
     return top;
   }
 
-  _handleClick: function(e) {
+  _handleClick(e) {
     e.isBalloonInnerEvent = true;
   }
 
-  render: function() {
+  render() {
     return (
       <div className='sky-balloon-container'>
         {this.state.element ? (
@@ -96,6 +96,6 @@ class Balloon extends React.Component {
       </div>
     );
   }
-});
+}
 
 export default Balloon;

@@ -8,10 +8,11 @@
     $BORDER_COLOR: $grey200;
     $TAB_MIN_WIDTH: 720px;
     $MAIN_MENU_HEIGHT: 50px;
-    background-color: $grey100;
     ul.main-menu {
       position: fixed;
       top: $HEADER_HEIGHT;
+      z-index: $TAB;
+      background-color: $grey100;
 
       height: $MAIN_MENU_HEIGHT;
       width: 100%;
@@ -22,7 +23,6 @@
           height: 33px;
           box-sizing: content-box;
           position: relative;
-          z-index: $TAB;
           display: inline-block;
           padding: 15px 15px 0;
           font-size: 15px;
@@ -54,7 +54,6 @@
       min-width: $TAB_MIN_WIDTH;
       background-color: $white;
       border-top: 1px solid $BORDER_COLOR;
-      z-index: $TAB;
     }
   }
 }

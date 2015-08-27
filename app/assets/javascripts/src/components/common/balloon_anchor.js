@@ -11,6 +11,8 @@ class BalloonAnchor extends React.Component {
     super(props);
     this.state = this.initialState;
     this.onChangeHandler = this.onChange.bind(this);
+    this.toggleBalloonHandler = this._toggleBalloon.bind(this);
+    this.hideBalloonHandler = this._hideBalloon.bind(this);
   }
 
   static get defaultProps() {
@@ -38,17 +40,17 @@ class BalloonAnchor extends React.Component {
   }
 
   componentDidMount() {
-    React.findDOMNode(this).addEventListener('click', this._toggleBalloon);
-    document.body.addEventListener('click', this._hideBalloon);
+    React.findDOMNode(this).addEventListener('click', this.toggleBalloonHandler);
+    document.body.addEventListener('click', this.hideBalloonHandler);
 
-    BalloonStore.addChangeListener(this.onChangeHandler);
+    BalloonStore.onChange(this.onChangeHandler);
   }
 
   componentWillUnmount() {
-    React.findDOMNode(this).removeEventListener('click', this._toggleBalloon)
-    document.body.removeEventListener('click', this._hideBalloon);
+    React.findDOMNode(this).removeEventListener('click', this.toggleBalloonHandler);
+    document.body.removeEventListener('click', this.hideBalloonHandler);
 
-    BalloonStore.removeChangeListener(this.onChangeHandler);
+    BalloonStore.offChange(this.onChangeHandler);
   }
 
   onChange() {
@@ -73,7 +75,8 @@ class BalloonAnchor extends React.Component {
         y: rect.top,
         anchorWidth: anchorWidth,
         anchorHeight: anchorHeight,
-        isButtom: this.props.isBottom});
+        isButtom: this.props.isBottom
+      });
     }
   }
 
@@ -85,7 +88,7 @@ class BalloonAnchor extends React.Component {
     }
   }
 
-  render: function() {
+  render() {
     return (
       <span className='sky-balloon-anchor-area'>
         {this.props.defaultContent}
@@ -93,6 +96,6 @@ class BalloonAnchor extends React.Component {
       </span>
     );
   }
-});
+}
 
 export default BalloonAnchor;

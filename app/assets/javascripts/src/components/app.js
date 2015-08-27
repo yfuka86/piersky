@@ -2,6 +2,7 @@ import React from 'react';
 import {Link, RouteHandler} from 'react-router';
 import _ from 'lodash';
 
+import Balloon from '../components/common/balloon';
 import Header from '../components/header';
 import Notifier from '../components/common/notifier';
 import DashBoard from '../components/dash_board';
@@ -34,6 +35,7 @@ class App extends React.Component {
     return (
       this.state.hasAppInitialized ?
         <div className='app'>
+          <Balloon />
           <Header />
           <DashBoard />
         </div> :

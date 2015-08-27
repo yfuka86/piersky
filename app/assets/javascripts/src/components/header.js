@@ -1,7 +1,10 @@
 import React from 'react';
 import {Link, RouteHandler} from 'react-router';
 import _ from 'lodash';
+
+import SessionAction from '../actions/session';
 import SessionStore from '../stores/session';
+import Dropdown from '../components/common/Dropdown';
 
 class Header extends React.Component {
   constructor(props) {
@@ -28,6 +31,9 @@ class Header extends React.Component {
   }
 
   render() {
+    let defaultContent = <p>{I18n.t('webapp.header.account')}</p>
+    let dropdown = <Dropdown defaultContent={defaultContent}
+                             options={[{title: I18n.t('auth.title.logout'), callback: SessionAction.logout}]} />
     return (
       <div className="header">
         <div className="container">
@@ -40,14 +46,10 @@ class Header extends React.Component {
           <div className="navbar-right">
             <ul className="nav navbar-nav">
               <li>
-                <Link to="app" className="navbar-brand">
-                  {I18n.t('webapp.header.teams')}
-                </Link>
+                <p>{I18n.t('webapp.header.teams')}</p>
               </li>
               <li>
-                <Link to="app" className="navbar-brand">
-                  {I18n.t('webapp.header.account')}
-                </Link>
+                {dropdown}
               </li>
             </ul>
           </div>
