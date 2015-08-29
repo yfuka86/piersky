@@ -15,6 +15,7 @@ let routes = (
     <Route name='app' handler={App} path="/webapp">
       <Route name='integrations' handler={IntegrationsBoard} path='integrations'>
         <DefaultRoute handler={IntegrationsIndex} />
+        <Route name='integrations-index' handler={IntegrationsIndex} path='index' />
         <Route name='integrations-new' handler={IntegrationsNew} path='new' />
         <Route name='integrations-show' path=':id'>
           <DefaultRoute handler={IntegrationsShow} />

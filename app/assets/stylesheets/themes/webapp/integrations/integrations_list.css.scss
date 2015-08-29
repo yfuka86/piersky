@@ -9,7 +9,7 @@
     min-height: 650px;
     a.active {
       li {
-        background-color: $blue50;
+        color: $blue500;
       }
     }
     li {
@@ -18,10 +18,10 @@
       color: $grey700;
       cursor: pointer;
       @include lato-normal;
-      font-size: 17px;
+      font-size: 16px;
 
       &:hover {
-        background-color: $grey50;
+        color: $grey600;
       }
       .icon-area {
         position: absolute;

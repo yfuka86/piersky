@@ -13,6 +13,7 @@ export default {
   APIEndpoints: {
     LOGOUT:         Root + '/sign_out',
     USERS:          APIRoot + '/users',
+    TEAMS:          APIRoot + '/teams',
     INTEGRATIONS:   APIRoot + '/integrations'
   },
   IntegrationEndpoint(provider) {
@@ -37,6 +38,10 @@ export default {
     // route
     TRANSITION: null,
     REDIRECT: null,
+
+    //initialize
+    LOAD_USER: null,
+    LOAD_TEAM: null,
 
     //integration
     LOAD_INTEGRATIONS: null,

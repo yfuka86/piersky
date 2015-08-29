@@ -1,4 +1,6 @@
 class Api::GithubWrapperController < ApplicationController
+  require_dependency 'integration/github'
+
   def index
     integration = Integration::Github.find_by(user: current_user)
     pull_requests = integration.pull_requests

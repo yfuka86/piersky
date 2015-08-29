@@ -2,6 +2,7 @@ import React from 'react';
 import {Link, RouteHandler} from 'react-router';
 import _ from 'lodash';
 
+import SessionAction from '../actions/'
 import Balloon from '../components/common/balloon';
 import Header from '../components/header';
 import Notifier from '../components/common/notifier';
@@ -15,16 +16,17 @@ class App extends React.Component {
 
   get initialState() {
     return _.extend({
-      hasAppInitialized: true
+      hasAppInitialized: false
     });
   }
 
   componentDidMount() {
-    // RouteStore.on('change', this.onChangeHandler);
+    [SessionAction.loadUser(), SessionAction.loadTeam()].then(=> {
+      this.setState({hasAppInitialized: true});
+    });
   }
 
   componentWillUnmount() {
-    // RouteStore.off('change', this.onChangeHandler);
   }
 
   onChange(e) {

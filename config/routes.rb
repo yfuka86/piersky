@@ -28,6 +28,12 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :teams, only: [] do
+      collection do
+        get 'current'
+      end
+    end
+
     resources :integrations, only: [:index]
     resources :invitations, only: [:index, :create, :update, :destroy]
 

@@ -47,13 +47,21 @@ class IntegrationsShow extends React.Component {
   render() {
     let integrationClass = changeCase.pascalCase(this.state.integration.type);
     let Integration = Statistics[integrationClass];
+    let integration = this.state.integration;
     return (
       <div className='container-main'>
-        <p className='title'>{I18n.t('integration.board.show', {name: integrationClass})}</p>
-        <Link to='integration-setting' params={{id: 1}}>
-          setting
-        </Link>
-        {Integration ? <Integration integration={this.state.integration} /> : <span/> }
+        {integration.id ?
+          <div className='integrations-show'>
+            <div className='icon-area'>
+              <span className={['icon', integration.type + '-logo'].join(' ')} />
+            </div>
+            <p className='title'>{I18n.t('integration.board.show', {name: integrationClass})}</p>
+            <Link to='integration-setting' params={{id: integration.id}}>
+              setting
+            </Link>
+            {Integration ? <Integration integration={integration} /> : <span/> }
+          </div>
+        : <span/>}
       </div>
     );
   }

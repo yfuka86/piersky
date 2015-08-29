@@ -18,12 +18,20 @@ class IntegrationsList extends React.Component {
   render() {
     return (
       <ul className='integrations-list'>
+        <Link to='integrations-index'>
+          <li>
+            <div className='icon-area'>
+              <span className='icon icon-ic_trending_up_24px' />
+            </div>
+            {I18n.t('integration.list.dashboard')}
+          </li>
+        </Link>
         <Link to='integrations-new'>
           <li>
             <div className='icon-area'>
               <span className='icon icon-ic_add_24px' />
             </div>
-            {I18n.t('integration.general.add')}
+            {I18n.t('integration.list.add')}
           </li>
         </Link>
         {_.map(this.props.integrations, (integration) => {

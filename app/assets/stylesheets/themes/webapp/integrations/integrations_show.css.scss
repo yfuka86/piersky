@@ -1,0 +1,17 @@
+@import 'globals/config-loader';
+@import 'modules/center_container';
+
+.integrations-show {
+  .icon-area {
+    display: inline-block;
+    margin-right: 20px;
+    vertical-align: middle;
+    .icon {
+      @include icon(30px, 30px);
+    }
+  }
+  .title {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}

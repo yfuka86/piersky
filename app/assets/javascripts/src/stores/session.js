@@ -23,7 +23,6 @@ const SessionStore = assign({}, BaseStore, {
       userName: json.email
     }
   }
-
 });
 
 SessionStore.dispatchToken = Dispatcher.register(payload => {
@@ -32,6 +31,10 @@ SessionStore.dispatchToken = Dispatcher.register(payload => {
   ]);
 
   switch(action.type) {
+    case ActionTypes.LOAD_USER:
+      SessionStore.setUser(SessionStore.parse(action.json));
+      SessionStore.emitChange();
+      break;
 
     default:
   }
