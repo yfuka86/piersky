@@ -12,13 +12,19 @@ const UserStore = assign({}, BaseStore, {
     return this.get('users');
   },
 
+  getUserById(id) {
+    _.find(this.getUsers(), (user) => {
+      return user.id === parseInt(id, 10)
+    })
+  },
+
   setUsers(users) {
     this.set('users', users);
   },
 
   parse(json) {
     return {
-      id: json.id,
+      id: parseInt(json.id, 10),
       userName: json.userName,
       email: json.email
     }
@@ -32,7 +38,6 @@ UserStore.dispatchToken = Dispatcher.register(payload => {
 
   switch(action.type) {
     case ActionTypes.LOAD_TEAM:
-      debugger
       UserStore.setUsers(action.json.users.map((user)=>{return UserStore.parse(user)}));
       UserStore.emitChange();
       break;

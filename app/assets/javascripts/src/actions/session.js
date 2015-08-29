@@ -1,6 +1,6 @@
 import request from 'superagent';
 import Dispatcher from '../dispatcher';
-import {APIEndpoints, CSRFToken} from '../constants/app';
+import {ActionTypes, APIEndpoints, CSRFToken} from '../constants/app';
 
 export default {
   loadUser(resolve=()=>{}, reject=()=>{}){
@@ -11,7 +11,7 @@ export default {
         if (res.status === 200){
           let json = JSON.parse(res.text);
           resolve();
-          Dispatcher.handleViewAction({
+          Dispatcher.handleServerAction({
             type: ActionTypes.LOAD_USER,
             json: json
           });
@@ -30,7 +30,7 @@ export default {
         if (res.status === 200){
           let json = JSON.parse(res.text);
           resolve();
-          Dispatcher.handleViewAction({
+          Dispatcher.handleServerAction({
             type: ActionTypes.LOAD_TEAM,
             json: json
           });

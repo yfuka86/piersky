@@ -93,12 +93,13 @@ ActiveRecord::Schema.define(version: 20150825170018) do
   end
 
   create_table "user_teams", force: :cascade do |t|
-    t.integer  "user_id",       limit: 4,                 null: false
-    t.integer  "team_id",       limit: 4,                 null: false
-    t.boolean  "is_logging_in",           default: false, null: false
-    t.integer  "role",          limit: 4, default: 0,     null: false
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.integer  "user_id",       limit: 4,                  null: false
+    t.integer  "team_id",       limit: 4,                  null: false
+    t.string   "user_name",     limit: 20, default: "",    null: false
+    t.boolean  "is_logging_in",            default: false, null: false
+    t.integer  "role",          limit: 4,  default: 0,     null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
   end
 
   add_index "user_teams", ["user_id", "team_id"], name: "index_user_teams_on_user_id_and_team_id", unique: true, using: :btree

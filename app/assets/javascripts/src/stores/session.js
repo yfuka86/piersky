@@ -20,7 +20,8 @@ const SessionStore = assign({}, BaseStore, {
     return {
       id: json.id,
       email: json.email,
-      userName: json.email
+      userName: json.user_name,
+      teams: json.teams
     }
   }
 });

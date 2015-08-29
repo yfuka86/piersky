@@ -11,7 +11,7 @@ export default {
         if (res.status === 200){
           let json = JSON.parse(res.text);
           resolve();
-          Dispatcher.handleViewAction({
+          Dispatcher.handleServerAction({
             type: ActionTypes.LOAD_INTEGRATIONS,
             json: json
           });

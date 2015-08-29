@@ -2,7 +2,8 @@ import React from 'react';
 import {Link, RouteHandler} from 'react-router';
 import _ from 'lodash';
 
-import SessionAction from '../actions/'
+import SessionAction from '../actions/session';
+import Loading from '../components/common/loading';
 import Balloon from '../components/common/balloon';
 import Header from '../components/header';
 import Notifier from '../components/common/notifier';
@@ -21,7 +22,9 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    [SessionAction.loadUser(), SessionAction.loadTeam()].then(=> {
+    Promise
+    .all([SessionAction.loadUser(), SessionAction.loadTeam()])
+    .then(()=> {
       this.setState({hasAppInitialized: true});
     });
   }

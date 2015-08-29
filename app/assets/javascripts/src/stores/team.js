@@ -30,7 +30,6 @@ TeamStore.dispatchToken = Dispatcher.register(payload => {
 
   switch(action.type) {
     case ActionTypes.LOAD_TEAM:
-      debugger
       TeamStore.setTeam(TeamStore.parse(action.json));
       TeamStore.emitChange();
       break;

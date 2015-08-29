@@ -1,15 +1,24 @@
 class Api::UserSerializer < ActiveModel::Serializer
 
-  attributes :email, :id, :user_teams
+  attributes :email, :id, :user_name, :teams
 
-  def user_teams
-    current_user = options[:current_user]
-    if current_user.present?
-      object.user_teams.where(user_id: current_user.id).map do |user_team|
-        Api::UserTeamSerializer.new(user_team, team: true, root: nil)
+  def user_name
+    if options[:is_me]
+      object.user_teams.find_by(team: current_user.current_team).user_name
+    elsif options[:team]
+      object.user_teams.find_by(team: options[:team]).user_name
+    else
+      ''
+    end
+  end
+
+  def teams
+    if options[:is_me]
+      object.teams.map do |team|
+        Api::TeamSerializer.new(team, root: nil)
       end
     else
-      []
+      nil
     end
   end
 end
