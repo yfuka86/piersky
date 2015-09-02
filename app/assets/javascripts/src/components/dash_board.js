@@ -28,6 +28,11 @@ class DashBoard extends React.Component {
       <div className='dash-board'>
         <ul className='main-menu'>
           <div className='container'>
+            <Link to='home'>
+              <li className='menu'>
+                {I18n.t('webapp.tab.home')}
+              </li>
+            </Link>
             <Link to='integrations'>
               <li className='menu'>
                 {I18n.t('webapp.tab.integrations')}

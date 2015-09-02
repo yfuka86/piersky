@@ -31,6 +31,11 @@
           @include icon(20px, 20px);
         }
       }
+      .description {
+        @include lato-thin;
+        font-size: 14px;
+        color: $grey600;
+      }
     }
   }
 }

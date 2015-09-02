@@ -13,9 +13,9 @@ const UserStore = assign({}, BaseStore, {
   },
 
   getUserById(id) {
-    _.find(this.getUsers(), (user) => {
-      return user.id === parseInt(id, 10)
-    })
+    return _.find(this.getUsers(), (user) => {
+      return user.id === parseInt(id, 10);
+    });
   },
 
   setUsers(users) {
@@ -25,7 +25,7 @@ const UserStore = assign({}, BaseStore, {
   parse(json) {
     return {
       id: parseInt(json.id, 10),
-      userName: json.userName,
+      name: json.name,
       email: json.email
     }
   }

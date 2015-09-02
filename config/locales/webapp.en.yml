@@ -4,8 +4,18 @@ en:
       teams: 'Teams'
       account: 'Account'
     tab:
+      home: 'Home'
       integrations: 'Integrations'
       users: 'Users'
     users:
       index: 'Users Dashboard'
       show: 'Statistics for %{name}'
+    invitations:
+      index:
+        title: 'Invitations'
+        accepted_at: 'accepted at'
+        sent_at: 'sent at'
+        resend: 'Resend Invitation'
+        revoke: 'Revoke Invitation'
+      new:
+        title: 'Send New Invitations'

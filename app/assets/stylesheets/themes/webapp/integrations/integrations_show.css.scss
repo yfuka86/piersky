@@ -2,16 +2,28 @@
 @import 'modules/center_container';
 
 .integrations-show {
+  position: relative;
   .icon-area {
+    position: absolute;
+    top: 30px;
     display: inline-block;
-    margin-right: 20px;
-    vertical-align: middle;
     .icon {
       @include icon(30px, 30px);
     }
   }
   .title {
+    margin-left: 45px;
     display: inline-block;
-    vertical-align: middle;
+  }
+  .actions {
+    margin-left: 40px;
+    display: inline-block;
+    .icon {
+      color: $grey500;
+      font-size: 24px;
+      &:hover {
+        color: $grey700;
+      }
+    }
   }
 }

@@ -3,7 +3,7 @@ import Dispatcher from '../dispatcher';
 import {APIRoot, APIEndpoints, ActionTypes} from '../constants/app';
 
 export default {
-  load(resolve=()=>{}, reject=()=>{}) {
+  load() {
     return new Promise((resolve, reject) => {
       request
       .get(APIEndpoints.INTEGRATIONS)

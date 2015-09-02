@@ -1,10 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
 import changeCase from 'change-case';
+import {Link} from 'react-router';
 import Constants from '../../constants/app';
 
 import IntegrationAction from '../../actions/integration';
 import IntegrationStore from '../../stores/integration';
+import UserStore from '../../stores/user';
 
 import Slack from '../../components/integrations/settings/slack';
 import Github from '../../components/integrations/settings/github';
@@ -46,14 +48,37 @@ class IntegrationsSetting extends React.Component {
   }
 
   render() {
-    let integrationClass = changeCase.pascalCase(this.state.integration.type);
-    let IntegrationSetting = Settings[integrationClass];
-    return (
+    let integration = this.state.integration;
+    let IntegrationSetting = Settings[integration.type];
+    let integrationUser = UserStore.getUserById(integration.userId);
+
+    return integration.id ?
       <div className='container-main'>
-        <p className='title'>{I18n.t('integration.board.settings', {name: integrationClass})}</p>
-        {IntegrationSetting ? <IntegrationSetting integration={this.state.integration} /> : <span/> }
-      </div>
-    );
+        <div className='breadcrumb'>
+          <div className='link'>
+            <Link to='integrations-show' params={{id: integration.id}} >
+              {I18n.t('integration.breadcrumb.show')}
+            </Link>
+          </div>
+          <div className='current'>
+            <span>
+              {I18n.t('integration.breadcrumb.settings')}
+            </span>
+          </div>
+        </div>
+        <div className='integrations-setting'>
+          <div className='icon-area'>
+            <span className={['icon', changeCase.snakeCase(integration.type) + '-logo'].join(' ')} />
+          </div>
+          <p className='title'>{`${I18n.t('integration.board.settings')} ${integration.type}`}</p>
+          <p className='description'>
+            {I18n.t('integration.board.show_description', {
+              userName: integrationUser.name || integrationUser.email,
+              createdAt: integration.createdAt.format('MMMM Do, YYYY')})}
+          </p>
+          {IntegrationSetting ? <IntegrationSetting integration={this.state.integration} /> : <span/>}
+        </div>
+      </div> : <span/>
   }
 }
 

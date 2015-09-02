@@ -14,7 +14,8 @@ export default {
     LOGOUT:         Root + '/sign_out',
     USERS:          APIRoot + '/users',
     TEAMS:          APIRoot + '/teams',
-    INTEGRATIONS:   APIRoot + '/integrations'
+    INTEGRATIONS:   APIRoot + '/integrations',
+    INVITATIONS:    APIRoot + '/invitations'
   },
   IntegrationEndpoint(provider) {
     return Root + `/auth/${provider}`
@@ -42,6 +43,12 @@ export default {
     //initialize
     LOAD_USER: null,
     LOAD_TEAM: null,
+
+    //invitation
+    LOAD_INVITATIONS: null,
+    CREATE_INVITATIONS: null,
+    RESEND_INVITATION: null,
+    REVOKE_INVITATION: null,
 
     //integration
     LOAD_INTEGRATIONS: null,

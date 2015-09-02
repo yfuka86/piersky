@@ -5,6 +5,7 @@ import {Link} from 'react-router';
 
 import IntegrationAction from '../../actions/integration';
 import IntegrationStore from '../../stores/integration';
+import UserStore from '../../stores/user';
 
 import Slack from '../../components/statistics/slack';
 import Github from '../../components/statistics/github';
@@ -45,20 +46,27 @@ class IntegrationsShow extends React.Component {
   }
 
   render() {
-    let integrationClass = changeCase.pascalCase(this.state.integration.type);
-    let Integration = Statistics[integrationClass];
     let integration = this.state.integration;
+    let Integration = Statistics[integration.type];
+    let integrationUser = UserStore.getUserById(integration.userId);
     return (
       <div className='container-main'>
         {integration.id ?
           <div className='integrations-show'>
             <div className='icon-area'>
-              <span className={['icon', integration.type + '-logo'].join(' ')} />
+              <span className={['icon', changeCase.snakeCase(integration.type) + '-logo'].join(' ')} />
             </div>
-            <p className='title'>{I18n.t('integration.board.show', {name: integrationClass})}</p>
-            <Link to='integration-setting' params={{id: integration.id}}>
-              setting
-            </Link>
+            <p className='title'>{integration.type}</p>
+            <p className='description'>
+              {I18n.t('integration.board.show_description', {
+                userName: integrationUser.name || integrationUser.email,
+                createdAt: integration.createdAt.format('MMMM Do, YYYY')})}
+            </p>
+            <div className='actions'>
+              <Link to='integration-setting' params={{id: integration.id}}>
+                <span className='icon icon-ic_settings_24px' />
+              </Link>
+            </div>
             {Integration ? <Integration integration={integration} /> : <span/> }
           </div>
         : <span/>}

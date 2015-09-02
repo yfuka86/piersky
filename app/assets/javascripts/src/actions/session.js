@@ -3,7 +3,7 @@ import Dispatcher from '../dispatcher';
 import {ActionTypes, APIEndpoints, CSRFToken} from '../constants/app';
 
 export default {
-  loadUser(resolve=()=>{}, reject=()=>{}){
+  loadUser(){
     return new Promise((resolve, reject) => {
       request
       .get(`${APIEndpoints.USERS}/me`)
@@ -22,7 +22,7 @@ export default {
     });
   },
 
-  loadTeam(resolve=()=>{}, reject=()=>{}){
+  loadTeam(){
     return new Promise((resolve, reject) => {
       request
       .get(`${APIEndpoints.TEAMS}/current`)

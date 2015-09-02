@@ -1,8 +1,8 @@
 class Api::UserSerializer < ActiveModel::Serializer
 
-  attributes :email, :id, :user_name, :teams
+  attributes :email, :id, :name, :teams
 
-  def user_name
+  def name
     if options[:is_me]
       object.user_teams.find_by(team: current_user.current_team).user_name
     elsif options[:team]

@@ -1,6 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router';
+import changeCase from 'change-case';
 import _ from 'lodash';
+
+import UserStore from '../../stores/user';
 
 class IntegrationsList extends React.Component {
   static get defaultProps() {
@@ -35,13 +38,22 @@ class IntegrationsList extends React.Component {
           </li>
         </Link>
         {_.map(this.props.integrations, (integration) => {
+          let integrationUser = UserStore.getUserById(integration.userId);
           return (
             <Link to='integrations-show' params={{id: integration.id}} key={integration.id}>
               <li>
                 <div className='icon-area'>
-                  <span className={['icon', integration.type + '-logo'].join(' ')} />
+                  <span className={['icon', changeCase.snakeCase(integration.type) + '-logo'].join(' ')} />
                 </div>
                 {integration.type}
+                <div className='description'>
+                  <p className='user-name'>
+                    {integrationUser.name || integrationUser.email}
+                  </p>
+                  <p className='date'>
+                    {integration.createdAt.format('MMMM Do, YYYY')}
+                  </p>
+                </div>
               </li>
             </Link>
           )

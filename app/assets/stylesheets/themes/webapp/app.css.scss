@@ -18,6 +18,22 @@
   @include center-container;
 }
 
+.breadcrumb {
+  padding: 15px 0;
+  .link {
+    display: inline-block;
+    &:after {
+      content: '>';
+      padding: 0 12px;
+      color: $grey500;
+    }
+  }
+  .current {
+    display: inline-block;
+    color: $grey500;
+  }
+}
+
 .clear-fix {
   clear: both;
 }
