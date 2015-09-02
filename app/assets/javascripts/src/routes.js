@@ -30,11 +30,11 @@ let routes = (
       </Route>
       <Route name='users' handler={UsersBoard} path='users'>
         <DefaultRoute handler={UsersIndex} />
-        <Route name='users-show' handler={UsersShow} path=':id' />
         <Route name='invitations' handler={InvitationsPage} path='invitations'>
           <DefaultRoute handler={InvitationsIndex} />
           <Route name='invitations-new' handler={InvitationsNew} path='new' />
         </Route>
+        <Route name='users-show' handler={UsersShow} path=':id' />
       </Route>
     </Route>
   </Route>

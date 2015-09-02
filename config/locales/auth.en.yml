@@ -33,3 +33,14 @@ en:
       password: Forgot password?
       resend_confirmation: Resend confirmation email
       resend_unlock_instruction: Resend instruction for unlock
+    message:
+      user_already_in_team: "User %{email} is already in the team."
+      invitation_needs_email: "Add at least one email address before sending invitations."
+      invitation_already_sent: "Invitation to %{email} was already sent. please check invitations list."
+      invitation_to_yourself: "Hey! Why are you sending invitation to yourself??"
+      failed_to_send_invitation: "Something went wrong with sending invitation. Please retry."
+    mail:
+      invitation:
+        title: "%{inviter_name} has invited you to join %{team_name} on Piersky"
+      setup:
+        title: "Welcome to Piersky"

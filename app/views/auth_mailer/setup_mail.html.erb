@@ -1,0 +1,31 @@
+<table>
+  <tbody><tr>
+    <td valign="top">
+      <div style="padding:0 12px">
+        <div style="padding:2rem;">
+          <h2>Hi!</h2>
+
+          <p>
+            Thank you for signing up for Piersky. Click the link below to get your team set up:
+          </p>
+
+          <p class='center' style="margin:2rem 0">
+            <%= link_to 'Get started', setup_url(confirmation_token: @token), class: 'main-button', target: '_blank' %>
+          </p>
+
+          <p class='center bold'>
+            Your sign up email is:<br>
+            <%= link_to @email, setup_url(confirmation_token: @token) %>
+          </p>
+
+          <hr />
+
+          <p class='center message light-color' style="margin:0 auto 1rem;max-width:320px;word-break:break-word">Link not working? Try copying
+            <%= link_to setup_url(confirmation_token: @token), setup_url(confirmation_token: @token) %>
+          </p>
+        </div>
+
+      </div>
+    </td>
+  </tr></tbody>
+</table>
