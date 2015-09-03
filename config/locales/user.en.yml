@@ -1,0 +1,5 @@
+en:
+  user:
+    list:
+      dashboard: 'Dashboard'
+      add: 'Invite new member'
