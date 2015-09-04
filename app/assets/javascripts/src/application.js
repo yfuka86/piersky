@@ -8,12 +8,13 @@ import routes from './routes';
 window.PierSky = {}
 window.PierSky.Router = Router;
 
-google.load("visualization", "1", {packages:["corechart"]});
-
-Router.run(routes, Router.HistoryLocation, (Handler, state) => {
-  React.render(
-    <Handler path={window.location.pathname} />,
-    document.getElementById('react_container')
-  );
-  RouteAction.transition(Handler, state);
+google.load("visualization", "1", {packages:["corechart"], callback: () => {
+    Router.run(routes, Router.HistoryLocation, (Handler, state) => {
+      React.render(
+        <Handler path={window.location.pathname} />,
+        document.getElementById('react_container')
+      );
+      RouteAction.transition(Handler, state);
+    });
+  }
 });

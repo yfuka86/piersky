@@ -9,6 +9,6 @@ class CreateIntegrations < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    add_index :integrations, :team_id, unique: true, using: :btree
+    add_index :integrations, :team_id, using: :btree
   end
 end

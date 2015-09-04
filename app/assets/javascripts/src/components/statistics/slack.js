@@ -1,13 +1,10 @@
 import React from 'react';
 import _ from 'lodash';
 import request from 'superagent';
-import ReactD3 from 'react-d3-components'
 import Constants from '../../constants/app';
 import {APIRoot} from '../../constants/app';
 
 class Slack extends React.Component {
-
-  // this.props.integrationにわたってきてます
 
   constructor(props){
     super(props);

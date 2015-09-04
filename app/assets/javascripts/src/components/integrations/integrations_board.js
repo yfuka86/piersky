@@ -16,7 +16,7 @@ class IntegrationsBoard extends React.Component {
   get initialState() {
     return _.extend({
       integrations: IntegrationStore.getIntegrations(),
-      objects: [ 
+      objects: [
         {id: 1, name: "test", elems: [
           {type: "github", title: "internet"},
           {type: "slack", title: "chat"}]

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= @title || 'Piersky Mail' %></title>
+
+    <style type="text/css">
+
+
+      /* Template styling */
+      body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        width: 100%;
+        max-width: 100%;
+        font-size: 17px;
+        line-height: 24px;
+        color: #212121;
+      }
+      table {
+        width: 100%;
+        margin: 0 auto;
+      }
+      div {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      h1, h2, h3, h4 {
+        color: #EF6C00;
+        margin-bottom: 12px;
+        line-height: 26px;
+      }
+      p, ul, ul li {
+        font-size: 17px;
+        margin: 0 0 16px;
+        line-height: 24px;
+      }
+      ul {
+        margin-bottom: 24px;
+      }
+      ul li {
+        margin-bottom: 8px;
+      }
+      p.mini {
+        font-size: 12px;
+        line-height: 18px;
+        color: #ABAFB4;
+      }
+      p.message {
+        font-size: 16px;
+        line-height: 20px;
+        margin-bottom: 4px;
+      }
+      p.center {
+        text-align: center;
+      }
+      p.bold {
+        font-weight: bold;
+      }
+      p.light-color {
+        color: #aaa;
+      }
+      hr {
+        margin: 2rem 0;
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #e0e0e0;
+      }
+      a, a:link, a:visited, a:active, a:hover {
+        font-weight: bold;
+        color: #439fe0;
+        text-decoration: none;
+        word-break: break-word;
+      }
+      a:active, a:hover {
+        text-decoration: underline;
+      }
+      a.main-button {
+        display: inline-block;
+        padding: 14px 32px;
+        background: #EF6C00;
+        border-radius: 4px;
+        font-weight: normal;
+        letter-spacing: 1px;
+        font-size: 20px;
+        line-height: 26px;
+        color: white;
+        text-decoration: none;
+      }
+      .time {
+        font-size: 11px;
+        color: #ABAFB4;
+        padding-right: 6px;
+      }
+      .identity-color {
+        color: #1976d2 !important;
+      }
+      #mail-footer p {
+        margin-top: 16px;
+        font-size: 12px;
+      }
+
+      /* Client-specific Styles */
+      #outlook a {padding:0;}
+      body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0 auto; padding:0;}
+      .ExternalClass {width:100%;}
+      .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;}
+      #backgroundTable {margin:0; padding:0; width:100%; line-height: 100% !important;}
+
+      /* Some sensible defaults for images
+      Bring inline: Yes. */
+      img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;}
+      a img {border:none;}
+      .image_fix {display:block;}
+
+      /* Outlook 07, 10 Padding issue fix
+      Bring inline: No.*/
+      table td {border-collapse: collapse;}
+
+      /* Fix spacing around Outlook 07, 10 tables
+      Bring inline: Yes */
+      table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
+
+    </style>
+  </head>
+  <body>
+    <table>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <table>
+              <tbody><tr>
+                <td valign="bottom" style="padding:20px 16px 12px">
+                  <div style="text-align:center; font-family: Lato">
+                    <%= link_to root_url do %>
+                      <h1 class='identity-color'>Piersky</h1>
+                    <% end %>
+                  </div>
+                </td>
+              </tr></tbody>
+            </table>
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <%= yield %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <%= render 'mailer/footer' %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

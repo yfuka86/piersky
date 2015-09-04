@@ -3,12 +3,13 @@
 
 .integrations-board .container-left {
   ul.integrations-list {
-    padding-top: 30px;
-    padding-bottom: 200px;
-    border-right: 1px solid $grey300;
+    margin: 30px 0;
+    padding: 10px 0;
+    border-right: 1px solid $grey400;
+    min-height: 650px;
     a.active {
       li {
-        background-color: $blue50;
+        color: $blue500;
       }
     }
     li {
@@ -17,10 +18,10 @@
       color: $grey700;
       cursor: pointer;
       @include lato-normal;
-      font-size: 17px;
+      font-size: 16px;
 
       &:hover {
-        background-color: $grey50;
+        color: $grey600;
       }
       .icon-area {
         position: absolute;
@@ -29,6 +30,11 @@
         span.icon {
           @include icon(20px, 20px);
         }
+      }
+      .description {
+        @include lato-thin;
+        font-size: 14px;
+        color: $grey600;
       }
     }
   }
