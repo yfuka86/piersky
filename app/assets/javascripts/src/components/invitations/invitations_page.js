@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import {Link} from 'react-router';
+import {Link, RouteHandler} from 'react-router';
 
 import InvitationAction from '../../actions/invitation';
 import InvitationStore from '../../stores/invitation';
@@ -20,7 +20,9 @@ class InvitationsPage extends React.Component {
   }
 
   componentDidMount() {
-    InvitationAction.load();
+    InvitationAction.load().then(() => {
+      this.setState({hasInitialized: true});
+    })
     InvitationStore.onChange(this.onChangeHandler);
   }
 
@@ -36,7 +38,7 @@ class InvitationsPage extends React.Component {
     return (
       <div className='container-main'>
         <p className='title'>{I18n.t('webapp.invitations.index.title')}</p>
-        {this.state.invitations.length > 0 ? <RouteHandler invitations={this.state.invitations} /> : <Loading />}
+        {this.state.hasInitialized > 0 ? <RouteHandler invitations={this.state.invitations} /> : <Loading />}
       </div>
     );
   }

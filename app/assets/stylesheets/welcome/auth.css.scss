@@ -24,41 +24,18 @@
       }
       form {
         @include standard-form-vertical;
-        .field {
-          .field_with_errors {
-            display: inline;
-            color: $red500;
-          }
-          label {
+        .explanation {
+          margin: 0;
+          padding: 0 5px 5px 5px;
+          @include lato-thin;
+          color: $grey600;
+          font-size: 18px;
+          span.attention {
             display: inline-block;
-            padding: 5px;
-            @include lato-normal;
-            font-size: 18px;
-            color: $grey700;
-          }
-          .explanation {
-            margin: 0;
-            padding: 0 5px 5px 5px;
-            @include lato-thin;
-            color: $grey600;
-            font-size: 18px;
-            span.attention {
-              display: inline-block;
-              font-size: 16px;
-              font-weight: bold;
-              color: $grey900;
-              padding: 0 3px;
-            }
-          }
-          input[type='email'], input[type='password'], input[type='text'] {
-            @include lato-normal;
-            font-size: 18px;
-            width: 100%;
-            position: relative;
-          }
-          select {
-            width: 70%;
-            font-size: 18px;
+            font-size: 16px;
+            font-weight: bold;
+            color: $grey900;
+            padding: 0 3px;
           }
         }
         .actions {

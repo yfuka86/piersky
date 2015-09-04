@@ -1,5 +1,9 @@
 en:
   webapp:
+    general:
+      add_another: Add another
+      sending: Sending . . .
+      workspace: Workspace
     header:
       teams: 'Teams'
       account: 'Account'
@@ -18,4 +22,5 @@ en:
         resend: 'Resend Invitation'
         revoke: 'Revoke Invitation'
       new:
-        title: 'Send New Invitations'
+        title: 'Invite people to %{name}'
+        submit: 'Send invites'

@@ -11,6 +11,9 @@ en:
       reset_password: Reset password
       change_password: Change password
       signed_up: You're signed up!
+      accept_invitation: Welcome to Piersky
+    explanation:
+      accept_invitation: "Choose your password for Piersky"
     label:
       email: Enter your email address
       password: Enter your password
@@ -39,6 +42,8 @@ en:
       invitation_already_sent: "Invitation to %{email} was already sent. please check invitations list."
       invitation_to_yourself: "Hey! Why are you sending invitation to yourself??"
       failed_to_send_invitation: "Something went wrong with sending invitation. Please retry."
+      failed_to_accept_invitation: "Something went wrong with your Invitation. Please ask your inviter to resend invitation."
+      invitation_is_not_yours: "This invitation was not sent to you. Please check your account."
     mail:
       invitation:
         title: "%{inviter_name} has invited you to join %{team_name} on Piersky"

@@ -2,20 +2,20 @@ import React from 'react';
 import _ from 'lodash';
 
 import InvitationAction from '../../actions/invitation';
+import SessionStore from '../../stores/session';
 
 class InvitationsNew extends React.Component {
 
   constructor(props){
     super(props);
     this.uid = 0;
-    this.state = {
-      json: []
-    };
+    this.state = this.initialState;
   }
 
   get initialState() {
     return {
-      users: []
+      users: [],
+      teamName: SessionStore.getTeam().name
     };
   }
 
@@ -33,7 +33,7 @@ class InvitationsNew extends React.Component {
   _removeUser(uid, e) {
     if (uid) {
       let users = _.clone(this.state.users);
-      _.remove(this.state.users, (user) => {
+      _.remove(users, (user) => {
         return user.uid === uid;
       });
       this.setState({users: users});
@@ -60,38 +60,47 @@ class InvitationsNew extends React.Component {
   render() {
     let users = this.state.users;
     return (
-      <form onSubmit={this._onSubmit}>
-        {users.map((user, index) => {
-          let removeIcon;
-          if (index !== 0) {
-            removeIcon = <span className='icon icon-ic_clear_24px' onClick={this._removeUser.bind(this, user.uid)} />;
-          } else {
-            removeIcon = <span />
-          }
-          return (
-            <div className='field' key={user.uid} >
-              <input type='email'
-                     autoFocus={index === users.length - 1}
-                     placeholder='name@domain.com'
-                     value={_.find(users, (stateUser) => {return stateUser.uid === user.uid}).email}
-                     disabled={this.state.syncing ? 'disabled' : false}
-                     onChange={this._changeEmail.bind(this, user.uid)} />
-              {removeIcon}
-            </div>
-          );
-        })}
-        <div className='field'>
-          <button type='button' className='add-row-button' onClick={this._addUser} disabled={this.state.syncing ? 'disabled' : false}>
-            {I18n.t('webapp.general.add_another')}
-          </button>
-          {this.state.syncing ?
-            <button type='submit' className='invitation-submit-button' disabled='disabled'>
-              <span className='icon icon-ic_sync_24px spin' />
-              {I18n.t('webapp.general.sending')}
-            </button> :
-            <button type='submit' className='invitation-submit-button'>{I18n.t('webapp.team_settings.invitations.invitation_new.submit')}</button>}
-        </div>
-      </form>
+      <div className='invitations-new'>
+        <p className='subtitle'>
+          {I18n.t('webapp.invitations.new.title', {name: this.state.teamName.length > 0 ? this.state.teamName : I18n.t('webapp.general.workspace')})}
+        </p>
+        <form onSubmit={this._onSubmit.bind(this)}>
+          {users.map((user, index) => {
+            let removeIcon;
+            if (index !== 0) {
+              removeIcon = <span className='icon icon-ic_clear_24px' onClick={this._removeUser.bind(this, user.uid)} />;
+            } else {
+              removeIcon = <span />
+            }
+            return (
+              <div className='field' key={user.uid} >
+                <label>{'email address'}
+                <input type='email'
+                       autoFocus={index === users.length - 1}
+                       placeholder='name@domain.com'
+                       value={_.find(users, (stateUser) => {return stateUser.uid === user.uid}).email}
+                       disabled={this.state.syncing ? 'disabled' : false}
+                       onChange={this._changeEmail.bind(this, user.uid)} />
+                {removeIcon}
+                </label>
+              </div>
+            );
+          })}
+          <div className='field'>
+            <button type='button' className='add-row-button' onClick={this._addUser.bind(this)} disabled={this.state.syncing ? 'disabled' : false}>
+              {I18n.t('webapp.general.add_another')}
+            </button>
+          </div>
+          <div className='field'>
+            {this.state.syncing ?
+              <button type='submit' className='invitation-submit-button' disabled='disabled'>
+                <span className='icon icon-ic_sync_24px spin' />
+                {I18n.t('webapp.general.sending')}
+              </button> :
+              <button type='submit' className='invitation-submit-button'>{I18n.t('webapp.invitations.new.submit')}</button>}
+          </div>
+        </form>
+      </div>
     );
   }
 }

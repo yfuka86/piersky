@@ -9,7 +9,7 @@ class Invitation < ActiveRecord::Base
 
   before_destroy :destroy_unregistered_invitee
 
-  INBITE_KEYS = [:email]
+  INVITE_KEYS = [:email]
 
   def self.send_invitations(users_params=[], inviter, team)
     invitations = []
@@ -25,12 +25,11 @@ class Invitation < ActiveRecord::Base
   def self.send_with_attributes(attributes={}, inviter, team)
     key_attributes = {}
     attributes = attributes.with_indifferent_access
-    INBITE_KEYS.each do |key|
+    INVITE_KEYS.each do |key|
       attribute = attributes.delete(key)
       key_attributes[key] = attribute.to_s.strip
     end
-
-    invitee = User.find_or_initialize_with_errors(INBITE_KEYS, key_attributes)
+    invitee = User.find_or_initialize_with_errors(INVITE_KEYS, key_attributes)
     # when resend invitation, grab invitation here
     invitation = Invitation.find_by(invitee: invitee, inviter: inviter, team: team) ||
       self.new(invitee: invitee, inviter: inviter, team: team)
@@ -69,15 +68,15 @@ class Invitation < ActiveRecord::Base
     invitation && invitation.persisted? && invitation.accepted_at.blank?
   end
 
-  def self.accept_with_attributes(params, willResetPassword)
+  def self.accept_with_attributes(params)
     invitation = self.by_token(params[:token])
     invitee = invitation.invitee
     ActiveRecord::Base.transaction do
-      invitee.confirm!
-      if willResetPassword
+      if invitee.confirm!
         invitee.reset_password!(params[:password], params[:password])
       end
-      invitation.invitee.join_to_team!(invitation.team, user_name: params[:user_name], first_name: params[:first_name], last_name: params[:last_name], role: :member)
+      invitee.join_to_team!(invitation.team)
+      invitee.set_current_team(invitation.team)
       invitation.accepted_at = Time.now.utc
       [invitation.tap(&:save!), invitee]
     end

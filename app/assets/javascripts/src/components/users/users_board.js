@@ -12,8 +12,9 @@ class UsersBoard extends React.Component {
   }
 
   get initialState() {
-    return _.extend({
-    });
+    return {
+
+    };
   }
 
   componentDidMount() {

@@ -15,6 +15,13 @@ Rails.application.routes.draw do
 
   get 'webapp(/*path)', to: 'webapp#index', as: 'webapp'
 
+  resources :invitations, only:[] do
+    collection do
+      get 'accept', to: 'invitations#edit'
+      post 'accept', to: 'invitations#update'
+    end
+  end
+
   resources :integrations, only: [] do
     collection do
       post '/:user_id/:webhook_uid', to: 'integrations#incoming_webhook'
