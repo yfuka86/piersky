@@ -6,7 +6,6 @@ gem 'rails', '4.2.3'
 gem 'active_model_serializers', '0.8.3'
 gem 'kaminari'
 
-gem 'mysql2'
 gem 'pg'
 gem 'arproxy', '0.2.0'
 
@@ -54,6 +53,7 @@ gem 'faker'
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.2'
   gem 'factory_girl_rails', '~> 4.4.1'
+  gem 'mysql2'
   # for tracking performance
   gem 'rack-mini-profiler', require: false
 
