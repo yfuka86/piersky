@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import {Link} from 'react-router';
 
 import InvitationAction from '../../actions/invitation';
 import SessionStore from '../../stores/session';
@@ -73,6 +74,11 @@ class InvitationsNew extends React.Component {
     let users = this.state.users;
     return (
       <div className='invitations-new'>
+        <Breadcrumb links={[(<Link to='invitations'>
+                            {I18n.t('webapp.invitations.breadcrumb.index')}
+                          </Link>)]}
+                    current={I18n.t('webapp.invitations.breadcrumb.new')} />
+        <p className='title'>{I18n.t('webapp.invitations.index.title')}</p>
         <p className='subtitle'>
           {I18n.t('webapp.invitations.new.title', {name: this.state.teamName.length > 0 ? this.state.teamName : I18n.t('webapp.general.workspace')})}
         </p>

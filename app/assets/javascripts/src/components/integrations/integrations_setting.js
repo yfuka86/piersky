@@ -55,7 +55,7 @@ class IntegrationsSetting extends React.Component {
     return integration.id ?
       <div className='container-main'>
         <Breadcrumb links={[(<Link to='integrations-show' params={{id: integration.id}}>
-                            {I18n.t('integration.breadcrumb.show')}
+                            {integration.type}
                           </Link>)]}
                     current={I18n.t('integration.breadcrumb.settings')} />
         <div className='integrations-setting'>

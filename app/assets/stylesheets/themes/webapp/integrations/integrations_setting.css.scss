@@ -5,14 +5,13 @@
   position: relative;
   .icon-area {
     position: absolute;
-    top: 10px;
+    top: 30px;
     display: inline-block;
     .icon {
       @include icon(30px, 30px);
     }
   }
   .title {
-    padding-top: 0 !important;
     margin-left: 45px;
     display: inline-block;
   }

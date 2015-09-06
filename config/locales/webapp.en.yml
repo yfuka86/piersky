@@ -32,3 +32,6 @@ en:
         sent: 'Your invitations have been sent!'
         label:
           email: Email address
+      breadcrumb:
+        index: Invitations
+        new: New Invitation

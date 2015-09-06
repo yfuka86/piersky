@@ -71,6 +71,7 @@ class InvitationsIndex extends React.Component {
   render() {
     return (
       <div>
+        <p className='title'>{I18n.t('webapp.invitations.index.title')}</p>
         <p className='subtitle'>
           {this.props.invitations.length > 0 ? '' : I18n.t('user.general.no_invitations')}
         </p>
