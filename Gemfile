@@ -55,6 +55,7 @@ gem 'faker'
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.2'
   gem 'factory_girl_rails', '~> 4.4.1'
+  gem 'mysql2'
   # for tracking performance
   gem 'rack-mini-profiler', require: false
 
