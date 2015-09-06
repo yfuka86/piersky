@@ -23,13 +23,11 @@ const InvitationStore = assign({}, BaseStore, {
   },
 
   removeInvitation(invitation) {
-    var invitations = this.getInvitations();
+    let invitations = this.getInvitations();
     _.remove(invitations, (i)=> {
-      i.id === invitation.id
+      return parseInt(i.id, 10) === invitation.id;
     });
-    if (idx >= 0) {
-      this.set('invitations', invitations);
-    }
+    this.set('invitations', invitations);
   },
 
   parse(json) {
@@ -56,6 +54,18 @@ InvitationStore.dispatchToken = Dispatcher.register(payload => {
       InvitationStore.setInvitations(_.map(action.json.invitations, (invitationJson) => {
         return InvitationStore.parse(invitationJson);}
       ));
+      InvitationStore.emitChange();
+      break;
+
+    case ActionTypes.CREATE_INVITATIONS:
+      InvitationStore.addInvitations(_.map(action.json.invitations, (invitationJson) => {
+        return InvitationStore.parse(invitationJson);}
+      ));
+      InvitationStore.emitChange();
+      break;
+
+    case ActionTypes.REVOKE_INVITATION:
+      InvitationStore.removeInvitation(InvitationStore.parse(action.json));
       InvitationStore.emitChange();
       break;
 

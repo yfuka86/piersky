@@ -1,8 +1,7 @@
 en:
   integration:
     breadcrumb:
-      show: 'integration'
-      settings: 'settings'
+      settings: 'Settings'
     board:
       index: 'Integration Dashboard'
       new: 'Add New Integration'

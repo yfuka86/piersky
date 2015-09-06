@@ -1,8 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
+import {Link} from 'react-router';
 
 import InvitationAction from '../../actions/invitation';
 import SessionStore from '../../stores/session';
+import NotifierInForm from '../../components/common/notifier_in_form';
+import Breadcrumb from '../../components/common/breadcrumb';
+import {parseErrors} from '../../utils/app_module';
 
 class InvitationsNew extends React.Component {
 
@@ -15,7 +19,8 @@ class InvitationsNew extends React.Component {
   get initialState() {
     return {
       users: [],
-      teamName: SessionStore.getTeam().name
+      teamName: SessionStore.getTeam().name,
+      messages: {}
     };
   }
 
@@ -52,19 +57,33 @@ class InvitationsNew extends React.Component {
     e.stopPropagation();
     e.preventDefault();
     this.setState({syncing: true});
+
     InvitationAction.create({
       users: this.state.users
-    });
+    }).then((res) => {
+      this.setState({messages: {successes: [I18n.t('webapp.invitations.new.sent')]}, users: []});
+      this._addUser();
+    }, (res) => {
+      this.setState({messages: {errors: parseErrors(res)}});
+    }).then(() => {
+      this.setState({syncing: false});
+    })
   }
 
   render() {
     let users = this.state.users;
     return (
       <div className='invitations-new'>
+        <Breadcrumb links={[(<Link to='invitations'>
+                            {I18n.t('webapp.invitations.breadcrumb.index')}
+                          </Link>)]}
+                    current={I18n.t('webapp.invitations.breadcrumb.new')} />
+        <p className='title'>{I18n.t('webapp.invitations.index.title')}</p>
         <p className='subtitle'>
           {I18n.t('webapp.invitations.new.title', {name: this.state.teamName.length > 0 ? this.state.teamName : I18n.t('webapp.general.workspace')})}
         </p>
         <form onSubmit={this._onSubmit.bind(this)}>
+          <NotifierInForm messages={this.state.messages} />
           {users.map((user, index) => {
             let removeIcon;
             if (index !== 0) {
@@ -74,7 +93,7 @@ class InvitationsNew extends React.Component {
             }
             return (
               <div className='field' key={user.uid} >
-                <label>{'email address'}
+                <label>{I18n.t('webapp.invitations.new.label.email')}
                 <input type='email'
                        autoFocus={index === users.length - 1}
                        placeholder='name@domain.com'
