@@ -30,7 +30,7 @@ class IntegrationsNew extends React.Component {
                   <p className='title'>{I18n.t('integration.' + name + '.name')}</p>
                 </div>
                 <div className='right-area'>
-                  <a href={Constants.IntegrationEndpoint({provider: name})}>
+                  <a href={Constants.IntegrationEndpoint(name)}>
                     <button className='button-identity'>
                       {I18n.t('integration.general.connect')}
                     </button>

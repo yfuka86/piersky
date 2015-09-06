@@ -1,22 +1,18 @@
 class Integration < ActiveRecord::Base
   include Concerns::UserRelatable
   belongs_to :team
-
   has_one :setting, class_name: "::IntegrationSetting", dependent: :destroy
+  has_many :activities
+
   after_create :create_setting!
+  after_create :create_identity
 
   validates_associated :user
   validates_associated :setting
 
   class << self
-    def establish(user, options={})
-      self.new(user: user).tap do |integration|
-        integration.save!
-      end
-    end
-
-    def accomplish(auth, user)
-      self.find_by(user: user, token: nil).tap do |integration|
+    def create_with_user(auth, user)
+      self.new(user: user, team: user.current_team).tap do |integration|
         raise ActiveRecordNotFound unless integration
 
         integration.assign_attributes(
@@ -26,6 +22,13 @@ class Integration < ActiveRecord::Base
         integration.save!
       end
     end
+  end
+
+  def create_identity(primary_key, secondary_key="")
+    #please override
+    user_team = UserTeam.find_by(user: self.user, team: self.team)
+    klass = ('Identity::' + self.class.name.split('::')[1]).constantize
+    klass.create(user_team: user_team, is_verified: true, primary_key: primary_key, secondary_key: secondary_key)
   end
 
   def update_setting(setting)

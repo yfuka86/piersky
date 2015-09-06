@@ -4,7 +4,7 @@ import _ from 'lodash';
 class Loading extends React.Component {
   render() {
     return (
-      <div className={['spinner', this.props.className].join(' ')} id={this.props.id || 'spinner_container'}>
+      <div className={['spinner', this.props.className].join(' ')} id={this.props.id || 'loading_container'}>
         <div></div>
         <p>{I18n.t('general.loading')}</p>
       </div>

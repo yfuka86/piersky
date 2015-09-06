@@ -7,18 +7,18 @@ import BaseStore from '../stores/base';
 
 const RouteStore = assign({}, BaseStore, {
 
-  getRouter: function() {
+  getRouter() {
     window.PierSky.Router;
   },
 
-  getRouteNames: function() {
+  getRouteNames() {
     if (!this.get('routeNames')) {
       this.setRouteNames([]);
     }
     this.get('routeNames');
   },
 
-  setRouteNames: function(names) {
+  setRouteNames(names) {
     this.set('routeNames', names);
   }
 });

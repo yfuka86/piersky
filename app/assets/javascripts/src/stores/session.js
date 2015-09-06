@@ -16,11 +16,28 @@ const SessionStore = assign({}, BaseStore, {
     this.set('user', user);
   },
 
-  parse(json) {
+  getTeam() {
+    if (!this.get('team')) this.set('team', {});
+    return this.get('team');
+  },
+
+  setTeam(team) {
+    this.set('team', team);
+  },
+
+  parseUser(json) {
     return {
-      id: json.id,
+      id: parseInt(json.id, 10),
       email: json.email,
-      userName: json.email
+      userName: json.user_name,
+      teams: json.teams
+    }
+  },
+
+  parseTeam(json) {
+    return {
+      id: parseInt(json.id, 10),
+      name: json.name
     }
   }
 
@@ -32,6 +49,15 @@ SessionStore.dispatchToken = Dispatcher.register(payload => {
   ]);
 
   switch(action.type) {
+    case ActionTypes.LOAD_USER:
+      SessionStore.setUser(SessionStore.parseUser(action.json));
+      SessionStore.emitChange();
+      break;
+
+    case ActionTypes.LOAD_TEAM:
+      SessionStore.setTeam(SessionStore.parseTeam(action.json));
+      SessionStore.emitChange();
+      break;
 
     default:
   }

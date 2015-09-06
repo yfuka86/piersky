@@ -6,7 +6,7 @@
 
 // jQuery for page scrolling feature - requires jQuery Easing plugin
 $(function() {
-  if (window.location.pathname === '/') {
+  if ($(".navbar-fixed-top").hasClass('welcome')) {
     $(window).scroll(function() {
       if ($(".navbar").offset().top > 50) {
         $(".navbar-fixed-top").addClass("top-nav-collapse");

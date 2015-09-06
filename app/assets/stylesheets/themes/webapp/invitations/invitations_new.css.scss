@@ -1,0 +1,27 @@
+@import 'globals/config-loader';
+@import 'modules/standard_form';
+
+.users-board .container-main .invitations-new {
+  form {
+    @include standard-form-vertical;
+    margin-top: 10px;
+    max-width: 640px;
+    .field {
+      padding: 5px 0;
+    }
+    input[type='email'] {
+      width: 90%;
+    }
+    .icon {
+      &.icon-ic_clear_24px {
+        vertical-align: middle;
+        font-size: 24px;
+        cursor: pointer;
+        margin-left: 10px;
+        &:hover {
+          color: $red500;
+        }
+      }
+    }
+  }
+}

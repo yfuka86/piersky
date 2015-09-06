@@ -20,6 +20,22 @@ class UsersList extends React.Component {
   render() {
     return (
       <ul className='users-list'>
+        <Link to='users-index'>
+          <li>
+            <div className='icon-area'>
+              <span className='icon icon-ic_trending_up_24px' />
+            </div>
+            {I18n.t('user.list.dashboard')}
+          </li>
+        </Link>
+        <Link to='invitations'>
+          <li>
+            <div className='icon-area'>
+              <span className='icon icon-ic_group_add_24px' />
+            </div>
+            {I18n.t('user.list.add')}
+          </li>
+        </Link>
         {_.map(this.props.users, (user) => {
           return (
             <Link to='users-show' params={{id: user.id}} key={user.id}>
@@ -27,7 +43,7 @@ class UsersList extends React.Component {
                 <div className='icon-area'>
                   <UserIcon user={user} />
                 </div>
-                {user.userName}
+                {user.name || user.email}
               </li>
             </Link>
           )

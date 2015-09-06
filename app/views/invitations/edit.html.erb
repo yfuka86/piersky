@@ -1,0 +1,22 @@
+<div class='title'>
+  <%= t('auth.title.accept_invitation') %>
+</div>
+
+<%= form_tag '/invitations/accept', method: :post do %>
+  <%= hidden_field_tag :token, params[:token] %>
+
+  <div class='field'>
+    <p class='explanation'><%= t('auth.explanation.accept_invitation') %></p>
+  </div>
+
+  <div class="field">
+    <%= label_tag :password, t('auth.label.password') do %>
+      <%= t('auth.label.password') %>
+      <%= password_field_tag :password, params[:password], placeholder: DeviseHelper::PASSWORD_EXAMPLE %>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= submit_tag t('auth.submit.create_account'), name: nil, class: '', data: {disable_with: t('auth.submit.create_account')} %>
+  </div>
+<% end %>

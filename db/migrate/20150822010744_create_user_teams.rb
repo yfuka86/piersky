@@ -3,7 +3,9 @@ class CreateUserTeams < ActiveRecord::Migration
     create_table :user_teams do |t|
       t.integer :user_id, null: false
       t.integer :team_id, null: false
-      t.integer :role, null: false
+      t.string  :user_name, null: false, default: '', limit: 20
+      t.boolean :is_logging_in, null: false, default: false
+      t.integer :role, null: false, default: 0
 
       t.timestamps null: false
     end

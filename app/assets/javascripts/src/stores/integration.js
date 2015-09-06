@@ -2,6 +2,7 @@ import Dispatcher from '../dispatcher';
 import assign from 'object-assign';
 import _ from 'lodash';
 import changeCase from 'change-case';
+import moment from 'moment';
 import { ActionTypes } from '../constants/app';
 
 import BaseStore from '../stores/base';
@@ -26,9 +27,9 @@ const IntegrationStore = assign({}, BaseStore, {
   parse(json) {
     return {
       id: json.id,
-      type: changeCase.snakeCase(json.type.split('::')[1]),
-      user: json.user,
-      createdAt: json.created_at
+      type: changeCase.pascalCase(json.type.split('::')[1]),
+      userId: parseInt(json.user_id, 10),
+      createdAt: moment(json.created_at)
     }
   }
 

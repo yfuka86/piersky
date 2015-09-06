@@ -7,13 +7,17 @@ $WEBAPP_HEADER_HEIGHT: $HEADER_HEIGHT;
   top: 0;
   width: 100%;
   height: $WEBAPP_HEADER_HEIGHT;
-  a {
+  a,p {
     color: #fff;
   }
   z-index: $HEADER_Z;
   background: $IDENTITY_COLOR;
   border-bottom: 1px solid rgba(255,255,255,.3);
   letter-spacing: 1px;
+
+  .container {
+    padding: 0 15px;
+  }
 
   .navbar-header {
     float: left;
@@ -43,7 +47,8 @@ $WEBAPP_HEADER_HEIGHT: $HEADER_HEIGHT;
         display: block;
         line-height: $WEBAPP_HEADER_HEIGHT;
         vertical-align: middle;
-        a {
+        a,p {
+          display: inline;
           padding: 15px;
           @include lato-normal;
           text-transform: uppercase;
