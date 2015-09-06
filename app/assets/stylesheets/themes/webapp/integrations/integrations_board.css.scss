@@ -1,0 +1,41 @@
+@import 'globals/config-loader';
+@import 'modules/center_container';
+
+.integrations-board {
+  height: 100%;
+  position: relative;
+  padding: 0 15px 0 0;
+  .container-left {
+    width: 260px;
+    float: left;
+  }
+  .container-main {
+    position: relative;
+    float: right;
+    width: -webkit-calc(100% - 300px);
+    width: -moz-calc(100% - 300px);
+    width: calc(100% - 300px);
+    p{
+      &.title {
+        padding: 20px 0;
+        @include lato-thin;
+        font-size: 36px;
+      }
+      &.subtitle {
+        padding: 5px 0;
+        @include lato-thin;
+        font-size: 24px;
+        span {
+          margin-right: 10px;
+        }
+      }
+      &.description {
+        margin-left: 20px;
+        display: inline-block;
+        @include lato-thin;
+        font-size: 16px;
+        color: $grey600;
+      }
+    }
+  }
+}

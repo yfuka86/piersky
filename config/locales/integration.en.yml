@@ -1,0 +1,24 @@
+en:
+  integration:
+    breadcrumb:
+      settings: 'Settings'
+    board:
+      index: 'Integration Dashboard'
+      new: 'Add New Integration'
+      show_description: 'Added by %{userName} on %{createdAt}'
+      settings: 'Settings for'
+    list:
+      dashboard: 'Dashboard'
+      add: 'Add new integration'
+    general:
+      connect: 'Connect'
+      no_integrations: 'No integrations to show.'
+      setup: 'Would you like to setup?'
+    wunderlist:
+      name: 'Wunderlist'
+    asana:
+      name: 'Asana'
+    slack:
+      name: 'Slack'
+    github:
+      name: 'Github'

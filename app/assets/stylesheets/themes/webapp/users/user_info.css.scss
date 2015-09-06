@@ -1,0 +1,42 @@
+@import "globals/config-loader";
+
+.user-info-container {
+  display: inline-block;
+  position: relative;
+  z-index: $OVER_TOGGLE;
+  vertical-align: middle;
+}
+
+.user-info-wrapper {
+  display: inline-block;
+  padding: 4px 6px;
+  cursor: pointer;
+  position: relative;
+  &:hover {
+    .user-info {
+      .user-info-inner {
+        .user-name {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  .user-info {
+    float: right;
+    position: relative;
+    height: 36px;
+    line-height: 36px;
+    width: 150px;
+    .user-info-inner {
+      @include lato-normal;
+      line-height: 20px;
+      .user-name {
+        display: block;
+        font-size: 14px;
+        margin-left: 6px;
+        width: 144px;
+        @include text-ellipsis;
+      }
+    }
+  }
+}

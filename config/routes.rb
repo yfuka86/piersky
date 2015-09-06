@@ -13,13 +13,42 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
 
+  get 'webapp(/*path)', to: 'webapp#index', as: 'webapp'
+
+  resources :invitations, only:[] do
+    collection do
+      get 'accept', to: 'invitations#edit'
+      post 'accept', to: 'invitations#update'
+    end
+  end
+
   resources :integrations, only: [] do
     collection do
-      get 'establish', to: 'integrations#establish'
-      post '/:team_id/:webhook_uid', to: 'integrations#incoming_webhook'
+      post '/:user_id/:webhook_uid', to: 'integrations#incoming_webhook'
     end
   end
 
   namespace :api, defaults: { format: :json } do
+    resources :users, only: [] do
+      collection do
+        get 'me'
+      end
+    end
+
+    resources :teams, only: [] do
+      collection do
+        get 'current'
+      end
+    end
+
+    resources :integrations, only: [:index]
+    resources :invitations, only: [:index, :create, :update, :destroy]
+
+    get 'github_wrapper', to: 'github_wrapper#index'
+    get 'github_wrapper/show/:user/:name', to: 'github_wrapper#index'
+    get 'slack_wrapper(/:integration_id)', to: 'slack_wrapper#index'
+    get 'slack_wrapper/:integration_id/show/:id(/:ts)', to: 'slack_wrapper#show'
+
+    resources :slack_gathers, only: [:index, :create, :show ]
   end
 end

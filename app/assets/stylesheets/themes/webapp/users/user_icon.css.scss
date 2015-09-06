@@ -1,0 +1,13 @@
+@import "globals/config-loader";
+
+.simple-user-icon {
+  @include icon(36px, 24px);
+
+  text-align: center;
+  border-radius: 4px;
+  @include lato-normal;
+  color: $white;
+  cursor: pointer;
+
+  @include coloring-back;
+}

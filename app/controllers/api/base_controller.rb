@@ -57,4 +57,8 @@ class Api::BaseController < ApplicationController
   def valid_user
     return @_user ||= current_user
   end
+
+  def valid_team
+    return @_team ||= current_user.current_team
+  end
 end

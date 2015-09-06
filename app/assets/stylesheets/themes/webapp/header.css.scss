@@ -1,0 +1,69 @@
+@import 'globals/config-loader';
+
+$WEBAPP_HEADER_HEIGHT: $HEADER_HEIGHT;
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: $WEBAPP_HEADER_HEIGHT;
+  a,p {
+    color: #fff;
+  }
+  z-index: $HEADER_Z;
+  background: $IDENTITY_COLOR;
+  border-bottom: 1px solid rgba(255,255,255,.3);
+  letter-spacing: 1px;
+
+  .container {
+    padding: 0 15px;
+  }
+
+  .navbar-header {
+    float: left;
+    height: $WEBAPP_HEADER_HEIGHT;
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 24px;
+      line-height: $WEBAPP_HEADER_HEIGHT;
+      vertical-align: middle;
+      @include lato-bold;
+      &:focus {
+        outline: 0;
+      }
+    }
+  }
+  .navbar-right {
+    float: right;
+    height: $WEBAPP_HEADER_HEIGHT;
+
+    .nav {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      li {
+        float: left;
+        position: relative;
+        display: block;
+        line-height: $WEBAPP_HEADER_HEIGHT;
+        vertical-align: middle;
+        a,p {
+          display: inline;
+          padding: 15px;
+          @include lato-normal;
+          text-transform: uppercase;
+          font-size: 15px;
+          &:hover {
+            outline: 0;
+            color: rgba(255,255,255,.8);
+            background-color: transparent;
+          }
+          &:focus, &:active {
+            outline: 0;
+            background-color: transparent;
+          }
+        }
+      }
+    }
+  }
+}

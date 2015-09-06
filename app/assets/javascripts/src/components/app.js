@@ -1,29 +1,35 @@
 import React from 'react';
 import {Link, RouteHandler} from 'react-router';
 import _ from 'lodash';
-import Notifier from '../components/common/notifier';
 
+import SessionAction from '../actions/session';
+import Loading from '../components/common/loading';
+import Balloon from '../components/common/balloon';
+import Header from '../components/header';
+import Notifier from '../components/common/notifier';
+import DashBoard from '../components/dash_board';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.state = this.initialState;
   }
 
-  get stateFromStore() {
+  get initialState() {
     return _.extend({
+      hasAppInitialized: false
     });
   }
 
-  getInitialState() {
-    this.stateFromStore;
-  }
-
   componentDidMount() {
-    // RouteStore.on('change', this.onChangeHandler);
+    Promise
+    .all([SessionAction.loadUser(), SessionAction.loadTeam()])
+    .then(()=> {
+      this.setState({hasAppInitialized: true});
+    });
   }
 
   componentWillUnmount() {
-    // RouteStore.off('change', this.onChangeHandler);
   }
 
   onChange(e) {
@@ -32,9 +38,13 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className='app' id='container'>
-        <RouteHandler/>
-      </div>
+      this.state.hasAppInitialized ?
+        <div className='app'>
+          <Balloon />
+          <Header />
+          <DashBoard />
+        </div> :
+        <Loading />
     );
   }
 }

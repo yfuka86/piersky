@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Piersky</title>
+  <title><%= t('identity') %></title>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <%= favicon_link_tag 'favicon.ico' %>
@@ -9,10 +9,10 @@
   <%= javascript_include_tag "translations" %>
 </head>
 <body>
-  <%= render 'shared/header' %>
-  <%= render 'shared/notification_message'%>
+  <%= render 'shared/notification_message' %>
 
   <%= yield %>
+  <%= javascript_include_tag 'https://www.google.com/jsapi' %>
   <%= javascript_include_tag 'dist/application', 'data-turbolinks-track' => true %>
 </body>
 </html>

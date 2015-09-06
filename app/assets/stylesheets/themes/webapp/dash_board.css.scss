@@ -1,0 +1,59 @@
+@import 'globals/config-loader';
+
+.app {
+  .dash-board {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+
+    $BORDER_COLOR: $grey200;
+    $TAB_MIN_WIDTH: 720px;
+    $MAIN_MENU_HEIGHT: 50px;
+    ul.main-menu {
+      position: fixed;
+      top: $HEADER_HEIGHT;
+      z-index: $TAB;
+      background-color: $grey100;
+
+      height: $MAIN_MENU_HEIGHT;
+      width: 100%;
+
+      padding: 0;
+      a {
+        li.menu {
+          height: 33px;
+          box-sizing: content-box;
+          position: relative;
+          display: inline-block;
+          padding: 15px 15px 0;
+          font-size: 15px;
+          @include lato-normal;
+          color: $grey500;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
+        &.active {
+          li.menu {
+            color: $grey800;
+            cursor: default;
+            border-bottom: 2px solid $blue500;
+            &:hover {
+              text-decoration: none;
+            }
+          }
+        }
+      }
+    }
+    .main-panel {
+      position: absolute;
+      top: $MAIN_MENU_HEIGHT;
+      right: 0; bottom: 0; left: 0;
+
+      min-width: $TAB_MIN_WIDTH;
+      background-color: $white;
+      border-top: 1px solid $BORDER_COLOR;
+    }
+  }
+}

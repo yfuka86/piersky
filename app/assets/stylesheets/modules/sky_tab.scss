@@ -3,39 +3,38 @@
 @mixin sky-tab {
   $BORDER_COLOR: $grey200;
   $TAB_MIN_WIDTH: 720px;
+  background-color: $grey100;
   ul.sky-tab-list {
     min-width: $TAB_MIN_WIDTH;
+    height: 50px;
     list-style-type: none;
-    margin: 0;
-    margin-bottom: -1px;
     padding: 0;
-    li.sky-tab {
-      position: relative;
-      z-index: $TAB;
-      display: inline-block;
-      padding: 6px 24px;
-      font-size: 18px;
-      vertical-align: middle;
-      @include lato-normal;
-      &:hover {
-        text-decoration: underline;
+    a {
+      li.sky-tab {
+        height: 33px;
+        box-sizing: content-box;
+        position: relative;
+        z-index: $TAB;
+        display: inline-block;
+        padding: 15px 15px 0;
+        font-size: 15px;
+        @include lato-normal;
+        color: $grey500;
+
+        &:hover {
+          text-decoration: underline;
+        }
       }
 
-      margin: 0 1px;
       &.active {
-        margin: 0;
-        border-top: 1px solid $BORDER_COLOR;
-        border-right: 1px solid $BORDER_COLOR;
-        border-left: 1px solid $BORDER_COLOR;
-        border-top-right-radius: 5px;
-        border-top-left-radius: 5px;
-        background-color: $white;
-        color: $grey800;
-        &:hover {
+        li.sky-tab {
           color: $grey800;
-          text-decoration: none;
+          cursor: default;
+          border-bottom: 2px solid $blue500;
+          &:hover {
+            text-decoration: none;
+          }
         }
-        cursor: default;
       }
     }
   }
@@ -43,7 +42,8 @@
     width: 100%;
     min-width: $TAB_MIN_WIDTH;
     background-color: $white;
-    border: 1px solid $BORDER_COLOR;
+    border-top: 1px solid $BORDER_COLOR;
+    z-index: $TAB;
   }
 }
 

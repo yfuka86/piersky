@@ -7,7 +7,7 @@ gem 'active_model_serializers', '0.8.3'
 gem 'kaminari'
 
 gem 'mysql2'
-gem 'pg'
+gem 'pg', group: :production
 gem 'arproxy', '0.2.0'
 
 gem 'sdoc', '~> 0.4.0', group: :doc
@@ -17,12 +17,13 @@ gem 'devise', '~> 3.4.1'
 # for integrations
 gem 'faraday', '0.9.1'
 gem 'omniauth'
-gem 'omniauth-wunderlist'
-gem 'wunderlist-api'
+
 gem 'omniauth-github'
 gem "github_api"
 gem 'omniauth-slack'
-gem 'slack-api', require: false
+gem 'slack-api'
+gem 'omniauth-wunderlist'
+gem 'wunderlist-api'
 
 # go international
 gem 'i18n'
@@ -54,6 +55,7 @@ gem 'faker'
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.2'
   gem 'factory_girl_rails', '~> 4.4.1'
+  gem 'mysql2'
   # for tracking performance
   gem 'rack-mini-profiler', require: false
 
@@ -61,6 +63,7 @@ group :development, :test do
   gem 'pry'
   gem 'pry-remote'
   gem 'pry-byebug'
+  gem 'pry-rails'
   gem 'byebug'
   gem 'web-console', '~> 2.0'
   gem 'http-dump'
