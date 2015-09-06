@@ -6,6 +6,8 @@ import InvitationAction from '../../actions/invitation';
 import InvitationStore from '../../stores/invitation';
 import UserStore from '../../stores/user';
 import UserInfo from '../../components/users/user_info';
+import NotifierInForm from '../../components/common/notifier_in_form';
+import {parseErrors} from '../../utils/app_module';
 
 class InvitationsIndex extends React.Component {
   static get defaultProps() {
@@ -45,11 +47,25 @@ class InvitationsIndex extends React.Component {
   }
 
   _revokeInvitation(id) {
-    InvitationActionCreators.revoke(id)
+    this.setState({revoking: true});
+    InvitationAction.revoke(id).then((res) => {
+      this.setState({messages: {infos: [I18n.t('webapp.invitations.index.revoked')]}});
+    }, (res) => {
+      this.setState({messages: {errors: parseErrors(res)}});
+    }).then(() => {
+      this.setState({revoking: false});
+    })
   }
 
   _resendInvitation(id) {
-    InvitationActionCreators.resend(id)
+    this.setState({resending: true});
+    InvitationAction.resend(id).then((res) => {
+      this.setState({messages: {successes: [I18n.t('webapp.invitations.index.resent')]}});
+    }, (res) => {
+      this.setState({messages: {errors: parseErrors(res)}});
+    }).then(() => {
+      this.setState({resending: false});
+    })
   }
 
   render() {
@@ -57,18 +73,24 @@ class InvitationsIndex extends React.Component {
       <div>
         <p className='subtitle'>
           {this.props.invitations.length > 0 ? '' : I18n.t('user.general.no_invitations')}
+        </p>
+        <p className='subtitle'>
           <Link to='invitations-new'>
             {I18n.t('user.general.setup')}
           </Link>
         </p>
-        <div className='invitation-list'>
+        <div className='invitations-list'>
+          <NotifierInForm messages={this.state.messages} />
           {this.props.invitations.map((invitation) => {
             let invitee = UserStore.getUserById(invitation.inviteeId);
             let inviter = UserStore.getUserById(invitation.inviterId);
             return (
-              <div className={['option', (this._isExpanded(invitation.id) ? 'expanded' : '')].join(' ')}>
+              <div className={`option ${invitation.acceptedAt ? '' : 'option-expandable'} ${this._isExpanded(invitation.id) ? 'expanded' : ''}`}>
+                {invitation.acceptedAt ? <div /> :
+                  <div className='toggle' onClick={this._toggleExpantion.bind(this, invitation.id)} />
+                }
                 <div className='content-area'>
-                  <p className='sub-content'>{I18n.t('webapp.team_settings.invitations.invitation_to')}</p>
+                  <p className='sub-content'>{I18n.t('webapp.invitations.index.to')}</p>
                   {invitee ? <UserInfo user={invitee} /> : <p className='main-content'>{invitation.inviteeEmail}</p>}
                   <p className='sub-content'>
                     {invitation.acceptedAt ?
@@ -77,19 +99,31 @@ class InvitationsIndex extends React.Component {
                   </p>
 
                   <span className='right-content'>
-                    <p className='sub-content'>{I18n.t('webapp.team_settings.invitations.from')}</p>
+                    <p className='sub-content'>{I18n.t('webapp.invitations.index.from')}</p>
                     {inviter ? <UserInfo user={inviter} /> : <p className='main-content'>{invitation.inviterEmail}</p>}
                   </span>
-
-                  {invitation.acceptedAt ? <div /> : <div className='toggle' onClick={this._toggleExpantion.bind(this, invitation.id)} />}
                 </div>
-                {_this._isExpanded(invitation.id) ? (
+                {this._isExpanded(invitation.id) ? (
                   <div className='expanded-area invitation-actions'>
                     <div className='field'>
-                      <button disabled={_this.state.syncing ? 'disabled' : false} onClick={this._revokeInvitation.bind(this, invitation.id)}>{I18n.t('webapp.invitations.index.revoke')}</button>
+                      {this.state.revoking ?
+                        <button disabled='disabled'>
+                          <span className='icon icon-ic_sync_24px spin' />
+                          {I18n.t('webapp.invitations.index.revoke')}
+                        </button> :
+                        <button onClick={this._revokeInvitation.bind(this, invitation.id)} disabled={this.state.resending ? 'disabled' : false}>
+                          {I18n.t('webapp.invitations.index.revoke')}
+                        </button>}
                     </div>
                     <div className='field'>
-                      <button disabled={_this.state.syncing ? 'disabled' : false} onClick={this._resendInvitation.bind(this, invitation.id)}>{I18n.t('webapp.invitations.index.resend')}</button>
+                      {this.state.resending ?
+                        <button disabled='disabled'>
+                          <span className='icon icon-ic_sync_24px spin' />
+                          {I18n.t('webapp.invitations.index.resend')}
+                        </button> :
+                        <button onClick={this._resendInvitation.bind(this, invitation.id)} disabled={this.state.revoking ? 'disabled' : false}>
+                          {I18n.t('webapp.invitations.index.resend')}
+                        </button>}
                     </div>
                   </div>
                 ) : (<div></div>)}

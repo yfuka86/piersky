@@ -32,13 +32,13 @@ export default {
       .end((error, res) => {
         if (res.status === 200){
           let json = JSON.parse(res.text);
-          resolve();
+          resolve(res);
           Dispatcher.handleServerAction({
             type: ActionTypes.CREATE_INVITATIONS,
             json: json
           });
         } else {
-          reject();
+          reject(res);
         }
       })
     });
@@ -54,7 +54,7 @@ export default {
           let json = JSON.parse(res.text);
           resolve();
           Dispatcher.handleServerAction({
-            type: ActionTypes.RESENT_INVITATIONS,
+            type: ActionTypes.RESENT_INVITATION,
             json: json
           });
         } else {
@@ -74,7 +74,7 @@ export default {
           let json = JSON.parse(res.text);
           resolve();
           Dispatcher.handleServerAction({
-            type: ActionTypes.REVOKE_INVITATIONS,
+            type: ActionTypes.REVOKE_INVITATION,
             json: json
           });
         } else {

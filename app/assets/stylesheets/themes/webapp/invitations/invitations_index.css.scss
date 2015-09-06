@@ -1,0 +1,14 @@
+@import 'globals/config-loader';
+@import 'modules/list_table';
+@import 'modules/standard_form';
+
+.invitations-list {
+  @include list-table-expandable;
+  padding-top: 20px;
+  .option {
+    .invitation-actions {
+      padding: 10px 10px 0;
+      @include standard-form-horizontal;
+    }
+  }
+}

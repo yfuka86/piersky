@@ -2,6 +2,7 @@ import React from 'react';
 import {Link, RouteHandler} from 'react-router';
 import _ from 'lodash';
 
+import UserStore from '../../stores/user';
 import UsersList from '../../components/users/users_list';
 
 class UsersBoard extends React.Component {
@@ -13,14 +14,16 @@ class UsersBoard extends React.Component {
 
   get initialState() {
     return {
-
+      users: UserStore.getUsers()
     };
   }
 
   componentDidMount() {
+    UserStore.onChange(this.onChangeHandler);
   }
 
   componentWillUnmount() {
+    UserStore.offChange(this.onChangeHandler);
   }
 
   onChange(e) {
@@ -31,7 +34,7 @@ class UsersBoard extends React.Component {
     return (
       <div className='users-board container'>
         <div className='container-left'>
-          <UsersList users={[{id: 1, email:'yfuka86@gmail.com', userName: 'yfuka86'}]} />
+          <UsersList users={this.state.users} />
         </div>
         <RouteHandler />
         <div className='clear-fix' />

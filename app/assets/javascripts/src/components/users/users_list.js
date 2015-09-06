@@ -43,7 +43,7 @@ class UsersList extends React.Component {
                 <div className='icon-area'>
                   <UserIcon user={user} />
                 </div>
-                {user.userName}
+                {user.name || user.email}
               </li>
             </Link>
           )

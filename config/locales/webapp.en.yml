@@ -4,6 +4,7 @@ en:
       add_another: Add another
       sending: Sending . . .
       workspace: Workspace
+      error_message: 'Something went wrong, please try again'
     header:
       teams: 'Teams'
       account: 'Account'
@@ -17,10 +18,17 @@ en:
     invitations:
       index:
         title: 'Invitations'
-        accepted_at: 'accepted at'
-        sent_at: 'sent at'
+        accepted_at: 'accepted at %{time}'
+        sent_at: 'on %{time}'
         resend: 'Resend Invitation'
+        resent: 'invitation has been resent'
         revoke: 'Revoke Invitation'
+        revoked: 'Your invitation has been revoked'
+        to: 'Sent to'
+        from: 'from'
       new:
         title: 'Invite people to %{name}'
         submit: 'Send invites'
+        sent: 'Your invitations have been sent!'
+        label:
+          email: Email address

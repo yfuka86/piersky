@@ -7,6 +7,7 @@ import Constants from '../../constants/app';
 import IntegrationAction from '../../actions/integration';
 import IntegrationStore from '../../stores/integration';
 import UserStore from '../../stores/user';
+import Breadcrumb from '../../components/common/breadcrumb';
 
 import Slack from '../../components/integrations/settings/slack';
 import Github from '../../components/integrations/settings/github';
@@ -15,7 +16,6 @@ const Settings = {
   Slack: Slack,
   Github: Github
 }
-
 
 class IntegrationsSetting extends React.Component {
 
@@ -54,18 +54,10 @@ class IntegrationsSetting extends React.Component {
 
     return integration.id ?
       <div className='container-main'>
-        <div className='breadcrumb'>
-          <div className='link'>
-            <Link to='integrations-show' params={{id: integration.id}} >
-              {I18n.t('integration.breadcrumb.show')}
-            </Link>
-          </div>
-          <div className='current'>
-            <span>
-              {I18n.t('integration.breadcrumb.settings')}
-            </span>
-          </div>
-        </div>
+        <Breadcrumb links={[(<Link to='integrations-show' params={{id: integration.id}}>
+                            {I18n.t('integration.breadcrumb.show')}
+                          </Link>)]}
+                    current={I18n.t('integration.breadcrumb.settings')} />
         <div className='integrations-setting'>
           <div className='icon-area'>
             <span className={['icon', changeCase.snakeCase(integration.type) + '-logo'].join(' ')} />
