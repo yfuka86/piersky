@@ -3,6 +3,7 @@ import {Link, RouteHandler} from 'react-router';
 import _ from 'lodash';
 
 import SessionAction from '../actions/session';
+import IdentityAction from '../actions/identity';
 import Loading from '../components/common/loading';
 import Balloon from '../components/common/balloon';
 import Header from '../components/header';
@@ -23,7 +24,7 @@ class App extends React.Component {
 
   componentDidMount() {
     Promise
-    .all([SessionAction.loadUser(), SessionAction.loadTeam()])
+    .all([SessionAction.loadUser(), SessionAction.loadTeam(), IdentityAction.load()])
     .then(()=> {
       this.setState({hasAppInitialized: true});
     });

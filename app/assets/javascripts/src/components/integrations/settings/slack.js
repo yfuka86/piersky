@@ -1,7 +1,9 @@
 import React from 'react';
 import _ from 'lodash';
 
-class Slack extends React.Component {
+import SettingBase from './setting_base';
+
+class Slack extends SettingBase {
 
   constructor(props){
     super(props);

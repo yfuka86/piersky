@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20150825170018) do
   add_index "activities", ["integration_id"], name: "index_activities_on_integration_id", using: :btree
 
   create_table "identities", force: :cascade do |t|
-    t.integer  "user_team_id",  limit: 4
+    t.integer  "user_team_id",  limit: 4,                   null: false
     t.string   "type",          limit: 255,                 null: false
     t.string   "primary_key",   limit: 255,                 null: false
     t.string   "secondary_key", limit: 255, default: ""
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20150825170018) do
     t.datetime "updated_at",                                null: false
   end
 
-  add_index "identities", ["user_team_id"], name: "index_identities_on_user_team_id", using: :btree
+  add_index "identities", ["user_team_id", "type"], name: "index_identities_on_user_team_id_and_type", unique: true, using: :btree
 
   create_table "integration_settings", force: :cascade do |t|
     t.integer "integration_id", limit: 4

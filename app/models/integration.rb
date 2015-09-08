@@ -28,7 +28,9 @@ class Integration < ActiveRecord::Base
     #please override
     user_team = UserTeam.find_by(user: self.user, team: self.team)
     klass = ('Identity::' + self.class.name.split('::')[1]).constantize
-    klass.create(user_team: user_team, is_verified: true, primary_key: primary_key, secondary_key: secondary_key)
+    unless klass.find_by(user_team: user_team)
+      klass.create(user_team: user_team, is_verified: true, primary_key: primary_key, secondary_key: secondary_key)
+    end
   end
 
   def update_setting(setting)

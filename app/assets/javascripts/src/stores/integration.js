@@ -24,6 +24,23 @@ const IntegrationStore = assign({}, BaseStore, {
     }) || {};
   },
 
+  replaceIntegration(integration) {
+    let idx = _.findIndex(this.getIntegrations(), (i) => {
+      return i.id === integration.id;
+    })
+    if (idx >= 0) {
+      this.getIntegrations()[idx] = integration;
+    }
+  },
+
+  removeIntegration(integration) {
+    let integrations = this.getIntegrations();
+    _.remove(integrations, (i)=> {
+      return parseInt(i.id, 10) === integration.id;
+    });
+    this.setIntegrations(integrations);
+  },
+
   parse(json) {
     return {
       id: json.id,
@@ -45,6 +62,11 @@ IntegrationStore.dispatchToken = Dispatcher.register(payload => {
       IntegrationStore.setIntegrations(_.map(action.json.integrations, (integrationJson) => {
         return IntegrationStore.parse(integrationJson);}
       ));
+      IntegrationStore.emitChange();
+      break;
+
+    case ActionTypes.UPDATE_INTEGRATIONS:
+      IntegrationStore.replaceIntegrations(IntegrationStore.parse(action.json));
       IntegrationStore.emitChange();
       break;
 

@@ -40,7 +40,7 @@ class IntegrationsList extends React.Component {
         {_.map(this.props.integrations, (integration) => {
           let integrationUser = UserStore.getUserById(integration.userId);
           return (
-            <Link to='integrations-show' params={{id: integration.id}} key={integration.id}>
+            <Link to='integration-statistics' params={{id: integration.id}} key={integration.id}>
               <li>
                 <div className='icon-area'>
                   <span className={['icon', changeCase.snakeCase(integration.type) + '-logo'].join(' ')} />

@@ -14,6 +14,7 @@ export default {
     LOGOUT:         Root + '/sign_out',
     USERS:          APIRoot + '/users',
     TEAMS:          APIRoot + '/teams',
+    IDENTITIES:     APIRoot + '/identities',
     INTEGRATIONS:   APIRoot + '/integrations',
     INVITATIONS:    APIRoot + '/invitations'
   },
@@ -44,6 +45,9 @@ export default {
     LOAD_USER: null,
     LOAD_TEAM: null,
 
+    //identities
+    LOAD_IDENTITIES: null,
+
     //invitation
     LOAD_INVITATIONS: null,
     CREATE_INVITATIONS: null,
@@ -52,6 +56,7 @@ export default {
 
     //integration
     LOAD_INTEGRATIONS: null,
+    UPDATE_INTEGRATION: null,
 
     //balloon
     SHOW_BALLOON: null,

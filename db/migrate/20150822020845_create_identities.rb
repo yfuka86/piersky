@@ -1,7 +1,7 @@
 class CreateIdentities < ActiveRecord::Migration
   def change
     create_table :identities do |t|
-      t.belongs_to :user_team, index: true
+      t.integer :user_team_id, null: false
       t.string :type, null: false
       t.string :primary_key, null: false
       t.string :secondary_key, default: ""
@@ -9,5 +9,6 @@ class CreateIdentities < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+    add_index :identities, [:user_team_id, :type], unique: true, using: :btree
   end
 end

@@ -1,6 +1,6 @@
 import request from 'superagent';
 import Dispatcher from '../dispatcher';
-import {APIRoot, APIEndpoints, ActionTypes} from '../constants/app';
+import {ActionTypes, APIEndpoints, CSRFToken} from '../constants/app';
 
 export default {
   load() {
@@ -17,6 +17,27 @@ export default {
           });
         } else {
           reject();
+        }
+      })
+    });
+  },
+
+  update(params) {
+    return new Promise((resolve, reject) => {
+      request
+      .put(`${APIEndpoints.INTEGRATIONS}/${params.id}`)
+      .set('X-CSRF-Token', CSRFToken())
+      .send(params)
+      .end((error, res) => {
+        if (res.status === 200){
+          let json = JSON.parse(res.text);
+          resolve(res);
+          Dispatcher.handleServerAction({
+            type: ActionTypes.UPDATE_INTEGRATION,
+            json: json
+          });
+        } else {
+          reject(res);
         }
       })
     });

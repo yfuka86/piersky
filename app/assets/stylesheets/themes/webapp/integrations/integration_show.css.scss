@@ -1,0 +1,26 @@
+@import 'globals/config-loader';
+@import 'modules/center_container';
+
+.integration-show {
+  position: relative;
+  .icon-area {
+    position: absolute;
+    top: 30px;
+    display: inline-block;
+    .icon {
+      @include icon(30px, 30px);
+    }
+  }
+  .title {
+    margin-left: 45px;
+    display: inline-block;
+  }
+  .sky-tab-area .sky-tab-panel {
+    .section-title {
+      @include lato-normal;
+      font-size: 24px;
+      padding: 0;
+      color: $grey600;
+    }
+  }
+}
