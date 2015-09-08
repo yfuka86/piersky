@@ -24,6 +24,29 @@ class Integration::Github < Integration
     gh_client.pull_requests
   end
 
+  def create_external_webhook(webhook)
+    self.gh_client.repos.hooks.create *webhook.name.split('/'), {
+      name:  'web',
+      active: true,
+      events: [:issues, :pull_request],
+      config: { url: webhook.webhook_url }
+    }
+  end
+
+  def destroy_external_webhook(webhook)
+    self.gh_client.repos.hooks.delete *webhook.name.split('/'), webhook.external_uid
+  rescue Github::Error::NotFound
+  end
+
+  def execute_webhook(payload)
+    # https://developer.github.com/v3/activity/events/types/
+    if payload["zen"].present?
+      self.update_attribute(:external_uid, payload["hook_id"])
+    elsif payload["action"] == "opened"
+      issue_params = payload["issue"] || payload["pull_request"]
+    end
+  end
+
   private
 
   def gh_client

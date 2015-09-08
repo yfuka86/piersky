@@ -1,33 +1,34 @@
 class Api::IntegrationsController < Api::BaseController
-  before_action :set_integration, only: [:update, :destroy]
+  before_action :set_integration, only: [:update, :destroy, :statistics]
 
   def index
     @integrations = valid_team.integrations
     render json: @integrations, each_serializer: Api::IntegrationSerializer
   end
 
+  def show
+    render json: @integration, serializer: "Api::#{object.type}Serializer".constantize, root: nil, detail_required: true
+  end
+
   def update
-    render_error t('api.error.integrations.not_found'), status: :bad_request and return unless @integration
     @integration.update_setting(params[:integration][:setting])
-    render json: @integration, serializer: Api::IntegrationSerializer, root: nil
+    render json: @integration, serializer: Api::IntegrationSerializer, root: nil, detail_required: true
   rescue => ex
     fail ex
-    render_error t('api.errors.integrations.import_failed'), status: :internal_server_error
+    render_error t('integration.api.errors.update_failed'), status: :internal_server_error
   end
 
   def destroy
-    team = valid_user.teams.find_by(external_cid: params[:team_id])
-    integration = team.integrations.find_by(id: params[:id])
-    if integration.destroy
-      render json: integration, serializer: Api::IntegrationSerializer, root: nil
+    if @integration.destroy
+      render json: @integration, serializer: Api::IntegrationSerializer, root: nil
     else
-      render_error t('api.errors.integrations.destroy_failed'), status: :internal_server_error
+      render_error t('integration.api.errors.destroy_failed'), status: :internal_server_error
     end
   end
 
   private
   def set_integration
-    team = valid_user.teams.find_by(external_cid: params[:integration][:team_id])
-    @integration = team.integrations.find_by(id: params[:id])
+    @integration = valid_team.integrations.find_by(id: params[:id])
+    render_error t('api.error.integrations.not_found'), status: :bad_request and return unless @integration
   end
 end

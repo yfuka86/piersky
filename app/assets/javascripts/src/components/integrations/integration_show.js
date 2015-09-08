@@ -7,6 +7,7 @@ import IntegrationAction from '../../actions/integration';
 import IntegrationStore from '../../stores/integration';
 import UserStore from '../../stores/user';
 import RouteStore from '../../stores/route';
+import Loading from '../../components/common/loading';
 
 class IntegrationShow extends React.Component {
 
@@ -17,17 +18,33 @@ class IntegrationShow extends React.Component {
   }
 
   get initialState() {
-    return _.extend({
-      integration: IntegrationStore.getIntegrationById(this.props.params.id)
-    });
+    return this.getParamsFromStores(this.props);
+  }
+
+  getParamsFromStores(props) {
+    let integration = IntegrationStore.getIntegrationById(props.params.id)
+    return {
+      integration: integration
+    };
   }
 
   componentDidMount() {
     IntegrationStore.onChange(this.onChangeHandler);
+    this._loadIntegrationDetails(this.props.params.id);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({integration: IntegrationStore.getIntegrationById(nextProps.params.id)})
+    this.setState(this.getParamsFromStores(nextProps));
+    this._loadIntegrationDetails(nextProps.params.id);
+  }
+
+  _loadIntegrationDetails(id) {
+    if (!this.state.integration.details) {
+      this.setState({loading: true});
+      IntegrationAction.show(id).then((res) => {
+        this.setState({loading: false});
+      })
+    }
   }
 
   componentWillUnmount() {
@@ -35,7 +52,7 @@ class IntegrationShow extends React.Component {
   }
 
   onChange(e) {
-    this.setState(this.InitialState);
+    this.setState(this.initialState);
   }
 
   render() {
@@ -43,7 +60,7 @@ class IntegrationShow extends React.Component {
     let integrationUser = UserStore.getUserById(integration.userId);
     return (
       <div className='container-main'>
-        {integration.id ?
+        {this.state.loading ? <Loading /> :
           <div className='integration-show'>
             <div className='icon-area'>
               <span className={['icon', changeCase.snakeCase(integration.type) + '-logo'].join(' ')} />
@@ -72,8 +89,7 @@ class IntegrationShow extends React.Component {
                 <RouteHandler integration={integration} />
               </div>
             </div>
-          </div>
-        : <span/>}
+          </div>}
       </div>
     );
   }

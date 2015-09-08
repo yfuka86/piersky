@@ -24,12 +24,20 @@ const IntegrationStore = assign({}, BaseStore, {
     }) || {};
   },
 
+  addIntegration(integration) {
+    let integrations = this.getIntegrations();
+    integrations.push(integration);
+    this.setIntegrations(integrations);
+  },
+
   replaceIntegration(integration) {
     let idx = _.findIndex(this.getIntegrations(), (i) => {
       return i.id === integration.id;
     })
     if (idx >= 0) {
       this.getIntegrations()[idx] = integration;
+    } else {
+      this.addIntegration(integration);
     }
   },
 
@@ -46,7 +54,8 @@ const IntegrationStore = assign({}, BaseStore, {
       id: json.id,
       type: changeCase.pascalCase(json.type.split('::')[1]),
       userId: parseInt(json.user_id, 10),
-      createdAt: moment(json.created_at)
+      createdAt: moment(json.created_at),
+      details: json.details
     }
   }
 
@@ -65,8 +74,18 @@ IntegrationStore.dispatchToken = Dispatcher.register(payload => {
       IntegrationStore.emitChange();
       break;
 
-    case ActionTypes.UPDATE_INTEGRATIONS:
+    case ActionTypes.LOAD_INTEGRATION:
       IntegrationStore.replaceIntegrations(IntegrationStore.parse(action.json));
+      IntegrationStore.emitChange();
+      break;
+
+    case ActionTypes.UPDATE_INTEGRATION:
+      IntegrationStore.replaceIntegrations(IntegrationStore.parse(action.json));
+      IntegrationStore.emitChange();
+      break;
+
+    case ActionTypes.DESTROY_INTEGRATION:
+      IntegrationStore.removeIntegration(IntegrationStore.parse(action.json));
       IntegrationStore.emitChange();
       break;
 

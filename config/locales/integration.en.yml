@@ -1,5 +1,9 @@
 en:
   integration:
+    api:
+      errors:
+        update_failed: 'failed to update integration'
+        destroy_failed: 'failed to remove integration'
     breadcrumb:
       settings: 'Settings'
     general:

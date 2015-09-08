@@ -36,7 +36,6 @@ class SettingBase extends React.Component {
   onSubmit(e) {
     e.stopPropagation();
     e.preventDefault();
-    var _this = this;
     IntegrationAction.update({
       id: this.props.integration.id,
       integration: {

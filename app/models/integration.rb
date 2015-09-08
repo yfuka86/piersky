@@ -2,6 +2,7 @@ class Integration < ActiveRecord::Base
   include Concerns::UserRelatable
   belongs_to :team
   has_one :setting, class_name: "::IntegrationSetting", dependent: :destroy
+  has_many :webhooks, class_name: "::IntegrationWebhook", dependent: :destroy
   has_many :activities
 
   after_create :create_setting!
@@ -34,6 +35,18 @@ class Integration < ActiveRecord::Base
   end
 
   def update_setting(setting)
+    # please override
+  end
+
+  def create_external_webhook(webhook)
+    # please override
+  end
+
+  def destroy_external_webhook(webhook)
+    # please override
+  end
+
+  def execute_webhook(payload)
     # please override
   end
 end

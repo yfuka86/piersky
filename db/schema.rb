@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20150825170018) do
   add_index "identities", ["user_team_id", "type"], name: "index_identities_on_user_team_id_and_type", unique: true, using: :btree
 
   create_table "integration_settings", force: :cascade do |t|
-    t.integer "integration_id", limit: 4
+    t.integer "integration_id", limit: 4,   null: false
     t.string  "webhook_token",  limit: 255
   end
 

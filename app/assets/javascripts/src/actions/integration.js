@@ -22,6 +22,25 @@ export default {
     });
   },
 
+  show(id) {
+    return new Promise((resolve, reject) => {
+      request
+      .get(`${APIEndpoints.INTEGRATIONS}/${id}`)
+      .end((error, res) => {
+        if (res.status === 200){
+          let json = JSON.parse(res.text);
+          resolve();
+          Dispatcher.handleServerAction({
+            type: ActionTypes.LOAD_INTEGRATION,
+            json: json
+          });
+        } else {
+          reject();
+        }
+      })
+    });
+  },
+
   update(params) {
     return new Promise((resolve, reject) => {
       request

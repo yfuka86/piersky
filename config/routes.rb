@@ -42,7 +42,7 @@ Rails.application.routes.draw do
     end
 
     resources :identities, only: [:index]
-    resources :integrations, only: [:index, :update, :destroy]
+    resources :integrations, only: [:index, :show, :update, :destroy]
     resources :invitations, only: [:index, :create, :update, :destroy]
 
     get 'github_wrapper', to: 'github_wrapper#index'

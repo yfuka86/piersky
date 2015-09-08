@@ -36,9 +36,9 @@ class IntegrationSettings extends React.Component {
     let integrationUser = UserStore.getUserById(integration.userId);
 
     return integration.id ?
-      <div className='integrations-setting'>
+      <div className='integration-settings'>
         <p className='section-title'>{I18n.t('integration.board.settings')}</p>
-        {IntegrationSetting ? <IntegrationSettings integration={integration} /> : <span/>}
+        {IntegrationSettings ? <IntegrationSettings integration={integration} /> : <span/>}
       </div> : <span/>
   }
 }

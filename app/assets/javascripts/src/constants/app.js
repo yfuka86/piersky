@@ -56,7 +56,9 @@ export default {
 
     //integration
     LOAD_INTEGRATIONS: null,
+    LOAD_INTEGRATION: null,
     UPDATE_INTEGRATION: null,
+    DESTROY_INTEGRATION: null,
 
     //balloon
     SHOW_BALLOON: null,
