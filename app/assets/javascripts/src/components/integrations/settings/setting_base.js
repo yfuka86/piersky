@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 
 import IntegrationAction from '../../../actions/integration';
+import NotifierInForm from '../../../components/common/notifier_in_form';
 
 class SettingBase extends React.Component {
   static get defaultProps() {
@@ -47,48 +48,32 @@ class SettingBase extends React.Component {
     })
   }
 
-  render() {
+  render(element) {
     return  <form className='integration-settings-form' onSubmit={this._onSubmit}>
-      <p className='instruction'>
-        {I18n.t('integration.github.instructions.general')}<br/>
-        {I18n.t('integration.github.instructions.connect_project')}
-      </p>
       <NotifierInForm messages={this.state.messages} />
-
-      <div className='connection-settings'>
-        <div className='project-settings field'>
-          <ProjectSelect team={_this.props.team}
-                         onChange={_this._onChangeProject}
-                         value={_this.state.setting.project_id}/>
-          <div className='repository-settings'>
-            {_this.state.setting.repositories.map(function(repository){
-              return (
-                <div className='repository-select'>
-                  <select key={repository.uid} onChange={_this._onChangeRepositories.bind(null, repository.uid)} value={repository.name}>
-                    <option value='-1'>{I18n.t('integration.github.choose_repository')}</option>
-                    {integration.setting.syncable_repositories.map(function (name) {
-                      return <option key={name} value={name}>{name}</option>
-                    })}
-                  </select>
-                </div>);
-            })}
-            <div className='repository-select'>
-              <select onChange={_this._onChangeRepositories.bind(null, null)} value={-1}>
-                <option value='-1'>{I18n.t('integration.github.choose_repository')}</option>
-                {integration.setting.syncable_repositories.map(function (name) {
-                  return <option key={name} value={name}>{name}</option>
-                })}
-              </select>
-            </div>
-          </div>
-        </div>
+      <p className='title-label'>
+        {I18n.t('integration.settings.label.label')}
+      </p>
+      <div className='label'>
+        {I18n.t('integration.settings.description.label')}
+      </div>
+      <div className='field'>
+        <input />
       </div>
 
+      {element}
+
+      <div className='label'>
+      </div>
       <div className='field'>
         <button type="submit">{I18n.t('integration.general.save')}</button>
       </div>
+      <hr/>
+
+      <div className='label'>
+      </div>
       <div className='field'>
-        <button type='button' onClick={this._removeIntegration} disabled={_this.state.disableButtons ? 'disabled' : false}>
+        <button type='button' className='button-red' onClick={this.removeIntegration} disabled={this.state.disableButtons ? 'disabled' : false}>
           {I18n.t('integration.general.remove')}
         </button>
       </div>

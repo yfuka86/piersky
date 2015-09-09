@@ -75,12 +75,12 @@ IntegrationStore.dispatchToken = Dispatcher.register(payload => {
       break;
 
     case ActionTypes.LOAD_INTEGRATION:
-      IntegrationStore.replaceIntegrations(IntegrationStore.parse(action.json));
+      IntegrationStore.replaceIntegration(IntegrationStore.parse(action.json));
       IntegrationStore.emitChange();
       break;
 
     case ActionTypes.UPDATE_INTEGRATION:
-      IntegrationStore.replaceIntegrations(IntegrationStore.parse(action.json));
+      IntegrationStore.replaceIntegration(IntegrationStore.parse(action.json));
       IntegrationStore.emitChange();
       break;
 

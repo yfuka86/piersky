@@ -1,5 +1,5 @@
 class Api::IntegrationsController < Api::BaseController
-  before_action :set_integration, only: [:update, :destroy, :statistics]
+  before_action :set_integration, only: [:show, :update, :destroy]
 
   def index
     @integrations = valid_team.integrations
@@ -7,7 +7,7 @@ class Api::IntegrationsController < Api::BaseController
   end
 
   def show
-    render json: @integration, serializer: "Api::#{object.type}Serializer".constantize, root: nil, detail_required: true
+    render json: @integration, serializer: Api::IntegrationSerializer, root: nil, detail_required: true
   end
 
   def update

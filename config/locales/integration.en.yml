@@ -10,6 +10,8 @@ en:
       connect: 'Connect'
       no_integrations: 'No integrations to show.'
       setup: 'Would you like to setup?'
+      save: 'Save Integration'
+      remove: 'Remove Integration'
       settings_saved: 'Integration settings have been saved'
     board:
       index: 'Integration Dashboard'
@@ -23,6 +25,11 @@ en:
       tab:
         stats: 'Stats'
         settings: 'Settings'
+    settings:
+      label:
+        label: 'Descriptive Label'
+      description:
+        label: 'You can use this label to explain extra context of each integration'
     wunderlist:
       name: 'Wunderlist'
     asana:

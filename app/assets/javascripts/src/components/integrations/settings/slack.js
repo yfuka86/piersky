@@ -23,7 +23,7 @@ class Slack extends SettingBase {
   }
 
   render() {
-    return (
+    return super.render(
       <div className='slack-settings'>
       </div>
     );
