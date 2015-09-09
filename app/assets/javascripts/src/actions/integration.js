@@ -60,5 +60,25 @@ export default {
         }
       })
     });
+  },
+
+  destroy(id) {
+    return new Promise((resolve, reject) => {
+      request
+      .del(APIEndpoints.INTEGRATION + '/' + id)
+      .set('X-CSRF-Token', CSRFToken())
+      .end((error, res) => {
+        if (res.status === 200){
+          let json = JSON.parse(res.text);
+          resolve();
+          Dispatcher.handleServerAction({
+            type: ActionTypes.DESTROY_INTEGRATION,
+            json: json
+          });
+        } else {
+          reject();
+        }
+      })
+    });
   }
 }

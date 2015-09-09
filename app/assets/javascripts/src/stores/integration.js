@@ -53,6 +53,7 @@ const IntegrationStore = assign({}, BaseStore, {
     return {
       id: json.id,
       type: changeCase.pascalCase(json.type.split('::')[1]),
+      label: json.label,
       userId: parseInt(json.user_id, 10),
       createdAt: moment(json.created_at),
       details: json.details

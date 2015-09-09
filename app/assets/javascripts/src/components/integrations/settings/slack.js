@@ -5,23 +5,6 @@ import SettingBase from './setting_base';
 
 class Slack extends SettingBase {
 
-  constructor(props){
-    super(props);
-    this.state = this.initialState
-  }
-
-  get initialState() {
-    return {
-
-    };
-  }
-
-  componentDidMount() {
-  }
-
-  componentWillUnmount() {
-  }
-
   render() {
     return super.render(
       <div className='slack-settings'>

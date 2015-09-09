@@ -12,7 +12,7 @@
     clear: both;
     .title-label {
       @include lato-normal;
-      color: $grey600;
+      color: $grey700;
       font-size: 20px;
       padding: 10px 0;
     }
@@ -22,7 +22,7 @@
       margin-bottom: 32px;
       padding-right: 20px;
       @include lato-thin;
-      color: $grey700;
+      color: $grey800;
       font-size: 16px;
     }
     .field {

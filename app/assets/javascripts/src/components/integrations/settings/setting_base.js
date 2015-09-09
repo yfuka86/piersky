@@ -23,33 +23,50 @@ class SettingBase extends React.Component {
   }
 
   get initialState() {
+    let integration = this.props.integration;
     return {
-
+      id: integration.id,
+      integration: {
+        label: integration.label,
+        settings: this.getSettingsFromIntegration()
+      }
     };
   }
 
-  componentDidMount() {
+  getSettingsFromIntegration() {
+    //please override
+    return {};
   }
 
-  componentWillUnmount() {
+  removeIntegration(e) {
+    if (window.confirm(I18n.t('integration.general.confirm_remove'))) {
+      this.setState({syncing: true});
+      IntegrationAction.destroy(this.props.integration.id).then(() => {
+        this.setState({syncing: false, messages: {infos: [I18n.t('integration.general.removed')]}});
+      })
+    }
+  }
+
+  changeLabel(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.setState({integration: _.assign({}, this.state.integration, {label: e.target.value})});
   }
 
   onSubmit(e) {
     e.stopPropagation();
     e.preventDefault();
+    this.setState({syncing: true});
     IntegrationAction.update({
-      id: this.props.integration.id,
-      integration: {
-        team_id: this.props.team.id,
-        setting: this.state.setting
-      }
-    }).then(function() {
-      _this.setState({messages: {successes: [I18n.t('integration.general.settings_saved')]}})
+      id: this.state.id,
+      integration: this.state.integration
+    }).then(() => {
+      this.setState({syncing: false, messages: {successes: [I18n.t('integration.general.settings_saved')]}});
     })
   }
 
   render(element) {
-    return  <form className='integration-settings-form' onSubmit={this._onSubmit}>
+    return  <form className='integration-settings-form' onSubmit={this.onSubmit.bind(this)}>
       <NotifierInForm messages={this.state.messages} />
       <p className='title-label'>
         {I18n.t('integration.settings.label.label')}
@@ -58,7 +75,7 @@ class SettingBase extends React.Component {
         {I18n.t('integration.settings.description.label')}
       </div>
       <div className='field'>
-        <input />
+        <input onChange={this.changeLabel.bind(this)} value={this.state.integration.label} maxLength={20} />
       </div>
 
       {element}
@@ -68,12 +85,12 @@ class SettingBase extends React.Component {
       <div className='field'>
         <button type="submit">{I18n.t('integration.general.save')}</button>
       </div>
-      <hr/>
+      <hr className='attention' />
 
       <div className='label'>
       </div>
       <div className='field'>
-        <button type='button' className='button-red' onClick={this.removeIntegration} disabled={this.state.disableButtons ? 'disabled' : false}>
+        <button type='button' className='button-red' onClick={this.removeIntegration.bind(this)} disabled={this.state.disableButtons ? 'disabled' : false}>
           {I18n.t('integration.general.remove')}
         </button>
       </div>

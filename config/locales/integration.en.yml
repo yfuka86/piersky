@@ -12,6 +12,8 @@ en:
       setup: 'Would you like to setup?'
       save: 'Save Integration'
       remove: 'Remove Integration'
+      removed: 'Integration has been successfully removed'
+      confirm_remove: 'Are you sure you want to remove this integration? This operation cannot be undone.'
       settings_saved: 'Integration settings have been saved'
     board:
       index: 'Integration Dashboard'
@@ -29,7 +31,7 @@ en:
       label:
         label: 'Descriptive Label'
       description:
-        label: 'You can use this label to explain extra context of each integration'
+        label: 'You can use this label to explain extra context of each integration.'
     wunderlist:
       name: 'Wunderlist'
     asana:
@@ -38,3 +40,7 @@ en:
       name: 'Slack'
     github:
       name: 'Github'
+      repository:
+        label: 'Repositories'
+        description: 'Choose repositories we should track and analyze.'
+        placeholder: 'Choose a repository...'

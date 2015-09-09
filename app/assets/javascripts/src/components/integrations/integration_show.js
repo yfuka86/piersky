@@ -40,10 +40,7 @@ class IntegrationShow extends React.Component {
 
   _loadIntegrationDetails(id) {
     if (!IntegrationStore.getIntegrationById(id).details) {
-      this.setState({loading: true});
-      IntegrationAction.show(id).then((res) => {
-        this.setState({loading: false});
-      })
+      IntegrationAction.show(id)
     }
   }
 
@@ -60,7 +57,7 @@ class IntegrationShow extends React.Component {
     let integrationUser = UserStore.getUserById(integration.userId);
     return (
       <div className='container-main'>
-        {this.state.loading || !integration.id ? <Loading /> :
+        {!integration.details ? <Loading /> :
           <div className='integration-show'>
             <div className='icon-area'>
               <span className={['icon', changeCase.snakeCase(integration.type) + '-logo'].join(' ')} />

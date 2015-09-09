@@ -57,11 +57,12 @@ ActiveRecord::Schema.define(version: 20150825170018) do
   create_table "integrations", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
     t.integer  "team_id",    limit: 4
-    t.string   "type",       limit: 255, null: false
+    t.string   "type",       limit: 255,              null: false
+    t.string   "label",      limit: 20,  default: ""
     t.string   "token",      limit: 255
     t.string   "secret",     limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   add_index "integrations", ["team_id"], name: "index_integrations_on_team_id", using: :btree

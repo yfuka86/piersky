@@ -1,5 +1,5 @@
 class Api::IntegrationSerializer < ActiveModel::Serializer
-  attributes :id, :type, :user_id, :created_at, :details
+  attributes :id, :type, :user_id, :created_at, :label, :details
 
   def details
     if options[:detail_required]

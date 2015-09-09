@@ -11,6 +11,7 @@ class Api::IntegrationsController < Api::BaseController
   end
 
   def update
+    binding.pry
     @integration.update_setting(params[:integration][:setting])
     render json: @integration, serializer: Api::IntegrationSerializer, root: nil, detail_required: true
   rescue => ex
@@ -19,6 +20,7 @@ class Api::IntegrationsController < Api::BaseController
   end
 
   def destroy
+    binding.pry
     if @integration.destroy
       render json: @integration, serializer: Api::IntegrationSerializer, root: nil
     else

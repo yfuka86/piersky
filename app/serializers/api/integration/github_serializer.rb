@@ -1,12 +1,12 @@
 class Api::Integration::GithubSerializer < ActiveModel::Serializer
 
-  attributes :synced_repositories, :syncable_repositories
+  attributes :syncable_repositories, :repositories
 
   def syncable_repositories
     object.fetch_syncables
   end
 
-  def synced_repositories
+  def repositories
     object.webhooks.pluck(:name)
   end
 end
