@@ -45,7 +45,7 @@ class IntegrationsList extends React.Component {
                 <div className='icon-area'>
                   <span className={['icon', changeCase.snakeCase(integration.type) + '-logo'].join(' ')} />
                 </div>
-                {integration.type}
+                {`${integration.type}${(integration.label.length > 0 ? ` : ${integration.label}` : '')}`}
                 <div className='description'>
                   <p className='user-name'>
                     {integrationUser.name || integrationUser.email}

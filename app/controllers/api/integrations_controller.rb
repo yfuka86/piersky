@@ -11,8 +11,11 @@ class Api::IntegrationsController < Api::BaseController
   end
 
   def update
-    binding.pry
-    @integration.update_setting(params[:integration][:setting])
+    ActiveRecord::Base.transaction do
+      @integration.assign_attributes(integration_params)
+      @integration.save!
+      @integration.update_setting(params[:integration][:settings])
+    end
     render json: @integration, serializer: Api::IntegrationSerializer, root: nil, detail_required: true
   rescue => ex
     fail ex
@@ -32,5 +35,9 @@ class Api::IntegrationsController < Api::BaseController
   def set_integration
     @integration = valid_team.integrations.find_by(id: params[:id])
     render_error t('api.error.integrations.not_found'), status: :bad_request and return unless @integration
+  end
+
+  def integration_params
+    params.require(:integration).permit(:label)
   end
 end

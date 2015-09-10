@@ -4,14 +4,15 @@ class Integration::Github < Integration
   end
 
   def update_setting(params)
+    return if !params
     ActiveRecord::Base.transaction do
       if repositories = params[:repositories].map{|repository| repository[:name]}
         repositories.each do |repository|
-          self.setting.webhooks.create(uid: SecureRandom.hex, name: repository) unless self.setting.webhooks.exists?(name: repository)
+          self.webhooks.create(uid: SecureRandom.hex, name: repository) unless self.webhooks.exists?(name: repository)
         end
-        self.setting.webhooks.each { |webhook| webhook.destroy unless webhook.name.in?(repositories) }
+        self.webhooks.each { |webhook| webhook.destroy unless webhook.name.in?(repositories) }
       else
-        self.setting.webhooks.each(&:destroy)
+        self.webhooks.each(&:destroy)
       end
     end
   end
@@ -25,7 +26,7 @@ class Integration::Github < Integration
   end
 
   def create_external_webhook(webhook)
-    self.gh_client.repos.hooks.create *webhook.name.split('/'), {
+    gh_client.repos.hooks.create *webhook.name.split('/'), {
       name:  'web',
       active: true,
       events: [:issues, :pull_request],
@@ -34,7 +35,7 @@ class Integration::Github < Integration
   end
 
   def destroy_external_webhook(webhook)
-    self.gh_client.repos.hooks.delete *webhook.name.split('/'), webhook.external_uid
+    gh_client.repos.hooks.delete *webhook.name.split('/'), webhook.external_uid
   rescue Github::Error::NotFound
   end
 
