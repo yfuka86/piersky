@@ -51,7 +51,7 @@
 
 .notification-container {
   width: 100%;
-  position: absolute;
+  position: fixed;
   top: $HEADER_HEIGHT + 10px;
   left: 0;
   right: 0;

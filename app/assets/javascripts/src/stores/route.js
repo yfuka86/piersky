@@ -36,7 +36,9 @@ RouteStore.dispatchToken = Dispatcher.register(payload => {
       break;
 
     case ActionTypes.REDIRECT:
-      RouteStore.getRouter().transitionTo(action.route, action.params, action.query);
+      _.delay(() => {
+        RouteStore.getRouter().transitionTo(action.route, action.params, action.query);
+      });
       break;
 
     default:

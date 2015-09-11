@@ -22,7 +22,7 @@ class Notifier extends React.Component {
             {
               _.map(notifications, (notification, index) => {
                 return (
-                  <div className='notification-message-box' key={`${str}-${index}`}>
+                  <div className='message' key={`${str}-${index}`}>
                     {notification}
                   </div>
                 );

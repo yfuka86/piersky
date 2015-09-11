@@ -4,6 +4,7 @@ en:
       errors:
         update_failed: 'failed to update integration'
         destroy_failed: 'failed to remove integration'
+        not_found: "Couldn't find the integration"
     breadcrumb:
       settings: 'Settings'
     general:

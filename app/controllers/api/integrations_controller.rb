@@ -33,7 +33,7 @@ class Api::IntegrationsController < Api::BaseController
   private
   def set_integration
     @integration = valid_team.integrations.find_by(id: params[:id])
-    render_error t('api.error.integrations.not_found'), status: :bad_request and return unless @integration
+    render_error t('integration.api.errors.not_found'), status: :bad_request and return unless @integration
   end
 
   def integration_params

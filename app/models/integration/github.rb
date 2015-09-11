@@ -4,7 +4,7 @@ class Integration::Github < Integration
   end
 
   def update_setting(params)
-    return if !params
+    return if !params || !params[:repositories]
     ActiveRecord::Base.transaction do
       if repositories = params[:repositories].map{|repository| repository[:name]}
         repositories.each do |repository|

@@ -33,8 +33,8 @@ ViewStore.dispatchToken = Dispatcher.register(payload => {
   switch(action.type) {
 
     case ActionTypes.SHOW_NOTIFICATION:
-      RouteStore.setMessages(action.messages);
-      RouteStore.emitChange();
+      ViewStore.setMessages(action.messages);
+      ViewStore.emitChange();
       break;
 
     default:
