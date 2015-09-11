@@ -85,7 +85,7 @@ IntegrationStore.dispatchToken = Dispatcher.register(payload => {
       IntegrationStore.emitChange();
       break;
 
-    case ActionTypes.DESTROY_INTEGRATION:
+    case ActionTypes.REMOVE_INTEGRATION:
       IntegrationStore.removeIntegration(IntegrationStore.parse(action.json));
       IntegrationStore.emitChange();
       break;

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, DefaultRoute, NotFound} from 'react-router';
+import {Route, DefaultRoute, NotFound, Redirect} from 'react-router';
 import App from './components/app';
 import Home from './components/home';
 import IntegrationsBoard from './components/integrations/integrations_board';
@@ -26,6 +26,7 @@ let routes = (
         <Route name='integrations-index' handler={IntegrationsIndex} path='index' />
         <Route name='integrations-new' handler={IntegrationsNew} path='new' />
         <Route name='integration-show' handler={IntegrationShow} path=':id'>
+          <DefaultRoute handler={IntegrationStatistics} />
           <Route name='integration-statistics' handler={IntegrationStatistics} path='statistics' />
           <Route name='integration-settings' handler={IntegrationSettings} path='settings' />
         </Route>

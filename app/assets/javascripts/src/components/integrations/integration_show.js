@@ -59,6 +59,7 @@ class IntegrationShow extends React.Component {
   render() {
     let integration = this.state.integration;
     let integrationUser = UserStore.getUserById(integration.userId);
+    let lastRouteName = _.last(RouteStore.getRouteNames());
     return (
       <div className='container-main'>
         {this.state.loading || !integration.details ? <Loading /> :
@@ -75,7 +76,7 @@ class IntegrationShow extends React.Component {
 
             <div className='integration-inner sky-tab-area'>
               <ul className='sky-tab-list'>
-                <Link to='integration-statistics' params={{id: integration.id}}>
+                <Link to='integration-statistics' params={{id: integration.id}} className={lastRouteName ? '' : 'active'}>
                   <li className='sky-tab'>
                     {I18n.t('integration.show.tab.stats')}
                   </li>

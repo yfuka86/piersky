@@ -14,8 +14,8 @@ class Notifier extends React.Component {
 
   render() {
     let messages = {};
-    ['errors', 'successes', 'infos'].forEach(function(str) {
-      notifications = _this.props.messages[str];
+    ['errors', 'successes', 'infos'].forEach((str) => {
+      let notifications = this.props.messages[str];
       if (notifications && notifications.length > 0) {
         messages[str] = (
           <div className={str}>

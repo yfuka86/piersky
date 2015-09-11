@@ -62,17 +62,17 @@ export default {
     });
   },
 
-  destroy(id) {
+  remove(id) {
     return new Promise((resolve, reject) => {
       request
-      .del(APIEndpoints.INTEGRATION + '/' + id)
+      .del(`${APIEndpoints.INTEGRATIONS}/${id}`)
       .set('X-CSRF-Token', CSRFToken())
       .end((error, res) => {
         if (res.status === 200){
           let json = JSON.parse(res.text);
           resolve();
           Dispatcher.handleServerAction({
-            type: ActionTypes.DESTROY_INTEGRATION,
+            type: ActionTypes.REMOVE_INTEGRATION,
             json: json
           });
         } else {

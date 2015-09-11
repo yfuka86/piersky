@@ -20,7 +20,7 @@ const Settings = {
 class IntegrationSettings extends React.Component {
   static get defaultProps() {
     return {
-      integration: []
+      integration: {}
     };
   }
 

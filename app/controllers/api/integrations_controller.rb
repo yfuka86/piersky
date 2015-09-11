@@ -23,7 +23,6 @@ class Api::IntegrationsController < Api::BaseController
   end
 
   def destroy
-    binding.pry
     if @integration.destroy
       render json: @integration, serializer: Api::IntegrationSerializer, root: nil
     else

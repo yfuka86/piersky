@@ -58,11 +58,12 @@ export default {
     LOAD_INTEGRATIONS: null,
     LOAD_INTEGRATION: null,
     UPDATE_INTEGRATION: null,
-    DESTROY_INTEGRATION: null,
+    REMOVE_INTEGRATION: null,
 
-    //balloon
+    //view
     SHOW_BALLOON: null,
-    CLOSE_BALLOON: null
+    CLOSE_BALLOON: null,
+    SHOW_NOTIFICATION: null
   }),
 
   Colors: ['red', 'pink', 'purple', 'deeppurple', 'indigo', 'blue', 'lightblue', 'cyan', 'teal', 'green',

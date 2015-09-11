@@ -2,6 +2,8 @@ import React from 'react';
 import _ from 'lodash';
 
 import IntegrationAction from '../../../actions/integration';
+import RouteAction from '../../../actions/route';
+import ViewAction from '../../../actions/view';
 import NotifierInForm from '../../../components/common/notifier_in_form';
 
 class SettingBase extends React.Component {
@@ -41,8 +43,10 @@ class SettingBase extends React.Component {
   removeIntegration(e) {
     if (window.confirm(I18n.t('integration.general.confirm_remove'))) {
       this.setState({syncing: true});
-      IntegrationAction.destroy(this.props.integration.id).then(() => {
-        this.setState({syncing: false, messages: {infos: [I18n.t('integration.general.removed')]}});
+      IntegrationAction.remove(this.props.integration.id).then(() => {
+        RouteAction.redirect('integrations-index');
+        ViewAction.showNotification({infos: [I18n.t('integration.general.removed')]})
+        this.setState({syncing: false});
       })
     }
   }
@@ -83,14 +87,14 @@ class SettingBase extends React.Component {
       <div className='label'>
       </div>
       <div className='field'>
-        <button type="submit">{I18n.t('integration.general.save')}</button>
+        <button type="submit" disabled={this.state.syncing ? 'disabled' : false}>{I18n.t('integration.general.save')}</button>
       </div>
       <hr className='attention' />
 
       <div className='label'>
       </div>
       <div className='field'>
-        <button type='button' className='button-red' onClick={this.removeIntegration.bind(this)} disabled={this.state.disableButtons ? 'disabled' : false}>
+        <button type='button' className='button-red' onClick={this.removeIntegration.bind(this)} disabled={this.state.syncing ? 'disabled' : false}>
           {I18n.t('integration.general.remove')}
         </button>
       </div>

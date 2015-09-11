@@ -8,14 +8,14 @@ import BaseStore from '../stores/base';
 const RouteStore = assign({}, BaseStore, {
 
   getRouter() {
-    window.PierSky.Router;
+    return window.PierSky.Router;
   },
 
   getRouteNames() {
     if (!this.get('routeNames')) {
       this.setRouteNames([]);
     }
-    this.get('routeNames');
+    return this.get('routeNames');
   },
 
   setRouteNames(names) {
@@ -36,7 +36,7 @@ RouteStore.dispatchToken = Dispatcher.register(payload => {
       break;
 
     case ActionTypes.REDIRECT:
-      RouteStore.getRouter().transitionTo(action.route, action.params);
+      RouteStore.getRouter().transitionTo(action.route, action.params, action.query);
       break;
 
     default:
