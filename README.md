@@ -1,6 +1,6 @@
 PierSky ver2
 
-keep going
+# keep going
 
     cp config/database.yml.shared config/database.yml
 
@@ -24,6 +24,12 @@ keep going
 
     $ brew install ngrok
     $ ngrok 3000
+
+    or
+
+    $ gem install ultrahook
+    $ ultrahook stripe 3000
+    (should go http://www.ultrahook.com/ and set info)
     put export PIERSKY_WEBHOOK_HOST=Forwarding url in settingfile
 
 

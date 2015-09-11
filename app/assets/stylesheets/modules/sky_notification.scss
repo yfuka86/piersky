@@ -59,7 +59,7 @@
 
   z-index: $NOTIFICATION_MESSAGE_Z;
 
-  .infos {
+  .successes {
     @include message-base;
     background-color: $green50;
     border: 1px solid $green200;
@@ -77,7 +77,7 @@
     }
   }
 
-  .successes {
+  .infos {
     @include message-base;
     background-color: $blue50;
     border: 1px solid $blue200;

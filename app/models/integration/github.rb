@@ -1,4 +1,6 @@
 class Integration::Github < Integration
+  require_dependency 'activity/github'
+
   def create_identity
     super(gh_client.users.get.id)
   end
@@ -29,23 +31,18 @@ class Integration::Github < Integration
     gh_client.repos.hooks.create *webhook.name.split('/'), {
       name:  'web',
       active: true,
-      events: [:issues, :pull_request],
+      events: [:*],
       config: { url: webhook.webhook_url }
     }
   end
 
   def destroy_external_webhook(webhook)
     gh_client.repos.hooks.delete *webhook.name.split('/'), webhook.external_uid
-  rescue Github::Error::NotFound
+  rescue ::Github::Error::NotFound
   end
 
   def execute_webhook(payload)
-    # https://developer.github.com/v3/activity/events/types/
-    if payload["zen"].present?
-      self.update_attribute(:external_uid, payload["hook_id"])
-    elsif payload["action"] == "opened"
-      issue_params = payload["issue"] || payload["pull_request"]
-    end
+    Activity::Github.create_with_payload(payload)
   end
 
   private

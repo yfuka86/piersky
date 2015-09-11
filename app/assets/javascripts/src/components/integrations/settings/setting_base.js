@@ -45,7 +45,7 @@ class SettingBase extends React.Component {
       this.setState({syncing: true});
       IntegrationAction.remove(this.props.integration.id).then(() => {
         RouteAction.redirect('integrations-index');
-        ViewAction.showNotification({infos: [I18n.t('integration.general.removed')]})
+        ViewAction.showNotification({infos: [I18n.t('integration.general.removed')]});
         this.setState({syncing: false});
       })
     }
@@ -65,7 +65,8 @@ class SettingBase extends React.Component {
       id: this.state.id,
       integration: this.state.integration
     }).then(() => {
-      this.setState({syncing: false, messages: {successes: [I18n.t('integration.general.settings_saved')]}});
+      ViewAction.showNotification({successes: [I18n.t('integration.general.settings_saved')]});
+      this.setState({syncing: false});
     })
   }
 

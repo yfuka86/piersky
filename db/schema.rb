@@ -14,13 +14,15 @@
 ActiveRecord::Schema.define(version: 20150825170018) do
 
   create_table "activities", force: :cascade do |t|
-    t.string   "type",           limit: 255, null: false
+    t.string   "type",           limit: 255,             null: false
+    t.integer  "code",           limit: 4,   default: 0, null: false
     t.integer  "integration_id", limit: 4
     t.integer  "identity_id",    limit: 4
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
+  add_index "activities", ["code"], name: "index_activities_on_code", using: :btree
   add_index "activities", ["identity_id"], name: "index_activities_on_identity_id", using: :btree
   add_index "activities", ["integration_id"], name: "index_activities_on_integration_id", using: :btree
 

@@ -209,6 +209,9 @@ GEM
     rake (10.4.2)
     rdoc (4.2.0)
       json (~> 1.4)
+    redis (3.2.1)
+    redis-objects (1.2.0)
+      redis (>= 3.0.2)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
     roadie (3.0.5)
@@ -315,6 +318,8 @@ DEPENDENCIES
   rack-mini-profiler
   rails (= 4.2.3)
   rails_12factor
+  redis
+  redis-objects
   roadie-rails
   rspec-rails (~> 2.14.2)
   sass-rails (~> 5.0)

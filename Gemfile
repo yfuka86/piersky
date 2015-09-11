@@ -9,6 +9,8 @@ gem 'kaminari'
 gem 'mysql2'
 gem 'pg', group: :production
 gem 'arproxy', '0.2.0'
+gem 'redis'
+gem 'redis-objects'
 
 gem 'sdoc', '~> 0.4.0', group: :doc
 
@@ -55,7 +57,6 @@ gem 'faker'
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.2'
   gem 'factory_girl_rails', '~> 4.4.1'
-  gem 'mysql2'
   # for tracking performance
   gem 'rack-mini-profiler', require: false
 
