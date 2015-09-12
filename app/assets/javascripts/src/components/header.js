@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import SessionAction from '../actions/session';
 import SessionStore from '../stores/session';
-import DropDown from '../components/common/dropdown';
+import Dropdown from '../components/common/dropdown';
 
 class Header extends React.Component {
   constructor(props) {
