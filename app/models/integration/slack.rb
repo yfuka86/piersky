@@ -9,8 +9,6 @@ class Integration::Slack < Integration
   end
 
   def update_setting(setting)
-    return unless project = Project.find_by_id(setting[:project_id])
-    self.setting.update_attributes(project_id: project.id, synced_object: setting[:channel])
   end
 
   def channel_names

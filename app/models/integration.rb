@@ -2,6 +2,7 @@ class Integration < ActiveRecord::Base
   include Concerns::UserRelatable
   belongs_to :team
   has_one :setting, class_name: "::IntegrationSetting", dependent: :destroy
+  has_many :webhooks, class_name: "::IntegrationWebhook", dependent: :destroy
   has_many :activities
 
   after_create :create_setting!
@@ -28,10 +29,24 @@ class Integration < ActiveRecord::Base
     #please override
     user_team = UserTeam.find_by(user: self.user, team: self.team)
     klass = ('Identity::' + self.class.name.split('::')[1]).constantize
-    klass.create(user_team: user_team, is_verified: true, primary_key: primary_key, secondary_key: secondary_key)
+    unless klass.find_by(user_team: user_team)
+      klass.create(user_team: user_team, is_verified: true, primary_key: primary_key, secondary_key: secondary_key)
+    end
   end
 
   def update_setting(setting)
+    # please override
+  end
+
+  def create_external_webhook(webhook)
+    # please override
+  end
+
+  def destroy_external_webhook(webhook)
+    # please override
+  end
+
+  def execute_webhook(payload)
     # please override
   end
 end

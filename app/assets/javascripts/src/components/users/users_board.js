@@ -36,7 +36,7 @@ class UsersBoard extends React.Component {
         <div className='container-left'>
           <UsersList users={this.state.users} />
         </div>
-        <RouteHandler />
+        <RouteHandler users={this.state.users} />
         <div className='clear-fix' />
       </div>
     );

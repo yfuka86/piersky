@@ -24,6 +24,8 @@ class IntegrationsIndex extends React.Component {
         <p className='title'>{I18n.t('integration.board.index')}</p>
         <p className='subtitle'>
           {I18n.t('integration.general.no_integrations')}
+        </p>
+        <p className='subtitle'>
           <Link to='integrations-new'>
             {I18n.t('integration.general.setup')}
           </Link>

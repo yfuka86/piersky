@@ -10,11 +10,12 @@ export default {
     });
   },
 
-  redirect(route, params) {
+  redirect(route, params, query) {
     Dispatcher.handleViewAction({
       type: ActionTypes.REDIRECT,
       route: route,
-      params: params
+      params: params,
+      query: query
     });
   }
 }
