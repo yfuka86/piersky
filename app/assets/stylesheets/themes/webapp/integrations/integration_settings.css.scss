@@ -1,0 +1,38 @@
+@import 'globals/config-loader';
+@import 'modules/standard_form';
+
+.integration-settings {
+  position: relative;
+  padding: 32px;
+  .section-title {
+    margin-bottom: 16px;
+  }
+  .integration-settings-form {
+    @include standard-form-vertical;
+    clear: both;
+    .title-label {
+      @include lato-normal;
+      color: $grey700;
+      font-size: 20px;
+      padding: 10px 0;
+    }
+    .label {
+      width: 33%;
+      float: left;
+      margin-bottom: 32px;
+      padding-right: 20px;
+      @include lato-thin;
+      color: $grey800;
+      font-size: 16px;
+    }
+    .field {
+      width: 66%;
+      float: left;
+      margin-bottom: 32px;
+      padding-bottom: 0px;
+    }
+    hr {
+      clear: both;
+    }
+  }
+}

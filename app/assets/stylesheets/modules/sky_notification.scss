@@ -10,12 +10,14 @@
 @mixin message-base {
   box-sizing: border-box;
   min-width: 320px;
-  width: 100%;
+  width: 40%;
+  min-width: 600px;
   margin: 0 auto;
-  padding-bottom: 3px;
+  padding: 5px 0;
   @include transform(translateY(-120px));
   max-height: 60px;
   overflow: hidden;
+  border-radius: 5px;
 
   background-color: $grey50;
 
@@ -23,8 +25,8 @@
 
   .message {
     line-height: 20px;
-    font-size: 18px;
-    @include lato-normal;
+    font-size: 14px;
+    @include open-sans-normal;
     color: $grey900;
     vertical-align: middle;
     text-align: center;
@@ -50,33 +52,37 @@
 .notification-container {
   width: 100%;
   position: fixed;
-  top: $HEADER_HEIGHT;
-  left: 0px;
+  top: $HEADER_HEIGHT + 10px;
+  left: 0;
+  right: 0;
   height: 0;
 
   z-index: $NOTIFICATION_MESSAGE_Z;
 
-  .infos {
+  .successes {
     @include message-base;
-    background-color: $green400;
+    background-color: $green50;
+    border: 1px solid $green200;
     .message {
-      color: $white;
+      color: $green600;
     }
   }
 
   .errors {
     @include message-base;
-    background-color: $red800;
+    background-color: $red50;
+    border: 1px solid $red200;
     .message {
-      color: $white;
+      color: $red600;
     }
   }
 
-  .successes {
+  .infos {
     @include message-base;
-    background-color: $blue700;
+    background-color: $blue50;
+    border: 1px solid $blue200;
     .message {
-      color: $white;
+      color: $blue600;
     }
   }
 

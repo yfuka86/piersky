@@ -14,7 +14,6 @@ en:
       users: 'Users'
     users:
       index: 'Users Dashboard'
-      show: 'Statistics for %{name}'
     invitations:
       index:
         title: 'Invitations'

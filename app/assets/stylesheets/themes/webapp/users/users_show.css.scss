@@ -1,0 +1,11 @@
+@import 'globals/config-loader';
+@import 'modules/center_container';
+
+.users-board .users-show {
+  .identities {
+    .icon {
+      @include icon(24px, 24px);
+      margin-right: 20px;
+    }
+  }
+}
