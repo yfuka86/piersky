@@ -41,7 +41,10 @@ class Integration::Github < Integration
   rescue ::Github::Error::NotFound
   end
 
-  def execute_webhook(payload)
+  def execute_webhook(payload, webhook)
+    if payload["zen"].present?
+      webhook.update_attribute(:external_uid, payload["hook_id"])
+    end
     Activity::Github.create_with_payload(payload)
   end
 

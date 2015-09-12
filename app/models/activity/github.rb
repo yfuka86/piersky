@@ -1,13 +1,17 @@
 class Activity::Github < Activity
-  # https://developer.github.com/v3/activity/events/types/#issuesevent
+  include Redis::Objects
+
+  # https://developer.github.com/v3/activity/events/types
   enum code: {default: 0, commit_comment: 1, issue_comment: 12,
               issues: 13, pr: 18, pr_review_comment: 19, push: 20}
 
-  def create_with_payload(payload)
-    if payload["zen"].present?
-      self.update_attribute(:external_uid, payload["hook_id"])
-    elsif payload["action"] == "opened"
-      issue_params = payload["issue"] || payload["pull_request"]
+  def self.create_with_payload(payload)
+    if payload["action"] == "created"
+      if payload["issue"]
+        activity = self.create(code: :issue_comment)
+      elsif payload["pull_request"]
+      else
+      end
     end
   end
 end

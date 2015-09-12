@@ -12,7 +12,7 @@ class IntegrationWebhook < ActiveRecord::Base
   end
 
   def execute(payload)
-    self.integration.execute_webhook(payload)
+    self.integration.execute_webhook(payload, self)
   end
 
   def webhook_url
