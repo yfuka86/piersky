@@ -46,9 +46,6 @@ class Header extends React.Component {
           <div className="navbar-right">
             <ul className="nav navbar-nav">
               <li>
-                <p>{I18n.t('webapp.header.teams')}</p>
-              </li>
-              <li>
                 {dropdown}
               </li>
             </ul>

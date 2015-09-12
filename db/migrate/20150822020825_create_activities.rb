@@ -5,8 +5,7 @@ class CreateActivities < ActiveRecord::Migration
       t.integer :code, null: false, default: 0, index: true
       t.belongs_to :integration, index: true
       t.belongs_to :identity, index: true
-
-      t.timestamps null: false
+      t.datetime :ts, null: false, index: true
     end
   end
 end

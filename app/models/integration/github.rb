@@ -27,6 +27,10 @@ class Integration::Github < Integration
     gh_client.pull_requests
   end
 
+  def user_by_name(name)
+    gh_client.users.get(user: name)
+  end
+
   def create_external_webhook(webhook)
     gh_client.repos.hooks.create *webhook.name.split('/'), {
       name:  'web',
@@ -45,7 +49,7 @@ class Integration::Github < Integration
     if payload["zen"].present?
       webhook.update_attribute(:external_uid, payload["hook_id"])
     end
-    Activity::Github.create_with_payload(payload)
+    Activity::Github.create_with_webhook(payload, webhook)
   end
 
   private
