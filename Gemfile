@@ -6,7 +6,6 @@ gem 'rails', '4.2.3'
 gem 'active_model_serializers', '0.8.3'
 gem 'kaminari'
 
-gem 'mysql2'
 gem 'pg', group: :production
 gem 'arproxy', '0.2.0'
 
@@ -33,9 +32,6 @@ gem "i18n-js"
 gem 'newrelic_rpm'
 gem 'exception_notification', '4.1.1'
 gem 'slack-notifier'
-
-# for heroku
-gem 'rails_12factor', group: :production
 
 gem 'sass-rails', '~> 5.0'
 gem 'coffee-rails', '~> 4.1.0'
