@@ -30,7 +30,7 @@ class Integration < ActiveRecord::Base
     user_team = UserTeam.find_by(user: self.user, team: self.team)
     klass = ('Identity::' + self.class.name.split('::')[1]).constantize
     unless klass.find_by(user_team: user_team)
-      klass.create(user_team: user_team, is_verified: true, primary_key: primary_key, secondary_key: secondary_key)
+      klass.create(team: self.team, user_team: user_team, is_verified: true, primary_key: primary_key, secondary_key: secondary_key)
     end
   end
 
