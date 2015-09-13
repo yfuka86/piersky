@@ -1,2 +1,2 @@
-class Activity::Slack < Activity
+class ActivitySlack
 end
