@@ -1,10 +1,10 @@
 @import "globals/config-loader";
 
 @include keyframes(notification-message) {
-  0% {@include transform(translateY(-115px));}
+  0% {@include transform(translateY(-290px));}
   10% {@include transform(translateY(0px));}
   90% {@include transform(translateY(0px));}
-  100% {@include transform(translateY(-115px));}
+  100% {@include transform(translateY(-290px));}
 }
 
 @mixin message-base {
@@ -14,7 +14,7 @@
   min-width: 600px;
   margin: 0 auto;
   padding: 5px 0;
-  @include transform(translateY(-120px));
+  @include transform(translateY(-300px));
   max-height: 60px;
   overflow: hidden;
   border-radius: 5px;
