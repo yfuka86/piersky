@@ -1,0 +1,1 @@
+Piersky::Application.config.secret_token = "88109b36e7eeed9a1668368729bad67643d243579cd62199b1a37e6b14f0ef1a39c89876fbf77b2b7207ab59dca28d34e7f452b902c39c74c746d95faceea34d"
