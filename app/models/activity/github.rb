@@ -1,8 +1,4 @@
 class Activity::Github < Activity
-  include Redis::Objects
-
-  value :payload
-
   # https://developer.github.com/v3/activity/events/types
   enum code: {default: 0, commit_comment: 1, issue_comment: 12,
               issues: 13, pr: 18, pr_review_comment: 19, push: 20}
@@ -23,7 +19,6 @@ class Activity::Github < Activity
       activity.integration = integration
       activity.identity = Identity::Github.find_or_initialize_with_payload(payload, integration)
       activity.save!
-      activity.payload = payload.to_s
       true
     else
       false
