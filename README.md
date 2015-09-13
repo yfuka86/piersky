@@ -43,3 +43,7 @@ PierSky ver2
     (should go http://www.ultrahook.com/ and set info)
     put export PIERSKY_WEBHOOK_HOST=Forwarding url in settingfile
 
+# Cassandra
+
+    bundle exec rake cequel:keyspace:create
+    bundle exec rake cequel:migrate
