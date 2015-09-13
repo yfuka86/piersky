@@ -6,6 +6,7 @@ before setup
 
     brew install node
     brew install postgresql
+    (http://qiita.com/_daisuke/items/13996621cf51f835494b)
     postgres -D /usr/local/var/postgres
 
 env
@@ -25,7 +26,7 @@ setup
 
     bin/rails s
 
-# to build js
+# to develop js
 
     build:
     npm run-script build
