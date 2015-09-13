@@ -18,7 +18,6 @@ Rails.application.configure do
 
   config.log_level = :info
   config.logger = Logger.new("log/production.log", 5, 10 * 1024 * 1024)
-  config.cache_store = :dalli_store, 'cache.masturbate.io', { expires_in: 1.day, compress: true }
   config.i18n.fallbacks = true
   config.active_support.deprecation = :notify
   config.log_formatter = ::Logger::Formatter.new
