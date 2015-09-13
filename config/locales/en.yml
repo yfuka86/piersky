@@ -23,3 +23,16 @@ en:
   identity: 'PierSky'
   general:
     loading: 'Loading . . .'
+  http_status:
+    not_found:
+      code: '404'
+      main: Page not found
+      explanation: Probably not the web page you were looking for.
+    bad_request:
+      code: '400'
+      main: Bad request
+      explanation: Something went wrong with your request. Please try again.
+    internal_server_error:
+      code: '500'
+      main: Looks like something went wrong
+      explanation: 'We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing.'
