@@ -13,7 +13,7 @@ Rails.application.configure do
   end
 
   config.assets.js_compressor = NoCompression.new
-  config.assets.compile = false
+  config.assets.compile = true
   config.assets.digest = true
 
   config.log_level = :info
