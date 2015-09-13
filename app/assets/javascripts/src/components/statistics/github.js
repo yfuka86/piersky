@@ -17,7 +17,7 @@ class Github extends React.Component {
   // this.props.integrationにわたってきてます
 
   componentDidMount() {
-    this.loadStats();
+    // this.loadStats();
   }
 
   componentWillUnmount() {
@@ -37,29 +37,29 @@ class Github extends React.Component {
     }.bind(this));
   }
 
-    drawChart(){
-      let data = google.visualization.arrayToDataTable([
-        ['Repository', 'number', { role: 'style' }]
-      ].concat(this.state.json.map(function(repo){
-        return [repo.user + "/"+ repo.name, repo.pull_requests.length, Constants.colorHexByKey(repo.user + "/"+ repo.name)];
-      })));
+  drawChart(){
+    let data = google.visualization.arrayToDataTable([
+      ['Repository', 'number', { role: 'style' }]
+    ].concat(this.state.json.map(function(repo){
+      return [repo.user + "/"+ repo.name, repo.pull_requests.length, Constants.colorHexByKey(repo.user + "/"+ repo.name)];
+    })));
 
-      let options = {
-        title: 'number of open pull requests',
-        chartArea: {width: 890,height: 400},
-        hAxis: {
-          title: 'number',
-          minValue: 0
-        },
-        vAxis: {
-          title: 'Repository'
-        }
-      };
+    let options = {
+      title: 'number of open pull requests',
+      chartArea: {width: 890,height: 400},
+      hAxis: {
+        title: 'number',
+        minValue: 0
+      },
+      vAxis: {
+        title: 'Repository'
+      }
+    };
 
-      let chart = new google.visualization.BarChart(React.findDOMNode(this).querySelector('#graph_'));
+    let chart = new google.visualization.BarChart(React.findDOMNode(this).querySelector('#graph_'));
 
-      chart.draw(data, options);
-    }
+    chart.draw(data, options);
+  }
 
   render() {
     // data = [{

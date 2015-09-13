@@ -1,19 +1,38 @@
 en:
   integration:
+    api:
+      errors:
+        update_failed: 'failed to update integration'
+        destroy_failed: 'failed to remove integration'
+        not_found: "Couldn't find the integration"
     breadcrumb:
       settings: 'Settings'
-    board:
-      index: 'Integration Dashboard'
-      new: 'Add New Integration'
-      show_description: 'Added by %{userName} on %{createdAt}'
-      settings: 'Settings for'
-    list:
-      dashboard: 'Dashboard'
-      add: 'Add new integration'
     general:
       connect: 'Connect'
       no_integrations: 'No integrations to show.'
       setup: 'Would you like to setup?'
+      save: 'Save Integration'
+      remove: 'Remove Integration'
+      removed: 'Integration has been successfully removed'
+      confirm_remove: 'Are you sure you want to remove this integration? This operation cannot be undone.'
+      settings_saved: 'Integration settings have been saved'
+    board:
+      index: 'Integration Dashboard'
+      new: 'Add New Integration'
+      show_description: 'Added by %{userName} on %{createdAt}'
+      settings: 'Integration Settings'
+    list:
+      dashboard: 'Dashboard'
+      add: 'Add new integration'
+    show:
+      tab:
+        stats: 'Stats'
+        settings: 'Settings'
+    settings:
+      label:
+        label: 'Descriptive Label'
+      description:
+        label: 'You can use this label to explain extra context of each integration.'
     wunderlist:
       name: 'Wunderlist'
     asana:
@@ -22,3 +41,7 @@ en:
       name: 'Slack'
     github:
       name: 'Github'
+      repository:
+        label: 'Repositories'
+        description: 'Choose repositories we should track and analyze.'
+        placeholder: 'Choose a repository...'

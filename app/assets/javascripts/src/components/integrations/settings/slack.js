@@ -1,27 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
 
-class Slack extends React.Component {
+import SettingBase from './setting_base';
 
-  constructor(props){
-    super(props);
-    this.state = this.initialState
-  }
-
-  get initialState() {
-    return {
-
-    };
-  }
-
-  componentDidMount() {
-  }
-
-  componentWillUnmount() {
-  }
+class Slack extends SettingBase {
 
   render() {
-    return (
+    return super.render(
       <div className='slack-settings'>
       </div>
     );

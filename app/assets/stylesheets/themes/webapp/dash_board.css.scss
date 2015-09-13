@@ -11,7 +11,7 @@
     ul.main-menu {
       position: fixed;
       top: $HEADER_HEIGHT;
-      z-index: $TAB;
+      z-index: $MAIN_MENU_Z;
       background-color: $grey100;
 
       height: $MAIN_MENU_HEIGHT;

@@ -66,6 +66,9 @@
         @include flat-button-identity;
         font-weight: 300;
       }
+      &.button-red {
+        @include flat-button-red;
+      }
     }
   }
 }
@@ -77,10 +80,10 @@
 @mixin standard-form-vertical {
   @include standard-form;
   .field {
-    label, input, textarea {
+    label, input, textarea, select {
       width: 100%;
     }
-    input, textarea {
+    input, textarea, select {
       margin: 5px 0;
     }
   }

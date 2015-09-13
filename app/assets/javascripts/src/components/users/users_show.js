@@ -1,21 +1,35 @@
 import React from 'react';
 import _ from 'lodash';
-import ReactD3 from 'react-d3-components'
+import changeCase from 'change-case';
+
+import SessionStore from '../../stores/session';
+import UserStore from '../../stores/user';
+import IdentityStore from '../../stores/identity';
 
 class UsersShow extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = this.initialState;
   }
 
   get initialState() {
+    return this.getParamsFromStores(this.props);
+  }
+
+  getParamsFromStores(props) {
+    let user = UserStore.getUserById(props.params.id)
     return {
+      user: user,
+      identities: IdentityStore.getIdentitiesByUserId(user.id)
     };
   }
 
   componentDidMount() {
     this.drawChart();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState(this.getParamsFromStores(nextProps))
   }
 
   componentWillUnmount() {
@@ -55,13 +69,15 @@ class UsersShow extends React.Component {
   }
 
   render() {
-    let LineChart = ReactD3.LineChart;
-
     return (
-      <div className='container-main'>
-        <p className='title'>{I18n.t('webapp.users.show', {name: 'yfuka86'})}</p>
+      <div className='container-main users-show'>
+        <p className='title'>{this.state.user.name || this.state.user.email}</p>
+        <div className='identities'>
+          {this.state.identities.map((identity) => {
+            return <span className={['icon', changeCase.snakeCase(identity.type) + '-logo'].join(' ')} />
+          })}
+        </div>
         <div id='graph' />
-        <p className='title'>contribution score<br/>1.12<br/>rank: 2nd</p>
       </div>
     );
   }

@@ -27,7 +27,7 @@ const InvitationStore = assign({}, BaseStore, {
     _.remove(invitations, (i)=> {
       return parseInt(i.id, 10) === invitation.id;
     });
-    this.set('invitations', invitations);
+    this.setInvitations(invitations);
   },
 
   parse(json) {

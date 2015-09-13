@@ -2,27 +2,27 @@ import React from 'react';
 import _ from 'lodash';
 
 class Notifier extends React.Component {
-  propTypes: {
-    messages: React.PropTypes.object
-  }
-
-  getDefaultProps() {
+  static get defaultProps() {
     return {
       messages: {}
     }
   }
 
+  static get propTypes() {
+    messages: React.PropTypes.object
+  }
+
   render() {
     let messages = {};
-    ['errors', 'successes', 'infos'].forEach(function(str) {
-      notifications = _this.props.messages[str];
+    ['errors', 'successes', 'infos'].forEach((str) => {
+      let notifications = this.props.messages[str];
       if (notifications && notifications.length > 0) {
         messages[str] = (
           <div className={str}>
             {
               _.map(notifications, (notification, index) => {
                 return (
-                  <div className='notification-message-box' key={`${str}-${index}`}>
+                  <div className='message' key={`${str}-${index}`}>
                     {notification}
                   </div>
                 );

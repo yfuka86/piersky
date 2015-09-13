@@ -28,9 +28,9 @@ module Api
     private
     def set_slack
       if params[:integration_id].present?
-        @slack = Integration.find_by(id: params[:integration_id])
+        @slack = ::Integration.find_by(id: params[:integration_id])
       else
-        @slack = Integration.find_by(user: current_user, type: "Integration::Slack")
+        @slack = ::Integration.find_by(user: current_user, type: "Integration::Slack")
       end
     end
 

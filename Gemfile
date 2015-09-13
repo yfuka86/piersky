@@ -38,9 +38,7 @@ gem 'slack-notifier'
 gem 'rails_12factor', group: :production
 
 gem 'sass-rails', '~> 5.0'
-gem 'coffee-rails', '~> 4.1.0'
 gem 'uglifier', '>= 1.3.0'
-gem 'font-awesome-sass', '~> 4.3.0'
 gem 'turbolinks'
 
 gem 'rack-cors', :require => 'rack/cors'
@@ -55,7 +53,6 @@ gem 'faker'
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.2'
   gem 'factory_girl_rails', '~> 4.4.1'
-  gem 'mysql2'
   # for tracking performance
   gem 'rack-mini-profiler', require: false
 

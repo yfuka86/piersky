@@ -9,7 +9,6 @@ class User < ActiveRecord::Base
 
   has_many :user_teams, dependent: :destroy
   has_many :teams, through: :user_teams
-  has_many :identities
   has_many :integrations
   has_many :invitations_sent, foreign_key: "inviter_id", class_name: "Invitation"
   has_many :invitations_received, foreign_key: "invitee_id", class_name: "Invitation"
@@ -24,6 +23,10 @@ class User < ActiveRecord::Base
       team.user_teams.find_by(user_id: self.id).update_attribute(:is_logging_in, true)
       team
     end
+  end
+
+  def identities(team)
+    user_teams.find_by(user: self, team: team).identities
   end
 
   def set_current_team(team)
