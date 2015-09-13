@@ -1,6 +1,13 @@
 PierSky ver2
 
-# keep going
+# setup
+
+before setup
+    brew install node
+    brew install postgresql
+    postgres -D /usr/local/var/postgres
+
+setup
 
     cp config/database.yml.shared config/database.yml
 
@@ -12,7 +19,7 @@ PierSky ver2
 
     bin/rails s
 
-    To build js
+to build js
     npm run-script build
 
     When develop around js
