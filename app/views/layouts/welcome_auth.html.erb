@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Piersky</title>
-  <%= stylesheet_link_tag 'welcome', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'welcome', media: 'all' %>
   <%= csrf_meta_tags %>
   <%= favicon_link_tag 'favicon.ico' %>
 </head>
@@ -17,9 +17,9 @@
     </div>
   </div>
   <%= render 'shared/welcome_footer' %>
-  <%= javascript_include_tag 'welcome/jquery', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'welcome/bootstrap.min', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'welcome/jquery.easing.min', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'welcome/grayscale', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'welcome/jquery' %>
+  <%= javascript_include_tag 'welcome/bootstrap.min' %>
+  <%= javascript_include_tag 'welcome/jquery.easing.min' %>
+  <%= javascript_include_tag 'welcome/grayscale' %>
 </body>
 </html>
