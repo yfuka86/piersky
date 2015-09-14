@@ -26,6 +26,8 @@ module Piersky
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
     config.assets.paths << Rails.root.join('node_modules', 'react-tooltip', 'dist')
 
+    Dir.glob("#{config.root}/app/models/activity/*.{rb}").each { |file| require file }
+
     config.middleware.use ActionDispatch::Flash
 
     config.middleware.insert_before 0, "Rack::Cors" do
