@@ -56,7 +56,7 @@ Rails.application.configure do
     domain: 'smtp.gmail.com',
     authentication: :plain,
     user_name: 'mail@piersky.com',
-    password: 'yksreiPyksreiP'
+    password: 'ykSreiPykSreiP'
   }
 end
 
@@ -72,7 +72,7 @@ Piersky::Application.config.middleware.use ExceptionNotification::Rack,
       domain: 'smtp.gmail.com',
       authentication: :plain,
       user_name: 'mail@piersky.com',
-      password: 'yksreiPyksreiP'
+      password: 'ykSreiPykSreiP'
     }
   }
 
