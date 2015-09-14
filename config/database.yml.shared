@@ -3,7 +3,7 @@ default: &default
   encoding: unicode
   pool: 5
   timeout: 5000
-  username: ms
+  username: piersky
 
 development:
   <<: *default
@@ -14,12 +14,3 @@ test:
   <<: *default
   database: piersky_test
   host: localhost
-
-production:
-  <<: *default
-  adapter: postgresql
-  database: <%= ENV['RDS_DB_NAME'] %>
-  username: <%= ENV['RDS_USERNAME'] %>
-  password: <%= ENV['RDS_PASSWORD'] %>
-  host: <%= ENV['RDS_HOSTNAME'] %>
-  port: <%= ENV['RDS_PORT'] %>

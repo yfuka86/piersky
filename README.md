@@ -5,9 +5,16 @@ PierSky ver2
 before setup
 
     brew install node
+
     brew install postgresql
     (http://qiita.com/_daisuke/items/13996621cf51f835494b)
-    postgres -D /usr/local/var/postgres
+    (postgres -D /usr/local/var/postgres)
+    createuser piersky
+    createdb piersky_development -O piersky
+
+    brew install cassandra
+    (if you don't have java, install it and alias it)
+    cassandra -f
 
 env
 
@@ -20,8 +27,10 @@ setup
     # config database.yml...
 
 
-    bin/bundle  install --path=vendor/bundle
-    bin/rake db:build (テストユーザー　test@piersky.com, test1@piersky.com, test2@piersky.com  pass: testtest)
+    bin/bundle install --path=vendor/bundle
+    bin/rake db:build
+    bin/rake cequel:keyspace:create
+    bin/rake cequel:migrate
     npm install
 
     bin/rails s
@@ -57,4 +66,3 @@ please exec following command
     $ ultrahook stripe 3000
     (should go http://www.ultrahook.com/ and set info)
     put export PIERSKY_WEBHOOK_HOST=Forwarding url in settingfile
-
