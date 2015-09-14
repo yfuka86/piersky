@@ -17,8 +17,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise', '~> 3.4.1'
 
 # for integrations
-gem 'faraday', '0.9.1'
 gem 'omniauth'
+gem 'faraday', '0.8.7'
 
 gem 'omniauth-github'
 gem "github_api"
