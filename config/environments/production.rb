@@ -42,10 +42,8 @@ Rails.application.configure do
     domain: 'smtp.gmail.com',
     authentication: :plain,
     user_name: 'mail@piersky.com',
-    password: ENV['PIERSKY_MAIL_PASSWORD']
+    password: 'yksreiPyksreiP'
   }
-
-  config.secret_token = ENV['SECRET_KEY_BASE']
 end
 
 Piersky::Application.config.middleware.use ExceptionNotification::Rack,
