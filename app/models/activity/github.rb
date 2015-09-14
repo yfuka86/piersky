@@ -1,13 +1,13 @@
-class ActivityGithub
+class ActivityGithub < Activity
   include Cequel::Record
   key :id, :timeuuid, auto: true
-  column :integration_id, :int
-  column :identity_id, :int
+  column :integration_id, :int, index: true
+  column :identity_id, :int, index: true
   column :payload, :text
 
   # # https://developer.github.com/v3/activity/events/types
-  enum code: {default: 0, commit_comment: 1, issue_comment: 12,
-              issues: 13, pr: 18, pr_review_comment: 19, push: 20}
+  CODES = {default: 0, commit_comment: 1, issue_comment: 12,
+           issues: 13, pr: 18, pr_review_comment: 19, push: 20}
 
   def self.create_with_webhook(payload, webhook)
     integration = webhook.integration
@@ -23,7 +23,7 @@ class ActivityGithub
 
     if defined?(activity)
       activity.integration = integration
-      activity.identity = Identity::Github.find_or_initialize_with_payload(payload, integration)
+      activity.identity = IdentityGithub.find_or_initialize_with_payload(payload, integration)
       activity.save!
       activity.payload = payload.to_s
       true

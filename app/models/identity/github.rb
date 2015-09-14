@@ -1,4 +1,4 @@
-class Identity::Github < Identity
+class IdentityGithub < Identity
 
   def self.find_or_initialize_with_payload(payload, integration)
     identity = self.find_by(primary_key: payload["sender"]["id"])

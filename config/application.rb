@@ -26,7 +26,7 @@ module Piersky
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
     config.assets.paths << Rails.root.join('node_modules', 'react-tooltip', 'dist')
 
-    Dir.glob("#{config.root}/app/models/activity/*.{rb}").each { |file| require file }
+    config.autoload_paths += Dir["#{config.root}/app/models/activity/**/"]
 
     config.middleware.use ActionDispatch::Flash
 

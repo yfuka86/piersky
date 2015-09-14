@@ -1,6 +1,4 @@
-class Integration::Github < Integration
-  require_dependency 'activity/github'
-
+class IntegrationGithub < Integration
   def create_identity
     super(gh_client.users.get.id)
   end
@@ -49,7 +47,7 @@ class Integration::Github < Integration
     if payload["zen"].present?
       webhook.update_attribute(:external_uid, payload["hook_id"])
     end
-    Activity::Github.create_with_webhook(payload, webhook)
+    ActivityGithub.create_with_webhook(payload, webhook)
   end
 
   private

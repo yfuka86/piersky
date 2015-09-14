@@ -1,4 +1,4 @@
-class Integration::Wunderlist < Integration
+class IntegrationWunderlist < Integration
 
   def trigger_import(user)
     wl = ::Wunderlist::API.new({

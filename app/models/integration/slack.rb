@@ -1,4 +1,4 @@
-class Integration::Slack < Integration
+class IntegrationSlack < Integration
   require "slack"
   USERNAME = "Piersky"
   ICON_URL = "https://www.blueskyexhibits.com/website/wp-content/uploads/sky-home.jpg"

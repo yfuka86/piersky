@@ -1,2 +1,2 @@
-class Identity::Slack < Identity
+class IdentitySlack < Identity
 end
