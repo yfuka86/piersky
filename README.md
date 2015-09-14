@@ -7,7 +7,9 @@ before setup
     brew install node
     brew install postgresql
     (http://qiita.com/_daisuke/items/13996621cf51f835494b)
-    postgres -D /usr/local/var/postgres
+    (postgres -D /usr/local/var/postgres)
+    createuser piersky
+    createdb piersky_development -O piersky
 
 env
 
@@ -20,8 +22,8 @@ setup
     # config database.yml...
 
 
-    bin/bundle  install --path=vendor/bundle
-    bin/rake db:build (テストユーザー　test@piersky.com, test1@piersky.com, test2@piersky.com  pass: testtest)
+    bin/bundle install --path=vendor/bundle
+    bin/rake db:build
     npm install
 
     bin/rails s
