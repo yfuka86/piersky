@@ -26,7 +26,9 @@ module Piersky
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
     config.assets.paths << Rails.root.join('node_modules', 'react-tooltip', 'dist')
 
-    config.autoload_paths += Dir["#{config.root}/app/models/activity/**/"]
+    config.autoload_paths += Dir["#{config.root}/app/models/identity/"]
+    config.autoload_paths += Dir["#{config.root}/app/models/integration/"]
+    config.autoload_paths += Dir["#{config.root}/app/models/activity/"]
 
     config.middleware.use ActionDispatch::Flash
 
