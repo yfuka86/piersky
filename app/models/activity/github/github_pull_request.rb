@@ -6,9 +6,8 @@ class GithubPullRequest
   column :state, :text, index: true
   column :url, :text
 
-
   def self.find_or_create(params)
-    pr = self[params["id"]].take(1)
+    pr = self.find_by_id(params["id"])
     pr = self.create(id: params["id"], number: params["number"], url: params["url"]) unless pr
     pr.title = params["title"] if pr.title != params["title"]
     pr.state = params["state"] if pr.title != params["state"]

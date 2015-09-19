@@ -6,7 +6,7 @@ class GithubCommit
   column :url, :text
 
   def self.find_or_create(params)
-    commit = self[params["id"]].take(1)
+    commit = self.find_by_id(params["id"])
     commit = self.create(
               id: params["id"],
               message: params["message"],
