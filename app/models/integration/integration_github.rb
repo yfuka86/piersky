@@ -50,6 +50,10 @@ class IntegrationGithub < Integration
     ActivityGithub.create_with_webhook(payload, webhook)
   end
 
+  def activities
+    ActivityGithub[self.id]
+  end
+
   private
 
   def gh_client

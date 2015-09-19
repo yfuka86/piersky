@@ -28,7 +28,7 @@ module Piersky
 
     config.autoload_paths += Dir["#{config.root}/app/models/identity/"]
     config.autoload_paths += Dir["#{config.root}/app/models/integration/"]
-    config.autoload_paths += Dir["#{config.root}/app/models/activity/"]
+    config.autoload_paths += Dir["#{config.root}/app/models/activity/**/"]
 
     config.middleware.use ActionDispatch::Flash
 
