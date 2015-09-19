@@ -16,10 +16,6 @@ before setup
     (if you don't have java, install it and alias it)
     cassandra -f
 
-env
-
-    export PIERSKY_MAIL_PASSWORD=[ask someone]
-
 setup
 
     git clone git@github.com:yfuka86/piersky.git

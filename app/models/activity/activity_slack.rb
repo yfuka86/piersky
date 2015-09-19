@@ -1,0 +1,2 @@
+class ActivitySlack < Activity
+end
