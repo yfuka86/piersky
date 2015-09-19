@@ -6,9 +6,8 @@ class GithubIssue
   column :state, :text, index: true
   column :url, :text
 
-
   def self.find_or_create(params)
-    issue = self[params["id"]].take(1)
+    issue = self.find_by_id(params["id"])
     issue = self.create(id: params["id"], number: params["number"], url: params["url"]) unless issue
     issue.title = params["title"] if issue.title != params["title"]
     issue.state = params["state"] if issue.title != params["state"]
