@@ -8,7 +8,7 @@ class OmniauthCallbacksController < WebBaseController
   #       auth = env["omniauth.auth"]
   #       @user = User.find_for_oauth auth, current_user
 
-  #       klass = "Integration::#{provider.classify}".constantize
+  #       klass = "Integration#{provider.classify}".constantize
   #       klass.build_with_auth_and_user(auth, @user)
 
   #       if @user.persisted?
@@ -31,7 +31,7 @@ class OmniauthCallbacksController < WebBaseController
       def #{provider}
         return unless current_user
         auth = env["omniauth.auth"]
-        klass = "Integration::#{provider.classify}".constantize
+        klass = "Integration#{provider.classify}".constantize
         integration = klass.create_with_user(auth, current_user)
 
         redirect_to after_callback_path(integration.id)

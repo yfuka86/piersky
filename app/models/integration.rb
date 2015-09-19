@@ -3,7 +3,6 @@ class Integration < ActiveRecord::Base
   belongs_to :team
   has_one :setting, class_name: "::IntegrationSetting", dependent: :destroy
   has_many :webhooks, class_name: "::IntegrationWebhook", dependent: :destroy
-  has_many :activities
 
   after_create :create_setting!
   after_create :create_identity
@@ -28,7 +27,7 @@ class Integration < ActiveRecord::Base
   def create_identity(primary_key, secondary_key="")
     #please override
     user_team = UserTeam.find_by(user: self.user, team: self.team)
-    klass = ('Identity::' + self.class.name.split('::')[1]).constantize
+    klass = ('Identity' + self.class.name.split('Integration')[1]).constantize
     unless klass.find_by(user_team: user_team)
       klass.create(team: self.team, user_team: user_team, is_verified: true, primary_key: primary_key, secondary_key: secondary_key)
     end
