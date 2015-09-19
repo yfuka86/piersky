@@ -1,0 +1,2 @@
+class IdentitySlack < Identity
+end
