@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default {
 
   getUid: () => {
@@ -23,5 +25,19 @@ export default {
       }
     }
     return errorMsgs;
+  },
+
+  getTicks(max) {
+    let multiplier = 1;
+    let counter = 1;
+    while (Math.ceil(max / (Math.pow(10, multiplier) * counter)) > 1) {
+      if (counter === 9) {
+        multiplier += 1;
+        counter = 1;
+      } else {
+        counter += 1;
+      }
+    }
+    return _.range(0, Math.pow(10, multiplier) * counter, Math.pow(10, multiplier - 1) * 5);
   }
 }

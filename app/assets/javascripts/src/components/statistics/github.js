@@ -3,6 +3,7 @@ import _ from 'lodash';
 import request from 'superagent';
 import moment from 'moment';
 import Constants from '../../constants/app';
+import {getTicks} from '../../utils/app_module';
 
 import IdentityStore from '../../stores/identity';
 import UserStore from '../../stores/user';
@@ -61,25 +62,29 @@ class Github extends React.Component {
 
     let end = this.state.periodEndAt;
     let length = this.state.periodLength;
+    let max = 0;
     _.times(length, (i) => {
-      let ary = [moment(end).subtract(length - (i + 1), 'days').format("MMM Do")].concat(identitiesData.map((data) => {
-        return data[this.state.activity][length - (i + 1)]
-      }));
-      data.push(ary)
+      let ary = identitiesData.map((data) => {
+        return data[this.state.activity][length - (i + 1)];
+      });
+      let sum = _.sum(ary);
+      if (sum > max) max = sum;
+      data.push([moment(end).subtract(length - (i + 1), 'days').format("MMM Do")].concat(ary));
     })
 
     let tableData = google.visualization.arrayToDataTable(data);
 
     let width = React.findDOMNode(this).clientWidth;
     let height = width * 3 / 8;
+    let ticks = getTicks(max);
     let options = {
       isStacked: true,
       width: width,
       height: height,
       legend: {position: 'right', maxLines: 3},
       colors: colors,
-      hAxis: {title: 'Day',  titleTextStyle: {color: '#333'}},
       vAxis: {
+        ticks: ticks,
         minValue: 0
       }
     };
