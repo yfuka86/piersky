@@ -45,3 +45,13 @@ en:
         label: 'Repositories'
         description: 'Choose repositories we should track and analyze.'
         placeholder: 'Choose a repository...'
+      activity:
+        default: 'Choose a sort of activity...'
+        commit_comment: 'Comments on commit'
+        issue_comment: 'Comments on issue'
+        pr_review_comment: 'Comments on pull requests'
+        push: 'Number of pushing'
+      period:
+        placeholder: 'Choose a period...'
+        last_week: 'last 1 week'
+        last_month: 'last 1 month'

@@ -52,7 +52,7 @@ class IntegrationShow extends React.Component {
     IntegrationStore.offChange(this.onChangeHandler);
   }
 
-  onChange(e) {
+  onChange() {
     this.setState(this.initialState);
   }
 
@@ -70,7 +70,7 @@ class IntegrationShow extends React.Component {
             <p className='title'>{integration.type}</p>
             <p className='description'>
               {I18n.t('integration.board.show_description', {
-                userName: integrationUser.name || integrationUser.email,
+                userName: integrationUser.identity(),
                 createdAt: integration.createdAt.format('MMMM Do, YYYY')})}
             </p>
 
