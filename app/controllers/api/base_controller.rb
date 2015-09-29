@@ -4,8 +4,6 @@ class Api::BaseController < ApplicationController
   rescue_from Exception, with: :render_error
   rescue_from ActionView::MissingTemplate, with: :render_not_found
 
-  respond_to :json
-
   def render_success(message='')
     @_success = true
     render(

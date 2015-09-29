@@ -9,6 +9,8 @@ gem 'kaminari'
 gem 'pg'
 gem 'cequel'
 
+gem 'sidekiq'
+
 gem 'unicorn', group: :production
 gem 'arproxy', '0.2.0'
 
@@ -64,12 +66,3 @@ group :development, :test do
   gem 'web-console', '~> 2.0'
   gem 'http-dump'
 end
-
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
