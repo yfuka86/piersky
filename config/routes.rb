@@ -42,14 +42,14 @@ Rails.application.routes.draw do
     end
 
     resources :identities, only: [:index]
-    resources :integrations, only: [:index, :show, :update, :destroy]
+    resources :integrations, only: [:index, :show, :update, :destroy] do
+      member do
+        get 'stat'
+      end
+    end
     resources :invitations, only: [:index, :create, :update, :destroy]
 
-    get 'github_wrapper', to: 'github_wrapper#index'
-    get 'github_wrapper/show/:user/:name', to: 'github_wrapper#index'
     get 'slack_wrapper(/:integration_id)', to: 'slack_wrapper#index'
     get 'slack_wrapper/:integration_id/show/:id(/:ts)', to: 'slack_wrapper#show'
-
-    resources :slack_gathers, only: [:index, :create, :show ]
   end
 end

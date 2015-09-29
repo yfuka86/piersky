@@ -60,6 +60,9 @@ export default {
     UPDATE_INTEGRATION: null,
     REMOVE_INTEGRATION: null,
 
+    //stats
+    LOAD_INTEGRATION_STAT: null,
+
     //view
     SHOW_BALLOON: null,
     CLOSE_BALLOON: null,

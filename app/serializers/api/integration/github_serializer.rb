@@ -1,5 +1,4 @@
 class Api::Integration::GithubSerializer < ActiveModel::Serializer
-
   attributes :syncable_repositories, :repositories
 
   def syncable_repositories
