@@ -1,93 +1,127 @@
 import React from 'react';
 import _ from 'lodash';
 import request from 'superagent';
+import moment from 'moment';
 import Constants from '../../constants/app';
-import {APIRoot} from '../../constants/app';
+import {getTicks} from '../../utils/app_module';
 
+import IdentityStore from '../../stores/identity';
+import UserStore from '../../stores/user';
 
 class Github extends React.Component {
+  static get defaultProps() {
+    return {
+      integration: {},
+      stat: {}
+    };
+  }
+
+  static get propTypes() {
+    return {
+      integration: React.PropTypes.object,
+      stat: React.PropTypes.object
+    };
+  }
 
   constructor(props){
     super(props);
-    this.state= {
-      json: []
-    };
+    this.state = this.initialState;
   }
 
-  // this.props.integrationにわたってきてます
+  get initialState() {
+    return {
+      activity: 'default',
+      periodLength: 31,
+      periodEndAt: moment(this.props.stat.today)
+    }
+  }
 
   componentDidMount() {
-    // this.loadStats();
+    this.drawChart();
+    window.onresize = this.drawChart.bind(this);
+  }
+
+  componentDidUpdate() {
+    this.drawChart();
   }
 
   componentWillUnmount() {
+    window.onresize = null;
   }
 
-  loadStats() {
-    request
-    .get(APIRoot + '/github_wrapper')
-    .end(function(error, res) {
-      if (res.status === 200){
-        let json = JSON.parse(res.text);
-        this.setState({
-          json: json
-        });
-        this.drawChart();
-      }
-    }.bind(this));
-  }
+  drawChart() {
+    if (!this.props) return;
+    let identitiesData = this.props.stat.identities;
+    let users = identitiesData.map((data) => {
+      return UserStore.getUserById(IdentityStore.getIdentityById(data.id).userId);
+    });
 
-  drawChart(){
-    let data = google.visualization.arrayToDataTable([
-      ['Repository', 'number', { role: 'style' }]
-    ].concat(this.state.json.map(function(repo){
-      return [repo.user + "/"+ repo.name, repo.pull_requests.length, Constants.colorHexByKey(repo.user + "/"+ repo.name)];
-    })));
+    let header = ['Day'].concat(users.map((user) => {return user.identity()}));
+    let colors = users.map((user) => {return Constants.colorHexByKey(user.identity())});
+    let data = [header];
 
+    let end = this.state.periodEndAt;
+    let length = this.state.periodLength;
+    let max = 0;
+    _.times(length, (i) => {
+      let ary = identitiesData.map((data) => {
+        return data[this.state.activity][length - (i + 1)];
+      });
+      let sum = _.sum(ary);
+      if (sum > max) max = sum;
+      data.push([moment(end).subtract(length - (i + 1), 'days').format("MMM Do")].concat(ary));
+    })
+
+    let tableData = google.visualization.arrayToDataTable(data);
+
+    let width = React.findDOMNode(this).clientWidth;
+    let height = width * 3 / 8;
+    let ticks = getTicks(max);
     let options = {
-      title: 'number of open pull requests',
-      chartArea: {width: 890,height: 400},
-      hAxis: {
-        title: 'number',
-        minValue: 0
-      },
+      isStacked: true,
+      width: width,
+      height: height,
+      legend: {position: 'right', maxLines: 3},
+      colors: colors,
       vAxis: {
-        title: 'Repository'
+        ticks: ticks,
+        minValue: 0
       }
     };
 
-    let chart = new google.visualization.BarChart(React.findDOMNode(this).querySelector('#graph_'));
+    let chart = new google.visualization.AreaChart(React.findDOMNode(this).querySelector('#main_graph'));
+    chart.draw(tableData, options);
+  }
 
-    chart.draw(data, options);
+  changeActivity(e) {
+    this.setState({activity: e.target.value});
+  }
+
+  changePeriod(e) {
+    this.setState({periodLength: parseInt(e.target.value, 10)})
   }
 
   render() {
-    // data = [{
-    //   label: 'pull_requests',
-    //   values: this.state.json.filter(function(obj){
-    //     return obj.pull_requests.length!=0;
-    //   }).map(function(obj){
-    //     return  {x: obj.user + "/" + obj.name,y: obj.pull_requests.length}
-    //   })
-    // }];
     return (
       <div className='statistics-github'>
-        <div id='graph_' />
-          <ul>
-          {this.state.json.map(function(obj){
-            console.log(obj);
-            return (
-              <li id={obj.user + "/" + obj.name} className='slack-channel'>
-                <h3> {obj.user + "/" + obj.name} </h3>
-                <ul>
-                {obj.pull_requests.map(function(pl){
-                  return <li> {pl.title} </li>
-                })}
-                </ul>
-                </li>
-                );
-            })}
-            </ul>
+        <div className='main-graph-action standard-form-horizontal'>
+          <div className='field'>
+            <select onChange={this.changeActivity.bind(this)}>
+              <option value={'default'} >{I18n.t('integration.github.activity.default')}</option>
+              {this.props.stat.activities.map((activity)=>{
+                return <option value={activity} key={activity}>{I18n.t(`integration.github.activity.${activity}`)}</option>
+              })}
+            </select>
+          </div>
+          <div className='field'>
+            <select onChange={this.changePeriod.bind(this)}>
+              <option value={31} >{I18n.t('integration.github.period.placeholder')}</option>
+              <option value={7} >{I18n.t('integration.github.period.last_week')}</option>
+              <option value={31} >{I18n.t('integration.github.period.last_month')}</option>
+            </select>
+          </div>
+        </div>
+        <div id='main_graph' />
       </div>
     );
   }

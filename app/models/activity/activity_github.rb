@@ -1,10 +1,11 @@
 class ActivityGithub < Activity
   include Cequel::Record
   key :integration_id, :int
+  key :identity_id, :int
   key :ts, :timestamp
 
+  column :code, :int, index: true
   column :id, :uuid, auto: true, index: true
-  column :identity_id, :int, index: true
 
   column :repository_id, :int, index: true
   column :issue_id, :int, index: true
@@ -12,7 +13,6 @@ class ActivityGithub < Activity
   column :comment_id, :int, index: true
   set :commits_id, :text
 
-  column :code, :int, index: true
   column :action, :text
   column :ref, :text, index: true
 
