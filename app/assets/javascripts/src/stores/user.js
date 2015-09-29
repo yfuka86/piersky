@@ -26,7 +26,10 @@ const UserStore = assign({}, BaseStore, {
     return {
       id: parseInt(json.id, 10),
       name: json.name,
-      email: json.email
+      email: json.email,
+      identity: function() {
+        return this.name || this.email;
+      }
     }
   }
 });
