@@ -247,6 +247,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.15.0)
     rake (10.4.2)
+    rb-readline (0.5.3)
     rdoc (4.2.0)
       json (~> 1.4)
     redis (3.2.1)
@@ -365,6 +366,7 @@ DEPENDENCIES
   rack-cors
   rack-mini-profiler
   rails (= 4.2.3)
+  rb-readline
   roadie-rails
   rspec-rails (~> 2.14.2)
   sass-rails (~> 5.0)
