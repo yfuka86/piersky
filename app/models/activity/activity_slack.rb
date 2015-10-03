@@ -3,7 +3,7 @@ class ActivitySlack < Activity
   key :identity_id, :int
   key :ts, :timestamp
 
-  column :channel_id, :int, index: true
+  column :channel_id, :text, index: true
   column :type, :text, index: true
   column :message, :text
 
@@ -23,9 +23,9 @@ class ActivitySlack < Activity
     self.by_integration(integration).last.try(:ts)
   end
 
-  def self.create_with_integration(message, integration)
+  def self.create_with_integration(message, channel, integration)
     if message["user"]
-      activity = self.new(channel: params[:id], ts: message["ts"].to_f, message: message["text"], type: message["type"])
+      activity = self.new(channel_id: channel.id, ts: message["ts"].to_f, message: message["text"], type: message["type"])
       activity.identity_id = IdentitySlack.find_or_initialize_with_id(message["user"], integration).tap(&:save!).id
       activity.save!
     end

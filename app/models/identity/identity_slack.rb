@@ -6,7 +6,6 @@ class IdentitySlack < Identity
       identity = self.build_by_email(info["profile"]["email"], integration)
       identity.primary_key = info["id"]
       identity.name = info["name"]
-      identity.save!
     end
     identity
   end

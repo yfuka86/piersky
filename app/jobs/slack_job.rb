@@ -8,18 +8,18 @@ class SlackJob < ActiveJob::Base
 
       # fix range of time
       now = DateTime.now.to_f
-      latest = ActivitySlack.latest_ts(integration).to_f || 1
+      latest_persisted = ActivitySlack.latest_ts(integration) || 1.0
       #
 
       integration.show_channels.each do |c|
         channel = SlackChannel.find_or_create(c)
 
-        latest_in_fetched = latest
-        until messages = integration.show_messages(channel, oldest: latest_in_fetched, latest: now) && messages.length == 0
-          latest_in_fetched = masseges.last["ts"].to_f
+        oldest_in_fetched = now
+        until (messages = integration.show_messages(channel, oldest: latest_persisted, latest: oldest_in_fetched)) && messages.length == 0
           messages.each do |m|
-            ActivitySlack.create_with_integration(m, integration)
+            ActivitySlack.create_with_integration(m, channel, integration)
           end
+          oldest_in_fetched = messages.last["ts"].to_f
         end
       end
     end
