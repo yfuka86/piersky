@@ -4,8 +4,9 @@ class IdentityGithub < Identity
     identity = self.find_by(primary_key: payload["sender"]["id"])
     unless identity
       gh_user = integration.user_by_name(payload["sender"]["login"])
-      identity = self.build_by_email(gh_user.email, integration.team)
+      identity = self.build_by_email(gh_user.email, integration)
       identity.primary_key = gh_user.id
+      identity.name = payload["sender"]["login"]
     end
     identity
   end

@@ -8,7 +8,7 @@ module Api
     end
 
     def show
-      messages = @slack.show_messages(params[:id], params[:ts])
+      messages = @slack.show_messages(params[:id])
       activities = []
       oldest_ts = nil
       messages["messages"].each do |message|

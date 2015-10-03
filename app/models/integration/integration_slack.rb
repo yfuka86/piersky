@@ -5,22 +5,31 @@ class IntegrationSlack < Integration
 
   def create_identity
     info = slack_client.auth_test
-    super(info["user_id"], info["team_id"])
+    super(info["user_id"], {name: info["user"]})
   end
 
   def update_setting(setting)
   end
 
-  def channel_names
-    slack_client.channels_list["channels"].map {|x| "#" + x["name"] }
+  def team_info
+    slack_client.team_info["team"]
   end
 
   def show_channels
     slack_client.channels_list["channels"]
   end
 
-  def show_messages(channel_id, ts)
-    slack_client.channels_history(channel: channel_id, latest: ts)
+  def channel_names
+    show_channels.map {|x| "#" + x["name"] }
+  end
+
+  # :latest, :oldest, :inclusive, :count
+  def show_messages(channel, options={})
+    slack_client.channels_history({channel: channel.try(:id) || channel}.merge(options))["messages"]
+  end
+
+  def user_info(id)
+    slack_client.users_info(user: id)["user"]
   end
 
   def post_message(channel:, pretext:, title:, title_link:, text:, color:)

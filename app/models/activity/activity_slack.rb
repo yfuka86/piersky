@@ -1,36 +1,33 @@
 class ActivitySlack < Activity
   include Cequel::Record
-  key :integration_id, :int
   key :identity_id, :int
   key :ts, :timestamp
 
   column :channel_id, :int, index: true
+  column :type, :text, index: true
+  column :message, :text
 
-  def self.create()
-    messages = @slack.show_messages(params[:id], params[:ts])
-    activities = []
-    oldest_ts = nil
-    messages["messages"].each do |message|
-      oldest_ts = message["ts"] || oldest_ts
-      next if message["type"]!= "message" || message["text"].blank? || message["user"].blank?
-      activity = SlackActivity.find_by(channel: params[:id], ts: message["ts"])
-      if activity.blank?
-        activity_params = { user_id: message["user"], channel: params[:id], ts: message["ts"], message: message["text"].slice(0, 100)}
-        activity = SlackActivity.create(activity_params)
-        activity.save!
-      end
-      activities.push(activity)
-    end
+  def self.by_integration(integration)
+    self.values_at(*integration.identities.pluck(:id))
+  end
 
-    if defined?(activity) && activity.class == self
-      # activity.payload = p.to_s
-      activity.repository_id = GithubRepository.find_or_create(p["repository"]).id
-      activity.integration_id = integration.id
-      activity.identity_id = IdentityGithub.find_or_initialize_with_payload(payload, integration).tap(&:save!).id
+  def self.by_channel(integration, channel)
+    self.by_integration(integration).where(channel_id: channel.id)
+  end
+
+  def self.oldest_ts(integration)
+    self.by_integration(integration).first.try(:ts)
+  end
+
+  def self.latest_ts(integration)
+    self.by_integration(integration).last.try(:ts)
+  end
+
+  def self.create_with_integration(message, integration)
+    if message["user"]
+      activity = self.new(channel: params[:id], ts: message["ts"].to_f, message: message["text"], type: message["type"])
+      activity.identity_id = IdentitySlack.find_or_initialize_with_id(message["user"], integration).tap(&:save!).id
       activity.save!
-      true
-    else
-      false
     end
   end
 end

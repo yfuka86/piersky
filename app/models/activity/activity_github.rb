@@ -1,6 +1,5 @@
 class ActivityGithub < Activity
   include Cequel::Record
-  key :integration_id, :int
   key :identity_id, :int
   key :ts, :timestamp
 
@@ -64,7 +63,7 @@ class ActivityGithub < Activity
     if defined?(activity) && activity.class == self
       # activity.payload = p.to_s
       activity.repository_id = GithubRepository.find_or_create(p["repository"]).id
-      activity.integration_id = integration.id
+
       activity.identity_id = IdentityGithub.find_or_initialize_with_payload(payload, integration).tap(&:save!).id
       activity.save!
       true
