@@ -6,7 +6,7 @@ class SlackTeam
   column :domain, :text
   column :email_domain, :text
 
-  def self.find_or_create(params, intgration)
+  def self.find_or_create(params, integration)
     team = self[integration.id].find_by_id(params["id"])
     team = self.create(integration_id: integration.id, id: params["id"], name: params["name"], domain: params["domain"], email_domain: params["email_domain"]) unless team
     team.name = params["name"] if team.name != params["name"]
