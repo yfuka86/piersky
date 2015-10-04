@@ -5,6 +5,9 @@ import changeCase from 'change-case';
 import SessionStore from '../../stores/session';
 import UserStore from '../../stores/user';
 import IdentityStore from '../../stores/identity';
+import IntegrationStore from '../../stores/integration';
+import IntegrationAction from '../../actions/integration';
+import StatisticsStore from '../../stores/statistics';
 import moment from 'moment';
 
 class UsersShow extends React.Component {
@@ -63,12 +66,25 @@ class UsersShow extends React.Component {
     return {
       user: user,
       identities: IdentityStore.getIdentitiesByUserId(user.id),
+      integrations: IntegrationStore.getIntegrations(),
+      statistics: StatisticsStore.getStats(),
       data: data
     };
   }
 
   componentDidMount() {
-    this.drawChart();
+    IntegrationAction.load().then(() => {
+      let p = IntegrationStore.getIntegrations().filter((integ) => {
+        return StatisticsStore.getStatById(integ.id)==null;
+      }).map((integ) => {
+        console.log("send stat");
+        return IntegrationAction.stat(integ.id);
+      })
+      return Promise.all(p);
+    }).then(() =>{
+      this.setState(this.getParamsFromStores(this.props));
+      this.drawChart();
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -86,7 +102,7 @@ class UsersShow extends React.Component {
   drawChart() {
     let identities = this.state.identities;
     let data = this.state.data;
-    console.log(identities);
+    console.log(this.state);
 
 
     var table =[['Date'].concat(identities.map((identity) => identity.type))];
@@ -98,7 +114,6 @@ class UsersShow extends React.Component {
       });
       table.push([moment().subtract(length - (i + 1), 'days').format("YYYY/MM/DD")].concat(ary));
     });
-    console.log(table);
 
     var graphData = google.visualization.arrayToDataTable(table);
 
