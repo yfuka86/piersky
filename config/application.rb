@@ -43,3 +43,6 @@ module Piersky
     end
   end
 end
+
+ActiveJob::Base.queue_adapter = :sidekiq
+

@@ -1,6 +1,5 @@
 class ActivityGithub < Activity
   include Cequel::Record
-  key :integration_id, :int
   key :identity_id, :int
   key :ts, :timestamp
 
@@ -31,40 +30,40 @@ class ActivityGithub < Activity
     if p["action"] == "created" && p["comment"]
       if p["issue"]
         activity = self.new(code: CODES[:issue_comment])
-        activity.issue_id = GithubIssue.find_or_create(p["issue"]).id
+        activity.issue_id = GithubIssue.find_or_create(p["issue"], integration).id
       elsif p["pull_request"]
         activity = self.new(code: CODES[:pr_review_comment])
-        activity.pull_request_id = GithubPullRequest.find_or_create(p["pull_request"]).id
+        activity.pull_request_id = GithubPullRequest.find_or_create(p["pull_request"], integration).id
       else
         activity = self.new(code: CODES[:commit_comment])
       end
-      activity.comment_id = GithubComment.find_or_create(p["comment"]).id
+      activity.comment_id = GithubComment.find_or_create(p["comment"], integration).id
       activity.ts = p["comment"]["created_at"]
     end
 
     if p["action"].in?(ISSUE_EVENTS) && p["issue"]
       activity = self.new(code: CODES[:issues])
-      activity.issue_id = GithubIssue.find_or_create(p["issue"]).id
+      activity.issue_id = GithubIssue.find_or_create(p["issue"], integration).id
       activity.ts = p["issue"]["updated_at"]
     end
 
     if p["action"].in?(PR_EVENTS) && p["pull_request"]
       activity = self.new(code: CODES[:pr])
-      activity.pull_request_id = GithubPullRequest.find_or_create(p["pull_request"]).id
+      activity.pull_request_id = GithubPullRequest.find_or_create(p["pull_request"], integration).id
       activity.ts = p["pull_request"]["updated_at"]
     end
 
     if p["ref"] && p["commits"]
       activity = self.new(code: CODES[:push])
       activity.ref = p["ref"]
-      activity.commits_id = p["commits"].map{|c| GithubCommit.find_or_create(c).id}
+      activity.commits_id = p["commits"].map{|c| GithubCommit.find_or_create(c, integration).id}
       activity.ts = p["head_commit"]["timestamp"]
     end
 
     if defined?(activity) && activity.class == self
       # activity.payload = p.to_s
-      activity.repository_id = GithubRepository.find_or_create(p["repository"]).id
-      activity.integration_id = integration.id
+      activity.repository_id = GithubRepository.find_or_create(p["repository"], integration).id
+
       activity.identity_id = IdentityGithub.find_or_initialize_with_payload(payload, integration).tap(&:save!).id
       activity.save!
       true

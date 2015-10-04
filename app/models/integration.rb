@@ -32,17 +32,22 @@ class Integration < ActiveRecord::Base
     ('Identity' + service_name).constantize
   end
 
-  def create_identity(primary_key, secondary_key="")
+  def create_identity(primary_key, options={})
     #please override
     user_team = UserTeam.find_by(user: self.user, team: self.team)
     klass = identity_class
     unless klass.find_by(user_team: user_team)
-      klass.create(team: self.team, user_team: user_team, is_verified: true, primary_key: primary_key, secondary_key: secondary_key)
+      klass.create(integration: self,
+                   user_team: user_team,
+                   is_verified: true,
+                   primary_key: primary_key,
+                   secondary_key: options[:secondary_key],
+                   name: options[:name])
     end
   end
 
   def identities
-    identity_class.where(team: self.team)
+    identity_class.where(integration: self)
   end
 
   def update_setting(setting)

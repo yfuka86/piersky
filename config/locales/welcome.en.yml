@@ -1,8 +1,21 @@
 en:
   welcome:
     intro_first: "Analyze, visualize, and give feedback for your team's performance automatically."
+    description:
+      title_html: "Automatically gather and organize<br>your team’s data"
+      body_html: "No more going from tool to tool.<br>Sync your communication and task management tools in one platform."
+    feature1:
+      title: "Grasp what’s going on in one glance"
+      body_html: "Piersky visualizes your team’s data so everyone can keep up with the details.<br>Learn about members’ activities, tasks, and communication effortlessly."
+    feature2:
+      title: "Feedback based on data analysis"
+      body_html: "Evaluate your members and give concrete feedback based on hard data. <br>PierSky empowers your decision with automatically analyzed results."
+    sync:
+      title: "Utilize communication data from all your tools"
+      body: "Let PierSky automatically keep track of your team's daily activities."
+    sign_up: "Step up your team communication today."
     contact:
-      title: "Contact"
-      body: "Feel free to email us to provide some feedback on our products"
+      title: "Contact us"
+      body: "Feel free to email us for questions and feedback:"
     copy_right: "PierSky 2015"
 

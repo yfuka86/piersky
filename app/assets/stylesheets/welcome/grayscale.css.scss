@@ -24,22 +24,12 @@ h4,
 h5,
 h6 {
     margin: 0 0 35px;
-    @include lato-bold;
     letter-spacing: 1px;
 }
 
 p {
-    margin: 0 0 25px;
     font-size: 18px;
-    line-height: 1.5;
-}
-
-@media(min-width:768px) {
-    p {
-        margin: 0 0 35px;
-        font-size: 20px;
-        line-height: 1.6;
-    }
+    line-height: 1.6;
 }
 
 a {
@@ -278,48 +268,98 @@ a:focus {
     }
 }
 
+section#sync {
+    color: $white;
+    background-color: #eef4f1;
+    width: 100%;
+    .row {
+        margin: 0 auto;
+    }
+}
+
 .content-section {
     padding-top: 100px;
+    padding-bottom: 100px;
     color: $grey800;
     @include lato-thin;
-
 }
+
 .about-section {
     display: table;
     width: 100%;
-    height: 400px;
     text-align: center;
     color: $grey800;
-    background: image-url('about.jpeg') no-repeat bottom center scroll ;
     background-color: transparent;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
 }
-.download-section {
-    color: $white;
-    background: image-url('welcome_bg.png') no-repeat bottom center scroll;
+
+.sync-section {
+    display: table;
+    width: 100%;
+    text-align: center;
+    color: $grey800;
     background-color: transparent;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+    img.logo {
+        display: inline;
+    }
+}
+
+section#features {
+    color: $grey800;
+    background-color: $white;
+}
+
+.feature {
+    padding-left: 30px;
+}
+
+.feature1 {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    h2 {
+        text-align: left;
+    }
+    .feature {
+        margin-bottom: 100px;
+    }
+}
+
+.feature2 {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    h2 {
+        text-align: left;
+    }
+}
+
+.feature-body {
+    text-align: left;
+    width: 400px;
 }
 
 @media(min-width:767px) {
-    .content-section {
-        padding-top: 100px;
-    }
-
-    .download-section {
-        padding: 100px 0;
-    }
 
     #map {
         height: 400px;
         margin-top: 250px;
     }
+}
+
+section#contact {
+    color: $grey800;
+    background-color: #f4faf9;
+    width: 100%;
 }
 
 .btn {
@@ -346,7 +386,7 @@ a:focus {
 }
 
 ul.banner-social-buttons {
-    margin-top: 0;
+    margin-top: 35px;
 }
 
 @media(max-width:1199px) {
@@ -369,14 +409,14 @@ ul.banner-social-buttons {
 
 footer {
     padding: 50px 0;
-    color: $grey800;
+    color: $white;
+    background-color: $blue700;
 }
 
 footer p {
-    @include lato-bold;
-    font-size: 18px;
-    color: $grey500;
-    margin: 0;
+    font-size: 16px;
+    margin-top: 15px;
+    margin-bottom: 0px;
 }
 
 img::selection {
