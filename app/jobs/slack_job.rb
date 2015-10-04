@@ -4,22 +4,22 @@ class SlackJob < ActiveJob::Base
   def perform(integration_id)
     ActiveRecord::Base.transaction do
       integration = IntegrationSlack.find_by(id: integration_id)
-      team = SlackTeam.find_or_create(integration.team_info)
+      team = SlackTeam.find_or_create(integration.team_info, integration)
 
       # fix range of time
       now = DateTime.now.to_f
-      latest_persisted = ActivitySlack.latest_ts(integration) || 1.0
+      latest_persisted = (ActivitySlack.latest_ts(integration) || 1.0).to_f
       #
 
       integration.show_channels.each do |c|
-        channel = SlackChannel.find_or_create(c)
+        channel = SlackChannel.find_or_create(c, integration)
 
-        oldest_in_fetched = now
-        until (messages = integration.show_messages(channel, oldest: latest_persisted, latest: oldest_in_fetched)) && messages.length == 0
+        oldest_in_fetching = now
+        until (messages = integration.show_messages(channel, oldest: latest_persisted, latest: oldest_in_fetching)) && messages.length == 0
           messages.each do |m|
             ActivitySlack.create_with_integration(m, channel, integration)
           end
-          oldest_in_fetched = messages.last["ts"].to_f
+          oldest_in_fetching = messages.last["ts"].to_f
         end
       end
     end

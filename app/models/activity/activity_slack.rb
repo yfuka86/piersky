@@ -4,7 +4,7 @@ class ActivitySlack < Activity
   key :ts, :timestamp
 
   column :channel_id, :text, index: true
-  column :type, :text, index: true
+  column :type, :text
   column :message, :text
 
   def self.by_integration(integration)
