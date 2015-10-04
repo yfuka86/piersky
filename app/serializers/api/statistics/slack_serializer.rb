@@ -1,5 +1,5 @@
 class Api::Statistics::SlackSerializer < ActiveModel::Serializer
-  attributes :integration_id, :today, :identities
+  attributes :integration_id, :channels, :today, :identities
 
   def integration_id
     object.id
@@ -9,17 +9,21 @@ class Api::Statistics::SlackSerializer < ActiveModel::Serializer
     @today ||= Date.today
   end
 
+  def channels
+    @channels ||= SlackChannel[object.id].reduce({}){ |hash, (c)| hash.merge({c.id.to_sym => c.name})  }
+  end
+
   def identities
     object.identities.map do |identity|
-      activities_obj = {}
-      activities.each do |k|
-        activities_obj[k] = period_map(ActivitySlack[identity.id].where(channel: )).map(&:count)
+      channels_obj = {}
+      channels.keys.each do |cid|
+        channels_obj[cid] = period_map(ActivitySlack[identity.id].where(channel_id: cid)).map(&:count)
       end
 
       {
         id: identity.id,
-        default: period_map(ActivityGithub[identity.id]).map(&:count),
-      }.merge(activities_obj)
+        default: period_map(ActivitySlack[identity.id]).map(&:count),
+      }.merge(channels_obj)
     end
   end
 
