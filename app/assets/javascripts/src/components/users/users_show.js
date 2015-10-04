@@ -5,10 +5,12 @@ import changeCase from 'change-case';
 import SessionStore from '../../stores/session';
 import UserStore from '../../stores/user';
 import IdentityStore from '../../stores/identity';
+import moment from 'moment';
 
 class UsersShow extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = this.initialState;
   }
 
@@ -18,26 +20,8 @@ class UsersShow extends React.Component {
 
   getParamsFromStores(props) {
     let user = UserStore.getUserById(props.params.id)
-    let date = [
-      '2015/08/07',
-      '2015/08/08',
-      '2015/08/09',
-      '2015/08/10',
-      '2015/08/11',
-      '2015/08/12',
-      '2015/08/13',
-      '2015/08/14',
-      '2015/08/15',
-      '2015/08/16',
-      '2015/08/17',
-      '2015/08/18',
-      '2015/08/19',
-      '2015/08/20',
-      '2015/08/21',
-      '2015/08/22',
-      '2015/08/23'
-    ];
-    let data=[ { type: "Slack", data:[
+    let data= {};
+    data["Slack"]=[
       1000,
       1170,
       1660,
@@ -55,8 +39,8 @@ class UsersShow extends React.Component {
       660,
       1000,
       1170
-    ]},
-    { type: "Github", data:[
+    ];
+    data["Github"] = [
       400,
       460,
       1120,
@@ -74,13 +58,11 @@ class UsersShow extends React.Component {
       1120,
       400,
       460
-    ]}
     ];
 
     return {
       user: user,
       identities: IdentityStore.getIdentitiesByUserId(user.id),
-      date: date,
       data: data
     };
   }
@@ -102,17 +84,23 @@ class UsersShow extends React.Component {
   }
 
   drawChart() {
-    var column =['date'];
-    var values = this.state.date;
-    this.state.data.forEach((item, idx) => {
-      column = column.concat([item.type]);
-      item.data.forEach((val,jdx) => {
-        if(idx==0) values[jdx] = [values[jdx],val];
-        else values[jdx] = values[jdx].concat([val]);
+    let identities = this.state.identities;
+    let data = this.state.data;
+    console.log(identities);
+
+
+    var table =[['Date'].concat(identities.map((identity) => identity.type))];
+    let length = 10;
+    let end = new Date(2014, 8, 25);
+    _.times(length, (i) =>{
+      let ary = identities.map((identity) => {
+        return data[identity.type][length - (i+1)];
       });
+      table.push([moment().subtract(length - (i + 1), 'days').format("YYYY/MM/DD")].concat(ary));
     });
-    var arr = [column].concat(values);
-    var data = google.visualization.arrayToDataTable(arr);
+    console.log(table);
+
+    var graphData = google.visualization.arrayToDataTable(table);
 
     var options = {
       title: 'activity',
@@ -120,9 +108,9 @@ class UsersShow extends React.Component {
       legend: { position: 'bottom' }
     };
 
-    var chart = new google.visualization.LineChart(document.getElementById('graph'));
+    var chart = new google.visualization.LineChart(React.findDOMNode(this).querySelector('#graph'));
 
-    chart.draw(data, options);
+    chart.draw(graphData, options);
   }
 
   render() {
