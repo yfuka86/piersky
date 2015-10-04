@@ -1,6 +1,5 @@
 import React from 'react';
 import _ from 'lodash';
-import request from 'superagent';
 import moment from 'moment';
 import Constants from '../../constants/app';
 import {getTicks} from '../../utils/app_module';
@@ -51,46 +50,56 @@ class Github extends React.Component {
 
   drawChart() {
     if (!this.props) return;
-    let identitiesData = this.props.stat.identities;
-    let users = identitiesData.map((data) => {
-      return UserStore.getUserById(IdentityStore.getIdentityById(data.id).userId);
-    });
-
-    let header = ['Day'].concat(users.map((user) => {return user.identity()}));
-    let colors = users.map((user) => {return Constants.colorHexByKey(user.identity())});
-    let data = [header];
-
+    let activity = this.state.activity;
     let end = this.state.periodEndAt;
     let length = this.state.periodLength;
-    let max = 0;
-    _.times(length, (i) => {
-      let ary = identitiesData.map((data) => {
-        return data[this.state.activity][length - (i + 1)];
-      });
-      let sum = _.sum(ary);
-      if (sum > max) max = sum;
-      data.push([moment(end).subtract(length - (i + 1), 'days').format("MMM Do")].concat(ary));
-    })
-
-    let tableData = google.visualization.arrayToDataTable(data);
 
     let width = React.findDOMNode(this).clientWidth;
-    let height = width * 3 / 8;
-    let ticks = getTicks(max);
-    let options = {
-      isStacked: true,
-      width: width,
-      height: height,
-      legend: {position: 'right', maxLines: 3},
-      colors: colors,
-      vAxis: {
-        ticks: ticks,
-        minValue: 0
-      }
-    };
+    let height = parseInt(width * 3 / 8);
 
-    let chart = new google.visualization.AreaChart(React.findDOMNode(this).querySelector('#main_graph'));
-    chart.draw(tableData, options);
+    let identitiesData = this.props.stat.identities;
+    identitiesData = _.reject(identitiesData, (data) => {
+      return _.sum(data[activity].slice(0, length)) === 0;
+    });
+
+    if (identitiesData.length > 0) {
+      let userNames = identitiesData.map((data) => {
+        return IdentityStore.getUserIdentityById(data.id)
+      })
+      let header = ['Day'].concat(userNames);
+      let colors = userNames.map((name) => {return Constants.colorHexByKey(name)});
+      let data = [header];
+
+      let max = 0;
+      _.times(length, (i) => {
+        let ary = identitiesData.map((data) => {
+          return data[activity][length - (i + 1)];
+        });
+        let sum = _.sum(ary);
+        if (sum > max) max = sum;
+        data.push([moment(end).subtract(length - (i + 1), 'days').format("MMM Do")].concat(ary));
+      })
+
+      let tableData = google.visualization.arrayToDataTable(data);
+
+      let ticks = getTicks(max);
+      let options = {
+        isStacked: true,
+        width: width,
+        height: height,
+        legend: {position: 'right', maxLines: 3},
+        colors: colors,
+        vAxis: {
+          ticks: ticks,
+          minValue: 0
+        }
+      };
+
+      let chart = new google.visualization.AreaChart(React.findDOMNode(this).querySelector('#main_graph'));
+      chart.draw(tableData, options);
+    } else {
+      React.findDOMNode(this).querySelector('#main_graph').innerHTML = `<div class="no-activities" style="height: ${height}px">${I18n.t('integration.general.no_activities')}</div>`;
+    }
   }
 
   changeActivity(e) {

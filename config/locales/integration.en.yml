@@ -10,6 +10,7 @@ en:
     general:
       connect: 'Connect'
       no_integrations: 'No integrations to show.'
+      no_activities: 'No activities to show.'
       setup: 'Would you like to setup?'
       save: 'Save Integration'
       remove: 'Remove Integration'
@@ -39,6 +40,12 @@ en:
       name: 'Asana'
     slack:
       name: 'Slack'
+      channel:
+        default: 'all channels'
+      period:
+        placeholder: 'Choose a period...'
+        last_week: 'last 1 week'
+        last_month: 'last 1 month'
     github:
       name: 'Github'
       repository:
