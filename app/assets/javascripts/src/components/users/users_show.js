@@ -7,6 +7,7 @@ import UserStore from '../../stores/user';
 import IdentityStore from '../../stores/identity';
 import IntegrationStore from '../../stores/integration';
 import IntegrationAction from '../../actions/integration';
+//import IdentityAction from '../../actions/integration';
 import StatisticsStore from '../../stores/statistics';
 import moment from 'moment';
 
@@ -73,6 +74,8 @@ class UsersShow extends React.Component {
   }
 
   componentDidMount() {
+
+
     IntegrationAction.load().then(() => {
       let p = IntegrationStore.getIntegrations().filter((integ) => {
         return StatisticsStore.getStatById(integ.id)==null;
@@ -100,20 +103,23 @@ class UsersShow extends React.Component {
   }
 
   drawChart() {
-    let identities = this.state.identities;
     let data = this.state.data;
     console.log(this.state);
 
+    let integrations = _.groupBy(this.state.integrations, (integration) => {
+      return integration.type;
+    });
 
-    var table =[['Date'].concat(identities.map((identity) => identity.type))];
+    var table =[['Date'].concat(_.map(integrations,(_,key) => key))];
     let length = 10;
     let end = new Date(2014, 8, 25);
     _.times(length, (i) =>{
-      let ary = identities.map((identity) => {
-        return data[identity.type][length - (i+1)];
+      let ary = _.map(integrations,(group, key) => {
+        return data[key][length - (i+1)];
       });
       table.push([moment().subtract(length - (i + 1), 'days').format("YYYY/MM/DD")].concat(ary));
     });
+
 
     var graphData = google.visualization.arrayToDataTable(table);
 
