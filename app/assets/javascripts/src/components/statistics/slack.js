@@ -91,13 +91,14 @@ class Slack extends React.Component {
         height: height,
         legend: {position: 'right', maxLines: 3},
         colors: colors,
+        curveType: 'function',
         vAxis: {
           ticks: ticks,
           minValue: 0
         }
       };
 
-      let chart = new google.visualization.AreaChart(React.findDOMNode(this).querySelector('#main_graph'));
+      let chart = new google.visualization.LineChart(React.findDOMNode(this).querySelector('#main_graph'));
       chart.draw(tableData, options);
     } else {
       React.findDOMNode(this).querySelector('#main_graph').innerHTML = `<div class="no-activities" style="height: ${height}px">${I18n.t('integration.general.no_activities')}</div>`;
@@ -132,7 +133,11 @@ class Slack extends React.Component {
             </select>
           </div>
         </div>
+        <div className='statistics-summary'>
+        </div>
         <div id='main_graph' />
+        <div className='users'>
+        </div>
       </div>
     );
   }
