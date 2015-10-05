@@ -6,6 +6,7 @@ import moment from 'moment';
 import { ActionTypes } from '../constants/app';
 
 import BaseStore from '../stores/base';
+import UserStore from '../stores/user';
 
 const IdentityStore = assign({}, BaseStore, {
 
@@ -28,6 +29,15 @@ const IdentityStore = assign({}, BaseStore, {
     return _.where(this.getIdentities(), {userId: parseInt(userId, 10)}) || [];
   },
 
+  getUserIdentityById(id) {
+    let identity = this.getIdentityById(id);
+    if (identity.userId) {
+      return UserStore.getUserById(identity.userId).identity();
+    } else {
+      return identity.name;
+    }
+  },
+
   parse(json) {
     return {
       id: json.id,
@@ -35,7 +45,8 @@ const IdentityStore = assign({}, BaseStore, {
       type: changeCase.pascalCase(json.type.match(/Identity(.+)/)[1]),
       primaryKey: json.primary_key,
       secondaryKey: json.secondary_key,
-      isVerified: json.is_verified
+      isVerified: json.is_verified,
+      name: json.name
     }
   }
 
