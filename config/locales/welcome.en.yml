@@ -2,8 +2,8 @@ en:
   welcome:
     intro_first: "Analyze, visualize, and give feedback for your team's performance automatically."
     description:
-      title_html: "Automatically gather and organize<br>your team’s data"
-      body_html: "No more going from tool to tool.<br>Sync your communication and task management tools in one platform."
+      title_html: "The simplest way to understand your team."
+      body_html: "Managers, no more going from tool to tool. <br>Employees, start learning what your colleagues are up to.<br>Save time by syncing your communication and task management tools into one platform.<br>Simply click \"integrate\" to gather data, and start learning about your members' activities."
     feature1:
       title: "Grasp what’s going on in one glance"
       body_html: "Piersky visualizes your team’s data so everyone can keep up with the details.<br>Learn about members’ activities, tasks, and communication effortlessly."
@@ -12,7 +12,7 @@ en:
       body_html: "Evaluate your members and give concrete feedback based on hard data. <br>PierSky empowers your decision with automatically analyzed results."
     sync:
       title: "Utilize communication data from all your tools"
-      body: "Let PierSky automatically keep track of your team's daily activities."
+      body_html: "Who's working on which project? How does your team collaborate?<br>Let PierSky automatically keep track of your team's daily activities from tools like:"
     sign_up: "Step up your team communication today."
     contact:
       title: "Contact us"
