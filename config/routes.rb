@@ -48,8 +48,5 @@ Rails.application.routes.draw do
       end
     end
     resources :invitations, only: [:index, :create, :update, :destroy]
-
-    get 'slack_wrapper(/:integration_id)', to: 'slack_wrapper#index'
-    get 'slack_wrapper/:integration_id/show/:id(/:ts)', to: 'slack_wrapper#show'
   end
 end

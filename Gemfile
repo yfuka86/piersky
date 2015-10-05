@@ -50,6 +50,7 @@ gem 'mail_view', :git => 'https://github.com/basecamp/mail_view.git'
 
 # to db:build in production
 gem 'faker'
+gem 'rb-readline'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.2'

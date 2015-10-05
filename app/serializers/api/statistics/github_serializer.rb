@@ -17,12 +17,12 @@ class Api::Statistics::GithubSerializer < ActiveModel::Serializer
     object.identities.map do |identity|
       activities_obj = {}
       activities.each do |k|
-        activities_obj[k] = period_map(ActivityGithub[object.id][identity.id].where(code: ActivityGithub::CODES[k])).map(&:count)
+        activities_obj[k] = period_map(ActivityGithub[identity.id].where(code: ActivityGithub::CODES[k])).map(&:count)
       end
 
       {
         id: identity.id,
-        default: period_map(ActivityGithub[object.id][identity.id]).map(&:count),
+        default: period_map(ActivityGithub[identity.id]).map(&:count),
       }.merge(activities_obj)
     end
   end

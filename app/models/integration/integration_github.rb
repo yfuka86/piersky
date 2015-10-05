@@ -1,6 +1,7 @@
 class IntegrationGithub < Integration
   def create_identity
-    super(gh_client.users.get.id)
+    user = gh_client.users.get
+    super(user.id, {name: user.login})
   end
 
   def update_setting(params)

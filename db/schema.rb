@@ -11,21 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150913084615) do
+ActiveRecord::Schema.define(version: 20151002113155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "identities", force: :cascade do |t|
-    t.integer  "team_id",                       null: false
     t.integer  "user_team_id"
-    t.string   "type",                          null: false
-    t.string   "primary_key",                   null: false
-    t.string   "secondary_key", default: ""
-    t.string   "email_key",     default: ""
-    t.boolean  "is_verified",   default: false, null: false
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.string   "type",                           null: false
+    t.string   "primary_key",                    null: false
+    t.string   "secondary_key",  default: ""
+    t.string   "email_key",      default: ""
+    t.boolean  "is_verified",    default: false, null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.integer  "integration_id",                 null: false
+    t.string   "name"
   end
 
   add_index "identities", ["user_team_id", "type"], name: "index_identities_on_user_team_id_and_type", using: :btree

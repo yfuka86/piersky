@@ -1,130 +1,142 @@
 import React from 'react';
 import _ from 'lodash';
 import request from 'superagent';
+import moment from 'moment';
 import Constants from '../../constants/app';
-import {APIRoot} from '../../constants/app';
+import {getTicks} from '../../utils/app_module';
+
+import IdentityStore from '../../stores/identity';
+import UserStore from '../../stores/user';
 
 class Slack extends React.Component {
+  static get defaultProps() {
+    return {
+      integration: {},
+      stat: {}
+    };
+  }
+
+  static get propTypes() {
+    return {
+      integration: React.PropTypes.object,
+      stat: React.PropTypes.object
+    };
+  }
 
   constructor(props){
     super(props);
-    this.state= {
-      channels: []
-    };
+    this.state = this.initialState;
+  }
+
+  get initialState() {
+    return {
+      channelId: 'default',
+      periodLength: 31,
+      periodEndAt: moment(this.props.stat.today)
+    }
   }
 
   componentDidMount() {
-    this.loadStats();
+    this.drawChart();
+    window.onresize = this.drawChart.bind(this);
+  }
+
+  componentDidUpdate() {
+    this.drawChart();
   }
 
   componentWillUnmount() {
+    window.onresize = null;
   }
 
-  loadStats() {
-      let integ_id = this.props.integration.id;
-      request
-      .get(APIRoot + '/slack_wrapper/' + integ_id)
-      .end(function(error, res) {
-        if (res.status === 200){
-          let json = JSON.parse(res.text);
-          console.log("java");
-          let channels = _.map(json.channels, function(channel) {
-            channel.messages = [];
-            request
-              .get(APIRoot + '/slack_wrapper/' + integ_id + '/show/' + channel.id)
-              .end(function(error, res){
-                if(res.status == 200) {
-                  channel.messages = JSON.parse(res.text).messages;
-                  this.setState(this.state);
-                  this.drawChart();
-                } else {
-                  reject();
-                }
 
-              }.bind(this)
-              );
-            return channel;
-          }.bind(this));
-          this.setState({
-            channels: json.channels
-          });
-          this.drawChart();
-        } else {
-          reject();
+  drawChart() {
+    if (!this.props) return;
+    let channelId = this.state.channelId;
+    let end = this.state.periodEndAt;
+    let length = this.state.periodLength;
+
+    let width = React.findDOMNode(this).clientWidth;
+    let height = parseInt(width * 3 / 8);
+
+    let identitiesData = this.props.stat.identities;
+    identitiesData = _.reject(identitiesData, (data) => {
+      return _.sum(data[channelId].slice(0, length)) === 0;
+    })
+
+    if (identitiesData.length > 0) {
+      let userNames = identitiesData.map((data) => {
+        return IdentityStore.getUserIdentityById(data.id)
+      })
+      let header = ['Day'].concat(userNames);
+      let colors = userNames.map((name) => {return Constants.colorHexByKey(name)});
+      let data = [header];
+
+      let max = 0;
+      _.times(length, (i) => {
+        let ary = identitiesData.map((data) => {
+          return data[channelId][length - (i + 1)];
+        });
+        let sum = _.sum(ary);
+        if (sum > max) max = sum;
+        data.push([moment(end).subtract(length - (i + 1), 'days').format("MMM Do")].concat(ary));
+      })
+
+      let tableData = google.visualization.arrayToDataTable(data);
+
+      let ticks = getTicks(max);
+      let options = {
+        isStacked: true,
+        width: width,
+        height: height,
+        legend: {position: 'right', maxLines: 3},
+        colors: colors,
+        curveType: 'function',
+        vAxis: {
+          ticks: ticks,
+          minValue: 0
         }
-      }.bind(this));
+      };
+
+      let chart = new google.visualization.LineChart(React.findDOMNode(this).querySelector('#main_graph'));
+      chart.draw(tableData, options);
+    } else {
+      React.findDOMNode(this).querySelector('#main_graph').innerHTML = `<div class="no-activities" style="height: ${height}px">${I18n.t('integration.general.no_activities')}</div>`;
+    }
   }
 
-  drawChart(){
-    let data = google.visualization.arrayToDataTable([
-      ['Channel', 'number', { role: 'style' }]
-    ].concat(this.state.channels.map(function(channel){
-      return [channel.name, channel.messages.length, Constants.colorHexByKey(channel.name)];
-    })));
+  changeChannel(e) {
+    this.setState({channelId: e.target.value});
+  }
 
-    let options = {
-      title: 'number of messages of channels',
-      chartArea: {width: '890px'},
-      hAxis: {
-        title: 'number',
-        minValue: 0
-      },
-      vAxis: {
-        title: 'Channel'
-      }
-    };
-
-    let chart = new google.visualization.BarChart(React.findDOMNode(this).querySelector('#graph'));
-
-    chart.draw(data, options);
-
-    let messages = _.reduce(this.state.channels, function(memo, channel){return memo.concat(channel.messages)}, []);
-    let group = _.groupBy(messages, 'user_id');
-    let ary = _.map(group, function(v,k) {return [k, v.length, Constants.colorHexByKey(k)]});
-
-    let data2 = google.visualization.arrayToDataTable([
-      ['User', 'number', { role: 'style' }]
-    ].concat(ary));
-
-    let options2 = {
-      title: 'number of messages of each user',
-      chartArea: {width: '890px'},
-      hAxis: {
-        title: 'number',
-        minValue: 0
-      },
-      vAxis: {
-        title: 'Channel'
-      }
-    };
-
-    let chart2 = new google.visualization.BarChart(React.findDOMNode(this).querySelector('#graph2'));
-
-    chart2.draw(data2, options2);
+  changePeriod(e) {
+    this.setState({periodLength: parseInt(e.target.value, 10)})
   }
 
   render() {
     return (
       <div className='statistics-slack'>
-        <div id='graph' />
-        <div id='graph2' />
-        <div className='slack-channels-container'>
-        <h2> Channels </h2>
-        <ul>
-        {this.state.channels.map(function(channel){
-          console.log(channel);
-          return (
-            <li id={channel.id} className='slack-channel'>
-              <h3> {channel.name} </h3>
-              <ul>
-              {channel.messages.map(function(message){
-                return <li> {message.message} </li>
+        <div className='main-graph-action standard-form-horizontal'>
+          <div className='field'>
+            <select onChange={this.changeChannel.bind(this)}>
+              <option value={'default'} >{I18n.t('integration.slack.channel.default')}</option>
+              {_.map(this.props.stat.channels, (name, id)=>{
+                return <option value={id} key={id}>{name}</option>
               })}
-              </ul>
-            </li>
-            );
-        })}
-        </ul>
+            </select>
+          </div>
+          <div className='field'>
+            <select onChange={this.changePeriod.bind(this)}>
+              <option value={31} >{I18n.t('integration.slack.period.placeholder')}</option>
+              <option value={7} >{I18n.t('integration.slack.period.last_week')}</option>
+              <option value={31} >{I18n.t('integration.slack.period.last_month')}</option>
+            </select>
+          </div>
+        </div>
+        <div className='statistics-summary'>
+        </div>
+        <div id='main_graph' />
+        <div className='users'>
         </div>
       </div>
     );
