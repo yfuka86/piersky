@@ -14,12 +14,15 @@ import moment from 'moment';
 class UsersShow extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = this.initialState;
   }
 
   get initialState() {
-    return this.getParamsFromStores(this.props);
+    let state = this.getParamsFromStores(this.props);
+    state.periodLength = 31;
+    state.ready = false;
+    return state;
+    //state.periodEndAt = moment(this.props.stat.today)
   }
 
   getParamsFromStores(props) {
@@ -36,14 +39,22 @@ class UsersShow extends React.Component {
   componentDidMount() {
 
     IntegrationAction.load().then(() => {
-      let p = IntegrationStore.getIntegrations().filter((integ) => {
+      let integrations = IntegrationStore.getIntegrations();
+      this.setState({ integrations: integrations });
+      let p = integrations.filter((integ) => {
         return StatisticsStore.getStatById(integ.id)==null;
       }).map((integ) => {
         return IntegrationAction.stat(integ.id);
       })
       return Promise.all(p);
     }).then(() =>{
-      this.setState(this.getParamsFromStores(this.props));
+      let statistics = StatisticsStore.getStats();
+      let today = _.find(statistics, (s) => true).today;
+      this.setState({ 
+        statistics: statistics,
+        ready: true,
+        periodEndAt: moment(today)
+      });
       this.drawChart();
     });
   }
@@ -61,8 +72,8 @@ class UsersShow extends React.Component {
   }
 
   drawChart() {
+    if(!this.state.ready) return;
     let data = this.state.data;
-    console.log(this.state);
 
     let identities = this.state.identities;
     let integrations = _.groupBy(this.state.integrations, (integration) => {
@@ -71,8 +82,8 @@ class UsersShow extends React.Component {
     let statistics = this.state.statistics;
 
     var table =[['Date'].concat(_.map(integrations,(_,key) => key))];
-    let length = 31;
-    let end = new Date(2014, 8, 25);
+    let length = this.state.periodLength;
+    let end = this.state.periodEndAt;
     _.times(length, (i) =>{
       let ary = _.map(integrations,(group, key) => {
         let identity = _.find(identities,{ 'type': key })
@@ -83,7 +94,7 @@ class UsersShow extends React.Component {
           return total;
         }, 0);
       });
-      table.push([moment().subtract(length - (i + 1), 'days').format("YYYY/MM/DD")].concat(ary));
+      table.push([end.subtract(length - (i + 1), 'days').format("YYYY/MM/DD")].concat(ary));
     });
 
 
@@ -100,6 +111,14 @@ class UsersShow extends React.Component {
     chart.draw(graphData, options);
   }
 
+  changePeriod(e) {
+    this.setState({periodLength: parseInt(e.target.value, 10)})
+  }
+
+  componentDidUpdate() {
+    this.drawChart();
+  }
+
   render() {
     return (
       <div className='container-main users-show'>
@@ -108,6 +127,13 @@ class UsersShow extends React.Component {
           {this.state.identities.map((identity) => {
             return <span className={['icon', changeCase.snakeCase(identity.type) + '-logo'].join(' ')} />
           })}
+        </div>
+        <div className='field'>
+          <select onChange={this.changePeriod.bind(this)}>
+            <option value={31} >{I18n.t('integration.slack.period.placeholder')}</option>
+            <option value={7} >{I18n.t('integration.slack.period.last_week')}</option>
+            <option value={31} >{I18n.t('integration.slack.period.last_month')}</option>
+          </select>
         </div>
         <div id='graph' />
       </div>
