@@ -3,6 +3,7 @@ import assign from 'object-assign';
 import _ from 'lodash';
 import changeCase from 'change-case';
 import moment from 'moment';
+import Constants from '../constants/app';
 import { ActionTypes } from '../constants/app';
 
 import BaseStore from '../stores/base';
@@ -57,6 +58,7 @@ const IntegrationStore = assign({}, BaseStore, {
       userId: parseInt(json.user_id, 10),
       createdAt: moment(json.created_at),
       details: json.details,
+      status: Constants.IntegrationStatus[parseInt(json.status, 10)],
       name: function() {
         return `${this.type}${(this.label && this.label.length > 0 ? ` : ${this.label}` : '')}`;
       }

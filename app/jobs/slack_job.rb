@@ -22,6 +22,8 @@ class SlackJob < ActiveJob::Base
           oldest_in_fetching = messages.last["ts"].to_f
         end
       end
+
+      integration.default!
     end
   end
 end

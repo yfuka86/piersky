@@ -1,5 +1,5 @@
 class Api::IntegrationSerializer < ActiveModel::Serializer
-  attributes :id, :type, :user_id, :created_at, :label, :details
+  attributes :id, :type, :user_id, :created_at, :label, :details, :status
 
   def type
     object.type.split('Integration')[1]
