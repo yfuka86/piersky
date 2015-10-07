@@ -6,11 +6,14 @@ class GithubCommit < ActiveRecord::Base
   # column :message, :text
   # column :url, :text
 
-  def self.find_or_create(params, integration)
-    commit = self[params["id"]].first
+  belongs_to :github_activity
+
+  def self.find_or_create(params, integration, activity)
+    commit = self.find_by(foreign_id: params["id"], integration_id: integration.id)
     commit = self.create(
+              activity_id: activity.id,
               integration_id: integration.id,
-              id: params["id"],
+              foreign_id: params["id"],
               message: params["message"],
               ts: params["timestamp"],
               url: params["url"]) unless commit

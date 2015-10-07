@@ -14,17 +14,18 @@ class Api::Statistics::GithubSerializer < ActiveModel::Serializer
   end
 
   def identities
-    object.identities.map do |identity|
-      activities_obj = {}
-      activities.each do |k|
-        activities_obj[k] = period_map(ActivityGithub[identity.id].where(code: ActivityGithub::CODES[k])).map(&:count)
-      end
+    binding.pry
+    # object.identities.map do |identity|
+    #   activities_obj = {}
+    #   activities.each do |k|
+    #     activities_obj[k] = period_map(ActivityGithub[identity.id].where(code: ActivityGithub::CODES[k])).map(&:count)
+    #   end
 
-      {
-        id: identity.id,
-        default: period_map(ActivityGithub[identity.id]).map(&:count),
-      }.merge(activities_obj)
-    end
+    #   {
+    #     id: identity.id,
+    #     default: period_map(ActivityGithub[identity.id]).map(&:count),
+    #   }.merge(activities_obj)
+    # end
   end
 
   def period_map(q)

@@ -6,11 +6,14 @@ class GithubComment < ActiveRecord::Base
   # column :body, :text
   # column :url, :text
 
-  def self.find_or_create(params, integration)
-    comment = self[params["id"]].first
+  belongs_to :github_activity
+
+  def self.find_or_create(params, integration, activity)
+    comment = self.find_by(foreign_id: params["id"], integration_id: integration.id)
     comment = self.create(
+                activity_id: activity.id,
                 integration_id: integration.id,
-                id: params["id"],
+                foreign_id: params["id"],
                 body: params["body"],
                 ts: params["created_at"],
                 url: params["url"]) unless comment

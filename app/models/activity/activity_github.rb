@@ -1,4 +1,4 @@
-class ActivityGithub < Activity
+class ActivityGithub < ActiveRecord::Base
   # include Cequel::Record
   # key :identity_id, :int
   # key :ts, :timestamp
@@ -18,6 +18,12 @@ class ActivityGithub < Activity
   # mmm
   # column :payload, :text
 
+  belongs_to :github_repository
+  belongs_to :github_issue
+  belongs_to :github_pull_request
+  has_one :github_comment, foreign_key: "activity_id", class_name: "GithubComment"
+  has_many :github_commits, foreign_key: "activity_id", class_name: "GithubCommit"
+
   # https://developer.github.com/v3/activity/events/types
   CODES = {default: 0, commit_comment: 1, issue_comment: 12,
            issues: 13, pr: 18, pr_review_comment: 19, push: 20}
@@ -27,48 +33,51 @@ class ActivityGithub < Activity
   def self.create_with_webhook(payload, webhook)
     p = payload
     integration = webhook.integration
-    if p["action"] == "created" && p["comment"]
-      if p["issue"]
-        activity = self.new(code: CODES[:issue_comment])
-        activity.issue_id = GithubIssue.find_or_create(p["issue"], integration).id
-      elsif p["pull_request"]
-        activity = self.new(code: CODES[:pr_review_comment])
-        activity.pull_request_id = GithubPullRequest.find_or_create(p["pull_request"], integration).id
-      else
-        activity = self.new(code: CODES[:commit_comment])
+
+    ActiveRecord::Base.transaction do
+      if p["action"] == "created" && p["comment"]
+        if p["issue"]
+          activity = self.create(code: CODES[:issue_comment])
+          activity.issue_id = GithubIssue.find_or_create(p["issue"], integration).id
+        elsif p["pull_request"]
+          activity = self.create(code: CODES[:pr_review_comment])
+          activity.pull_request_id = GithubPullRequest.find_or_create(p["pull_request"], integration).id
+        else
+          activity = self.create(code: CODES[:commit_comment])
+        end
+        GithubComment.find_or_create(p["comment"], integration, activity)
+        activity.ts = p["comment"]["created_at"]
       end
-      activity.comment_id = GithubComment.find_or_create(p["comment"], integration).id
-      activity.ts = p["comment"]["created_at"]
-    end
 
-    if p["action"].in?(ISSUE_EVENTS) && p["issue"]
-      activity = self.new(code: CODES[:issues])
-      activity.issue_id = GithubIssue.find_or_create(p["issue"], integration).id
-      activity.ts = p["issue"]["updated_at"]
-    end
+      if p["action"].in?(ISSUE_EVENTS) && p["issue"]
+        activity = self.create(code: CODES[:issues])
+        activity.issue_id = GithubIssue.find_or_create(p["issue"], integration).id
+        activity.ts = p["issue"]["updated_at"]
+      end
 
-    if p["action"].in?(PR_EVENTS) && p["pull_request"]
-      activity = self.new(code: CODES[:pr])
-      activity.pull_request_id = GithubPullRequest.find_or_create(p["pull_request"], integration).id
-      activity.ts = p["pull_request"]["updated_at"]
-    end
+      if p["action"].in?(PR_EVENTS) && p["pull_request"]
+        activity = self.create(code: CODES[:pr])
+        activity.pull_request_id = GithubPullRequest.find_or_create(p["pull_request"], integration).id
+        activity.ts = p["pull_request"]["updated_at"]
+      end
 
-    if p["ref"] && p["commits"]
-      activity = self.new(code: CODES[:push])
-      activity.ref = p["ref"]
-      activity.commits_id = p["commits"].map{|c| GithubCommit.find_or_create(c, integration).id}
-      activity.ts = p["head_commit"]["timestamp"]
-    end
+      if p["ref"] && p["commits"]
+        activity = self.create(code: CODES[:push])
+        activity.ref = p["ref"]
+        p["commits"].each{|c| GithubCommit.find_or_create(c, integration, activity)}
+        activity.ts = p["head_commit"]["timestamp"]
+      end
 
-    if defined?(activity) && activity.class == self
-      # activity.payload = p.to_s
-      activity.repository_id = GithubRepository.find_or_create(p["repository"], integration).id
+      if defined?(activity) && activity.class == self
+        # activity.payload = p.to_s
+        activity.repository_id = GithubRepository.find_or_create(p["repository"], integration).id
 
-      activity.identity_id = IdentityGithub.find_or_initialize_with_payload(payload, integration).tap(&:save!).id
-      activity.save!
-      true
-    else
-      false
+        activity.identity_id = IdentityGithub.find_or_initialize_with_payload(payload, integration).tap(&:save!).id
+        activity.save!
+        true
+      else
+        false
+      end
     end
   end
 end

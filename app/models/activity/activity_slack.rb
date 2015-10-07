@@ -1,4 +1,4 @@
-class ActivitySlack < Activity
+class ActivitySlack
   include Cequel::Record
   key :identity_id, :int
   key :ts, :timestamp
