@@ -8,6 +8,7 @@ import IntegrationAction from '../../actions/integration';
 import IntegrationStore from '../../stores/integration';
 import StatisticsStore from '../../stores/statistics';
 
+import IntegrationSyncing from '../../components/integrations/integration_syncing';
 import Loading from '../../components/common/loading';
 import Slack from '../../components/statistics/slack';
 import Github from '../../components/statistics/github';
@@ -62,6 +63,7 @@ class IntegrationStatistics extends React.Component {
   }
 
   _loadIntegrationStat(id) {
+    if (this.props.integration.status === Constants.IntegrationStatus[1]) return;
     if (!StatisticsStore.getStatById(id) && !this.state.loading) {
       this.setState({loading: true}, () => {
         IntegrationAction.stat(id).then((res) => {
@@ -78,6 +80,8 @@ class IntegrationStatistics extends React.Component {
   render() {
     let integration = this.props.integration;
     let Integration = Statistics[integration.type];
+
+    if (integration.status === Constants.IntegrationStatus[1]) return <IntegrationSyncing />
 
     return Integration && this.state.stat ?
       <div className='integration-statistics'>

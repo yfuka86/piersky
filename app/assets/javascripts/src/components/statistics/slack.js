@@ -32,13 +32,24 @@ class Slack extends React.Component {
     return {
       channelId: 'default',
       periodLength: 31,
-      periodEndAt: moment(this.props.stat.today)
+      periodEndAt: moment(this.props.stat.today),
+      data: {
+        messages: 0,
+        avgPerDay: 0,
+        users: 0,
+        avgPerDayUser: 0
+      }
     }
   }
 
   componentDidMount() {
+    this.calculateSummary();
     this.drawChart();
     window.onresize = this.drawChart.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.calculateSummary(nextProps)
   }
 
   componentDidUpdate() {
@@ -49,9 +60,47 @@ class Slack extends React.Component {
     window.onresize = null;
   }
 
+  changeChannel(e) {
+    this.setState({channelId: e.target.value}, () => {
+      this.calculateSummary();
+    });
+  }
+
+  changePeriod(e) {
+    this.setState({periodLength: parseInt(e.target.value, 10)}, () => {
+      this.calculateSummary();
+    })
+  }
+
+  calculateSummary(props) {
+    if (!props) props = this.props;
+
+    // set variables
+    let channelId = this.state.channelId;
+    let length = this.state.periodLength;
+
+    // extract users activities
+    let identitiesData = props.stat.identities;
+    identitiesData = _.reject(identitiesData, (data) => {
+      return _.sum(data[channelId].slice(0, length)) === 0;
+    })
+    let activeUserCount = identitiesData.length;
+
+    // set summary
+    let sum = _.sum(_.map(identitiesData, (data) => {
+      return _.sum(data[channelId].slice(0, length));
+    }));
+
+    let calculated = {messages: sum,
+                      avgPerDay: Math.round(sum / length * 100) / 100,
+                      users: activeUserCount,
+                      avgPerDayUser: activeUserCount === 0 ? 0 : Math.round(sum / activeUserCount / length * 100) / 100}
+    this.setState({data: calculated});
+  }
 
   drawChart() {
     if (!this.props) return;
+    // set variables
     let channelId = this.state.channelId;
     let end = this.state.periodEndAt;
     let length = this.state.periodLength;
@@ -59,11 +108,13 @@ class Slack extends React.Component {
     let width = React.findDOMNode(this).clientWidth;
     let height = parseInt(width * 3 / 8);
 
+    // extract users activities
     let identitiesData = this.props.stat.identities;
     identitiesData = _.reject(identitiesData, (data) => {
       return _.sum(data[channelId].slice(0, length)) === 0;
     })
 
+    // render graph
     if (identitiesData.length > 0) {
       let userNames = identitiesData.map((data) => {
         return IdentityStore.getUserIdentityById(data.id)
@@ -105,14 +156,6 @@ class Slack extends React.Component {
     }
   }
 
-  changeChannel(e) {
-    this.setState({channelId: e.target.value});
-  }
-
-  changePeriod(e) {
-    this.setState({periodLength: parseInt(e.target.value, 10)})
-  }
-
   render() {
     return (
       <div className='statistics-slack'>
@@ -134,6 +177,22 @@ class Slack extends React.Component {
           </div>
         </div>
         <div className='statistics-summary'>
+          <div className='panel'>
+            <div className='name'>{I18n.t('integration.slack.summary.messages')}</div>
+            <div className='number'>{this.state.data.messages}</div>
+          </div>
+          <div className='panel'>
+            <div className='name'>{I18n.t('integration.slack.summary.avg_per_day')}</div>
+            <div className='number'>{this.state.data.avgPerDay}</div>
+          </div>
+          <div className='panel'>
+            <div className='name'>{I18n.t('integration.slack.summary.users')}</div>
+            <div className='number'>{this.state.data.users}</div>
+          </div>
+          <div className='panel'>
+            <div className='name'>{I18n.t('integration.slack.summary.avg_per_day_users')}</div>
+            <div className='number'>{this.state.data.avgPerDayUser}</div>
+          </div>
         </div>
         <div id='main_graph' />
         <div className='users'>

@@ -17,6 +17,7 @@ en:
       removed: 'Integration has been successfully removed'
       confirm_remove: 'Are you sure you want to remove this integration? This operation cannot be undone.'
       settings_saved: 'Integration settings have been saved'
+      syncing: 'We are syncing your data now. Please check later!'
     board:
       index: 'Integration Dashboard'
       new: 'Add New Integration'
@@ -46,6 +47,11 @@ en:
         placeholder: 'Choose a period...'
         last_week: 'last 1 week'
         last_month: 'last 1 month'
+      summary:
+        messages: 'Messages'
+        users: 'Users'
+        avg_per_day: 'Messages / Day'
+        avg_per_day_users: 'Messages a Day / User '
     github:
       name: 'Github'
       repository:

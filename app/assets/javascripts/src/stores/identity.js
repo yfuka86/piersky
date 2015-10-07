@@ -42,7 +42,7 @@ const IdentityStore = assign({}, BaseStore, {
     return {
       id: json.id,
       userId: json.user_id,
-      type: changeCase.pascalCase(json.type.split('::')[1]),
+      type: changeCase.pascalCase(json.type.match(/Identity(.+)/)[1]),
       primaryKey: json.primary_key,
       secondaryKey: json.secondary_key,
       isVerified: json.is_verified,

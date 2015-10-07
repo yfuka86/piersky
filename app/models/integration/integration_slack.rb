@@ -8,6 +8,11 @@ class IntegrationSlack < Integration
     super(info["user_id"], {name: info["user"]})
   end
 
+  def initialize_data
+    self.syncing!
+    SlackJob.perform_later(self.id)
+  end
+
   def update_setting(setting)
   end
 

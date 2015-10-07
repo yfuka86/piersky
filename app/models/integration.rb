@@ -6,9 +6,12 @@ class Integration < ActiveRecord::Base
 
   after_create :create_setting!
   after_create :create_identity
+  after_create :initialize_data
 
   validates_associated :user
   validates_associated :setting
+
+  enum status: [:default, :syncing]
 
   class << self
     def create_with_user(auth, user)
@@ -48,6 +51,10 @@ class Integration < ActiveRecord::Base
 
   def identities
     identity_class.where(integration: self)
+  end
+
+  def initialize_data
+    # please override
   end
 
   def update_setting(setting)
