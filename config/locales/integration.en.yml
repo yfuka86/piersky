@@ -17,6 +17,7 @@ en:
       removed: 'Integration has been successfully removed'
       confirm_remove: 'Are you sure you want to remove this integration? This operation cannot be undone.'
       settings_saved: 'Integration settings have been saved'
+      syncing: 'We are syncing your data now. Please check later!'
     board:
       index: 'Integration Dashboard'
       new: 'Add New Integration'

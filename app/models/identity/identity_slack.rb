@@ -4,7 +4,9 @@ class IdentitySlack < Identity
     unless identity
       if another_identity = self.find_by(primary_key: id)
         identity = self.new(integration_id: integration.id)
-        identity.attributes = another_identity.attributes.reject{|k, v| k.in?[:id, :integration_id, :created_at, :updated_at] }
+        identity.attributes = another_identity
+                              .attributes
+                              .reject{|k, v| k.to_sym.in?([:id, :integration_id, :created_at, :updated_at]) }
       else
         info = integration.user_info(id)
         identity = self.build_by_email(info["profile"]["email"], integration)
