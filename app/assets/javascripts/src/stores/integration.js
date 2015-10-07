@@ -56,7 +56,10 @@ const IntegrationStore = assign({}, BaseStore, {
       label: json.label,
       userId: parseInt(json.user_id, 10),
       createdAt: moment(json.created_at),
-      details: json.details
+      details: json.details,
+      name: function() {
+        return `${this.type}${(this.label && this.label.length > 0 ? ` : ${this.label}` : '')}`;
+      }
     }
   }
 

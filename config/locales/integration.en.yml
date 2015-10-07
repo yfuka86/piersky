@@ -46,6 +46,11 @@ en:
         placeholder: 'Choose a period...'
         last_week: 'last 1 week'
         last_month: 'last 1 month'
+      summary:
+        messages: 'Messages'
+        users: 'Users'
+        avg_per_day: 'Messages / Day'
+        avg_per_day_users: 'Messages a Day / User '
     github:
       name: 'Github'
       repository:
