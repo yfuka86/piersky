@@ -36,27 +36,39 @@ class UsersShow extends React.Component {
     };
   }
 
-  componentDidMount() {
-
-    IntegrationAction.load().then(() => {
-      let integrations = IntegrationStore.getIntegrations();
-      this.setState({ integrations: integrations });
-      let p = integrations.filter((integ) => {
-        return StatisticsStore.getStatById(integ.id)==null;
-      }).map((integ) => {
-        return IntegrationAction.stat(integ.id);
-      })
-      return Promise.all(p);
-    }).then(() =>{
-      let statistics = StatisticsStore.getStats();
-      let today = _.find(statistics, (s) => true).today;
-      this.setState({ 
-        statistics: statistics,
-        ready: true,
-        periodEndAt: moment(today)
-      });
-      this.drawChart();
+  onIntegrationChange() {
+    let integrations = IntegrationStore.getIntegrations();
+    this.setState({ integrations: integrations });
+    let p = integrations.filter((integ) => {
+      return StatisticsStore.getStatById(integ.id)==null;
+    }).map((integ) => {
+      return IntegrationAction.stat(integ.id);
     });
+    if(p.length > 0){
+      this.setState({ ready: false });
+    } else {
+      this.setState({ ready: true });
+    }
+  }
+
+  onStatisticsChange() {
+    let statistics = StatisticsStore.getStats();
+    let today = _.find(statistics, (s) => true).today;
+    this.setState({ 
+      statistics: statistics,
+      periodEndAt: moment(today)
+    });
+    if(_.size(statistics) >= this.state.integrations.length) {
+      this.setState({ ready: true });
+      this.drawChart();
+    }
+  }
+
+  componentDidMount() {
+    IntegrationStore.onChange(this.onIntegrationChange.bind(this));
+    StatisticsStore.onChange(this.onStatisticsChange.bind(this));
+
+    IntegrationAction.load();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -72,7 +84,7 @@ class UsersShow extends React.Component {
   }
 
   drawChart() {
-    if(!this.state.ready) return;
+    if(!this.state.ready)  return;
     let data = this.state.data;
 
     let identities = this.state.identities;
