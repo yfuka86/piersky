@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151007180622) do
+ActiveRecord::Schema.define(version: 20151007213000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,17 @@ ActiveRecord::Schema.define(version: 20151007180622) do
   end
 
   add_index "activity_githubs", ["identity_id", "ts", "code"], name: "index_activity_githubs_on_identity_id_and_ts_and_code", using: :btree
+
+  create_table "activity_slacks", force: :cascade do |t|
+    t.integer  "identity_id"
+    t.datetime "ts"
+    t.string   "channel_id"
+    t.string   "type"
+    t.string   "message",      limit: 255
+    t.text     "long_message"
+  end
+
+  add_index "activity_slacks", ["identity_id", "ts", "channel_id"], name: "index_activity_slacks_on_identity_id_and_ts_and_channel_id", using: :btree
 
   create_table "github_comments", force: :cascade do |t|
     t.integer  "activity_id"
@@ -140,6 +151,27 @@ ActiveRecord::Schema.define(version: 20151007180622) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "slack_channels", force: :cascade do |t|
+    t.integer  "integration_id"
+    t.string   "foreign_id"
+    t.datetime "ts"
+    t.string   "name"
+    t.string   "creator_id"
+    t.boolean  "is_general"
+  end
+
+  add_index "slack_channels", ["integration_id", "foreign_id"], name: "index_slack_channels_on_integration_id_and_foreign_id", using: :btree
+
+  create_table "slack_teams", force: :cascade do |t|
+    t.integer "integration_id"
+    t.string  "foreign_id"
+    t.string  "name"
+    t.string  "domain"
+    t.string  "email_domain"
+  end
+
+  add_index "slack_teams", ["integration_id", "foreign_id"], name: "index_slack_teams_on_integration_id_and_foreign_id", using: :btree
 
   create_table "teams", force: :cascade do |t|
     t.string   "name",       default: "", null: false

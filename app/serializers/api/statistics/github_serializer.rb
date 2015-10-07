@@ -14,21 +14,25 @@ class Api::Statistics::GithubSerializer < ActiveModel::Serializer
   end
 
   def identities
-    binding.pry
-    # object.identities.map do |identity|
-    #   activities_obj = {}
-    #   activities.each do |k|
-    #     activities_obj[k] = period_map(ActivityGithub[identity.id].where(code: ActivityGithub::CODES[k])).map(&:count)
-    #   end
+    q = ActivityGithub.where(identity_id: object.identities.pluck(:id), ts: period)
+                      .group('identity_id', 'code', "date_trunc('day',ts)").count
 
-    #   {
-    #     id: identity.id,
-    #     default: period_map(ActivityGithub[identity.id]).map(&:count),
-    #   }.merge(activities_obj)
-    # end
+    object.identities.map do |identity|
+      counts = q.select{|k, v| k[0] == identity.id}
+
+      activities_obj = {}
+      activities.each do |activity|
+        activities_obj[activity] = period.map{|d| counts.find{|k, v| k[1] == ActivityGithub::CODES[activity] && k[2] == d}.try(:[], 1) || 0 }.reverse
+      end
+
+      {
+        id: identity.id,
+        default: period.map{|d| counts.select{|k, v| k[2] == d}.values.sum }.reverse
+      }.merge(activities_obj)
+    end
   end
 
-  def period_map(q)
-    (1..31).map{|i| q.after(today - (i - 1).day).upto(today - (i - 2).day) }
+  def period
+    (today - 31.day..today)
   end
 end
