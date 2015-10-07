@@ -11,10 +11,88 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151007080002) do
+ActiveRecord::Schema.define(version: 20151007213000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activity_githubs", force: :cascade do |t|
+    t.integer  "identity_id"
+    t.datetime "ts"
+    t.integer  "code"
+    t.integer  "repository_id"
+    t.integer  "issue_id"
+    t.integer  "pull_request_id"
+    t.string   "action",          limit: 20
+    t.string   "ref"
+  end
+
+  add_index "activity_githubs", ["identity_id", "ts", "code"], name: "index_activity_githubs_on_identity_id_and_ts_and_code", using: :btree
+
+  create_table "activity_slacks", force: :cascade do |t|
+    t.integer  "identity_id"
+    t.datetime "ts"
+    t.string   "channel_id"
+    t.string   "type"
+    t.string   "message",      limit: 255
+    t.text     "long_message"
+  end
+
+  add_index "activity_slacks", ["identity_id", "ts", "channel_id"], name: "index_activity_slacks_on_identity_id_and_ts_and_channel_id", using: :btree
+
+  create_table "github_comments", force: :cascade do |t|
+    t.integer  "activity_id"
+    t.integer  "integration_id"
+    t.string   "foreign_id"
+    t.datetime "ts"
+    t.string   "body"
+    t.string   "url"
+  end
+
+  add_index "github_comments", ["activity_id", "integration_id"], name: "index_github_comments_on_activity_id_and_integration_id", using: :btree
+
+  create_table "github_commits", force: :cascade do |t|
+    t.integer  "activity_id"
+    t.integer  "integration_id"
+    t.string   "foreign_id"
+    t.datetime "ts"
+    t.string   "message"
+    t.string   "url"
+  end
+
+  add_index "github_commits", ["activity_id", "integration_id"], name: "index_github_commits_on_activity_id_and_integration_id", using: :btree
+
+  create_table "github_issues", force: :cascade do |t|
+    t.integer  "integration_id"
+    t.integer  "foreign_id"
+    t.datetime "ts"
+    t.integer  "number"
+    t.string   "title"
+    t.string   "state"
+    t.string   "url"
+  end
+
+  add_index "github_issues", ["integration_id", "foreign_id"], name: "index_github_issues_on_integration_id_and_foreign_id", using: :btree
+
+  create_table "github_pull_requests", force: :cascade do |t|
+    t.integer  "integration_id"
+    t.integer  "foreign_id"
+    t.datetime "ts"
+    t.integer  "number"
+    t.string   "title"
+    t.string   "state"
+    t.string   "url"
+  end
+
+  add_index "github_pull_requests", ["integration_id", "foreign_id"], name: "index_github_pull_requests_on_integration_id_and_foreign_id", using: :btree
+
+  create_table "github_repositories", force: :cascade do |t|
+    t.integer "integration_id"
+    t.integer "foreign_id"
+    t.string  "full_name"
+  end
+
+  add_index "github_repositories", ["integration_id", "foreign_id"], name: "index_github_repositories_on_integration_id_and_foreign_id", using: :btree
 
   create_table "identities", force: :cascade do |t|
     t.integer  "user_team_id"
@@ -74,14 +152,26 @@ ActiveRecord::Schema.define(version: 20151007080002) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "slack_activities", force: :cascade do |t|
-    t.string   "user_id",    limit: 50,  default: "", null: false
-    t.string   "channel",    limit: 50,               null: false
-    t.string   "ts",         limit: 50,  default: "", null: false
-    t.string   "message",    limit: 100, default: "", null: false
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+  create_table "slack_channels", force: :cascade do |t|
+    t.integer  "integration_id"
+    t.string   "foreign_id"
+    t.datetime "ts"
+    t.string   "name"
+    t.string   "creator_id"
+    t.boolean  "is_general"
   end
+
+  add_index "slack_channels", ["integration_id", "foreign_id"], name: "index_slack_channels_on_integration_id_and_foreign_id", using: :btree
+
+  create_table "slack_teams", force: :cascade do |t|
+    t.integer "integration_id"
+    t.string  "foreign_id"
+    t.string  "name"
+    t.string  "domain"
+    t.string  "email_domain"
+  end
+
+  add_index "slack_teams", ["integration_id", "foreign_id"], name: "index_slack_teams_on_integration_id_and_foreign_id", using: :btree
 
   create_table "teams", force: :cascade do |t|
     t.string   "name",       default: "", null: false
