@@ -1,10 +1,10 @@
-class GithubCommit
-  include Cequel::Record
-  key :id, :text
-  key :ts, :timestamp
-  column :integration_id, :int, index: true
-  column :message, :text
-  column :url, :text
+class GithubCommit < ActiveRecord::Base
+  # include Cequel::Record
+  # key :id, :text
+  # key :ts, :timestamp
+  # column :integration_id, :int, index: true
+  # column :message, :text
+  # column :url, :text
 
   def self.find_or_create(params, integration)
     commit = self[params["id"]].first

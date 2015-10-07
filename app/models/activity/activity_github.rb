@@ -1,19 +1,19 @@
 class ActivityGithub < Activity
-  include Cequel::Record
-  key :identity_id, :int
-  key :ts, :timestamp
+  # include Cequel::Record
+  # key :identity_id, :int
+  # key :ts, :timestamp
 
-  column :code, :int, index: true
-  column :id, :uuid, auto: true, index: true
+  # column :code, :int, index: true
+  # column :id, :uuid, auto: true, index: true
 
-  column :repository_id, :int, index: true
-  column :issue_id, :int, index: true
-  column :pull_request_id, :int, index: true
-  column :comment_id, :int, index: true
-  set :commits_id, :text
+  # column :repository_id, :int, index: true
+  # column :issue_id, :int, index: true
+  # column :pull_request_id, :int, index: true
+  # column :comment_id, :int, index: true
+  # set :commits_id, :text
 
-  column :action, :text
-  column :ref, :text, index: true
+  # column :action, :text
+  # column :ref, :text, index: true
 
   # mmm
   # column :payload, :text

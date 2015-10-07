@@ -1,12 +1,12 @@
-class GithubIssue
-  include Cequel::Record
-  key :integration_id, :int
-  key :id, :int
-  key :ts, :timestamp
-  column :number, :int, index: true
-  column :title, :text, index: true
-  column :state, :text, index: true
-  column :url, :text
+class GithubIssue < ActiveRecord::Base
+  # include Cequel::Record
+  # key :integration_id, :int
+  # key :id, :int
+  # key :ts, :timestamp
+  # column :number, :int, index: true
+  # column :title, :text, index: true
+  # column :state, :text, index: true
+  # column :url, :text
 
   def self.find_or_create(params, integration)
     issue = self[integration.id].find_by_id(params["id"])

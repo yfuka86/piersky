@@ -1,8 +1,8 @@
-class GithubRepository
-  include Cequel::Record
-  key :integration_id, :int
-  key :id, :int
-  column :full_name, :text, index: true
+class GithubRepository < ActiveRecord::Base
+  # include Cequel::Record
+  # key :integration_id, :int
+  # key :id, :int
+  # column :full_name, :text, index: true
 
   def self.find_or_create(params, integration)
     repository = self[integration.id].find_by_id(params["id"])

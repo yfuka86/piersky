@@ -1,10 +1,10 @@
-class GithubComment
-  include Cequel::Record
-  key :id, :int
-  key :ts, :timestamp
-  column :integration_id, :int, index: true
-  column :body, :text
-  column :url, :text
+class GithubComment < ActiveRecord::Base
+  # include Cequel::Record
+  # key :id, :int
+  # key :ts, :timestamp
+  # column :integration_id, :int, index: true
+  # column :body, :text
+  # column :url, :text
 
   def self.find_or_create(params, integration)
     comment = self[params["id"]].first
