@@ -69,6 +69,8 @@ export default {
     SHOW_NOTIFICATION: null
   }),
 
+  IntegrationStatus: ['default', 'syncing'],
+
   Colors: ['red', 'pink', 'purple', 'deeppurple', 'indigo', 'blue', 'lightblue', 'cyan', 'teal', 'green',
            'lightgreen', 'lime', 'yellow', 'amber', 'orange', 'deeporange', 'brown', 'bluegrey', 'grey'],
   ColorHexes: {red: '#ef5350', pink: '#ec407a', purple: '#ab47bc', deeppurple: '#7e57c2', indigo: '#5c6bc0',
