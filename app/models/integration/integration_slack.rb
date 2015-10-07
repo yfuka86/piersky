@@ -30,7 +30,7 @@ class IntegrationSlack < Integration
 
   # :latest, :oldest, :inclusive, :count
   def show_messages(channel, options={})
-    slack_client.channels_history({channel: channel.try(:id) || channel}.merge(options))["messages"]
+    slack_client.channels_history({channel: channel.try(:foreign_id) || channel}.merge(options))["messages"]
   end
 
   def user_info(id)
