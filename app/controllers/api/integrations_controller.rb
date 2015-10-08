@@ -16,13 +16,6 @@ class Api::IntegrationsController < Api::BaseController
            root: nil
   end
 
-  def identity_stat
-    render json: @integration,
-           serializer: "Api::Statistics::Identity::#{@integration.class.name.split('Integration')[1]}Serializer".constantize,
-           root: nil,
-           identity_id: params[:identity_id]
-  end
-
   def update
     ActiveRecord::Base.transaction do
       @integration.assign_attributes(integration_params)

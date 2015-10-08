@@ -1,5 +1,7 @@
 @import 'globals/config-loader';
 @import 'modules/center_container';
+@import 'modules/list_table';
+@import 'modules/standard_form';
 
 .integration-statistics {
   padding: 20px 0;
@@ -23,11 +25,23 @@
       }
     }
   }
+
   #main_graph .no-activities {
     padding-top: 100px;
     text-align: center;
     @include lato-ultrabold;
     font-size: 24px;
     color: $grey400;
+  }
+
+  .users-stat {
+    @include list-table-expandable;
+    padding: 20px;
+    .option {
+      .users-stat-actions {
+        padding: 10px 10px 0;
+        @include standard-form-horizontal;
+      }
+    }
   }
 }

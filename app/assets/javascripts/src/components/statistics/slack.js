@@ -7,6 +7,7 @@ import {getTicks} from '../../utils/app_module';
 
 import IdentityStore from '../../stores/identity';
 import UserStore from '../../stores/user';
+import UserInfo from '../../components/users/user_info';
 
 class Slack extends React.Component {
   static get defaultProps() {
@@ -33,6 +34,7 @@ class Slack extends React.Component {
       channelId: 'default',
       periodLength: 31,
       periodEndAt: moment(this.props.stat.today),
+      expandedId: null,
       data: {
         messages: 0,
         avgPerDay: 0,
@@ -44,8 +46,12 @@ class Slack extends React.Component {
 
   componentDidMount() {
     this.calculateSummary();
-    this.drawChart();
-    window.onresize = this.drawChart.bind(this);
+    this.drawMainChart();
+    this.drawUsersChart();
+    window.onresize = () => {
+      this.drawMainChart.bind(this);
+      this.drawUsersChart.bind(this);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -53,7 +59,8 @@ class Slack extends React.Component {
   }
 
   componentDidUpdate() {
-    this.drawChart();
+    this.drawMainChart();
+    this.drawUsersChart();
   }
 
   componentWillUnmount() {
@@ -70,6 +77,18 @@ class Slack extends React.Component {
     this.setState({periodLength: parseInt(e.target.value, 10)}, () => {
       this.calculateSummary();
     })
+  }
+
+  toggleExpantion(id) {
+    if (this.isExpanded(id)) {
+      this.setState({expandedId: null});
+    } else {
+      this.setState({expandedId: id});
+    }
+  }
+
+  isExpanded(id) {
+    return this.state.expandedId === id;
   }
 
   calculateSummary(props) {
@@ -98,7 +117,7 @@ class Slack extends React.Component {
     this.setState({data: calculated});
   }
 
-  drawChart() {
+  drawMainChart() {
     if (!this.props) return;
     // set variables
     let channelId = this.state.channelId;
@@ -142,7 +161,7 @@ class Slack extends React.Component {
         height: height,
         legend: {position: 'right', maxLines: 3},
         colors: colors,
-        curveType: 'function',
+        // curveType: 'function',
         vAxis: {
           ticks: ticks,
           minValue: 0
@@ -154,6 +173,56 @@ class Slack extends React.Component {
     } else {
       React.findDOMNode(this).querySelector('#main_graph').innerHTML = `<div class="no-activities" style="height: ${height}px">${I18n.t('integration.general.no_activities')}</div>`;
     }
+  }
+
+  drawUsersChart() {
+    _.each(this.props.stat.identities, (identity) => {this.drawUserChart(identity.id)});
+  }
+
+  drawUserChart(identityId) {
+    if (!this.props) return;
+    // set variables
+    let channelId = this.state.channelId;
+    let end = this.state.periodEndAt;
+    let length = this.state.periodLength;
+
+    let width = 400;
+    let height = 54;
+
+    // extract users activities
+    let identityData = _.find(this.props.stat.identities, (identityData) => {return identityData.id === identityId});
+
+
+    let userName = IdentityStore.getUserIdentityById(identityId);
+    let header = ['Day', userName];
+    let colors = [Constants.colorHexByKey(userName)];
+    let data = [header];
+
+    let max = 0;
+    _.times(length, (i) => {
+      let count = identityData[channelId][length - (i + 1)];
+      if (count > max) max = count;
+      data.push([moment(end).subtract(length - (i + 1), 'days').format("MMM Do"), count]);
+    })
+
+    let tableData = google.visualization.arrayToDataTable(data);
+
+    let ticks = getTicks(max);
+    let options = {
+      isStacked: true,
+      width: width,
+      height: height,
+      legend: {position: 'none'},
+      colors: colors,
+      // curveType: 'function',
+      vAxis: {
+        ticks: [],
+        minValue: 0
+      }
+    };
+
+    let chart = new google.visualization.LineChart(React.findDOMNode(this).querySelector(`#user_graph_${identityId}`));
+    chart.draw(tableData, options);
   }
 
   render() {
@@ -194,8 +263,52 @@ class Slack extends React.Component {
             <div className='number'>{this.state.data.avgPerDayUser}</div>
           </div>
         </div>
+
         <div id='main_graph' />
-        <div className='users'>
+
+        <div className='users-stat'>
+          <div className='option-header'>
+            <div className='content-area'>
+              <p className='main-content'>{I18n.t('integration.general.member')}</p>
+              <span className='right-content'>
+                <p className='main-content total'>{I18n.t('integration.general.total')}</p>
+                <p className='main-content avg'>{I18n.t('integration.general.per_day')}</p>
+                <div className='user-graph' />
+              </span>
+            </div>
+          </div>
+
+          {this.props.stat.identities.map((identityData) =>{
+            let identity = IdentityStore.getIdentityById(identityData.id);
+            let user = IdentityStore.getUserByIdentityId(identityData.id);
+            let total = _.sum(identityData[this.state.channelId].slice(0, this.state.periodLength));
+            let avg = Math.round(total / this.state.periodLength * 100) / 100;
+            return (
+              <div className={`option ${this.isExpanded(identity.id) ? 'expanded' : ''}`}>
+                <div className='toggle' onClick={this.toggleExpantion.bind(this, identity.id)} />
+                <div className='content-area'>
+                  {user ? <UserInfo user={user} /> : <p className='main-content'>{identity.name}</p>}
+
+                  <span className='right-content'>
+                    <p className='main-content total'>{total}</p>
+                    <p className='main-content avg'>{avg}</p>
+                    <div className='user-graph' id={`user_graph_${identity.id}`} />
+                  </span>
+                </div>
+
+                {this.isExpanded(identity.id) ? (
+                  <div className='expanded-area invitation-actions'>
+                    <div className='field'>
+
+                    </div>
+                    <div className='field'>
+
+                    </div>
+                  </div>
+                ) : (<div />)}
+              </div>
+            );
+          })}
         </div>
       </div>
     );

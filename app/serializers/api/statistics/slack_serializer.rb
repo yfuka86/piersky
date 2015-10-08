@@ -22,7 +22,7 @@ class Api::Statistics::SlackSerializer < ActiveModel::Serializer
 
       channels_obj = {}
       channels.keys.each do |cid|
-        channels_obj[cid] = period.map{|d| counts.find{|k, v| k[1] == cid && k[2] == d}.try(:[], 1) || 0}.reverse
+        channels_obj[cid] = period.map{|d| counts.find{|k, v| k[1].to_sym == cid && k[2] == d}.try(:[], 1) || 0}.reverse
       end
 
       {

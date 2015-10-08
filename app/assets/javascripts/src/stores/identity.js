@@ -29,13 +29,18 @@ const IdentityStore = assign({}, BaseStore, {
     return _.where(this.getIdentities(), {userId: parseInt(userId, 10)}) || [];
   },
 
-  getUserIdentityById(id) {
+  getUserByIdentityId(id) {
     let identity = this.getIdentityById(id);
     if (identity.userId) {
-      return UserStore.getUserById(identity.userId).identity();
+      return UserStore.getUserById(identity.userId)
     } else {
-      return identity.name;
+      return null;
     }
+  },
+
+  getUserIdentityById(id) {
+    let user = this.getUserByIdentityId(id);
+    return user ? user.identity() : this.getIdentityById(id).name;
   },
 
   parse(json) {

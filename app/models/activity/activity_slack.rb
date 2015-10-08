@@ -21,7 +21,7 @@ class ActivitySlack < ActiveRecord::Base
 
   def self.create_with_integration(message, channel, integration)
     if message["user"]
-      activity = self.new(channel_id: channel.id,
+      activity = self.new(channel_id: channel.foreign_id,
                           ts: Time.at(message["ts"].to_f),
                           message: message["text"].length <= 255 ? message["text"] : '',
                           long_message: message["text"].length > 255 ? message["text"] : '',
