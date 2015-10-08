@@ -44,8 +44,7 @@ Rails.application.routes.draw do
     resources :identities, only: [:index]
     resources :integrations, only: [:index, :show, :update, :destroy] do
       member do
-        get 'stat'
-        get 'identity_stat'
+        get 'stats'
       end
     end
     resources :invitations, only: [:index, :create, :update, :destroy]

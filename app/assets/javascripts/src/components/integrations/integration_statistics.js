@@ -42,31 +42,31 @@ class IntegrationStatistics extends React.Component {
   }
 
   getParamsFromStores(props) {
-    let stat = StatisticsStore.getStatById(props.integration.id);
+    let stats = StatisticsStore.getStatsById(props.integration.id);
     return {
-      stat: stat
+      stats: stats
     };
   }
 
   componentDidMount() {
     StatisticsStore.onChange(this.onChangeHandler);
-    this._loadIntegrationStat(this.props.integration.id);
+    this._loadIntegrationStats(this.props.integration.id);
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState(this.getParamsFromStores(nextProps));
-    this._loadIntegrationStat(nextProps.integration.id);
+    this._loadIntegrationStats(nextProps.integration.id);
   }
 
   componentWillUnmount() {
     StatisticsStore.offChange(this.onChangeHandler);
   }
 
-  _loadIntegrationStat(id) {
+  _loadIntegrationStats(id) {
     if (this.props.integration.status === Constants.IntegrationStatus[1]) return;
-    if (!StatisticsStore.getStatById(id) && !this.state.loading) {
+    if (!StatisticsStore.getStatsById(id) && !this.state.loading) {
       this.setState({loading: true}, () => {
-        IntegrationAction.stat(id).then((res) => {
+        IntegrationAction.stats(id).then((res) => {
           this.setState({loading: false});
         });
       });
@@ -83,9 +83,9 @@ class IntegrationStatistics extends React.Component {
 
     if (integration.status === Constants.IntegrationStatus[1]) return <IntegrationSyncing />
 
-    return Integration && this.state.stat ?
+    return Integration && this.state.stats ?
       <div className='integration-statistics'>
-        <Integration integration={integration} stat={this.state.stat} />
+        <Integration integration={integration} stats={this.state.stats} />
       </div> : <Loading/>
   }
 }
