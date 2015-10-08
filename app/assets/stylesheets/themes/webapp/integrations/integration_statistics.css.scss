@@ -34,11 +34,11 @@
     color: $grey400;
   }
 
-  .users-stat {
+  .users-stats {
     @include list-table-expandable;
     padding: 20px;
     .option {
-      .users-stat-actions {
+      .users-stats-actions {
         padding: 10px 10px 0;
         @include standard-form-horizontal;
       }

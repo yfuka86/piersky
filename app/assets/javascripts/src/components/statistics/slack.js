@@ -13,14 +13,14 @@ class Slack extends React.Component {
   static get defaultProps() {
     return {
       integration: {},
-      stat: {}
+      stats: {}
     };
   }
 
   static get propTypes() {
     return {
       integration: React.PropTypes.object,
-      stat: React.PropTypes.object
+      stats: React.PropTypes.object
     };
   }
 
@@ -33,7 +33,7 @@ class Slack extends React.Component {
     return {
       channelId: 'default',
       periodLength: 31,
-      periodEndAt: moment(this.props.stat.today),
+      periodEndAt: moment(this.props.stats.today),
       expandedId: null,
       data: {
         messages: 0,
@@ -99,7 +99,7 @@ class Slack extends React.Component {
     let length = this.state.periodLength;
 
     // extract users activities
-    let identitiesData = props.stat.identities;
+    let identitiesData = props.stats.identities;
     identitiesData = _.reject(identitiesData, (data) => {
       return _.sum(data[channelId].slice(0, length)) === 0;
     })
@@ -128,7 +128,7 @@ class Slack extends React.Component {
     let height = parseInt(width * 3 / 8);
 
     // extract users activities
-    let identitiesData = this.props.stat.identities;
+    let identitiesData = this.props.stats.identities;
     identitiesData = _.reject(identitiesData, (data) => {
       return _.sum(data[channelId].slice(0, length)) === 0;
     })
@@ -176,7 +176,7 @@ class Slack extends React.Component {
   }
 
   drawUsersChart() {
-    _.each(this.props.stat.identities, (identity) => {this.drawUserChart(identity.id)});
+    _.each(this.props.stats.identities, (identity) => {this.drawUserChart(identity.id)});
   }
 
   drawUserChart(identityId) {
@@ -190,7 +190,7 @@ class Slack extends React.Component {
     let height = 54;
 
     // extract users activities
-    let identityData = _.find(this.props.stat.identities, (identityData) => {return identityData.id === identityId});
+    let identityData = _.find(this.props.stats.identities, (identityData) => {return identityData.id === identityId});
 
 
     let userName = IdentityStore.getUserIdentityById(identityId);
@@ -232,7 +232,7 @@ class Slack extends React.Component {
           <div className='field'>
             <select onChange={this.changeChannel.bind(this)}>
               <option value={'default'} >{I18n.t('integration.slack.channel.default')}</option>
-              {_.map(this.props.stat.channels, (name, id)=>{
+              {_.map(this.props.stats.channels, (name, id)=>{
                 return <option value={id} key={id}>{name}</option>
               })}
             </select>
@@ -266,7 +266,7 @@ class Slack extends React.Component {
 
         <div id='main_graph' />
 
-        <div className='users-stat'>
+        <div className='users-stats'>
           <div className='option-header'>
             <div className='content-area'>
               <p className='main-content'>{I18n.t('integration.general.member')}</p>
@@ -278,7 +278,7 @@ class Slack extends React.Component {
             </div>
           </div>
 
-          {this.props.stat.identities.map((identityData) =>{
+          {this.props.stats.identities.map((identityData) =>{
             let identity = IdentityStore.getIdentityById(identityData.id);
             let user = IdentityStore.getUserByIdentityId(identityData.id);
             let total = _.sum(identityData[this.state.channelId].slice(0, this.state.periodLength));
