@@ -1,5 +1,5 @@
 class Api::IntegrationsController < Api::BaseController
-  before_action :set_integration, only: [:show, :stat, :identity_stat, :update, :destroy]
+  before_action :set_integration, only: [:show, :stats, :update, :destroy]
 
   def index
     @integrations = valid_team.integrations
@@ -10,17 +10,10 @@ class Api::IntegrationsController < Api::BaseController
     render json: @integration, serializer: Api::IntegrationSerializer, root: nil, detail_required: true
   end
 
-  def stat
+  def stats
     render json: @integration,
            serializer: "Api::Statistics::#{@integration.class.name.split('Integration')[1]}Serializer".constantize,
            root: nil
-  end
-
-  def identity_stat
-    render json: @integration,
-           serializer: "Api::Statistics::Identity::#{@integration.class.name.split('Integration')[1]}Serializer".constantize,
-           root: nil,
-           identity_id: params[:identity_id]
   end
 
   def update

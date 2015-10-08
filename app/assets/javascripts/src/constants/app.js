@@ -61,7 +61,7 @@ export default {
     REMOVE_INTEGRATION: null,
 
     //stats
-    LOAD_INTEGRATION_STAT: null,
+    LOAD_INTEGRATION_STATS: null,
 
     //view
     SHOW_BALLOON: null,
