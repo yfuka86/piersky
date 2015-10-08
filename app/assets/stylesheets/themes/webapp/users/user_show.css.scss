@@ -1,7 +1,7 @@
 @import 'globals/config-loader';
 @import 'modules/center_container';
 
-.users-board .users-show {
+.users-board .user-show {
   .identities {
     .icon {
       @include icon(24px, 24px);

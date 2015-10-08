@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import moment from 'moment';
 import changeCase from 'change-case';
 
 import SessionStore from '../../stores/session';
@@ -7,11 +8,9 @@ import UserStore from '../../stores/user';
 import IdentityStore from '../../stores/identity';
 import IntegrationStore from '../../stores/integration';
 import IntegrationAction from '../../actions/integration';
-//import IdentityAction from '../../actions/integration';
 import StatisticsStore from '../../stores/statistics';
-import moment from 'moment';
 
-class UsersShow extends React.Component {
+class UserStatistics extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.initialState;
@@ -40,9 +39,9 @@ class UsersShow extends React.Component {
     let integrations = IntegrationStore.getIntegrations();
     this.setState({ integrations: integrations });
     let p = integrations.filter((integ) => {
-      return StatisticsStore.getStatById(integ.id)==null;
+      return StatisticsStore.getStatsById(integ.id)==null;
     }).map((integ) => {
-      return IntegrationAction.stat(integ.id);
+      return IntegrationAction.stats(integ.id);
     });
     if(p.length > 0){
       this.setState({ ready: false });
@@ -54,7 +53,7 @@ class UsersShow extends React.Component {
   onStatisticsChange() {
     let statistics = StatisticsStore.getStats();
     let today = _.find(statistics, (s) => true).today;
-    this.setState({ 
+    this.setState({
       statistics: statistics,
       periodEndAt: moment(today)
     });
@@ -153,4 +152,4 @@ class UsersShow extends React.Component {
   }
 }
 
-export default UsersShow;
+export default UserStatistics;
