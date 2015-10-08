@@ -35,6 +35,10 @@ class Integration < ActiveRecord::Base
     ('Identity' + service_name).constantize
   end
 
+  def activity_class
+    ('Activity' + service_name).constantize
+  end
+
   def create_identity(primary_key, options={})
     #please override
     user_team = UserTeam.find_by(user: self.user, team: self.team)
@@ -47,6 +51,10 @@ class Integration < ActiveRecord::Base
                    secondary_key: options[:secondary_key],
                    name: options[:name])
     end
+  end
+
+  def summary
+    self.activity_class.summary(self)
   end
 
   def identities

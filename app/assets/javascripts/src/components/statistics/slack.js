@@ -46,12 +46,8 @@ class Slack extends React.Component {
 
   componentDidMount() {
     this.calculateSummary();
-    this.drawMainChart();
-    this.drawUsersChart();
-    window.onresize = () => {
-      this.drawMainChart.bind(this);
-      this.drawUsersChart.bind(this);
-    }
+    this.drawCharts();
+    window.onresize = this.drawCharts.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -59,8 +55,7 @@ class Slack extends React.Component {
   }
 
   componentDidUpdate() {
-    this.drawMainChart();
-    this.drawUsersChart();
+    this.drawCharts();
   }
 
   componentWillUnmount() {
@@ -115,6 +110,11 @@ class Slack extends React.Component {
                       users: activeUserCount,
                       avgPerDayUser: activeUserCount === 0 ? 0 : Math.round(sum / activeUserCount / length * 100) / 100}
     this.setState({data: calculated});
+  }
+
+  drawCharts() {
+    this.drawMainChart();
+    this.drawUsersChart();
   }
 
   drawMainChart() {
@@ -186,7 +186,7 @@ class Slack extends React.Component {
     let end = this.state.periodEndAt;
     let length = this.state.periodLength;
 
-    let width = 400;
+    let width = 360;
     let height = 54;
 
     // extract users activities
@@ -198,16 +198,13 @@ class Slack extends React.Component {
     let colors = [Constants.colorHexByKey(userName)];
     let data = [header];
 
-    let max = 0;
     _.times(length, (i) => {
       let count = identityData[channelId][length - (i + 1)];
-      if (count > max) max = count;
       data.push([moment(end).subtract(length - (i + 1), 'days').format("MMM Do"), count]);
     })
 
     let tableData = google.visualization.arrayToDataTable(data);
 
-    let ticks = getTicks(max);
     let options = {
       isStacked: true,
       width: width,

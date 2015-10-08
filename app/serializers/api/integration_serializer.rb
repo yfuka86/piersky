@@ -1,5 +1,5 @@
 class Api::IntegrationSerializer < ActiveModel::Serializer
-  attributes :id, :type, :user_id, :created_at, :label, :details, :status, :stats
+  attributes :id, :type, :user_id, :created_at, :label, :details, :status, :summary
 
   def type
     object.type.split('Integration')[1]
@@ -14,6 +14,7 @@ class Api::IntegrationSerializer < ActiveModel::Serializer
     end
   end
 
-  def stats
+  def summary
+    object.summary
   end
 end

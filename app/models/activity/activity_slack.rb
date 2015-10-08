@@ -1,4 +1,5 @@
 class ActivitySlack < ActiveRecord::Base
+  extend SkyModule
   self.inheritance_column = nil
   # include Cequel::Record
   # key :identity_id, :int
@@ -10,6 +11,12 @@ class ActivitySlack < ActiveRecord::Base
 
   scope :by_integration, -> (integration) { where(identity_id: integration.identities.pluck(:id)) }
   scope :by_channel, -> (integration, channel) { by_integration(integration).where(channel_id: channel.id) }
+
+  def self.summary(integration)
+    period = SkyModule.get_period
+    q = self.where(identity_id: integration.identities.pluck(:id), ts: period).group("date_trunc('day',ts)").count
+    period.map{|d| q.find{|k, v| k == d}.try(:[], 1) || 0}.reverse
+  end
 
   def self.oldest_ts(integration)
     self.by_integration(integration).order(ts: :asc).first.try(:ts)

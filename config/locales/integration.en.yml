@@ -21,11 +21,15 @@ en:
       member: 'Member'
       total: 'Total'
       per_day: 'Per Day'
+      activities: 'Activities'
     board:
       index: 'Integration Dashboard'
       new: 'Add New Integration'
       show_description: 'Added by %{userName} on %{createdAt}'
       settings: 'Integration Settings'
+    index:
+      last_31_days: 'Last 31 days'
+      view_detail: 'View Detail'
     list:
       dashboard: 'Dashboard'
       add: 'Add new integration'
