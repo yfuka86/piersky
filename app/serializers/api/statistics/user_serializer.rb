@@ -1,5 +1,5 @@
 class Api::Statistics::UserSerializer < ActiveModel::Serializer
-  attributes :user_id, :channels, :today, :identities
+  attributes :user_id, :today, :integrations
 
   def user_id
     object.id
@@ -9,23 +9,18 @@ class Api::Statistics::UserSerializer < ActiveModel::Serializer
     @today ||= SkyModule.today
   end
 
-  def identities
+  def integrations
     period = SkyModule.get_period
-    q = ActivitySlack.where(identity_id: object.identities.pluck(:id), ts: period)
-                     .group('identity_id', 'channel_id', "date_trunc('day',ts)").count
+    user_team = UserTeam.find_by(user: object, team: user.current_team)
+    identity_ids = user_team.identities.pluck(:integration_id).uniq
+    integrations = Integration.where(id: identity_ids)
 
-    object.identities.map do |identity|
-      counts = q.select{|k, v| k[0] == identity.id}
-
-      channels_obj = {}
-      channels.keys.each do |cid|
-        channels_obj[cid] = period.map{|d| counts.find{|k, v| k[1].to_sym == cid && k[2] == d}.try(:[], 1) || 0}.reverse
-      end
-
+    integrations.map do |integration|
+      counts = integration.activity_class.where(identity_id: identity_ids, ts: period).group("date_trunc('day',ts)").count
       {
-        id: identity.id,
-        default: period.map{|d| counts.select{|k, v| k[2] == d}.values.sum }.reverse
-      }.merge(channels_obj)
+        id: integration.id
+        default: period.map{|d| counts.select{|k, v| k == d}.values.sum }.reverse
+      }
     end
   end
 end

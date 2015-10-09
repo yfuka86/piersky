@@ -42,7 +42,7 @@ class IntegrationStatistics extends React.Component {
   }
 
   getParamsFromStores(props) {
-    let stats = StatisticsStore.getStatsById(props.integration.id);
+    let stats = StatisticsStore.getIntegrationStatsById(props.integration.id);
     return {
       stats: stats
     };
@@ -64,7 +64,7 @@ class IntegrationStatistics extends React.Component {
 
   _loadIntegrationStats(id) {
     if (this.props.integration.status === Constants.IntegrationStatus[1]) return;
-    if (!StatisticsStore.getStatsById(id) && !this.state.loading) {
+    if (!StatisticsStore.getIntegrationStatsById(id) && !this.state.loading) {
       this.setState({loading: true}, () => {
         IntegrationAction.stats(id).then((res) => {
           this.setState({loading: false});

@@ -40,7 +40,7 @@ class UserStatistics extends React.Component {
     let integrations = IntegrationStore.getIntegrations();
     this.setState({ integrations: integrations });
     let p = integrations.filter((integ) => {
-      return StatisticsStore.getStatsById(integ.id)==null;
+      return StatisticsStore.getUserStatsById(integ.id)==null;
     }).map((integ) => {
       return IntegrationAction.stats(integ.id);
     });
