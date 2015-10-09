@@ -38,6 +38,7 @@ class UserStatistics extends React.Component {
     StatisticsStore.onChange(this.onChangeHandler);
     this._loadUserStats(this.props.params.id);
     window.onresize = this.drawChart.bind(this);
+    this.drawChart();
   }
 
   componentWillReceiveProps(nextProps) {
