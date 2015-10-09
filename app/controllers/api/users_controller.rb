@@ -6,4 +6,11 @@ class Api::UsersController < Api::BaseController
       render_error t('api.error.unauthorized')
     end
   end
+
+  def stats
+    @user = User.find_by(id: params[:id])
+    render json: @user,
+           serializer: Api::Statistics::UserSerializer,
+           root: nil
+  end
 end

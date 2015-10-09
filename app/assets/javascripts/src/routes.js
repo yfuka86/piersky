@@ -10,7 +10,9 @@ import IntegrationStatistics from './components/integrations/integration_statist
 import IntegrationSettings from './components/integrations/integration_settings';
 import UsersBoard from './components/users/users_board';
 import UsersIndex from './components/users/users_index';
-import UsersShow from './components/users/users_show';
+import UserShow from './components/users/user_show';
+import UserStatistics from './components/users/user_statistics';
+import UserProfile from './components/users/user_profile';
 import InvitationsPage from './components/invitations/invitations_page';
 import InvitationsIndex from './components/invitations/invitations_index';
 import InvitationsNew from './components/invitations/invitations_new';
@@ -39,7 +41,11 @@ let routes = (
           <DefaultRoute handler={InvitationsIndex} />
           <Route name='invitations-new' handler={InvitationsNew} path='new' />
         </Route>
-        <Route name='users-show' handler={UsersShow} path=':id' />
+        <Route name='user-show' handler={UserShow} path=':id' >
+          <DefaultRoute handler={UserStatistics} />
+          <Route name='user-statistics' handler={UserStatistics} path='statistics' />
+          <Route name='user-profile' handler={UserProfile} path='profile' />
+        </Route>
       </Route>
 
     </Route>
