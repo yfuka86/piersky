@@ -11,14 +11,14 @@ class Github extends React.Component {
   static get defaultProps() {
     return {
       integration: {},
-      stat: {}
+      stats: {}
     };
   }
 
   static get propTypes() {
     return {
       integration: React.PropTypes.object,
-      stat: React.PropTypes.object
+      stats: React.PropTypes.object
     };
   }
 
@@ -31,7 +31,7 @@ class Github extends React.Component {
     return {
       activity: 'default',
       periodLength: 31,
-      periodEndAt: moment(this.props.stat.today)
+      periodEndAt: moment(this.props.stats.today)
     }
   }
 
@@ -57,7 +57,7 @@ class Github extends React.Component {
     let width = React.findDOMNode(this).clientWidth;
     let height = parseInt(width * 3 / 8);
 
-    let identitiesData = this.props.stat.identities;
+    let identitiesData = this.props.stats.identities;
     identitiesData = _.reject(identitiesData, (data) => {
       return _.sum(data[activity].slice(0, length)) === 0;
     });
@@ -89,13 +89,14 @@ class Github extends React.Component {
         height: height,
         legend: {position: 'right', maxLines: 3},
         colors: colors,
+        // curveType: 'function',
         vAxis: {
           ticks: ticks,
           minValue: 0
         }
       };
 
-      let chart = new google.visualization.AreaChart(React.findDOMNode(this).querySelector('#main_graph'));
+      let chart = new google.visualization.LineChart(React.findDOMNode(this).querySelector('#main_graph'));
       chart.draw(tableData, options);
     } else {
       React.findDOMNode(this).querySelector('#main_graph').innerHTML = `<div class="no-activities" style="height: ${height}px">${I18n.t('integration.general.no_activities')}</div>`;
@@ -117,7 +118,7 @@ class Github extends React.Component {
           <div className='field'>
             <select onChange={this.changeActivity.bind(this)}>
               <option value={'default'} >{I18n.t('integration.github.activity.default')}</option>
-              {this.props.stat.activities.map((activity)=>{
+              {this.props.stats.activities.map((activity)=>{
                 return <option value={activity} key={activity}>{I18n.t(`integration.github.activity.${activity}`)}</option>
               })}
             </select>

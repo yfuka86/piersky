@@ -5,6 +5,11 @@ import changeCase from 'change-case';
 import SessionStore from '../../stores/session';
 import UserStore from '../../stores/user';
 import IdentityStore from '../../stores/identity';
+import IntegrationStore from '../../stores/integration';
+import IntegrationAction from '../../actions/integration';
+//import IdentityAction from '../../actions/integration';
+import StatisticsStore from '../../stores/statistics';
+import moment from 'moment';
 
 class UsersShow extends React.Component {
   constructor(props) {
@@ -13,19 +18,57 @@ class UsersShow extends React.Component {
   }
 
   get initialState() {
-    return this.getParamsFromStores(this.props);
+    let state = this.getParamsFromStores(this.props);
+    state.periodLength = 31;
+    state.ready = false;
+    return state;
+    //state.periodEndAt = moment(this.props.stat.today)
   }
 
   getParamsFromStores(props) {
     let user = UserStore.getUserById(props.params.id)
+
     return {
       user: user,
-      identities: IdentityStore.getIdentitiesByUserId(user.id)
+      identities: IdentityStore.getIdentitiesByUserId(user.id),
+      integrations: IntegrationStore.getIntegrations(),
+      statistics: StatisticsStore.getStats(),
     };
   }
 
+  onIntegrationChange() {
+    let integrations = IntegrationStore.getIntegrations();
+    this.setState({ integrations: integrations });
+    let p = integrations.filter((integ) => {
+      return StatisticsStore.getStatById(integ.id)==null;
+    }).map((integ) => {
+      return IntegrationAction.stat(integ.id);
+    });
+    if(p.length > 0){
+      this.setState({ ready: false });
+    } else {
+      this.setState({ ready: true });
+    }
+  }
+
+  onStatisticsChange() {
+    let statistics = StatisticsStore.getStats();
+    let today = _.find(statistics, (s) => true).today;
+    this.setState({ 
+      statistics: statistics,
+      periodEndAt: moment(today)
+    });
+    if(_.size(statistics) >= this.state.integrations.length) {
+      this.setState({ ready: true });
+      this.drawChart();
+    }
+  }
+
   componentDidMount() {
-    this.drawChart();
+    IntegrationStore.onChange(this.onIntegrationChange.bind(this));
+    StatisticsStore.onChange(this.onStatisticsChange.bind(this));
+
+    IntegrationAction.load();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -35,27 +78,39 @@ class UsersShow extends React.Component {
   componentWillUnmount() {
   }
 
+  onChange(e) {
+    this.setState(this.getParamsFromStores(this.props));
+    this.drawChart();
+  }
+
   drawChart() {
-    var data = google.visualization.arrayToDataTable([
-      ['date', 'Slack', 'Github'],
-      ['2015/08/07',  1000,      400],
-      ['2015/08/08',  1170,      460],
-      ['2015/08/09',  1660,       1120],
-      ['2015/08/10',  1030,      540],
-      ['2015/08/11',  1200,      400],
-      ['2015/08/12',  117,      260],
-      ['2015/08/13',  360,       100],
-      ['2015/08/14',  1030,      540],
-      ['2015/08/15',  900,      400],
-      ['2015/08/16',  1170,      460],
-      ['2015/08/17',  660,       1120],
-      ['2015/08/18',  1030,      540],
-      ['2015/08/19',  200,      100],
-      ['2015/08/20',  370,      60],
-      ['2015/08/21',  660,       1120],
-      ['2015/08/22',  1000,      400],
-      ['2015/08/23',  1170,      460]
-    ]);
+    if(!this.state.ready)  return;
+    let data = this.state.data;
+
+    let identities = this.state.identities;
+    let integrations = _.groupBy(this.state.integrations, (integration) => {
+      return integration.type;
+    });
+    let statistics = this.state.statistics;
+
+    var table =[['Date'].concat(_.map(integrations,(_,key) => key))];
+    let length = this.state.periodLength;
+    let end = this.state.periodEndAt;
+    _.times(length, (i) =>{
+      let ary = _.map(integrations,(group, key) => {
+        let identity = _.find(identities,{ 'type': key })
+        return _.reduce(group, (total, integration) => {
+          let stat = statistics[integration.id];
+          let tar = _.find(stat.identities, { 'id': identity.id });
+          if(tar) return total + tar.default[length - (i + 1)];
+          return total;
+        }, 0);
+      });
+      table.push([end.subtract(length - (i + 1), 'days').format("YYYY/MM/DD")].concat(ary));
+    });
+
+
+    var graphData = google.visualization.arrayToDataTable(table);
 
     var options = {
       title: 'activity',
@@ -63,9 +118,17 @@ class UsersShow extends React.Component {
       legend: { position: 'bottom' }
     };
 
-    var chart = new google.visualization.LineChart(document.getElementById('graph'));
+    var chart = new google.visualization.LineChart(React.findDOMNode(this).querySelector('#graph'));
 
-    chart.draw(data, options);
+    chart.draw(graphData, options);
+  }
+
+  changePeriod(e) {
+    this.setState({periodLength: parseInt(e.target.value, 10)})
+  }
+
+  componentDidUpdate() {
+    this.drawChart();
   }
 
   render() {
@@ -76,6 +139,13 @@ class UsersShow extends React.Component {
           {this.state.identities.map((identity) => {
             return <span className={['icon', changeCase.snakeCase(identity.type) + '-logo'].join(' ')} />
           })}
+        </div>
+        <div className='field'>
+          <select onChange={this.changePeriod.bind(this)}>
+            <option value={31} >{I18n.t('integration.slack.period.placeholder')}</option>
+            <option value={7} >{I18n.t('integration.slack.period.last_week')}</option>
+            <option value={31} >{I18n.t('integration.slack.period.last_month')}</option>
+          </select>
         </div>
         <div id='graph' />
       </div>

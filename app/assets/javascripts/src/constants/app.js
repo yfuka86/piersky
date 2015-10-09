@@ -61,13 +61,15 @@ export default {
     REMOVE_INTEGRATION: null,
 
     //stats
-    LOAD_INTEGRATION_STAT: null,
+    LOAD_INTEGRATION_STATS: null,
 
     //view
     SHOW_BALLOON: null,
     CLOSE_BALLOON: null,
     SHOW_NOTIFICATION: null
   }),
+
+  IntegrationStatus: ['default', 'syncing'],
 
   Colors: ['red', 'pink', 'purple', 'deeppurple', 'indigo', 'blue', 'lightblue', 'cyan', 'teal', 'green',
            'lightgreen', 'lime', 'yellow', 'amber', 'orange', 'deeporange', 'brown', 'bluegrey', 'grey'],

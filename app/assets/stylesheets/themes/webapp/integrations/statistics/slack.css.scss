@@ -1,0 +1,18 @@
+@import 'globals/config-loader';
+
+.statistics-slack {
+  .users-stats {
+    .content-area {
+      .total, .avg {
+        width: 80px;
+        text-align: right;
+      }
+      .user-graph {
+        display: inline-block;
+        height: 100%;
+        width: 360px;
+        vertical-align: middle;
+      }
+    }
+  }
+}
