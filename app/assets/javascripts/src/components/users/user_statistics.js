@@ -14,6 +14,7 @@ import Loading from '../../components/common/loading';
 class UserStatistics extends React.Component {
   constructor(props) {
     super(props);
+    this.HOUR_PER_DAY = 24;
     this.state = this.initialState;
     this.onChangeHandler = this.onChange.bind(this);
   }
@@ -73,21 +74,35 @@ class UserStatistics extends React.Component {
     if(!this.state.stats || this.state.loading) return;
     let width = React.findDOMNode(this).clientWidth - 20;
     let height = parseInt(width * 3 / 8);
-    let length = this.state.periodLength;
     let stats = this.state.stats;
-    let end = moment(stats.today);
-    let header = ['Day'].concat(stats.integrations.map((i) => {return IntegrationStore.getIntegrationById(i.id).name();}));
-    let table = [header];
-
+    let length = this.state.periodLength;
     let max = 0;
-    _.times(length, (i) => {
-      let ary = stats.integrations.map((integration) => {
-        return integration.default[length - (i + 1)];
-      });
-      let sum = _.sum(ary);
-      if (sum > max) max = sum;
-      table.push([moment(end).subtract(length - (i + 1), 'days').format("MMM Do")].concat(ary));
-    })
+    let table = [];
+    if (length === 1) {
+      let header = [I18n.t('user.stats.period.time_of_day')].concat(stats.integrations.map((i) => {return IntegrationStore.getIntegrationById(i.id).name();}));
+      table.push(header);
+      let offset = moment().utcOffset() / 60;
+      _.times(this.HOUR_PER_DAY, (i) => {
+        let ary = stats.integrations.map((integration) => {
+          return integration.day[(24 - offset + i) % 24];
+        });
+        let sum = _.sum(ary);
+        if (sum > max) max = sum;
+        table.push([i].concat(ary));
+      })
+    } else {
+      let end = moment(stats.today);
+      let header = ['Day'].concat(stats.integrations.map((i) => {return IntegrationStore.getIntegrationById(i.id).name();}));
+      table.push(header);
+      _.times(length, (i) => {
+        let ary = stats.integrations.map((integration) => {
+          return integration.default[length - (i + 1)];
+        });
+        let sum = _.sum(ary);
+        if (sum > max) max = sum;
+        table.push([moment(end).subtract(length - (i + 1), 'days').format("MMM Do")].concat(ary));
+      })
+    }
 
     var graphData = google.visualization.arrayToDataTable(table);
     let options = {
