@@ -7,8 +7,8 @@ import UserStore from '../../stores/user';
 import IdentityStore from '../../stores/identity';
 import IntegrationStore from '../../stores/integration';
 import IntegrationAction from '../../actions/integration';
-//import IdentityAction from '../../actions/integration';
 import StatisticsStore from '../../stores/statistics';
+import Loading from '../../components/common/loading';
 import moment from 'moment';
 
 class UsersShow extends React.Component {
@@ -147,7 +147,7 @@ class UsersShow extends React.Component {
             <option value={31} >{I18n.t('integration.slack.period.last_month')}</option>
           </select>
         </div>
-        <div id='graph' />
+        {this.state.ready ? <div id='graph' /> : <Loading />}
       </div>
     );
   }
