@@ -62,6 +62,7 @@ export default {
 
     //stats
     LOAD_INTEGRATION_STATS: null,
+    LOAD_USER_STATS: null,
 
     //view
     SHOW_BALLOON: null,

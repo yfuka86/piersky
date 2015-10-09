@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 import SessionAction from '../actions/session';
 import IdentityAction from '../actions/identity';
+import IntegrationAction from '../actions/integration';
 import ViewStore from '../stores/view';
 import Loading from '../components/common/loading';
 import Balloon from '../components/common/balloon';
@@ -33,7 +34,7 @@ class App extends React.Component {
 
   componentDidMount() {
     Promise
-    .all([SessionAction.loadUser(), SessionAction.loadTeam(), IdentityAction.load()])
+    .all([SessionAction.loadUser(), SessionAction.loadTeam(), IdentityAction.load(), IntegrationAction.load()])
     .then(()=> {
       this.setState({hasAppInitialized: true});
     });

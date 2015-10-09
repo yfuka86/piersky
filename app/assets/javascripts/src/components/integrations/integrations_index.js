@@ -122,7 +122,11 @@ class IntegrationsIndex extends React.Component {
                   <div className='icon-area'>
                     <span className={['icon', changeCase.snakeCase(integration.type) + '-logo'].join(' ')} />
                   </div>
-                  <p className='name'>{integration.name()}</p>
+                  <Link to='integration-show' params={{id: integration.id}} className='link'>
+                    <p className='name'>
+                      {integration.name()}
+                    </p>
+                  </Link>
 
                   <span className='right-content'>
                     <p className='main-content activity'>{_.sum(integration.summary)}</p>
