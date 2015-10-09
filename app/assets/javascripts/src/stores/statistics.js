@@ -26,6 +26,25 @@ const StatisticsStore = assign({}, BaseStore, {
     let integrationStats = this.getIntegrationStats();
     integrationStats[id] = stats;
     this.setIntegrationStats(integrationStats);
+  },
+
+  getUserStats() {
+    if (!this.get('userStats')) this.set('userStats', {});
+    return this.get('userStats');
+  },
+
+  setUserStats(stats) {
+    this.set('userStats', stats);
+  },
+
+  getUserStatsById(id) {
+    return this.getUserStats()[id];
+  },
+
+  addUserStats(id, stats) {
+    let userStats = this.getUserStats();
+    userStats[id] = stats;
+    this.setUserStats(userStats);
   }
 });
 

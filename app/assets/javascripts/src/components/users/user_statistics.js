@@ -163,7 +163,20 @@ class UserStatistics extends React.Component {
             return <span className={['icon', changeCase.snakeCase(identity.type) + '-logo'].join(' ')} />
           })}
         </div>
+<<<<<<< HEAD:app/assets/javascripts/src/components/users/user_statistics.js
       </div> : <Loading />;
+=======
+        <div className='field'>
+          <select onChange={this.changePeriod.bind(this)}>
+            <option value={31} >{I18n.t('integration.slack.period.placeholder')}</option>
+            <option value={7} >{I18n.t('integration.slack.period.last_week')}</option>
+            <option value={31} >{I18n.t('integration.slack.period.last_month')}</option>
+          </select>
+        </div>
+        {this.state.ready ? <div id='graph' /> : <Loading />}
+      </div>
+    );
+>>>>>>> origin/develop:app/assets/javascripts/src/components/users/users_show.js
   }
 }
 
