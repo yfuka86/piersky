@@ -1,0 +1,10 @@
+@import 'globals/config-loader';
+@import 'modules/center_container';
+
+.user-profile {
+  .title {
+    @include lato-thin;
+    font-size: 24px;
+    padding: 20px;
+  }
+}

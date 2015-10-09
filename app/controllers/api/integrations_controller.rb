@@ -11,6 +11,7 @@ class Api::IntegrationsController < Api::BaseController
   end
 
   def stats
+    @integration.refresh_data
     render json: @integration,
            serializer: "Api::Statistics::#{@integration.class.name.split('Integration')[1]}Serializer".constantize,
            root: nil

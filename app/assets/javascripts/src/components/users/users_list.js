@@ -38,7 +38,7 @@ class UsersList extends React.Component {
         </Link>
         {_.map(this.props.users, (user) => {
           return (
-            <Link to='users-show' params={{id: user.id}} key={user.id}>
+            <Link to='user-show' params={{id: user.id}} key={user.id}>
               <li>
                 <div className='icon-area'>
                   <UserIcon user={user} />

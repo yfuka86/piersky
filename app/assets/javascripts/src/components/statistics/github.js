@@ -84,7 +84,6 @@ class Github extends React.Component {
 
       let ticks = getTicks(max);
       let options = {
-        isStacked: true,
         width: width,
         height: height,
         legend: {position: 'right', maxLines: 3},
