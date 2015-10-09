@@ -4,13 +4,11 @@
     "build": "browserify app/assets/javascripts/src/application.js -t babelify --extension=\".js.jsx\" -o app/assets/javascripts/dist/application.js",
     "watch": "watchify app/assets/javascripts/src/application.js -t babelify --extension=\".js.jsx\" -d -o app/assets/javascripts/dist/application.js -v"
   },
-  "devDependencies": {
+  "dependencies": {
     "babel": "^5.1.10",
     "babelify": "^6.0.2",
     "browserify": "~10.2.3",
-    "watchify": "3.3.0"
-  },
-  "dependencies": {
+    "watchify": "3.3.0",
     "eventemitter2": "^0.4.14",
     "flux": "^2.0.0",
     "superagent": "^0.21.0",
