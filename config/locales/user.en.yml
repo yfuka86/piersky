@@ -13,6 +13,6 @@ en:
     stats:
       period:
         placeholder: 'Choose a period...'
-        last_24h: 'last 24 hour'
+        time_of_day: 'Time of day'
         last_week: 'last 1 week'
         last_month: 'last 1 month'

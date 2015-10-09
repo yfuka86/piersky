@@ -3,6 +3,21 @@
 
 .user-statistics {
   padding: 20px 0;
+
+  .graph-action {
+    margin-bottom: 20px;
+  }
+  #main_graph {
+    width: 100%;
+    height: 320px;
+    .no-activities {
+      padding-top: 100px;
+      text-align: center;
+      @include lato-ultrabold;
+      font-size: 24px;
+      color: $grey400;
+    }
+  }
   .identities {
     .icon {
       @include icon(24px, 24px);

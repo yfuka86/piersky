@@ -4,179 +4,130 @@ import moment from 'moment';
 import changeCase from 'change-case';
 import {getTicks} from '../../utils/app_module';
 
+import UserAction from '../../actions/user';
 import UserStore from '../../stores/user';
 import IdentityStore from '../../stores/identity';
-import StatisticsStore from '../../stores/statistics';
 import IntegrationStore from '../../stores/integration';
-import IntegrationAction from '../../actions/integration';
+import StatisticsStore from '../../stores/statistics';
 import Loading from '../../components/common/loading';
 
 class UserStatistics extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.initialState;
+    this.onChangeHandler = this.onChange.bind(this);
   }
 
   get initialState() {
-    let state = this.getParamsFromStores(this.props);
-    state.periodLength = 31;
-    state.ready = false;
-    return state;
-    //state.periodEndAt = moment(this.props.stat.today)
+    return this.getParamsFromStores(this.props);
   }
 
   getParamsFromStores(props) {
     let user = UserStore.getUserById(props.params.id)
+    let stats = StatisticsStore.getUserStatsById(user.id);
 
     return {
       user: user,
       identities: IdentityStore.getIdentitiesByUserId(user.id),
-      integrations: IntegrationStore.getIntegrations(),
-      statistics: StatisticsStore.getStats(),
+      stats: stats,
+      periodLength: 31
     };
-  }
-
-  onIntegrationChange() {
-    let integrations = IntegrationStore.getIntegrations();
-    this.setState({ integrations: integrations });
-    let p = integrations.filter((integ) => {
-      return StatisticsStore.getUserStatsById(integ.id)==null;
-    }).map((integ) => {
-      return IntegrationAction.stats(integ.id);
-    });
-    if(p.length > 0){
-      this.setState({ ready: false });
-    } else {
-      this.setState({ ready: true });
-    }
-  }
-
-  onStatisticsChange() {
-    let statistics = StatisticsStore.getStats();
-    let today = _.find(statistics, (s) => true).today;
-    this.setState({
-      statistics: statistics,
-      periodEndAt: moment(today)
-    });
-    if(_.size(statistics) >= this.state.integrations.length) {
-      this.setState({ ready: true });
-      this.drawChart();
-    }
   }
 
   componentDidMount() {
-    IntegrationStore.onChange(this.onIntegrationChange.bind(this));
-    StatisticsStore.onChange(this.onStatisticsChange.bind(this));
-
-    IntegrationAction.load();
+    StatisticsStore.onChange(this.onChangeHandler);
+    this._loadUserStats(this.props.params.id);
+    window.onresize = this.drawChart.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState(this.getParamsFromStores(nextProps))
-  }
-
-  componentWillUnmount() {
-  }
-
-  onChange(e) {
-    this.setState(this.getParamsFromStores(this.props));
-    this.drawChart();
-  }
-
-  drawChart() {
-    if(!this.state.ready) return;
-    let width = React.findDOMNode(this).clientWidth;
-    let height = parseInt(width * 3 / 8);
-
-    let data = this.state.data;
-
-    let identities = this.state.identities;
-    let integrations = _.groupBy(this.state.integrations, (integration) => {
-      return integration.type;
-    });
-    let statistics = this.state.statistics;
-
-    var table =[['Date'].concat(_.map(integrations,(_,key) => key))];
-    let length = this.state.periodLength;
-    let end = this.state.periodEndAt;
-    _.times(length, (i) =>{
-      let ary = _.map(integrations,(group, key) => {
-        let identity = _.find(identities,{ 'type': key })
-        return _.reduce(group, (total, integration) => {
-          let stat = statistics[integration.id];
-          let tar = _.find(stat.identities, { 'id': identity.id });
-          if(tar) return total + tar.default[length - (i + 1)];
-          return total;
-        }, 0);
-      });
-      table.push([end.subtract(length - (i + 1), 'days').format("YYYY/MM/DD")].concat(ary));
-    });
-
-
-    var graphData = google.visualization.arrayToDataTable(table);
-
-    let ticks = getTicks(100);
-    let options = {
-      isStacked: true,
-      width: width,
-      height: height,
-      legend: {position: 'right', maxLines: 3},
-      // colors: colors,
-      // curveType: 'function',
-      vAxis: {
-        ticks: ticks,
-        minValue: 0
-      }
-    };
-
-    var chart = new google.visualization.AreaChart(React.findDOMNode(this).querySelector('#graph'));
-
-    chart.draw(graphData, options);
-  }
-
-  changePeriod(e) {
-    this.setState({periodLength: parseInt(e.target.value, 10)})
+    this.setState(this.getParamsFromStores(nextProps));
+    this._loadUserStats(nextProps.params.id);
   }
 
   componentDidUpdate() {
     this.drawChart();
   }
 
+  componentWillUnmount() {
+    StatisticsStore.offChange(this.onChangeHandler);
+    window.onresize = null;
+  }
+
+  _loadUserStats(id) {
+    if (!StatisticsStore.getUserStatsById(id) && !this.state.loading) {
+      this.setState({loading: true}, () => {
+        UserAction.stats(id).then((res) => {
+          this.setState({loading: false});
+        });
+      });
+    }
+  }
+
+  onChange(e) {
+    this.setState(this.getParamsFromStores(this.props));
+  }
+
+  drawChart() {
+    if(!this.state.stats || this.state.loading) return;
+    let width = React.findDOMNode(this).clientWidth - 20;
+    let height = parseInt(width * 3 / 8);
+    let length = this.state.periodLength;
+    let stats = this.state.stats;
+    let end = moment(stats.today);
+    let header = ['Day'].concat(stats.integrations.map((i) => {return IntegrationStore.getIntegrationById(i.id).name();}));
+    let table = [header];
+
+    let max = 0;
+    _.times(length, (i) => {
+      let ary = stats.integrations.map((integration) => {
+        return integration.default[length - (i + 1)];
+      });
+      let sum = _.sum(ary);
+      if (sum > max) max = sum;
+      table.push([moment(end).subtract(length - (i + 1), 'days').format("MMM Do")].concat(ary));
+    })
+
+    var graphData = google.visualization.arrayToDataTable(table);
+    let options = {
+      width: width,
+      height: height
+    };
+
+    if (max > 0) {
+      var chart = new google.charts.Line(React.findDOMNode(this).querySelector('#main_graph'));
+      chart.draw(graphData, options);
+    } else {
+      React.findDOMNode(this).querySelector('#main_graph').innerHTML = `<div class="no-activities" style="height: ${height}px">${I18n.t('integration.general.no_activities')}</div>`;
+    }
+  }
+
+  changePeriod(e) {
+    this.setState({periodLength: parseInt(e.target.value, 10)})
+  }
+
   render() {
-    return this.state.ready ?
+    return this.state.loading ? <Loading /> :
       <div className='user-statistics'>
         <div className='graph-action standard-form-horizontal'>
           <div className='field'>
             <select onChange={this.changePeriod.bind(this)}>
               <option value={31} >{I18n.t('user.stats.period.placeholder')}</option>
-              <option value={1} >{I18n.t('user.stats.period.last_24h')}</option>
+              <option value={1} >{I18n.t('user.stats.period.time_of_day')}</option>
               <option value={7} >{I18n.t('user.stats.period.last_week')}</option>
               <option value={31} >{I18n.t('user.stats.period.last_month')}</option>
             </select>
           </div>
         </div>
 
-        <div id='graph' />
+        <div id='main_graph' />
 
         <div className='identities'>
           {this.state.identities.map((identity) => {
             return <span className={['icon', changeCase.snakeCase(identity.type) + '-logo'].join(' ')} />
           })}
         </div>
-<<<<<<< HEAD:app/assets/javascripts/src/components/users/user_statistics.js
-      </div> : <Loading />;
-=======
-        <div className='field'>
-          <select onChange={this.changePeriod.bind(this)}>
-            <option value={31} >{I18n.t('integration.slack.period.placeholder')}</option>
-            <option value={7} >{I18n.t('integration.slack.period.last_week')}</option>
-            <option value={31} >{I18n.t('integration.slack.period.last_month')}</option>
-          </select>
-        </div>
-        {this.state.ready ? <div id='graph' /> : <Loading />}
-      </div>
-    );
->>>>>>> origin/develop:app/assets/javascripts/src/components/users/users_show.js
+      </div>;
   }
 }
 

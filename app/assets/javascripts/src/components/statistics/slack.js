@@ -33,7 +33,6 @@ class Slack extends React.Component {
     return {
       channelId: 'default',
       periodLength: 31,
-      periodEndAt: moment(this.props.stats.today),
       expandedId: null,
       data: {
         messages: 0,
@@ -121,7 +120,7 @@ class Slack extends React.Component {
     if (!this.props) return;
     // set variables
     let channelId = this.state.channelId;
-    let end = this.state.periodEndAt;
+    let end = moment(this.props.stats.today);
     let length = this.state.periodLength;
 
     let width = React.findDOMNode(this).clientWidth;
@@ -182,7 +181,7 @@ class Slack extends React.Component {
     if (!this.props) return;
     // set variables
     let channelId = this.state.channelId;
-    let end = this.state.periodEndAt;
+    let end = moment(this.props.stats.today);
     let length = this.state.periodLength;
 
     let width = 360;

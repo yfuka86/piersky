@@ -11,14 +11,14 @@ class Api::Statistics::UserSerializer < ActiveModel::Serializer
 
   def integrations
     period = SkyModule.get_period
-    user_team = UserTeam.find_by(user: object, team: user.current_team)
+    user_team = UserTeam.find_by(user: object, team: object.current_team)
     identity_ids = user_team.identities.pluck(:integration_id).uniq
     integrations = Integration.where(id: identity_ids)
 
     integrations.map do |integration|
       counts = integration.activity_class.where(identity_id: identity_ids, ts: period).group("date_trunc('day',ts)").count
       {
-        id: integration.id
+        id: integration.id,
         default: period.map{|d| counts.select{|k, v| k == d}.values.sum }.reverse
       }
     end
