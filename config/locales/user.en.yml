@@ -15,4 +15,4 @@ en:
         placeholder: 'Choose a period...'
         time_of_day: 'Time of Day'
         last_week: 'last 1 week'
-        last_month: 'last 1 month'
+        last_month: 'last 1 month (default)'

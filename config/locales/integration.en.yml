@@ -53,7 +53,7 @@ en:
       period:
         placeholder: 'Choose a period...'
         last_week: 'last 1 week'
-        last_month: 'last 1 month'
+        last_month: 'last 1 month (default)'
       summary:
         messages: 'Messages'
         users: 'Users'
@@ -74,4 +74,4 @@ en:
       period:
         placeholder: 'Choose a period...'
         last_week: 'last 1 week'
-        last_month: 'last 1 month'
+        last_month: 'last 1 month (default)'
