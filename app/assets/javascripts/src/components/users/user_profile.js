@@ -21,7 +21,9 @@ class UserProfile extends React.Component {
 
   render() {
     return (
-      <div/>
+      <div className='user-profile'>
+        <div className='title'>Coming soon...</div>
+      </div>
     );
   }
 }

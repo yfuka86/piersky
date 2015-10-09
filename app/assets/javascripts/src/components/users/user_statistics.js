@@ -2,13 +2,14 @@ import React from 'react';
 import _ from 'lodash';
 import moment from 'moment';
 import changeCase from 'change-case';
+import {getTicks} from '../../utils/app_module';
 
-import SessionStore from '../../stores/session';
 import UserStore from '../../stores/user';
 import IdentityStore from '../../stores/identity';
+import StatisticsStore from '../../stores/statistics';
 import IntegrationStore from '../../stores/integration';
 import IntegrationAction from '../../actions/integration';
-import StatisticsStore from '../../stores/statistics';
+import Loading from '../../components/common/loading';
 
 class UserStatistics extends React.Component {
   constructor(props) {
@@ -83,7 +84,10 @@ class UserStatistics extends React.Component {
   }
 
   drawChart() {
-    if(!this.state.ready)  return;
+    if(!this.state.ready) return;
+    let width = React.findDOMNode(this).clientWidth;
+    let height = parseInt(width * 3 / 8);
+
     let data = this.state.data;
 
     let identities = this.state.identities;
@@ -111,13 +115,21 @@ class UserStatistics extends React.Component {
 
     var graphData = google.visualization.arrayToDataTable(table);
 
-    var options = {
-      title: 'activity',
-      curveType: 'function',
-      legend: { position: 'bottom' }
+    let ticks = getTicks(100);
+    let options = {
+      isStacked: true,
+      width: width,
+      height: height,
+      legend: {position: 'right', maxLines: 3},
+      // colors: colors,
+      // curveType: 'function',
+      vAxis: {
+        ticks: ticks,
+        minValue: 0
+      }
     };
 
-    var chart = new google.visualization.LineChart(React.findDOMNode(this).querySelector('#graph'));
+    var chart = new google.visualization.AreaChart(React.findDOMNode(this).querySelector('#graph'));
 
     chart.draw(graphData, options);
   }
@@ -131,24 +143,27 @@ class UserStatistics extends React.Component {
   }
 
   render() {
-    return (
-      <div className='container-main users-show'>
-        <p className='title'>{this.state.user.name || this.state.user.email}</p>
+    return this.state.ready ?
+      <div className='user-statistics'>
+        <div className='graph-action standard-form-horizontal'>
+          <div className='field'>
+            <select onChange={this.changePeriod.bind(this)}>
+              <option value={31} >{I18n.t('user.stats.period.placeholder')}</option>
+              <option value={1} >{I18n.t('user.stats.period.last_24h')}</option>
+              <option value={7} >{I18n.t('user.stats.period.last_week')}</option>
+              <option value={31} >{I18n.t('user.stats.period.last_month')}</option>
+            </select>
+          </div>
+        </div>
+
+        <div id='graph' />
+
         <div className='identities'>
           {this.state.identities.map((identity) => {
             return <span className={['icon', changeCase.snakeCase(identity.type) + '-logo'].join(' ')} />
           })}
         </div>
-        <div className='field'>
-          <select onChange={this.changePeriod.bind(this)}>
-            <option value={31} >{I18n.t('integration.slack.period.placeholder')}</option>
-            <option value={7} >{I18n.t('integration.slack.period.last_week')}</option>
-            <option value={31} >{I18n.t('integration.slack.period.last_month')}</option>
-          </select>
-        </div>
-        <div id='graph' />
-      </div>
-    );
+      </div> : <Loading />;
   }
 }
 

@@ -1,9 +1,11 @@
 @import 'globals/config-loader';
 @import 'modules/center_container';
 
-.users-board .user-show {
-  .title {
-    .simple-user-icon {
+.user-statistics {
+  padding: 20px 0;
+  .identities {
+    .icon {
+      @include icon(24px, 24px);
       margin-right: 20px;
     }
   }

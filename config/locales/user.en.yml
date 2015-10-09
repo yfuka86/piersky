@@ -6,3 +6,13 @@ en:
     list:
       dashboard: 'Dashboard'
       add: 'Invitations'
+    show:
+      tab:
+        stats: 'Stats'
+        profile: 'Profile'
+    stats:
+      period:
+        placeholder: 'Choose a period...'
+        last_24h: 'last 24 hour'
+        last_week: 'last 1 week'
+        last_month: 'last 1 month'
