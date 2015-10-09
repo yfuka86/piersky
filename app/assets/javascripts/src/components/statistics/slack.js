@@ -190,7 +190,6 @@ class Slack extends React.Component {
     // extract users activities
     let identityData = _.find(this.props.stats.identities, (identityData) => {return identityData.id === identityId});
 
-
     let userName = IdentityStore.getUserIdentityById(identityId);
     let header = ['Day', userName];
     let colors = [Constants.colorHexByKey(userName)];
@@ -279,7 +278,7 @@ class Slack extends React.Component {
             let total = _.sum(identityData[this.state.channelId].slice(0, this.state.periodLength));
             let avg = Math.round(total / this.state.periodLength * 100) / 100;
             return (
-              <div className={`option ${this.isExpanded(identity.id) ? 'expanded' : ''}`}>
+              <div className={`option ${this.isExpanded(identity.id) ? 'expanded' : ''}`} key={identityData.id}>
                 <div className='toggle' onClick={this.toggleExpantion.bind(this, identity.id)} />
                 <div className='content-area'>
                   {user ? <UserInfo user={user} /> : <p className='main-content'>{identity.name}</p>}
