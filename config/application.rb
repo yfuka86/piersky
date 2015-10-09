@@ -42,8 +42,6 @@ module Piersky
           :methods => [:get, :post, :delete, :put, :options, :head]
       end
     end
+    config.active_job.queue_adapter = :sidekiq
   end
 end
-
-ActiveJob::Base.queue_adapter = :sidekiq
-
