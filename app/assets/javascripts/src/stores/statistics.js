@@ -18,11 +18,11 @@ const StatisticsStore = assign({}, BaseStore, {
     this.set('stats', stats);
   },
 
-  getStatById(id) {
+  getStatsById(id) {
     return this.getStats()[id];
   },
 
-  addStat(id, stat) {
+  addStats(id, stat) {
     let stats = this.getStats();
     stats[id] = stat;
     this.setStats(stats);
@@ -35,8 +35,8 @@ StatisticsStore.dispatchToken = Dispatcher.register(payload => {
   ]);
 
   switch(action.type) {
-    case ActionTypes.LOAD_INTEGRATION_STAT:
-      StatisticsStore.addStat(action.json.integration_id, action.json);
+    case ActionTypes.LOAD_INTEGRATION_STATS:
+      StatisticsStore.addStats(action.json.integration_id, action.json);
       StatisticsStore.emitChange();
       break;
 

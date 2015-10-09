@@ -29,20 +29,25 @@ const IdentityStore = assign({}, BaseStore, {
     return _.where(this.getIdentities(), {userId: parseInt(userId, 10)}) || [];
   },
 
-  getUserIdentityById(id) {
+  getUserByIdentityId(id) {
     let identity = this.getIdentityById(id);
     if (identity.userId) {
-      return UserStore.getUserById(identity.userId).identity();
+      return UserStore.getUserById(identity.userId)
     } else {
-      return identity.name;
+      return null;
     }
+  },
+
+  getUserIdentityById(id) {
+    let user = this.getUserByIdentityId(id);
+    return user ? user.identity() : this.getIdentityById(id).name;
   },
 
   parse(json) {
     return {
       id: json.id,
       userId: json.user_id,
-      type: changeCase.pascalCase(json.type.split('::')[1]),
+      type: changeCase.pascalCase(json.type.match(/Identity(.+)/)[1]),
       primaryKey: json.primary_key,
       secondaryKey: json.secondary_key,
       isVerified: json.is_verified,

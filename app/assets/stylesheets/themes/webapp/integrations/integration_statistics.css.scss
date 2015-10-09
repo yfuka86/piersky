@@ -1,8 +1,30 @@
 @import 'globals/config-loader';
 @import 'modules/center_container';
+@import 'modules/list_table';
+@import 'modules/standard_form';
 
 .integration-statistics {
   padding: 20px 0;
+
+  .statistics-summary {
+    .panel {
+      display: inline-block;
+      cursor: pointer;
+      margin: 15px 0 10px 10px;
+      width: 160px;
+      border-right: 1px solid $grey400;
+      .name {
+        @include lato-normal;
+        font-size: 15px;
+      }
+      .number {
+        margin: 5px 0;
+        @include lato-thin;
+        font-size: 20px;
+        color: $grey800;
+      }
+    }
+  }
 
   #main_graph .no-activities {
     padding-top: 100px;
@@ -10,5 +32,10 @@
     @include lato-ultrabold;
     font-size: 24px;
     color: $grey400;
+  }
+
+  .users-stats {
+    @include list-table-expandable;
+    padding: 20px;
   }
 }

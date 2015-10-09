@@ -78,3 +78,15 @@
   0%, 60% {@include opacity(0.2);}
   30% {@include opacity(1);}
 }
+
+
+
+.syncing-container {
+  padding: 100px 0;
+  p {
+    text-align: center;
+    @include lato-thin;
+    font-size: 28px;
+    padding: 20px;
+  }
+}

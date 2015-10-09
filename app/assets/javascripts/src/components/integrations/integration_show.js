@@ -67,7 +67,7 @@ class IntegrationShow extends React.Component {
             <div className='icon-area'>
               <span className={['icon', changeCase.snakeCase(integration.type) + '-logo'].join(' ')} />
             </div>
-            <p className='title'>{integration.type}</p>
+            <p className='title'>{integration.name()}</p>
             <p className='description'>
               {I18n.t('integration.board.show_description', {
                 userName: integrationUser.identity(),

@@ -6,9 +6,12 @@ class Integration < ActiveRecord::Base
 
   after_create :create_setting!
   after_create :create_identity
+  after_create :initialize_data
 
   validates_associated :user
   validates_associated :setting
+
+  enum status: [:default, :syncing]
 
   class << self
     def create_with_user(auth, user)
@@ -32,6 +35,10 @@ class Integration < ActiveRecord::Base
     ('Identity' + service_name).constantize
   end
 
+  def activity_class
+    ('Activity' + service_name).constantize
+  end
+
   def create_identity(primary_key, options={})
     #please override
     user_team = UserTeam.find_by(user: self.user, team: self.team)
@@ -46,8 +53,16 @@ class Integration < ActiveRecord::Base
     end
   end
 
+  def summary
+    self.activity_class.summary(self)
+  end
+
   def identities
     identity_class.where(integration: self)
+  end
+
+  def initialize_data
+    # please override
   end
 
   def update_setting(setting)
