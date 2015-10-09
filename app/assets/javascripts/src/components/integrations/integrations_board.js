@@ -37,7 +37,7 @@ class IntegrationsBoard extends React.Component {
         <div className='container-left'>
           <IntegrationsList integrations={this.state.integrations} />
         </div>
-        <RouteHandler />
+        <RouteHandler integrations={this.state.integrations} />
         <div className='clear-fix' />
       </div>
     );

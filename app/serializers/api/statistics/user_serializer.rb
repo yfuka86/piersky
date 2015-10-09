@@ -11,9 +11,9 @@ class Api::Statistics::UserSerializer < ActiveModel::Serializer
 
   def integrations
     period = SkyModule.get_period
-    user_team = UserTeam.find_by(user: object, team: object.current_team)
+    user_team = object.user_teams.find_by(team: object.current_team)
     identity_ids = user_team.identities.pluck(:integration_id).uniq
-    integrations = Integration.where(id: identity_ids)
+    integrations = ::Integration.where(id: identity_ids)
 
     integrations.map do |integration|
       q = integration.activity_class.where(identity_id: identity_ids)

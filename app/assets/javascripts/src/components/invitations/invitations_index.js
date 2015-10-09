@@ -86,7 +86,7 @@ class InvitationsIndex extends React.Component {
             let invitee = UserStore.getUserById(invitation.inviteeId);
             let inviter = UserStore.getUserById(invitation.inviterId);
             return (
-              <div className={`option ${invitation.acceptedAt ? '' : 'option-expandable'} ${this._isExpanded(invitation.id) ? 'expanded' : ''}`}>
+              <div className={`option ${invitation.acceptedAt ? '' : 'option-expandable'} ${this._isExpanded(invitation.id) ? 'expanded' : ''}`} key={invitation.id}>
                 {invitation.acceptedAt ? <div /> :
                   <div className='toggle' onClick={this._toggleExpantion.bind(this, invitation.id)} />
                 }

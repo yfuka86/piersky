@@ -140,7 +140,7 @@ class UserStatistics extends React.Component {
 
         <div className='identities'>
           {this.state.identities.map((identity) => {
-            return <span className={['icon', changeCase.snakeCase(identity.type) + '-logo'].join(' ')} />
+            return <span className={['icon', changeCase.snakeCase(identity.type) + '-logo'].join(' ')} key={identity.id} />
           })}
         </div>
       </div>;

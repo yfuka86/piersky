@@ -6,6 +6,8 @@ en:
     list:
       dashboard: 'Dashboard'
       add: 'Invitations'
+    index:
+      view_detail: 'View Detail'
     show:
       tab:
         stats: 'Stats'
