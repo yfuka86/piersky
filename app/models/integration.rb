@@ -3,6 +3,7 @@ class Integration < ActiveRecord::Base
   belongs_to :team
   has_one :setting, class_name: "::IntegrationSetting", dependent: :destroy
   has_many :webhooks, class_name: "::IntegrationWebhook", dependent: :destroy
+  has_many :identities
 
   after_create :create_setting!
   after_create :create_identity
@@ -55,10 +56,6 @@ class Integration < ActiveRecord::Base
 
   def summary
     self.activity_class.summary(self)
-  end
-
-  def identities
-    identity_class.where(integration: self)
   end
 
   def initialize_data

@@ -12,12 +12,12 @@ class Api::Statistics::UserSerializer < ActiveModel::Serializer
   def integrations
     period = SkyModule.get_period
     user_team = object.user_teams.find_by(team: object.current_team)
-    identity_ids = user_team.identities.pluck(:integration_id).uniq
-    integrations = ::Integration.where(id: identity_ids)
+    integration_ids = user_team.identities.pluck(:integration_id).uniq
+    integrations = ::Integration.where(id: integration_ids)
 
     integrations.map do |integration|
-      q = integration.activity_class.where(identity_id: identity_ids)
-      daily_counts = q.where(ts: period).group("date_trunc('day', ts)").count
+      q = integration.activity_class.where(identity_id: Identity.where(integration_id: integration.id, user_team_id: user_team.id).pluck(:id))
+      daily_counts = q.where(ts: SkyModule.get_inclusive_period).group("date_trunc('day', ts)").count
       hourly_counts = q.group("date_part('hour', ts)").count
       {
         id: integration.id,
