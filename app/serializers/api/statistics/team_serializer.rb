@@ -1,25 +1,17 @@
 class Api::Statistics::TeamSerializer < ActiveModel::Serializer
-  attributes :today, :users
+  attributes :today, :activities
 
   def today
     @today ||= SkyModule.today
   end
 
-  def users
-    # period = SkyModule.get_period
-    # user_team = object.user_teams.find_by(team: object.current_team)
-    # identity_ids = user_team.identities.pluck(:integration_id).uniq
-    # integrations = ::Integration.where(id: identity_ids)
-
-    # integrations.map do |integration|
-    #   q = integration.activity_class.where(identity_id: identity_ids)
-    #   daily_counts = q.where(ts: SkyModule.get_inclusive_period).group("date_trunc('day', ts)").count
-    #   hourly_counts = q.group("date_part('hour', ts)").count
-    #   {
-    #     id: integration.id,
-    #     default: period.map{|d| daily_counts.select{|k, v| k == d}.values.sum }.reverse,
-    #     day: (0..23).map{|h| hourly_counts.select{|k, v| k == h}.values.sum }
-    #   }
-    # end
+  def activities
+    integrations = object.integrations
+    qs = integrations.map{|i| i.activity_class.where(identity_id: i.identities.pluck(:id))}
+    {
+      day: qs.map{|q| q.where(ts: (1.day.ago..DateTime.now)).count}.sum,
+      week: qs.map{|q| q.where(ts: (7.day.ago..DateTime.now)).count}.sum,
+      month: qs.map{|q| q.where(ts: (31.day.ago..DateTime.now)).count}.sum
+    }
   end
 end

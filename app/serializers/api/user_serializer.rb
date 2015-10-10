@@ -26,16 +26,22 @@ class Api::UserSerializer < ActiveModel::Serializer
     return unless options[:team]
     period = SkyModule.get_period
     user_team = object.user_teams.find_by(team: object.current_team)
-    identities =  user_team.identities
-    identity_ids = identities.pluck(:id)
-    integration_ids = identities.pluck(:integration_id).uniq
+    integration_ids = user_team.identities.pluck(:integration_id).uniq
     integrations = ::Integration.where(id: integration_ids)
 
     counts = integrations.map do |integration|
-      q = integration.activity_class.where(identity_id: identity_ids)
+      q = integration.activity_class.where(identity_id: Identity.where(integration_id: integration.id, user_team_id: user_team.id).pluck(:id))
       daily_counts = q.where(ts: SkyModule.get_inclusive_period).group("date_trunc('day', ts)").count
       period.map{|d| daily_counts.select{|k, v| k == d}.values.sum }.reverse
     end
-    counts.transpose.map(&:sum)
+
+    recent = {}
+    integrations.map do |integration|
+      q = integration.activity_class.where(identity_id: Identity.where(integration_id: integration.id, user_team_id: user_team.id).pluck(:id))
+      recent[integration.service_name] ||= 0
+      recent[integration.service_name] += q.where(ts: 1.day.ago..DateTime.now).count
+    end
+
+    {count: counts.transpose.map(&:sum), recent: recent}
   end
 end

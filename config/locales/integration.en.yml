@@ -51,9 +51,8 @@ en:
       channel:
         default: 'all channels'
       period:
-        placeholder: 'Choose a period...'
-        last_week: 'last 1 week'
         last_month: 'last 1 month (default)'
+        last_week: 'last 1 week'
       summary:
         messages: 'Messages'
         users: 'Users'
@@ -72,6 +71,5 @@ en:
         pr_review_comment: 'Comments on pull requests'
         push: 'Number of pushing'
       period:
-        placeholder: 'Choose a period...'
-        last_week: 'last 1 week'
         last_month: 'last 1 month (default)'
+        last_week: 'last 1 week'
