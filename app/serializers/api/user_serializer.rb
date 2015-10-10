@@ -26,8 +26,10 @@ class Api::UserSerializer < ActiveModel::Serializer
     return unless options[:team]
     period = SkyModule.get_period
     user_team = object.user_teams.find_by(team: object.current_team)
-    identity_ids = user_team.identities.pluck(:integration_id).uniq
-    integrations = ::Integration.where(id: identity_ids)
+    identities =  user_team.identities
+    identity_ids = identities.pluck(:id)
+    integration_ids = identities.pluck(:integration_id).uniq
+    integrations = ::Integration.where(id: integration_ids)
 
     counts = integrations.map do |integration|
       q = integration.activity_class.where(identity_id: identity_ids)
