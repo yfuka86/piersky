@@ -27,7 +27,8 @@ class Home extends React.Component {
   render() {
     return (
       <div className='home container'>
-        <RouteHandler />
+        <div className='team-summary'>
+        </div>
         <div className='clear-fix' />
       </div>
     );
