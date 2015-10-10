@@ -56,7 +56,7 @@ class UsersIndex extends React.Component {
     let colors = [Constants.colorHexByKey(name)];
     let data = [header];
 
-    let summary = user.summary;
+    let summary = user.summary.count;
     let length = summary.length
     // todo fix
     let end = moment(moment().format('YYYY MM DD'), 'YYYY MM DD');

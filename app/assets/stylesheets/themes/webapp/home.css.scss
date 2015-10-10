@@ -82,8 +82,18 @@
         }
         .user-graph {
           display: inline-block;
-          width: 300px;
+          width: 400px;
           vertical-align: middle;
+          &.recent {
+            @include lato-normal;
+            line-height: 58px;
+            font-size: 16px;
+            text-align: center;
+            .icon {
+              @include icon(30px, 30px);
+              margin: 0px 20px 0px 40px;
+            }
+          }
         }
         .link {
           display: inline-block;

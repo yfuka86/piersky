@@ -34,6 +34,14 @@ class Api::UserSerializer < ActiveModel::Serializer
       daily_counts = q.where(ts: SkyModule.get_inclusive_period).group("date_trunc('day', ts)").count
       period.map{|d| daily_counts.select{|k, v| k == d}.values.sum }.reverse
     end
-    counts.transpose.map(&:sum)
+
+    recent = {}
+    integrations.map do |integration|
+      q = integration.activity_class.where(identity_id: Identity.where(integration_id: integration.id, user_team_id: user_team.id).pluck(:id))
+      recent[integration.service_name] ||= 0
+      recent[integration.service_name] += q.where(ts: 1.day.ago..DateTime.now).count
+    end
+
+    {count: counts.transpose.map(&:sum), recent: recent}
   end
 end

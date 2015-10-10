@@ -1,6 +1,8 @@
 import React from 'react';
 import {Link, RouteHandler} from 'react-router';
 import _ from 'lodash';
+import moment from 'moment';
+import Constants from '../constants/app';
 
 import UserStore from '../stores/user';
 import TeamStore from '../stores/team';
@@ -28,11 +30,18 @@ class Home extends React.Component {
     TeamStore.onChange(this.onChangeHandler);
     UserStore.onChange(this.onChangeHandler);
     this.calculateSummary();
+    this.drawUsersChart();
+    window.onresize = this.drawUsersChart.bind(this);
+  }
+
+  componentDidUpdate() {
+    this.drawUsersChart();
   }
 
   componentWillUnmount() {
     TeamStore.onChange(this.onChangeHandler);
     UserStore.offChange(this.onChangeHandler);
+    window.onresize = null;
   }
 
   onChange(e) {
@@ -56,6 +65,49 @@ class Home extends React.Component {
       count = this.state.summary.activities.month
     }
     this.setState({data: {activities: count}});
+  }
+
+  drawUsersChart() {
+    if (this.state.periodLength === 1) return;
+    _.each(this.state.users, (user) => {this.drawUserChart(user)});
+  }
+
+  drawUserChart(user) {
+    if (!user) return;
+    let width = 400;
+    let height = 54;
+    let name = user.identity();
+
+    let header = ['Day', name];
+    let colors = [Constants.colorHexByKey(name)];
+    let data = [header];
+
+    let summary = user.summary.count;
+    let length = this.state.periodLength;
+    // todo fix
+    let end = moment(moment().format('YYYY MM DD'), 'YYYY MM DD');
+    _.times(length, (i) => {
+      let count = summary[length - (i + 1)];
+      data.push([moment(end).subtract(length - (i + 1), 'days').format("MMM Do"), count]);
+    })
+
+    let tableData = google.visualization.arrayToDataTable(data);
+
+    let options = {
+      isStacked: true,
+      width: width,
+      height: height,
+      legend: {position: 'none'},
+      colors: colors,
+      // curveType: 'function',
+      vAxis: {
+        ticks: [],
+        minValue: 0
+      }
+    };
+
+    let chart = new google.visualization.LineChart(React.findDOMNode(this).querySelector(`#user_graph_${user.id}`));
+    chart.draw(tableData, options);
   }
 
   render() {
@@ -96,7 +148,7 @@ class Home extends React.Component {
               </div>
             </div>
 
-            {this.state.users.map((user) =>{
+            {this.state.users.map((user) => {
               let summary = user.summary
               return (
                 <div className='option' key={user.id}>
@@ -111,8 +163,19 @@ class Home extends React.Component {
                     </Link>
 
                     <span className='right-content'>
-                      <p className='main-content activity'>{_.sum(user.summary)}</p>
-                      <div className='user-graph' id={`user_graph_${user.id}`} />
+                      <p className='main-content activity'>
+                        {this.state.periodLength === 1 ?
+                         user.summary.recent.Slack + user.summary.recent.Github :
+                         _.sum(user.summary.count.slice(0, this.state.periodLength))}
+                      </p>
+                      {this.state.periodLength === 1 ?
+                        <div className='user-graph recent'>
+                          <span className={['icon', 'slack-logo'].join(' ')} />
+                          {user.summary.recent.Slack}
+                          <span className={['icon', 'github-logo'].join(' ')} />
+                          {user.summary.recent.Github}
+                        </div> :
+                        <div className='user-graph' id={`user_graph_${user.id}`} />}
                       <Link to='user-show' params={{id: user.id}} className='link'>
                         <button>{I18n.t('user.index.view_detail')}</button>
                       </Link>
