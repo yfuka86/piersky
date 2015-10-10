@@ -17,7 +17,8 @@ class Api::Statistics::UserSerializer < ActiveModel::Serializer
 
     integrations.map do |integration|
       q = integration.activity_class.where(identity_id: identity_ids)
-      daily_counts = q.where(ts: period).group("date_trunc('day', ts)").count
+      [q.count, period]
+      # daily_counts = q.where(ts: period).group("date_trunc('day', ts)").count
       # hourly_counts = q.group("date_part('hour', ts)").count
       # {
       #   id: integration.id,
