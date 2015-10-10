@@ -63,7 +63,7 @@ class IntegrationsIndex extends React.Component {
     let summary = integration.summary;
     let length = summary.length
     // todo fix
-    let end = moment(moment().format('YYYY MM DD'));
+    let end = moment(moment().format('YYYY MM DD'), 'YYYY MM DD');
     _.times(length, (i) => {
       let count = summary[length - (i + 1)];
       data.push([moment(end).subtract(length - (i + 1), 'days').format("MMM Do"), count]);
