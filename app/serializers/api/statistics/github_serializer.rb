@@ -15,7 +15,7 @@ class Api::Statistics::GithubSerializer < ActiveModel::Serializer
 
   def identities
     period = SkyModule.get_period
-    q = ActivityGithub.where(identity_id: object.identities.pluck(:id), ts: period)
+    q = ActivityGithub.where(identity_id: object.identities.pluck(:id), ts: SkyModule.get_inclusive_period)
                       .group('identity_id', 'code', "date_trunc('day',ts)").count
 
     object.identities.map do |identity|
