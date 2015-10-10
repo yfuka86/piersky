@@ -18,12 +18,12 @@ class Api::Statistics::UserSerializer < ActiveModel::Serializer
     integrations.map do |integration|
       q = integration.activity_class.where(identity_id: identity_ids)
       daily_counts = q.where(ts: period).group("date_trunc('day', ts)").count
-      hourly_counts = q.group("date_part('hour', ts)").count
-      {
-        id: integration.id,
-        default: period.map{|d| daily_counts.select{|k, v| k == d}.values.sum }.reverse,
-        day: (0..23).map{|h| hourly_counts.select{|k, v| k == h}.values.sum }
-      }
+      # hourly_counts = q.group("date_part('hour', ts)").count
+      # {
+      #   id: integration.id,
+      #   default: period.map{|d| daily_counts.select{|k, v| k == d}.values.sum }.reverse,
+      #   day: (0..23).map{|h| hourly_counts.select{|k, v| k == h}.values.sum }
+      # }
     end
   end
 end
