@@ -165,15 +165,15 @@ class Home extends React.Component {
                     <span className='right-content'>
                       <p className='main-content activity'>
                         {this.state.periodLength === 1 ?
-                         user.summary.recent.Slack + user.summary.recent.Github :
+                         (user.summary.recent.Slack || 0) + (user.summary.recent.Github || 0) :
                          _.sum(user.summary.count.slice(0, this.state.periodLength))}
                       </p>
                       {this.state.periodLength === 1 ?
                         <div className='user-graph recent'>
                           <span className={['icon', 'slack-logo'].join(' ')} />
-                          {user.summary.recent.Slack}
+                          {user.summary.recent.Slack || 0}
                           <span className={['icon', 'github-logo'].join(' ')} />
-                          {user.summary.recent.Github}
+                          {user.summary.recent.Github || 0}
                         </div> :
                         <div className='user-graph' id={`user_graph_${user.id}`} />}
                       <Link to='user-show' params={{id: user.id}} className='link'>
