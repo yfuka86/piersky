@@ -1,5 +1,6 @@
 {
   "name": "piersky",
+  "private": true,
   "scripts": {
     "build": "browserify app/assets/javascripts/src/application.js -t babelify --extension=\".js.jsx\" -o app/assets/javascripts/dist/application.js",
     "watch": "watchify app/assets/javascripts/src/application.js -t babelify --extension=\".js.jsx\" -d -o app/assets/javascripts/dist/application.js -v"
