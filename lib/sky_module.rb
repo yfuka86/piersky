@@ -5,7 +5,7 @@ module SkyModule
     end
 
     def get_period
-      (today - 31.day..today)
+      (today - 30.day..today + 1.day)
     end
   end
 end
