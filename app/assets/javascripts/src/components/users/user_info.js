@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import _ from 'lodash';
 import Constants from '../../constants/app';
 
@@ -26,9 +27,11 @@ class UserInfo extends React.Component {
           <UserIcon user={user} />
           <div className='user-info'>
             <span className='user-info-inner'>
-              <span className='user-name'>
-                {user.name || user.email}
-              </span>
+              <Link to='user-show' params={{id: user.id}}>
+                <span className='user-name'>
+                  {user.name || user.email}
+                </span>
+              </Link>
             </span>
           </div>
         </div>

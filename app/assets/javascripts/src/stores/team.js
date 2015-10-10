@@ -18,7 +18,8 @@ const TeamStore = assign({}, BaseStore, {
 
   parse(json) {
     return {
-      id: json.id
+      id: json.id,
+      summary: json.summary
     }
   }
 });

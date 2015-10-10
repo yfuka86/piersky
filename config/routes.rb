@@ -42,6 +42,7 @@ Rails.application.routes.draw do
     resources :teams, only: [] do
       collection do
         get 'current'
+        get 'stats'
       end
     end
 

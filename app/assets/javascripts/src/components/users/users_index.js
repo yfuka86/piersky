@@ -56,10 +56,10 @@ class UsersIndex extends React.Component {
     let colors = [Constants.colorHexByKey(name)];
     let data = [header];
 
-    let summary = user.summary;
+    let summary = user.summary.count;
     let length = summary.length
     // todo fix
-    let end = moment(moment().format('YYYY MM DD'));
+    let end = moment(moment().format('YYYY MM DD'), 'YYYY MM DD');
     _.times(length, (i) => {
       let count = summary[length - (i + 1)];
       data.push([moment(end).subtract(length - (i + 1), 'days').format("MMM Do"), count]);
@@ -115,7 +115,7 @@ class UsersIndex extends React.Component {
                   </Link>
 
                   <span className='right-content'>
-                    <p className='main-content activity'>{_.sum(user.summary)}</p>
+                    <p className='main-content activity'>{_.sum(user.summary.count)}</p>
                     <div className='user-graph' id={`user_graph_${user.id}`} />
                     <Link to='user-show' params={{id: user.id}} className='link'>
                       <button>{I18n.t('user.index.view_detail')}</button>
