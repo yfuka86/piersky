@@ -1,0 +1,81 @@
+@import 'globals/config-loader';
+@import 'modules/center_container';
+@import 'modules/list_table';
+@import "modules/sky_flat_button";
+
+.home {
+  height: 100%;
+  position: relative;
+  padding: 20px;
+  min-width: 1080px;
+  p{
+    &.title {
+      padding: 20px 0;
+      @include lato-thin;
+      font-size: 36px;
+    }
+    &.subtitle {
+      padding: 5px 0;
+      @include lato-thin;
+      font-size: 24px;
+      span {
+        margin-right: 10px;
+      }
+    }
+    &.description {
+      margin-left: 20px;
+      display: inline-block;
+      @include lato-thin;
+      font-size: 16px;
+      color: $grey600;
+    }
+  }
+  .team-summary {
+    @include list-table-expandable;
+    .option, .option-header {
+      .content-area {
+        .icon-area {
+          display: inline-block;
+          width: 45px;
+          .icon {
+            @include icon(30px, 58px);
+          }
+        }
+        .name {
+          @include lato-normal;
+          @include text-ellipsis;
+          font-size: 16px;
+          color: $grey600;
+          max-width: 180px;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+        .activity {
+          width: 108px;
+          text-align: right;
+        }
+        .user-graph {
+          display: inline-block;
+          width: 300px;
+          vertical-align: middle;
+        }
+        .link {
+          display: inline-block;
+          width: 130px;
+          button {
+            @include flat-button-identity;
+          }
+        }
+      }
+    }
+    .option-header {
+      .content-area {
+        .activity {
+          line-height: 24px !important;
+          text-align: center;
+        }
+      }
+    }
+  }
+}

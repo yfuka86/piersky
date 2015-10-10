@@ -12,6 +12,8 @@ en:
       home: 'Home'
       integrations: 'Integrations'
       users: 'Users'
+    home:
+      index: "Team's Summary"
     users:
       index: 'Users Dashboard'
     invitations:
