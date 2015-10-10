@@ -31,9 +31,8 @@ class ActivityGithub < ActiveRecord::Base
   PR_EVENTS = ISSUE_EVENTS + ['synchronize']
 
   def self.summary(integration)
-    period = SkyModule.get_period
-    q = self.where(identity_id: integration.identities.pluck(:id), ts: period).group("date_trunc('day',ts)").count
-    period.map{|d| q.find{|k, v| k == d}.try(:[], 1) || 0}.reverse
+    q = self.where(identity_id: integration.identities.pluck(:id), ts: SkyModule.get_inclusive_period).group("date_trunc('day',ts)").count
+    SkyModule.get_period.map{|d| q.find{|k, v| k == d}.try(:[], 1) || 0}.reverse
   end
 
   def self.create_with_webhook(payload, webhook)

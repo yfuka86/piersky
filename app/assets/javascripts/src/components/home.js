@@ -27,7 +27,12 @@ class Home extends React.Component {
   render() {
     return (
       <div className='home container'>
-        <RouteHandler />
+        <div className='team-summary'>
+          <p className='title'>{I18n.t('webapp.users.index')}</p>
+          <div className='users-index'>
+
+          </div>
+        </div>
         <div className='clear-fix' />
       </div>
     );

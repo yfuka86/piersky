@@ -9,23 +9,42 @@ import BaseStore from '../stores/base';
 
 const StatisticsStore = assign({}, BaseStore, {
 
-  getStats() {
-    if (!this.get('stats')) this.set('stats', {});
-    return this.get('stats');
+  getIntegrationStats() {
+    if (!this.get('integrationStats')) this.set('integrationStats', {});
+    return this.get('integrationStats');
   },
 
-  setStats(stats) {
-    this.set('stats', stats);
+  setIntegrationStats(stats) {
+    this.set('integrationStats', stats);
   },
 
-  getStatsById(id) {
-    return this.getStats()[id];
+  getIntegrationStatsById(id) {
+    return this.getIntegrationStats()[id];
   },
 
-  addStats(id, stat) {
-    let stats = this.getStats();
-    stats[id] = stat;
-    this.setStats(stats);
+  addIntegrationStats(id, stats) {
+    let integrationStats = this.getIntegrationStats();
+    integrationStats[id] = stats;
+    this.setIntegrationStats(integrationStats);
+  },
+
+  getUserStats() {
+    if (!this.get('userStats')) this.set('userStats', {});
+    return this.get('userStats');
+  },
+
+  setUserStats(stats) {
+    this.set('userStats', stats);
+  },
+
+  getUserStatsById(id) {
+    return this.getUserStats()[id];
+  },
+
+  addUserStats(id, stats) {
+    let userStats = this.getUserStats();
+    userStats[id] = stats;
+    this.setUserStats(userStats);
   }
 });
 
@@ -36,7 +55,12 @@ StatisticsStore.dispatchToken = Dispatcher.register(payload => {
 
   switch(action.type) {
     case ActionTypes.LOAD_INTEGRATION_STATS:
-      StatisticsStore.addStats(action.json.integration_id, action.json);
+      StatisticsStore.addIntegrationStats(action.json.integration_id, action.json);
+      StatisticsStore.emitChange();
+      break;
+
+    case ActionTypes.LOAD_USER_STATS:
+      StatisticsStore.addUserStats(action.json.user_id, action.json);
       StatisticsStore.emitChange();
       break;
 

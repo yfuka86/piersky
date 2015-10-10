@@ -11,20 +11,29 @@ import UserStore from '../../stores/user';
 import IntegrationAction from '../../actions/integration';
 
 class IntegrationsIndex extends React.Component {
+  static get defaultProps() {
+    return {
+      integrations: []
+    };
+  }
+
+  static get propTypes() {
+    return {
+      integrations: React.PropTypes.array
+    };
+  }
+
   constructor(props) {
     super(props);
     this.state = this.initialState;
-    this.onChangeHandler = this.onChange.bind(this);
   }
 
   get initialState() {
     return {
-      integrations: IntegrationStore.getIntegrations()
     }
   }
 
   componentDidMount() {
-    IntegrationStore.onChange(this.onChangeHandler);
     this.drawIntegrationsChart();
     window.onresize = this.drawIntegrationsChart.bind(this);
   }
@@ -34,16 +43,11 @@ class IntegrationsIndex extends React.Component {
   }
 
   componentWillUnmount() {
-    IntegrationStore.offChange(this.onChangeHandler);
     window.onresize = null;
   }
 
-  onChange() {
-    this.setState(this.initialState);
-  }
-
   drawIntegrationsChart() {
-    _.each(this.state.integrations, (integration) => {this.drawIntegrationChart(integration)});
+    _.each(this.props.integrations, (integration) => {this.drawIntegrationChart(integration)});
   }
 
   drawIntegrationChart(integration) {
@@ -59,7 +63,7 @@ class IntegrationsIndex extends React.Component {
     let summary = integration.summary;
     let length = summary.length
     // todo fix
-    let end = moment(moment().format('YYYY MM DD'));
+    let end = moment(moment().format('YYYY MM DD'), 'YYYY MM DD');
     _.times(length, (i) => {
       let count = summary[length - (i + 1)];
       data.push([moment(end).subtract(length - (i + 1), 'days').format("MMM Do"), count]);
@@ -86,7 +90,7 @@ class IntegrationsIndex extends React.Component {
 
   render() {
     let integrationList
-    if (this.state.integrations.length === 0) {
+    if (this.props.integrations.length === 0) {
       integrationList = (
         <div>
           <p className='subtitle'>
@@ -113,7 +117,7 @@ class IntegrationsIndex extends React.Component {
             </div>
           </div>
 
-          {this.state.integrations.map((integration) =>{
+          {this.props.integrations.map((integration) =>{
             let integrationUser = UserStore.getUserById(integration.userId);
             let summary = integration.summary
             return (
@@ -122,7 +126,11 @@ class IntegrationsIndex extends React.Component {
                   <div className='icon-area'>
                     <span className={['icon', changeCase.snakeCase(integration.type) + '-logo'].join(' ')} />
                   </div>
-                  <p className='name'>{integration.name()}</p>
+                  <Link to='integration-show' params={{id: integration.id}} className='link'>
+                    <p className='name'>
+                      {integration.name()}
+                    </p>
+                  </Link>
 
                   <span className='right-content'>
                     <p className='main-content activity'>{_.sum(integration.summary)}</p>

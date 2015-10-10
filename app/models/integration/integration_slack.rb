@@ -14,6 +14,10 @@ class IntegrationSlack < Integration
     SlackJob.perform_later(self.id)
   end
 
+  def refresh_data
+    SlackJob.perform_later(self.id)
+  end
+
   def update_setting(setting)
   end
 

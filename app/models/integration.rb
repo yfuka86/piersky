@@ -65,6 +65,10 @@ class Integration < ActiveRecord::Base
     # please override
   end
 
+  def refresh_data
+    # please override
+  end
+
   def update_setting(setting)
     # please override
   end

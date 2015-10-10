@@ -6,7 +6,7 @@ class Api::Statistics::GithubSerializer < ActiveModel::Serializer
   end
 
   def today
-    @today ||= Date.today
+    @today ||= SkyModule.today
   end
 
   def activities
@@ -14,7 +14,8 @@ class Api::Statistics::GithubSerializer < ActiveModel::Serializer
   end
 
   def identities
-    q = ActivityGithub.where(identity_id: object.identities.pluck(:id), ts: period)
+    period = SkyModule.get_period
+    q = ActivityGithub.where(identity_id: object.identities.pluck(:id), ts: SkyModule.get_inclusive_period)
                       .group('identity_id', 'code', "date_trunc('day',ts)").count
 
     object.identities.map do |identity|
@@ -30,9 +31,5 @@ class Api::Statistics::GithubSerializer < ActiveModel::Serializer
         default: period.map{|d| counts.select{|k, v| k[2] == d}.values.sum }.reverse
       }.merge(activities_obj)
     end
-  end
-
-  def period
-    (today - 31.day..today)
   end
 end

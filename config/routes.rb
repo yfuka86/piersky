@@ -33,11 +33,16 @@ Rails.application.routes.draw do
       collection do
         get 'me'
       end
+
+      member do
+        get 'stats'
+      end
     end
 
     resources :teams, only: [] do
       collection do
         get 'current'
+        get 'stats'
       end
     end
 

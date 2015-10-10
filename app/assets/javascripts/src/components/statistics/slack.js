@@ -33,7 +33,6 @@ class Slack extends React.Component {
     return {
       channelId: 'default',
       periodLength: 31,
-      periodEndAt: moment(this.props.stats.today),
       expandedId: null,
       data: {
         messages: 0,
@@ -121,7 +120,7 @@ class Slack extends React.Component {
     if (!this.props) return;
     // set variables
     let channelId = this.state.channelId;
-    let end = this.state.periodEndAt;
+    let end = moment(this.props.stats.today);
     let length = this.state.periodLength;
 
     let width = React.findDOMNode(this).clientWidth;
@@ -156,7 +155,6 @@ class Slack extends React.Component {
 
       let ticks = getTicks(max);
       let options = {
-        isStacked: true,
         width: width,
         height: height,
         legend: {position: 'right', maxLines: 3},
@@ -183,7 +181,7 @@ class Slack extends React.Component {
     if (!this.props) return;
     // set variables
     let channelId = this.state.channelId;
-    let end = this.state.periodEndAt;
+    let end = moment(this.props.stats.today);
     let length = this.state.periodLength;
 
     let width = 360;
@@ -191,7 +189,6 @@ class Slack extends React.Component {
 
     // extract users activities
     let identityData = _.find(this.props.stats.identities, (identityData) => {return identityData.id === identityId});
-
 
     let userName = IdentityStore.getUserIdentityById(identityId);
     let header = ['Day', userName];
@@ -281,7 +278,7 @@ class Slack extends React.Component {
             let total = _.sum(identityData[this.state.channelId].slice(0, this.state.periodLength));
             let avg = Math.round(total / this.state.periodLength * 100) / 100;
             return (
-              <div className={`option ${this.isExpanded(identity.id) ? 'expanded' : ''}`}>
+              <div className={`option ${this.isExpanded(identity.id) ? 'expanded' : ''}`} key={identityData.id}>
                 <div className='toggle' onClick={this.toggleExpantion.bind(this, identity.id)} />
                 <div className='content-area'>
                   {user ? <UserInfo user={user} /> : <p className='main-content'>{identity.name}</p>}
