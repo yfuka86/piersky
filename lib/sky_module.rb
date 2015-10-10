@@ -4,8 +4,12 @@ module SkyModule
       Date.today
     end
 
+    def get_inclusive_period
+      (today - 31.day..today + 1.day)
+    end
+
     def get_period
-      (today - 30.day..today + 1.day)
+      (today - 31.day..today)
     end
   end
 end

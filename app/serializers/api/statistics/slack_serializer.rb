@@ -15,7 +15,7 @@ class Api::Statistics::SlackSerializer < ActiveModel::Serializer
 
   def identities
     period = SkyModule.get_period
-    q = ActivitySlack.where(identity_id: object.identities.pluck(:id), ts: period)
+    q = ActivitySlack.where(identity_id: object.identities.pluck(:id), ts: SkyModule.get_inclusive_period)
                      .group('identity_id', 'channel_id', "date_trunc('day',ts)").count
 
     object.identities.map do |identity|

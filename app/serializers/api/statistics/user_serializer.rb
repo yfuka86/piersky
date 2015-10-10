@@ -19,7 +19,7 @@ class Api::Statistics::UserSerializer < ActiveModel::Serializer
 
     integrations.map do |integration|
       q = integration.activity_class.where(identity_id: identity_ids)
-      daily_counts = q.where(ts: period).group("date_trunc('day', ts)").count
+      daily_counts = q.where(ts: SkyModule.get_inclusive_period).group("date_trunc('day', ts)").count
       hourly_counts = q.group("date_part('hour', ts)").count
       {
         id: integration.id,
