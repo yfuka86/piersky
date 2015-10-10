@@ -32,11 +32,36 @@
   }
   .team-summary {
     @include list-table-expandable;
+
+    .summary {
+      .panel {
+        display: inline-block;
+        cursor: pointer;
+        margin: 15px 0 10px 10px;
+        &:first-child {
+          margin: 15px 0 10px 0;
+        }
+        width: 160px;
+        border-right: 1px solid $grey400;
+        .name {
+          @include lato-normal;
+          font-size: 15px;
+        }
+        .number {
+          margin: 5px 0;
+          @include lato-thin;
+          font-size: 20px;
+          color: $grey800;
+        }
+      }
+    }
+
     .option, .option-header {
       .content-area {
         .icon-area {
           display: inline-block;
-          width: 45px;
+          width: 60px;
+          text-align: center;
           .icon {
             @include icon(30px, 58px);
           }
@@ -71,8 +96,12 @@
     }
     .option-header {
       .content-area {
+        .name {
+          &:hover {
+            text-decoration: none;
+          }
+        }
         .activity {
-          line-height: 24px !important;
           text-align: center;
         }
       }

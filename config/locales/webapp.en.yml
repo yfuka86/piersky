@@ -14,6 +14,16 @@ en:
       users: 'Users'
     home:
       index: "Team's Summary"
+      period:
+        last_24_hours: 'last 24 hours (default)'
+        last_7_days: 'last 7 days'
+        last_1_month: 'last 1 month'
+      summary:
+        activities: 'Activities'
+        members: 'Members'
+      users:
+        member: 'Member'
+        activities: 'Activities'
     users:
       index: 'Users Dashboard'
     invitations:

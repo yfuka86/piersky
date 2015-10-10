@@ -233,9 +233,8 @@ class Slack extends React.Component {
           </div>
           <div className='field'>
             <select onChange={this.changePeriod.bind(this)}>
-              <option value={31} >{I18n.t('integration.slack.period.placeholder')}</option>
-              <option value={7} >{I18n.t('integration.slack.period.last_week')}</option>
               <option value={31} >{I18n.t('integration.slack.period.last_month')}</option>
+              <option value={7} >{I18n.t('integration.slack.period.last_week')}</option>
             </select>
           </div>
         </div>
