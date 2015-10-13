@@ -7,7 +7,7 @@ gem 'active_model_serializers', '0.8.3'
 gem 'kaminari'
 
 gem 'pg'
-gem 'cequel'
+# gem 'cequel'
 
 gem 'sidekiq'
 

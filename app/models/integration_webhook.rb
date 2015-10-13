@@ -1,5 +1,5 @@
 class IntegrationWebhook < ActiveRecord::Base
-  WEBHOOK_HOST = Rails.env.development? ? ENV["PIERSKY_WEBHOOK_HOST"] : "http://hooks.piersky.com/"
+  WEBHOOK_HOST = Rails.env.development? ? ENV["PIERSKY_WEBHOOK_HOST"] : "https://www.piersky.com/"
   belongs_to :integration
 
   after_create do |webhook|
