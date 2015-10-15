@@ -10,18 +10,18 @@
           </p>
 
           <p class='center' style="margin:2rem 0">
-            <%= link_to 'Get started', setup_url(confirmation_token: @token), class: 'main-button', target: '_blank' %>
+            <%= link_to 'Get started', confirmation_url(@resource, confirmation_token: @token), class: 'main-button', target: '_blank' %>
           </p>
 
           <p class='center bold'>
             Your sign up email is:<br>
-            <%= link_to @email, setup_url(confirmation_token: @token) %>
+            <%= link_to confirmation_url(@resource, confirmation_token: @token), confirmation_url(@resource, confirmation_token: @token) %>
           </p>
 
           <hr />
 
           <p class='center message light-color' style="margin:0 auto 1rem;max-width:320px;word-break:break-word">Link not working? Try copying
-            <%= link_to setup_url(confirmation_token: @token), setup_url(confirmation_token: @token) %>
+            <%= link_to confirmation_url(@resource, confirmation_token: @token), confirmation_url(@resource, confirmation_token: @token) %>
           </p>
         </div>
 
