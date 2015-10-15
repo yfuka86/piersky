@@ -11,6 +11,10 @@ Rails.application.routes.draw do
       unlocks: 'users/unlocks'
     }
 
+  devise_scope :user do
+    get '/signed_up/:id', to: 'users/registrations#signed_up', as: 'signed_up'
+  end
+
   root 'welcome#index'
 
   get 'webapp(/*path)', to: 'webapp#index', as: 'webapp'
