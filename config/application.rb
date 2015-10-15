@@ -33,15 +33,6 @@ module Piersky
 
     config.middleware.use ActionDispatch::Flash
 
-    config.middleware.insert_before 0, "Rack::Cors" do
-      allow do
-        origins '*'
-
-        resource '/api',
-          :headers => :any,
-          :methods => [:get, :post, :delete, :put, :options, :head]
-      end
-    end
     config.active_job.queue_adapter = :sidekiq
   end
 end

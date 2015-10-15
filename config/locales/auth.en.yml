@@ -14,6 +14,7 @@ en:
       accept_invitation: Welcome to Piersky
     explanation:
       accept_invitation: "Choose your password for Piersky"
+      signed_up: "Please check your email. The email contains setup link."
     label:
       email: Enter your email address
       password: Enter your password

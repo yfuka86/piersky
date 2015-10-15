@@ -19,8 +19,14 @@
         @include lato-normal;
         font-size: 26px;
         color: $grey600;
-        padding: 0 0 20px 0;
+        padding: 0 10% 20px;
         text-align: center;
+        &.signed-up {
+          @include lato-bold;
+          padding-bottom: 10px;
+          font-size: 40px;
+          color: $IDENTITY_COLOR;
+        }
       }
       form {
         @include standard-form-vertical;
@@ -66,6 +72,19 @@
           &.skip-instruction {
             text-align: right;
           }
+        }
+      }
+      .signed-up-content {
+        text-align: center;
+        .email {
+          @include lato-bold;
+          padding: 20px 0;
+          font-size: 30px;
+        }
+        .explanation {
+          @include lato-normal;
+          padding: 20px 0;
+          font-size: 18px;
         }
       }
     }
