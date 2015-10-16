@@ -44,6 +44,11 @@ class User < ActiveRecord::Base
 
   def join_to_team!(team)
     UserTeam.create(team: team, user: self)
+    self.link_identities(team)
+  end
+
+  def link_identities(team)
+    Identity.link_user_team_by_email(self.user_teams.find_by(team: team))
   end
 
   def self.confirmable_user(confirmation_token)
