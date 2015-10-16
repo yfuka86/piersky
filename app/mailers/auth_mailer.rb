@@ -3,7 +3,8 @@ class AuthMailer < ActionMailer::Base
   layout 'email'
 
   def setup_mail(user_id, raw_confirmation_token)
-    @email = User.find_by(id: user_id).email
+    @resource = User.find_by(id: user_id)
+    @email = @resource.email
     @token = raw_confirmation_token
     @subject = I18n.t('auth.mail.setup.title')
 

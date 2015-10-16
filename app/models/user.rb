@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  attr_reader :raw_confirmation_token
+
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable
   devise :database_authenticatable, :registerable,
@@ -42,5 +44,17 @@ class User < ActiveRecord::Base
 
   def join_to_team!(team)
     UserTeam.create(team: team, user: self)
+    self.link_identities(team)
+  end
+
+  def link_identities(team)
+    Identity.link_user_team_by_email(self.user_teams.find_by(team: team))
+  end
+
+  def self.confirmable_user(confirmation_token)
+    original_token     = confirmation_token
+    confirmation_token = Devise.token_generator.digest(self, :confirmation_token, confirmation_token)
+
+    confirmable = find_or_initialize_with_error_by(:confirmation_token, confirmation_token)
   end
 end
