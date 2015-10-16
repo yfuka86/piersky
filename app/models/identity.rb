@@ -2,7 +2,7 @@ class Identity < ActiveRecord::Base
   belongs_to :integration
   belongs_to :user_team
 
-  scope :by_team, -> (team) { joins(:integration).where(integrations: {team: team}) }
+  scope :by_team, -> (team) { joins(:integration).where(integrations: {team_id: team.id}) }
   scope :by_email_key, -> (email) { where(email_key: email) }
 
   def self.build_by_email(email, integration)
