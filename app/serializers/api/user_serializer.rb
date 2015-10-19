@@ -31,7 +31,7 @@ class Api::UserSerializer < ActiveModel::Serializer
 
     counts = integrations.map do |integration|
       q = integration.activity_class.where(identity_id: Identity.where(integration_id: integration.id, user_team_id: user_team.id).pluck(:id))
-      daily_counts = q.where(ts: SkyModule.get_inclusive_period).group("date_trunc('day', ts)").count
+      daily_counts = q.where(ts: SkyModule.get_day_interval).group("date_trunc('day', ts)").count
       period.map{|d| daily_counts.select{|k, v| k == d}.values.sum }.reverse
     end.push(period.map{0})
 
