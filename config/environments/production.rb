@@ -67,6 +67,9 @@ OMNIAUTH = HashWithIndifferentAccess.new(YAML.load_file("#{Rails.root}/config/om
 
 Rails.application.config.middleware.use OmniAuth::Builder do
   OMNIAUTH.each do |provider_name, info|
-    provider provider_name, info[:key], info[:secret], info[:opts]
+    provider provider_name,
+             info[:key],
+             info[:secret],
+             info[:opts].merge({callback_url: "https://#{config.app_domain}/auth/#{provider_name}/callback/"})
   end
 end
