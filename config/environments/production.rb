@@ -26,7 +26,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # General Settings
-  config.app_domain = 'piersky.com'
+  config.app_domain = 'www.piersky.com'
 
   # Email Settings
   config.action_mailer.default_url_options = {host: config.app_domain}#, protocol: "https"}
