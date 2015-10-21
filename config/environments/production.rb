@@ -70,6 +70,6 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     provider provider_name,
              info[:key],
              info[:secret],
-             info[:opts].merge({callback_url: "https://#{config.app_domain}/auth/#{provider_name}/callback/"})
+             info[:opts].merge({callback_url: "https://#{Rails.application.config.app_domain}/auth/#{provider_name}/callback/"})
   end
 end
