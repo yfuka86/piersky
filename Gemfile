@@ -27,6 +27,8 @@ gem 'slack-api'
 gem 'omniauth-wunderlist'
 gem 'wunderlist-api'
 
+gem 'groupdate'
+
 # go international
 gem 'i18n'
 gem "i18n-js"
