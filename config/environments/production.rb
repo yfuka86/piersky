@@ -66,10 +66,11 @@ Piersky::Application.config.middleware.use ExceptionNotification::Rack,
 OMNIAUTH = HashWithIndifferentAccess.new(YAML.load_file("#{Rails.root}/config/omniauth_production.yml"))
 
 Rails.application.config.middleware.use OmniAuth::Builder do
+  configure do |config|
+    config.full_host = 'https://www.piersky.com'
+  end
+
   OMNIAUTH.each do |provider_name, info|
-    provider provider_name,
-             info[:key],
-             info[:secret],
-             info[:opts].merge({callback_url: "https://#{config.app_domain}/auth/#{provider_name}/callback/"})
+    provider provider_name, info[:key], info[:secret], info[:opts]
   end
 end
