@@ -120,6 +120,8 @@ GEM
       oauth2
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    groupdate (2.5.0)
+      activesupport (>= 3)
     hashie (3.4.2)
     hitimes (1.2.3)
     i18n (0.7.0)
@@ -295,6 +297,7 @@ DEPENDENCIES
   faraday (= 0.8.7)
   font-awesome-sass (~> 4.3.0)
   github_api
+  groupdate
   i18n
   i18n-js
   mail_view!
