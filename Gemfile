@@ -48,6 +48,8 @@ gem 'mail_view', :git => 'https://github.com/basecamp/mail_view.git'
 gem 'faker'
 gem 'rb-readline'
 
+gem 'groupdate'
+
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.2'
   gem 'factory_girl_rails', '~> 4.4.1'
