@@ -1,0 +1,52 @@
+ja:
+  auth:
+    title:
+      sign_up: 会員登録
+      sign_in: ログイン
+      logout: Logout
+      edit_profile: Edit profile
+      delete_accounnt: Delete account
+      resend_confirmation: Resend confirmation
+      resend_unlock_instruction: Resend Unlock Instruction
+      reset_password: Reset password
+      change_password: Change password
+      signed_up: You're signed up!
+      accept_invitation: Welcome to Piersky
+    explanation:
+      accept_invitation: "Choose your password for Piersky"
+      signed_up: "Please check your email. The email contains setup link."
+    label:
+      email: Enter your email address
+      password: Enter your password
+      password_confirmation: Reenter your password
+      current_password: Enter your current password
+      new_password: Enter your new password
+      reenter_new_password: Reenter your new password
+      remember_me: Remember me
+    submit:
+      normal: Continue
+      delete_account: Delete your account
+      create_account: Create Account
+    waiting_confirmation: Currently waiting confirmation for
+    confirmation:
+      delete_account: Are you sure?
+    back: Back
+    link:
+      sign_in: Already have an account?
+      sign_up: Create new account?
+      password: Forgot password?
+      resend_confirmation: Resend confirmation email
+      resend_unlock_instruction: Resend instruction for unlock
+    message:
+      user_already_in_team: "User %{email} is already in the team."
+      invitation_needs_email: "Add at least one email address before sending invitations."
+      invitation_already_sent: "Invitation to %{email} was already sent."
+      invitation_to_yourself: "Hey! Why are you sending invitation to yourself??"
+      failed_to_send_invitation: "Something went wrong with sending invitation. Please retry."
+      failed_to_accept_invitation: "Something went wrong with your Invitation. Please ask your inviter to resend invitation."
+      invitation_is_not_yours: "This invitation was not sent to you. Please check your account."
+    mail:
+      invitation:
+        title: "%{inviter_name} has invited you to join %{team_name} on Piersky"
+      setup:
+        title: "Welcome to Piersky"
