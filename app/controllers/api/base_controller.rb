@@ -1,5 +1,6 @@
 class Api::BaseController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_timezone
 
   rescue_from Exception, with: :render_error
   rescue_from ActionView::MissingTemplate, with: :render_not_found
@@ -58,5 +59,9 @@ class Api::BaseController < ApplicationController
 
   def valid_team
     return @_team ||= current_user.current_team
+  end
+
+  def set_timezone
+    @timezone = params[:timezone].presence || 0
   end
 end

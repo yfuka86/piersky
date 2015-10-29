@@ -24,16 +24,14 @@ class Api::UserSerializer < ActiveModel::Serializer
 
   def summary
     return unless options[:team]
-    period = SkyModule.get_period
     user_team = object.user_teams.find_by(team: object.current_team)
     integration_ids = user_team.identities.pluck(:integration_id).uniq
     integrations = ::Integration.where(id: integration_ids)
 
     counts = integrations.map do |integration|
       q = integration.activity_class.where(identity_id: Identity.where(integration_id: integration.id, user_team_id: user_team.id).pluck(:id))
-      daily_counts = q.where(ts: SkyModule.get_inclusive_period).group("date_trunc('day', ts)").count
-      period.map{|d| daily_counts.select{|k, v| k == d}.values.sum }.reverse
-    end
+      SkyModule.get_day_time_series(q)
+    end.push((1..28).map{0})
 
     recent = {}
     integrations.map do |integration|
