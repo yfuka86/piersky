@@ -318,6 +318,9 @@ section#features {
   }
   .column {
     margin: 50px 0;
+    @media(max-width:767px) {
+      margin: 20px 0;
+    }
   }
 }
 
