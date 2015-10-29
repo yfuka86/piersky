@@ -1,5 +1,38 @@
 <footer>
-  <div class="container text-center">
-    <p>Copyright &copy; <%= t('welcome.copy_right') %></p>
+  <div class="container">
+    <div class="footer-main">
+      <div class="row">
+
+        <div class="col-sm-4">
+          <div class="logo">
+            <%= render 'shared/identity' %>
+          </div>
+          <div class="message">
+            Grasp what’s going on in your team
+          </div>
+          <ul class="sns-links">
+          </ul>
+        </div>
+        <div class="col-sm-2 col-sm-offset-3">
+          <h4>PierSkyについて</h4>
+          <ul class="menus">
+            <li><a href="#" target="_blank">運営会社</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-2 col-sm-offset-1">
+          <h4>サポート</h4>
+          <ul class="menus">
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">利用規約</a></li>
+            <li><a href="#">プライバシーポリシー</a></li>
+          </ul>
+        </div>
+
+        <div class="copyright col-sm-12">
+          Copyright &copy; <%= t('welcome.copy_right') %>
+        </div>
+
+      </div>
+    </div>
   </div>
 </footer>

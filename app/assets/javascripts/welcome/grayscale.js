@@ -7,12 +7,9 @@
 // jQuery for page scrolling feature - requires jQuery Easing plugin
 $(function() {
   if ($(".navbar-fixed-top").hasClass('welcome')) {
+    setHeaderClass();
     $(window).scroll(function() {
-      if ($(".navbar").offset().top > 50) {
-        $(".navbar-fixed-top").addClass("top-nav-collapse");
-      } else {
-        $(".navbar-fixed-top").removeClass("top-nav-collapse");
-      }
+      setHeaderClass();
     });
   } else {
     $(".navbar-fixed-top").addClass("top-nav-collapse");
@@ -26,6 +23,14 @@ $(function() {
     event.preventDefault();
   });
 });
+
+function setHeaderClass() {
+  if ($(".navbar").offset().top > 50) {
+    $(".navbar-fixed-top").addClass("top-nav-collapse");
+  } else {
+    $(".navbar-fixed-top").removeClass("top-nav-collapse");
+  }
+}
 
 // Closes the Responsive Menu on Menu Item Click
 $('.navbar-collapse ul li a').click(function() {
