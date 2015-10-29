@@ -1,0 +1,36 @@
+@import "globals/config-loader";
+
+footer {
+  .logo {
+    font-weight: 700;
+    font-size: 24px;
+    vertical-align: middle;
+    @include lato-bold;
+  }
+  .message {
+    font-size: 16px;
+    @include lato-thin;
+  }
+  .copyright {
+    font-size: 14px;
+    @include lato-thin;
+  }
+  h4 {
+    margin: 0 0 15px;
+  }
+  ul {
+    &.menus {
+      list-style-type: none;
+      padding-left: 0px;
+      li {
+        padding: 3px 0;
+      }
+      a {
+        color: $white;
+        &:hover {
+          @include opacity(0.8);
+        }
+      }
+    }
+  }
+}
