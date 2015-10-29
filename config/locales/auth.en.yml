@@ -25,6 +25,7 @@ en:
       remember_me: Remember me
     submit:
       normal: Continue
+      sign_in: Sign in
       delete_account: Delete your account
       create_account: Create Account
     waiting_confirmation: Currently waiting confirmation for

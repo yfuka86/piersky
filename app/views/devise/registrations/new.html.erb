@@ -17,7 +17,7 @@
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation %><br />
+    <%= f.label :password_confirmation, t('auth.label.password_confirmation') %><br />
     <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: DeviseHelper::PASSWORD_EXAMPLE  %>
   </div>
 
