@@ -1,11 +1,11 @@
 ja:
   auth:
     title:
-      sign_up: 会員登録
+      sign_up: 新規登録
       sign_in: ログイン
-      logout: Logout
+      logout: ログアウト
       edit_profile: Edit profile
-      delete_accounnt: Delete account
+      delete_accounnt: 退会する
       resend_confirmation: Resend confirmation
       resend_unlock_instruction: Resend Unlock Instruction
       reset_password: Reset password
@@ -16,26 +16,27 @@ ja:
       accept_invitation: "Choose your password for Piersky"
       signed_up: "Please check your email. The email contains setup link."
     label:
-      email: Enter your email address
-      password: Enter your password
-      password_confirmation: Reenter your password
-      current_password: Enter your current password
-      new_password: Enter your new password
-      reenter_new_password: Reenter your new password
-      remember_me: Remember me
+      email: メールアドレス
+      password: パスワード
+      password_confirmation: パスワード（確認）
+      current_password: 現在のパスワード
+      new_password: 新しいパスワード
+      reenter_new_password: 新しいパスワード（確認）
+      remember_me: ログイン情報を記録する
     submit:
-      normal: Continue
-      delete_account: Delete your account
-      create_account: Create Account
+      normal: 進む
+      sign_in: ログイン
+      delete_account: アカウント削除
+      create_account: アカウント作成
     waiting_confirmation: Currently waiting confirmation for
     confirmation:
       delete_account: Are you sure?
     back: Back
     link:
-      sign_in: Already have an account?
-      sign_up: Create new account?
-      password: Forgot password?
-      resend_confirmation: Resend confirmation email
+      sign_in: すでにアカウントをお持ちの方
+      sign_up: 新規登録
+      password: パスワードを忘れてしまった方
+      resend_confirmation: メールの再送信
       resend_unlock_instruction: Resend instruction for unlock
     message:
       user_already_in_team: "User %{email} is already in the team."
