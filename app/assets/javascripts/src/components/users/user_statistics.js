@@ -81,10 +81,9 @@ class UserStatistics extends React.Component {
     if (length === 1) {
       let header = [I18n.t('user.stats.period.time_of_day')].concat(stats.integrations.map((i) => {return IntegrationStore.getIntegrationById(i.id).name();}));
       table.push(header);
-      let offset = moment().utcOffset() / 60;
       _.times(this.HOUR_PER_DAY, (i) => {
         let ary = stats.integrations.map((integration) => {
-          return integration.day[(24 - offset + i) % 24];
+          return integration.day[i];
         });
         let sum = _.sum(ary);
         if (sum > max) max = sum;

@@ -7,7 +7,7 @@ module SkyModule
     def get_day_interval(range: 28, end_at: nil, time_zone: 0, inclusive: true)
       d = end_at.present? ? end_at.in_time_zone(time_zone).to_date : today(time_zone).to_date
 
-      (d - range.day..(inclusive ? d + 1.day : d))
+      (d + 1.day - range.day..(inclusive ? d + 1.day : d))
     end
 
     def get_day_time_series(q, range: 28, end_at: nil, reverse: true)
