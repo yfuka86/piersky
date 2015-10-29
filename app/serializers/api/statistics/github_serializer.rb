@@ -14,21 +14,17 @@ class Api::Statistics::GithubSerializer < ActiveModel::Serializer
   end
 
   def identities
-    period = SkyModule.get_period
-    q = ActivityGithub.where(identity_id: object.identities.pluck(:id), ts: SkyModule.get_inclusive_period)
-                      .group('identity_id', 'code', "date_trunc('day',ts)").count
-
     object.identities.map do |identity|
-      counts = q.select{|k, v| k[0] == identity.id}
+      q = ActivityGithub.where(identity_id: identity.id)
 
       activities_obj = {}
       activities.each do |activity|
-        activities_obj[activity] = period.map{|d| counts.find{|k, v| k[1] == ActivityGithub::CODES[activity] && k[2] == d}.try(:[], 1) || 0 }.reverse
+        activities_obj[activity] = SkyModule.get_day_time_series(q.where(code: ActivityGithub::CODES[activity]))
       end
 
       {
         id: identity.id,
-        default: period.map{|d| counts.select{|k, v| k[2] == d}.values.sum }.reverse
+        default: SkyModule.get_day_time_series(q)
       }.merge(activities_obj)
     end
   end
