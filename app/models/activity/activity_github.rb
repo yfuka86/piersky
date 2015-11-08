@@ -18,11 +18,13 @@ class ActivityGithub < ActiveRecord::Base
   # mmm
   # column :payload, :text
 
+  # ちょっと非正規だけど直感的なのでbelongs_toはこの構成
   belongs_to :github_repository
   belongs_to :github_issue
   belongs_to :github_pull_request
   has_one :github_comment, foreign_key: "activity_id", class_name: "GithubComment"
-  has_many :github_commits, foreign_key: "activity_id", class_name: "GithubCommit"
+  has_many :github_commit_activities
+  has_many :github_commits, through: :github_commit_activities
 
   # https://developer.github.com/v3/activity/events/types
   CODES = {default: 0, commit_comment: 1, issue_comment: 12,

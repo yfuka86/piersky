@@ -7,7 +7,7 @@ class GithubIssue < ActiveRecord::Base
   # column :title, :text, index: true
   # column :state, :text, index: true
   # column :url, :text
-
+  belongs_to :github_repository
   has_many :activity_githubs, foreign_key: "issue_id", class_name: "ActivityGithub"
 
   def self.find_or_create(params, integration)

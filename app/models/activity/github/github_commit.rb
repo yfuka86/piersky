@@ -6,17 +6,18 @@ class GithubCommit < ActiveRecord::Base
   # column :message, :text
   # column :url, :text
 
-  belongs_to :github_activity
+  has_many :github_commit_activities
+  has_many :activity_githubs, through: :github_commit_activities
 
   def self.find_or_create(params, integration, activity)
     commit = self.find_by(foreign_id: params["id"], integration_id: integration.id)
     commit = self.create(
-              activity_id: activity.id,
               integration_id: integration.id,
               foreign_id: params["id"],
               message: params["message"],
               ts: params["timestamp"],
               url: params["url"]) unless commit
+    activity.github_commits << commit
     commit
   end
 end

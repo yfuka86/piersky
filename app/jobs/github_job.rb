@@ -6,10 +6,9 @@ class GithubJob < ActiveJob::Base
       integration = IntegrationGithub.find_by(id: integration_id)
       webhooks = integration.webhooks.pluck(:name)
       client = integration.gh_client
-      binding.pry
       webhooks.each do |w|
-        team = GithubRepository.(integration..team_info, integration)
-
+        repo = GithubRepository.find_or_create(client.repos.get(w.name), integration)
+        
         # fix range of time
         now = DateTime.now.to_f
         latest_persisted = (ActivitySlack.latest_ts(integration) || 1.0).to_f

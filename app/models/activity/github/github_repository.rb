@@ -4,6 +4,8 @@ class GithubRepository < ActiveRecord::Base
   # key :id, :int
   # column :full_name, :text, index: true
 
+  has_many :github_issues
+  has_many :github_pull_requests
   has_many :activity_githubs, foreign_key: "repository_id", class_name: "ActivityGithub"
 
   def self.find_or_create(params, integration)
