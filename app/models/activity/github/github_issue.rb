@@ -12,7 +12,13 @@ class GithubIssue < ActiveRecord::Base
 
   def self.find_or_create(params, integration)
     issue = self.find_by(foreign_id: params["id"], integration_id: integration.id)
-    issue = self.create(integration_id: integration.id, foreign_id: params["id"], number: params["number"], url: params["url"], ts: params["created_at"]) unless issue
+    issue ||= self.create(
+      github_repository: GithubRepository.find_or_create(params["repo"]),
+      integration_id: integration.id, 
+      foreign_id: params["id"], 
+      number: params["number"], 
+      url: params["url"], 
+      ts: params["created_at"])
     issue.title = params["title"] if issue.title != params["title"]
     issue.state = params["state"] if issue.title != params["state"]
     issue.save!

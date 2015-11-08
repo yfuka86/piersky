@@ -18,15 +18,15 @@ class IntegrationGithub < Integration
     end
   end
 
-  def initialize_data
-    self.syncing!
-    Rails.configuration.active_job.queue_adapter = :sidekiq
-    GithubJob.perform_later(self.id)
-  end
+  # def initialize_data
+  #   self.syncing!
+  #   Rails.configuration.active_job.queue_adapter = :sidekiq
+  #   GithubJob.perform_later(self.id)
+  # end
 
-  def refresh_data
-    GithubJob.perform_later(self.id)
-  end
+  # def refresh_data
+  #   GithubJob.perform_later(self.id)
+  # end
 
   def fetch_syncables
     gh_client.repos.list.map(&:full_name)

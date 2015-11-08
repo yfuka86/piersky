@@ -10,7 +10,7 @@ class GithubRepository < ActiveRecord::Base
 
   def self.find_or_create(params, integration)
     repository = self.find_by(foreign_id: params["id"], integration_id: integration.id)
-    repository = self.create(integration_id: integration.id, foreign_id: params["id"]) unless repository
+    repository ||= self.create(foreign_id: params["id"], integration_id: integration.id)
     repository.full_name = params["full_name"] if repository.full_name != params["full_name"]
     repository.save!
     repository
