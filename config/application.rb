@@ -32,7 +32,5 @@ module Piersky
     config.autoload_paths += Dir["#{config.root}/app/models/activity/**/"]
 
     config.middleware.use ActionDispatch::Flash
-
-    config.active_job.queue_adapter = :sidekiq
   end
 end

@@ -5,9 +5,9 @@ gem 'rails', '4.2.3'
 gem 'active_model_serializers', '0.8.3'
 
 gem 'pg'
-# gem 'cequel'
 
 gem 'sidekiq'
+gem 'sinatra', require: false # ダッシュボードを利用するため
 
 gem 'unicorn', group: :production
 gem 'arproxy', '0.2.0'
@@ -50,7 +50,7 @@ gem 'mail_view', :git => 'https://github.com/basecamp/mail_view.git'
 gem 'faker'
 gem 'rb-readline'
 
-gem 'groupdate'
+gem 'rails-erd'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.2'

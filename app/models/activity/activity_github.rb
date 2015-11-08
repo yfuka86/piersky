@@ -18,11 +18,13 @@ class ActivityGithub < ActiveRecord::Base
   # mmm
   # column :payload, :text
 
+  # ちょっと非正規だけど直感的なのでbelongs_toはこの構成
   belongs_to :github_repository
   belongs_to :github_issue
   belongs_to :github_pull_request
   has_one :github_comment, foreign_key: "activity_id", class_name: "GithubComment"
-  has_many :github_commits, foreign_key: "activity_id", class_name: "GithubCommit"
+  has_many :github_commit_activities
+  has_many :github_commits, through: :github_commit_activities
 
   # https://developer.github.com/v3/activity/events/types
   CODES = {default: 0, commit_comment: 1, issue_comment: 12,
@@ -30,8 +32,18 @@ class ActivityGithub < ActiveRecord::Base
   ISSUE_EVENTS = ['assigned', 'unassigned', 'labeled', 'unlabeled', 'opened', 'closed', 'reopened']
   PR_EVENTS = ISSUE_EVENTS + ['synchronize']
 
+  scope :by_integration, -> (integration) { where(identity_id: integration.identities.pluck(:id)) }
+
   def self.summary(integration)
     SkyModule.get_day_time_series(self.where(identity_id: integration.identities.pluck(:id)))
+  end
+
+  def self.oldest_ts(integration)
+    self.by_integration(integration).order(ts: :asc).first.try(:ts)
+  end
+
+  def self.latest_ts(integration)
+    self.by_integration(integration).order(ts: :desc).first.try(:ts)
   end
 
   def self.create_with_webhook(payload, webhook)

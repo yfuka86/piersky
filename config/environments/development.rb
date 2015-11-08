@@ -58,6 +58,8 @@ Rails.application.configure do
     user_name: 'mail@piersky.com',
     password: 'ykSreiPykSreiP'
   }
+
+  config.active_job.queue_adapter = :inline
 end
 
 Piersky::Application.config.middleware.use ExceptionNotification::Rack,
