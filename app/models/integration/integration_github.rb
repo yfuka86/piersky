@@ -65,8 +65,6 @@ class IntegrationGithub < Integration
     ActivityGithub[self.id]
   end
 
-  private
-
   def gh_client
     @gh_client ||= ::Github.new(oauth_token: self.token)
   end

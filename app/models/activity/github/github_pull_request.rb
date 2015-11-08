@@ -8,7 +8,7 @@ class GithubPullRequest < ActiveRecord::Base
   # column :state, :text, index: true
   # column :url, :text
 
-  has_many :activity_github, primary_key: "foreign_id", foreign_key: "pull_request_id", class_name: "ActivityGithub"
+  has_many :activity_githubs, foreign_key: "pull_request_id", class_name: "ActivityGithub"
 
   def self.find_or_create(params, integration)
     pr = self.find_by(foreign_id: params["id"], integration_id: integration.id)

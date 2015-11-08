@@ -61,8 +61,6 @@ class IntegrationSlack < Integration
     )
   end
 
-  private
-
   def slack_client
     ::Slack.configure do |config|
       config.token = self.token

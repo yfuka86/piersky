@@ -4,7 +4,7 @@ class GithubRepository < ActiveRecord::Base
   # key :id, :int
   # column :full_name, :text, index: true
 
-  has_many :activity_github, primary_key: "foreign_id", foreign_key: "repository_id", class_name: "ActivityGithub"
+  has_many :activity_githubs, foreign_key: "repository_id", class_name: "ActivityGithub"
 
   def self.find_or_create(params, integration)
     repository = self.find_by(foreign_id: params["id"], integration_id: integration.id)

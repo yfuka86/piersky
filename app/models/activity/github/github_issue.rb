@@ -8,7 +8,7 @@ class GithubIssue < ActiveRecord::Base
   # column :state, :text, index: true
   # column :url, :text
 
-  has_many :activity_githubs, primary_key: "foreign_id", foreign_key: "issue_id", class_name: "ActivityGithub"
+  has_many :activity_githubs, foreign_key: "issue_id", class_name: "ActivityGithub"
 
   def self.find_or_create(params, integration)
     issue = self.find_by(foreign_id: params["id"], integration_id: integration.id)
