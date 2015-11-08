@@ -1,10 +1,6 @@
 {
   "name": "piersky",
   "private": true,
-  "scripts": {
-    "build": "browserify app/assets/javascripts/src/application.js -t babelify --extension=\".js.jsx\" -o app/assets/javascripts/dist/application.js",
-    "watch": "watchify app/assets/javascripts/src/application.js -t babelify --extension=\".js.jsx\" -d -o app/assets/javascripts/dist/application.js -v"
-  },
   "dependencies": {
     "babel": "^5.1.10",
     "babelify": "^6.0.2",
@@ -24,7 +20,6 @@
     "keymirror": "~0.1.0",
     "moment": "2.10.3",
     "lodash": "3.10.1",
-    "bluebird": "2.9.25",
     "change-case": "2.3.0",
     "pikaday": "1.3.2",
     "react": "0.13.3",
