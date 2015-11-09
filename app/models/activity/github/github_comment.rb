@@ -1,12 +1,6 @@
 class GithubComment < ActiveRecord::Base
-  # include Cequel::Record
-  # key :id, :int
-  # key :ts, :timestamp
-  # column :integration_id, :int, index: true
-  # column :body, :text
-  # column :url, :text
-
-  belongs_to :activity_githubs, class_name: 'ActivityGithub'
+  ACTIVITY_CLASS = ActivityGithub
+  include Concerns::ActivityChild
 
   def self.find_or_create(params, integration, activity)
     comment = self.find_by(foreign_id: params["id"], integration_id: integration.id)

@@ -1,4 +1,4 @@
 class GithubCommitActivity < ActiveRecord::Base
-  belongs_to :github_commit
-  belongs_to :activity_github
+  belongs_to :commit, class_name: 'GithubCommit', foreign_key: :child_id
+  belongs_to :activity, class_name: 'ActivityGithub', foreign_key: :parent_id
 end

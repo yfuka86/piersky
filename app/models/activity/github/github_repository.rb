@@ -1,12 +1,9 @@
 class GithubRepository < ActiveRecord::Base
-  # include Cequel::Record
-  # key :integration_id, :int
-  # key :id, :int
-  # column :full_name, :text, index: true
-
-  has_many :github_issues
-  has_many :github_pull_requests
-  has_many :activity_githubs, foreign_key: "repository_id", class_name: "ActivityGithub"
+  ACTIVITY_CLASS = ActivityGithub
+  FOREIGN_KEY = :repository_id
+  include Concerns::ActivityParent
+  has_many :github_issues, foreign_key: :repository_id
+  has_many :github_pull_requests, foreign_key: :repository_id
 
   def self.find_or_create(params, integration)
     repository = self.find_by(foreign_id: params["id"], integration_id: integration.id)

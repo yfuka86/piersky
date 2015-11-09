@@ -1,14 +1,8 @@
 class GithubPullRequest < ActiveRecord::Base
-  # include Cequel::Record
-  # key :integration_id, :int
-  # key :id, :int
-  # key :ts, :timestamp
-  # column :number, :int, index: true
-  # column :title, :text, index: true
-  # column :state, :text, index: true
-  # column :url, :text
-  belongs_to :github_repository
-  has_many :activity_githubs, foreign_key: "pull_request_id", class_name: "ActivityGithub"
+  ACTIVITY_CLASS = ActivityGithub
+  FOREIGN_KEY = :pull_request_id 
+  include Concerns::ActivityParent  
+  belongs_to :github_repository, foreign_key: :repository_id
 
   def self.find_or_create(params, integration)
     pr = self.find_by(foreign_id: params["id"], integration_id: integration.id)

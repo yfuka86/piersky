@@ -52,8 +52,8 @@ ActiveRecord::Schema.define(version: 20151108110353) do
   add_index "github_comments", ["activity_id", "integration_id"], name: "index_github_comments_on_activity_id_and_integration_id", using: :btree
 
   create_table "github_commit_activities", force: :cascade do |t|
-    t.integer "github_commit_id",   null: false
-    t.integer "github_activity_id", null: false
+    t.integer "parent_id", null: false
+    t.integer "child_id",  null: false
   end
 
   create_table "github_commits", force: :cascade do |t|
