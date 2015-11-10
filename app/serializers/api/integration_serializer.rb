@@ -7,7 +7,7 @@ class Api::IntegrationSerializer < ActiveModel::Serializer
 
   def details
     if options[:detail_required]
-      klass = "Api::Integration::#{object.type.split('Integration')[1]}Serializer".constantize
+      klass = "Api::Integration::#{object.class.service_name}Serializer".constantize
       klass.new(object, root: nil)
     else
       nil
