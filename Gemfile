@@ -24,6 +24,8 @@ gem 'omniauth-github'
 gem "github_api"
 gem 'omniauth-slack'
 gem 'slack-api'
+gem 'omniauth-trello'
+gem 'ruby-trello'
 gem 'omniauth-wunderlist'
 gem 'wunderlist-api'
 
