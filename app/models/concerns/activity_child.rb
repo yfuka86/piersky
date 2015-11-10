@@ -8,9 +8,9 @@ module Concerns::ActivityChild
 
   class_methods do
     def find_or_initialize(params, integration, activity)
-      params = parse(params)
-      raise params.foreign_id.blank?
-      record = self.find_by(foreign_id: params.foreign_id, integration_id: integration.id)
+      params = parse(params, integration)
+      raise if params[:foreign_id].blank?
+      record = self.find_by(foreign_id: params[:foreign_id], integration_id: integration.id)
       record ||= self.new(params.merge({integration: integration, activity: activity}))
       record
     end
@@ -21,7 +21,7 @@ module Concerns::ActivityChild
       record
     end
 
-    def parse(params)
+    def parse(params, integration)
       params
     end
   end
