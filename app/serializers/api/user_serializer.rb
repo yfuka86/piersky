@@ -29,15 +29,15 @@ class Api::UserSerializer < ActiveModel::Serializer
     integrations = ::Integration.where(id: integration_ids)
 
     counts = integrations.map do |integration|
-      q = integration.activity_class.where(identity_id: Identity.where(integration_id: integration.id, user_team_id: user_team.id).pluck(:id))
+      q = integration.class.activity_class.where(identity_id: Identity.where(integration_id: integration.id, user_team_id: user_team.id).pluck(:id))
       SkyModule.get_day_time_series(q)
     end.push((1..28).map{0})
 
     recent = {}
     integrations.map do |integration|
-      q = integration.activity_class.where(identity_id: Identity.where(integration_id: integration.id, user_team_id: user_team.id).pluck(:id))
-      recent[integration.service_name] ||= 0
-      recent[integration.service_name] += q.where(ts: 1.day.ago..DateTime.now).count
+      q = integration.class.activity_class.where(identity_id: Identity.where(integration_id: integration.id, user_team_id: user_team.id).pluck(:id))
+      recent[integration.class.service_name] ||= 0
+      recent[integration.class.service_name] += q.where(ts: 1.day.ago..DateTime.now).count
     end
 
     {count: counts.transpose.map(&:sum), recent: recent}
