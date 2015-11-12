@@ -7,7 +7,7 @@ gem 'active_model_serializers', '0.8.3'
 gem 'pg'
 
 gem 'sidekiq'
-gem 'sinatra', require: false # ダッシュボードを利用するため
+gem 'sinatra'
 
 gem 'unicorn', group: :production
 gem 'arproxy', '0.2.0'

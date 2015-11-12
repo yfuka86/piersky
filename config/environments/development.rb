@@ -39,7 +39,7 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-    # General Settings
+  # General Settings
   config.app_domain = 'localhost:3000'
 
   # Email Settings

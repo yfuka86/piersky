@@ -29,7 +29,7 @@ Rails.application.configure do
   config.app_domain = 'www.piersky.com'
 
   # Email Settings
-  config.action_mailer.default_url_options = {host: config.app_domain}#, protocol: "https"}
+  config.action_mailer.default_url_options = {host: config.app_domain, protocol: "https"}
   config.action_mailer.default(from: "mail@piersky.com")
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
