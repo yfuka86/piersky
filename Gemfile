@@ -52,6 +52,8 @@ gem 'mail_view', :git => 'https://github.com/basecamp/mail_view.git'
 gem 'faker'
 gem 'rb-readline'
 
+gem 'whenever', :require => false
+
 gem 'rails-erd'
 
 group :development, :test do

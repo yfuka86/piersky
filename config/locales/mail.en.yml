@@ -1,0 +1,6 @@
+en:
+  summary_mailer:
+    daily_summary:
+      subject: 'DailySummary for %{team}'
+    weekly_summary:
+      subject: 'WeeklySummary for %{team}'
