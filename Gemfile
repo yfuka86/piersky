@@ -24,6 +24,8 @@ gem 'omniauth-github'
 gem "github_api"
 gem 'omniauth-slack'
 gem 'slack-api'
+gem 'omniauth-trello'
+gem 'ruby-trello'
 gem 'omniauth-wunderlist'
 gem 'wunderlist-api'
 
@@ -49,6 +51,8 @@ gem 'mail_view', :git => 'https://github.com/basecamp/mail_view.git'
 # to db:build in production
 gem 'faker'
 gem 'rb-readline'
+
+gem 'whenever', :require => false
 
 gem 'rails-erd'
 

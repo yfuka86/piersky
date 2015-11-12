@@ -1,0 +1,32 @@
+<table>
+  <tbody><tr>
+    <td valign="top">
+      <div style="padding:0 12px">
+        <div style="padding:2rem;">
+          <h2>You're invited</h2>
+
+          <p>
+            Team <strong><%= '@team.name' %></strong> has started using Piersky. The administrator, <strong><%= '@inviter_name' %></strong>, has invited you to join.
+          </p>
+
+          <p>You need to create account if you never sign up before.</p>
+          <p class='center' style="margin:2rem 0">
+            <%= link_to 'Join the Team', 'accept_invitations_url(token: @raw_invitation_token)', class: 'main-button', target: '_blank' %>
+          </p>
+
+          <p class='center bold'>
+            Your sign in email is:<br>
+            <%= link_to '@invitee.email, new_user_session_url' %>
+          </p>
+
+          <hr />
+
+          <p class='center message light-color' style="margin:0 auto 1rem;max-width:320px;word-break:break-word">Link not working? Try copying
+            <%= link_to 'accept_invitations_url(token: @raw_invitation_token)', 'accept_invitations_url(token: @raw_invitation_token)' %>
+          </p>
+        </div>
+
+      </div>
+    </td>
+  </tr></tbody>
+</table>

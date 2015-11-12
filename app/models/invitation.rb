@@ -85,7 +85,7 @@ class Invitation < ActiveRecord::Base
   # including save!
   def send_invitation
     raw_invitation_token = generate_invitation_token!
-    mail = AuthMailer.invitation_mail(self.id, raw_invitation_token).deliver if self.errors.empty?
+    mail = AuthMailer.invitation_mail(self.id, raw_invitation_token).deliver_later if self.errors.empty?
     self.sent_at = Time.now.utc
     self.save!
   end
