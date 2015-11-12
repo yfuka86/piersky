@@ -8,6 +8,7 @@ gem 'pg'
 
 gem 'sidekiq'
 gem 'sinatra', :require => nil
+gem 'slim', '2.0.1'
 
 gem 'unicorn', group: :production
 gem 'arproxy', '0.2.0'
