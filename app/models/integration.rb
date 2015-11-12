@@ -26,24 +26,24 @@ class Integration < ActiveRecord::Base
         integration.save!
       end
     end
-  end
 
-  def service_name
-    self.class.name.split('Integration')[1]
-  end
+    def service_name
+      self.name.split('Integration')[1]
+    end
 
-  def identity_class
-    ('Identity' + service_name).constantize
-  end
+    def identity_class
+      ('Identity' + service_name).constantize
+    end
 
-  def activity_class
-    ('Activity' + service_name).constantize
+    def activity_class
+      ('Activity' + service_name).constantize
+    end
   end
 
   def create_identity(primary_key, options={})
     #please override
     user_team = UserTeam.find_by(user: self.user, team: self.team)
-    klass = identity_class
+    klass = self.class.identity_class
     unless klass.find_by(user_team: user_team)
       klass.create(integration: self,
                    user_team: user_team,
@@ -55,7 +55,7 @@ class Integration < ActiveRecord::Base
   end
 
   def summary
-    self.activity_class.summary(self)
+    self.class.activity_class.summary(self)
   end
 
   def initialize_data

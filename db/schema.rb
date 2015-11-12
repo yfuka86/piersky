@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151007213000) do
+ActiveRecord::Schema.define(version: 20151108110353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,16 +51,18 @@ ActiveRecord::Schema.define(version: 20151007213000) do
 
   add_index "github_comments", ["activity_id", "integration_id"], name: "index_github_comments_on_activity_id_and_integration_id", using: :btree
 
+  create_table "github_commit_activities", force: :cascade do |t|
+    t.integer "parent_id", null: false
+    t.integer "child_id",  null: false
+  end
+
   create_table "github_commits", force: :cascade do |t|
-    t.integer  "activity_id"
     t.integer  "integration_id"
     t.string   "foreign_id"
     t.datetime "ts"
     t.string   "message"
     t.string   "url"
   end
-
-  add_index "github_commits", ["activity_id", "integration_id"], name: "index_github_commits_on_activity_id_and_integration_id", using: :btree
 
   create_table "github_issues", force: :cascade do |t|
     t.integer  "integration_id"
@@ -70,6 +72,7 @@ ActiveRecord::Schema.define(version: 20151007213000) do
     t.string   "title"
     t.string   "state"
     t.string   "url"
+    t.integer  "repository_id",  default: 0, null: false
   end
 
   add_index "github_issues", ["integration_id", "foreign_id"], name: "index_github_issues_on_integration_id_and_foreign_id", using: :btree
@@ -82,6 +85,7 @@ ActiveRecord::Schema.define(version: 20151007213000) do
     t.string   "title"
     t.string   "state"
     t.string   "url"
+    t.integer  "repository_id",  default: 0, null: false
   end
 
   add_index "github_pull_requests", ["integration_id", "foreign_id"], name: "index_github_pull_requests_on_integration_id_and_foreign_id", using: :btree
