@@ -7,7 +7,7 @@ gem 'active_model_serializers', '0.8.3'
 gem 'pg'
 
 gem 'sidekiq'
-gem 'sinatra'
+gem 'sinatra', :require => nil
 
 gem 'unicorn', group: :production
 gem 'arproxy', '0.2.0'
