@@ -15,7 +15,7 @@ class Api::Statistics::UserSerializer < ActiveModel::Serializer
     integrations = ::Integration.where(id: integration_ids)
 
     integrations.map do |integration|
-      q = integration.activity_class.where(identity_id: Identity.where(integration_id: integration.id, user_team_id: user_team.id).pluck(:id))
+      q = integration.class.activity_class.where(identity_id: Identity.where(integration_id: integration.id, user_team_id: user_team.id).pluck(:id))
       {
         id: integration.id,
         default: SkyModule.get_day_time_series(q),

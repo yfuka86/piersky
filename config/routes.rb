@@ -1,5 +1,3 @@
-require 'sidekiq/web'
-
 Rails.application.routes.draw do
   get '/auth/:action/callback', to: 'omniauth_callbacks'
 
@@ -16,6 +14,8 @@ Rails.application.routes.draw do
   devise_scope :user do
     get '/signed_up/:id', to: 'users/registrations#signed_up', as: 'signed_up'
   end
+
+  require 'sidekiq/web'
   mount Sidekiq::Web, at: "/sidekiq"
   
 
