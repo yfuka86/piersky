@@ -1,4 +1,4 @@
-en:
+ja:
   summary_mailer:
     daily_summary:
       subject: 'DailySummary for %{team}'
