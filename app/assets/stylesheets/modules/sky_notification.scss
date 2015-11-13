@@ -26,7 +26,7 @@
   .message {
     line-height: 20px;
     font-size: 14px;
-    @include open-sans-normal;
+    @include sans-normal;
     color: $grey900;
     vertical-align: middle;
     text-align: center;

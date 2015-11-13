@@ -1,4 +1,22 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:600,400,300);
+@font-face{
+  font-family: "AxisStd";
+  src: asset-url("AxisStd-Regular.otf") format("truetype");
+  weight: 400;
+}
+
+@font-face{
+  font-family: "AxisStd";
+  src: asset-url("AxisStd-Light.otf") format("truetype");
+  weight: 300;
+}
+
+@font-face{
+  font-family: "AxisStd";
+  src: asset-url("AxisStd-ExtraLight.otf") format("truetype");
+  weight: 200;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
 @import url(https://fonts.googleapis.com/css?family=Lato:900,700,400,300);
 
 @mixin lato-thin {
@@ -21,6 +39,16 @@
   font-family: 'Lato',sans-serif;
 }
 
+@mixin sans-normal {
+  font-weight: 400;
+  font-family: 'AxisStd',Helvetica,Tahoma,Arial,sans-serif;
+}
+
+@mixin sans-thin {
+  font-weight: 300;
+  font-family: 'AxisStd',Helvetica,Tahoma,Arial,sans-serif;
+}
+
 @mixin open-sans-normal {
   font-weight: 400;
   font-family: 'Open Sans',Helvetica,Tahoma,Arial,sans-serif;
@@ -30,3 +58,4 @@
   font-weight: 300;
   font-family: 'Open Sans',Helvetica,Tahoma,Arial,sans-serif;
 }
+

@@ -12,8 +12,9 @@ class Team < ActiveRecord::Base
     def send_daily_summary
       self.find_each do |team|
         team.user_teams.each do |user_team|
-          return if user_team.user.email != 'yuta@piersky.com'
-          mail = SummaryMailer.daily_mail(user_team.id).deliver_later
+          if user_team.user.email == 'yuta@piersky.com'
+            mail = SummaryMailer.daily_mail(user_team.id).deliver_later
+          end
         end
       end
     end
