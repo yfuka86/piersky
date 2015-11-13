@@ -1,7 +1,11 @@
 module SkyModule
   class << self
-    def today(time_zone=0)
+    def now(time_zone=0)
       Time.current.in_time_zone(time_zone)
+    end
+
+    def today(time_zone=0)
+      now(time_zone).to_date
     end
 
     def yesterday(time_zone=0)
@@ -13,7 +17,7 @@ module SkyModule
     end
 
     def get_day_interval(range: 28, end_at: nil, time_zone: 0, inclusive: true)
-      d = end_at.present? ? end_at.in_time_zone(time_zone).to_date : today(time_zone).to_date
+      d = end_at.present? ? end_at.in_time_zone(time_zone).to_date : today(time_zone)
 
       (d + 1.day - range.day..(inclusive ? d + 1.day : d))
     end
