@@ -10,6 +10,10 @@ module Concerns::Activity
       SkyModule.get_day_time_series(self.where(identity_id: integration.identities.pluck(:id)))
     end
 
+    def daily_summary(integration)
+      SkyModule.get_hour_of_yesterday_series(self.where(identity_id: integration.identities.pluck(:id)))
+    end
+
     def oldest_ts(integration)
       self.by_integration(integration).order(ts: :asc).first.try(:ts)
     end
