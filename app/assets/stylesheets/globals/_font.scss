@@ -1,3 +1,4 @@
+/*
 @font-face{
   font-family: "AxisStd";
   src: asset-url("AxisStd-Heavy.otf") format("truetype");
@@ -15,6 +16,7 @@
   src: asset-url("AxisStd-Medium.otf") format("truetype");
   font-weight: 500;
 }
+*/
 
 @font-face{
   font-family: "AxisStd";
@@ -34,11 +36,13 @@
   font-weight: 200;
 }
 
+/*
 @font-face{
   font-family: "AxisStd";
   src: asset-url("AxisStd-UltraLight.otf") format("truetype");
   font-weight: 100;
 }
+*/
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
 @import url(https://fonts.googleapis.com/css?family=Lato:900,700,400,300);
