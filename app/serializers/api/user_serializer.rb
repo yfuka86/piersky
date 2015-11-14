@@ -1,6 +1,6 @@
 class Api::UserSerializer < ActiveModel::Serializer
 
-  attributes :email, :id, :name, :teams, :summary
+  attributes :email, :id, :name, :teams, :summary, :gravatar_url
 
   def name
     if options[:is_me]

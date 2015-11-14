@@ -30,18 +30,21 @@ class ActivityGithub < ActiveRecord::Base
         else
           activity = self.create(code: CODES[:commit_comment])
         end
+        activity.action = p["action"]
         GithubComment.find_or_create!(p["comment"], integration, activity)
         activity.ts = p["comment"]["created_at"]
       end
 
       if p["action"].in?(ISSUE_EVENTS) && p["issue"]
         activity = self.create(code: CODES[:issues])
+        activity.action = p["action"]
         activity.issue_id = GithubIssue.find_or_create!(p, integration).id
         activity.ts = p["issue"]["updated_at"]
       end
 
       if p["action"].in?(PR_EVENTS) && p["pull_request"]
         activity = self.create(code: CODES[:pr])
+        activity.action = p["action"]
         activity.pull_request_id = GithubPullRequest.find_or_create!(p, integration).id
         activity.ts = p["pull_request"]["updated_at"]
       end

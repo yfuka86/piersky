@@ -8,7 +8,8 @@ class GithubRepository < ActiveRecord::Base
   def self.parse(params, integration)
     {
       foreign_id: params['id'],
-      full_name: params['full_name']
+      full_name: params['full_name'],
+      default_branch: params['default_branch']
     }
   end
 end
