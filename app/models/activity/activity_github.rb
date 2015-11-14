@@ -15,6 +15,13 @@ class ActivityGithub < ActiveRecord::Base
   ISSUE_EVENTS = ['assigned', 'unassigned', 'labeled', 'unlabeled', 'opened', 'closed', 'reopened']
   PR_EVENTS = ISSUE_EVENTS + ['synchronize']
 
+  scope :pushed_to_default_event, -> (integration) {
+    by_integration(integration).
+    where(code: CODES[:push]).
+    joins(:repository).
+    where("char_length(substring(activity_githubs.ref, github_repositories.default_branch)) != 0")
+  }
+
   def self.create_with_webhook(payload, webhook)
     p = payload
     integration = webhook.integration
