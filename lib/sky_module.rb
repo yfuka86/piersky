@@ -1,22 +1,22 @@
 module SkyModule
   class << self
-    def now(time_zone=0)
+    def now(time_zone=get_time_zone)
       Time.current.in_time_zone(time_zone)
     end
 
-    def today(time_zone=0)
+    def today(time_zone=get_time_zone)
       now(time_zone).to_date
     end
 
-    def yesterday(time_zone=0)
+    def yesterday(time_zone=get_time_zone)
       today(time_zone) - 1.day
     end
 
-    def yesterday_range(time_zone=0)
+    def yesterday_range(time_zone=get_time_zone)
       yesterday(time_zone)..today(time_zone)
     end
 
-    def get_day_interval(range: 28, end_at: nil, time_zone: 0, inclusive: true)
+    def get_day_interval(range: 28, end_at: nil, time_zone: get_time_zone, inclusive: true)
       d = end_at.present? ? end_at.in_time_zone(time_zone).to_date : today(time_zone)
 
       (d + 1.day - range.day..(inclusive ? d + 1.day : d))
@@ -25,17 +25,18 @@ module SkyModule
 
 
     def get_day_time_group(q, range: 28, end_at: nil, reverse: true, column: :ts)
-      inclusive = get_day_interval(range: range, end_at: end_at, time_zone: get_time_zone)
-      exclusive = get_day_interval(range: range, end_at: end_at, time_zone: get_time_zone, inclusive: false)
+      inclusive_interval = get_day_interval(range: range, end_at: end_at, time_zone: get_time_zone)
 
-      q.where(column => inclusive).
+      q.where(column => inclusive_interval).
         group_by_day(column, time_zone: get_time_zone).
         count
     end
 
     def get_day_time_series(q, range: 28, end_at: nil, reverse: true, column: :ts)
-      q = get_day_time_group(q, range, end_at, reverse, column)
-      list = exclusive.map{|d| q.find{|k, v| k.to_date == d}.try(:[], 1) || 0}
+      exclusive_interval = get_day_interval(range: range, end_at: end_at, time_zone: get_time_zone, inclusive: false)
+
+      q = get_day_time_group(q, range: range, end_at: end_at, reverse: reverse, column: column)
+      list = exclusive_interval.map{|d| q.find{|k, v| k.to_date == d}.try(:[], 1) || 0}
       reverse ? list.reverse : list
     end
 
