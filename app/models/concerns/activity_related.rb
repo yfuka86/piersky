@@ -13,7 +13,8 @@ module Concerns::ActivityRelated
       params = parse(params, integration)
       raise if params[:foreign_id].blank?
       record = self.find_by(foreign_id: params[:foreign_id], integration_id: integration.id)
-      record ||= self.new(params.merge({integration: integration, activities: [activity]}))
+      record ||= self.new()
+      record.assign_attributes(params.merge({integration: integration, activities: [activity]}))
       record
     end
 

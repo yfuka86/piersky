@@ -15,6 +15,62 @@ class ActivityGithub < ActiveRecord::Base
   ISSUE_EVENTS = ['assigned', 'unassigned', 'labeled', 'unlabeled', 'opened', 'closed', 'reopened']
   PR_EVENTS = ISSUE_EVENTS + ['synchronize']
 
+  scope :issues_event, -> (integration) {
+    by_integration(integration).
+    where(code: CODES[:issues])
+  }
+  scope :pr_event, -> (integration) {
+    by_integration(integration).
+    where(code: CODES[:pr])
+  }
+  scope :comment_event, -> (integration) {
+    by_integration(integration).
+    where(code: [CODES[:commit_comment], CODES[:issue_comment], CODES[:pr_review_comment]])
+  }
+  scope :pushed_to_default_event, -> (integration) {
+    by_integration(integration).
+    where(code: CODES[:push]).
+    joins(:repository).
+    where("char_length(substring(activity_githubs.ref, github_repositories.default_branch)) != 0")
+  }
+
+  def self.daily_summary(integration)
+    obj = {}
+    obj[:main] = super(integration)
+
+    commit_obj = {}
+    GithubCommit.
+      where(ts: SkyModule.yesterday_range).
+      group_by_author(integration).
+      count.
+      each{|author, count| commit_obj[IdentityGithub.find_by(secondary_key: author).try(:id)] = count}
+    obj[:commits] = commit_obj
+
+    obj[:comments] = self.
+      where(ts: SkyModule.yesterday_range).
+      comment_event(integration).
+      group(:identity_id).count
+
+    obj[:opened_prs] = self.
+      where(ts: SkyModule.yesterday_range, action: 'opened').
+      pr_event(integration).
+      group(:identity_id).count
+    obj[:closed_prs] = self.
+      where(ts: SkyModule.yesterday_range, action: 'closed').
+      pr_event(integration).
+      group(:identity_id).count
+
+    obj[:issues] = self.
+      where(ts: SkyModule.yesterday_range, action: 'opened').
+      issues_event(integration).
+      group(:identity_id).count
+    obj[:issues] = self.
+      where(ts: SkyModule.yesterday_range, action: 'closed').
+      issues_event(integration).
+      group(:identity_id).count
+    obj
+  end
+
   def self.create_with_webhook(payload, webhook)
     p = payload
     integration = webhook.integration

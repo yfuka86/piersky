@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20151113130459) do
     t.datetime "ts"
     t.string   "message"
     t.string   "url"
+    t.string   "author_name",    default: ""
   end
 
   create_table "github_issues", force: :cascade do |t|
