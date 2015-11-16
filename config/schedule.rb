@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + "/environment")
 set :output, 'log/cron.log'
 set :environment, :production
 
-every 10.minute do
+every 1.hour do
   runner "Team.send_daily_summary"
 end
 

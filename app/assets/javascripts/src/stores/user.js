@@ -1,6 +1,7 @@
 import Dispatcher from '../dispatcher';
 import assign from 'object-assign';
 import _ from 'lodash';
+import request from 'superagent';
 import { ActionTypes } from '../constants/app';
 
 import BaseStore from '../stores/base';
@@ -23,15 +24,25 @@ const UserStore = assign({}, BaseStore, {
   },
 
   parse(json) {
-    return {
+    let obj = {
       id: parseInt(json.id, 10),
       name: json.name,
       email: json.email,
       summary: json.summary,
+      imageUrl: null,
       identity: function() {
         return this.name || this.email;
       }
     }
+    request
+     .get(json.gravatar_url)
+     .end((err, res) => {
+       if (res.status !== 404) {
+        obj.imageUrl = json.gravatar_url;
+        UserStore.emitChange();
+       }
+     });
+    return obj;
   }
 });
 

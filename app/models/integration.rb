@@ -58,6 +58,10 @@ class Integration < ActiveRecord::Base
     self.class.activity_class.summary(self)
   end
 
+  def daily_summary
+    self.class.activity_class.daily_summary(self)
+  end
+
   def initialize_data
     # please override
   end
