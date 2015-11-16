@@ -15,6 +15,62 @@ class ActivityGithub < ActiveRecord::Base
   ISSUE_EVENTS = ['assigned', 'unassigned', 'labeled', 'unlabeled', 'opened', 'closed', 'reopened']
   PR_EVENTS = ISSUE_EVENTS + ['synchronize']
 
+  scope :issues_event, -> (integration) {
+    by_integration(integration).
+    where(code: CODES[:issues])
+  }
+  scope :pr_event, -> (integration) {
+    by_integration(integration).
+    where(code: CODES[:pr])
+  }
+  scope :comment_event, -> (integration) {
+    by_integration(integration).
+    where(code: [CODES[:commit_comment], CODES[:issue_comment], CODES[:pr_review_comment]])
+  }
+  scope :pushed_to_default_event, -> (integration) {
+    by_integration(integration).
+    where(code: CODES[:push]).
+    joins(:repository).
+    where("char_length(substring(activity_githubs.ref, github_repositories.default_branch)) != 0")
+  }
+
+  def self.daily_summary(integration)
+    obj = {}
+    obj[:main] = super(integration)
+
+    commit_obj = {}
+    GithubCommit.
+      where(ts: SkyModule.yesterday_range).
+      group_by_author(integration).
+      count.
+      each{|author, count| commit_obj[IdentityGithub.find_by(secondary_key: author).try(:id)] = count}
+    obj[:commits] = commit_obj
+
+    obj[:comments] = self.
+      where(ts: SkyModule.yesterday_range).
+      comment_event(integration).
+      group(:identity_id).count
+
+    obj[:opened_prs] = self.
+      where(ts: SkyModule.yesterday_range, action: 'opened').
+      pr_event(integration).
+      group(:identity_id).count
+    obj[:closed_prs] = self.
+      where(ts: SkyModule.yesterday_range, action: 'closed').
+      pr_event(integration).
+      group(:identity_id).count
+
+    obj[:issues] = self.
+      where(ts: SkyModule.yesterday_range, action: 'opened').
+      issues_event(integration).
+      group(:identity_id).count
+    obj[:issues] = self.
+      where(ts: SkyModule.yesterday_range, action: 'closed').
+      issues_event(integration).
+      group(:identity_id).count
+    obj
+  end
+
   def self.create_with_webhook(payload, webhook)
     p = payload
     integration = webhook.integration
@@ -30,18 +86,21 @@ class ActivityGithub < ActiveRecord::Base
         else
           activity = self.create(code: CODES[:commit_comment])
         end
+        activity.action = p["action"]
         GithubComment.find_or_create!(p["comment"], integration, activity)
         activity.ts = p["comment"]["created_at"]
       end
 
       if p["action"].in?(ISSUE_EVENTS) && p["issue"]
         activity = self.create(code: CODES[:issues])
+        activity.action = p["action"]
         activity.issue_id = GithubIssue.find_or_create!(p, integration).id
         activity.ts = p["issue"]["updated_at"]
       end
 
       if p["action"].in?(PR_EVENTS) && p["pull_request"]
         activity = self.create(code: CODES[:pr])
+        activity.action = p["action"]
         activity.pull_request_id = GithubPullRequest.find_or_create!(p, integration).id
         activity.ts = p["pull_request"]["updated_at"]
       end
