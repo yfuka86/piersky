@@ -37,21 +37,35 @@ class ActivityGithub < ActiveRecord::Base
   def self.daily_summary(integration)
     obj = {}
     obj[:main] = super(integration)
-    obj[:commits] = GithubCommit.
+
+    commit_obj = {}
+    GithubCommit.
       where(ts: SkyModule.yesterday_range).
       group_by_author(integration).
       count.
-      map{|author, count| [IdentityGithub.find_by(secondary_key: author).try(:id), count]}
+      each{|author, count| commit_obj[IdentityGithub.find_by(secondary_key: author).try(:id)] = count}
+    obj[:commits] = commit_obj
+
     obj[:comments] = self.
       where(ts: SkyModule.yesterday_range).
       comment_event(integration).
       group(:identity_id).count
-    obj[:prs] = self.
-      where(ts: SkyModule.yesterday_range).
+
+    obj[:opened_prs] = self.
+      where(ts: SkyModule.yesterday_range, action: 'opened').
       pr_event(integration).
       group(:identity_id).count
+    obj[:closed_prs] = self.
+      where(ts: SkyModule.yesterday_range, action: 'closed').
+      pr_event(integration).
+      group(:identity_id).count
+
     obj[:issues] = self.
-      where(ts: SkyModule.yesterday_range).
+      where(ts: SkyModule.yesterday_range, action: 'opened').
+      issues_event(integration).
+      group(:identity_id).count
+    obj[:issues] = self.
+      where(ts: SkyModule.yesterday_range, action: 'closed').
       issues_event(integration).
       group(:identity_id).count
     obj
