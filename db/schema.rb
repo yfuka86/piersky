@@ -158,6 +158,15 @@ ActiveRecord::Schema.define(version: 20151113130459) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "slack_activities", force: :cascade do |t|
+    t.string   "user_id",    limit: 50,  default: "", null: false
+    t.string   "channel",    limit: 50,               null: false
+    t.string   "ts",         limit: 50,  default: "", null: false
+    t.string   "message",    limit: 100, default: "", null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
   create_table "slack_channels", force: :cascade do |t|
     t.integer  "integration_id"
     t.string   "foreign_id"
@@ -183,6 +192,13 @@ ActiveRecord::Schema.define(version: 20151113130459) do
     t.string   "name",       default: "", null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+  end
+
+  create_table "user_team_settings", force: :cascade do |t|
+    t.integer  "user_team_id"
+    t.integer  "mail_state"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "user_teams", force: :cascade do |t|
