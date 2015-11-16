@@ -45,7 +45,6 @@ let routes = (
           <DefaultRoute handler={UserStatistics} />
           <Route name='user-statistics' handler={UserStatistics} path='statistics' />
           <Route name='user-profile' handler={UserProfile} path='profile' />
-          <Route name='user-settings' handler={UserSettings} path='settings' />
         </Route>
       </Route>
 

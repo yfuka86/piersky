@@ -64,7 +64,7 @@ class UserShow extends React.Component {
               </Link>
               <Link to='user-settings' params={{id: user.id}}>
                 <li className='sky-tab'>
-                  Settings
+                  {I18n.t('user.show.tab.settings')}
                 </li>
               </Link>
             </ul>
