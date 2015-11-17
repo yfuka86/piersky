@@ -60,12 +60,6 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-screenshot (1.0.11)
-      capybara (>= 1.0, < 3)
-      launchy
-    capybara-webkit (1.7.1)
-      capybara (>= 2.3.0, < 2.6.0)
-      json
     celluloid (0.17.2)
       celluloid-essentials
       celluloid-extras
@@ -148,8 +142,6 @@ GEM
     json (1.8.3)
     jwt (1.5.2)
     kgio (2.10.0)
-    launchy (2.4.3)
-      addressable (~> 2.3)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -359,8 +351,6 @@ DEPENDENCIES
   active_model_serializers (= 0.8.3)
   arproxy (= 0.2.0)
   capybara
-  capybara-screenshot
-  capybara-webkit
   devise (~> 3.4.1)
   exception_notification (= 4.1.1)
   factory_girl_rails (~> 4.4.1)
