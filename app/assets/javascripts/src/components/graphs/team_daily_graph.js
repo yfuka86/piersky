@@ -1,44 +1,37 @@
 import _ from 'lodash';
 import Constants from '../../constants/app';
 import {getTicks} from '../../utils/app_module';
+import Chart from 'chart.js';
 
 export default class TeamDailyGraph {
   drawChart() {
-    let max = 0;
-    let colors = [];
     let raw = JSON.parse(document.querySelector('#graph_data').innerHTML);
-    let data = _.unzip([['time'].concat(_.times(24, (n) => n))].concat(
+    let dataSets =
       raw.map((obj) => {
-        if (max <= _.max(obj.data)) max = _.max(obj.data);
-        colors.push(Constants.colorHexByKey(obj.name));
-        return [obj.name].concat(obj.data);
-      })
-    ));
+        return {
+          label: obj.name,
+          fillColor: "rgba(255,255,255,0)",
+          strokeColor: Constants.colorHexByKey(obj.name),
+          pointColor: Constants.colorHexByKey(obj.name),
+          pointStrokeColor: '#fff',
+          pointHighlightFill: '#fff',
+          pointHighlightStroke: Constants.colorHexByKey(obj.name),
+          data: obj.data
+        }
+      });
 
-    let width = 800;
-    let height = 400;
-
-    let tableData = google.visualization.arrayToDataTable(data);
-    let ticks = getTicks(max);
-    let options = {
-      width: width,
-      height: height,
-      legend: {position: 'right', maxLines: 3},
-      colors: colors,
-      // curveType: 'function',
-      vAxis: {
-        ticks: ticks,
-        minValue: 0
-      }
+    var data = {
+      labels: _.times(24, (n) => n),
+      datasets: dataSets
     };
 
-    let chart = new google.visualization.LineChart(document.querySelector('#graph'));
-    google.visualization.events.addListener(chart, 'ready', () => {
-      let d = document.createElement('div');
-      d.id = 'graph_image_url';
-      d.innerHTML = chart.getImageURI();
-      document.querySelector('body').appendChild(d);
-    });
-    chart.draw(tableData, options);
+    let options = {
+    };
+
+    let ctx = document.getElementById("graph").getContext("2d");
+    let lineChart = new Chart(ctx).Line(data, options);
+    let legend = lineChart.generateLegend();
+    let d = document.getElementById('graph_container');
+    d.appendChild(legend);
   }
 }
