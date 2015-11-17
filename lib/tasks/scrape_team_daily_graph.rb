@@ -20,9 +20,12 @@ class ScrapeTeamDailyGraph
     session = Capybara::Session.new(:poltergeist)
 
     session.driver.headers = { 'User-Agent' => "Mozilla/5.0 (Macintosh; Intel Mac OS X)" }
-    session.visit "https://developers.google.com/chart/interactive/docs/lines"#{Rails.application.config.app_domain}/graphs?team_id=#{@team.id}"
+    session.visit "#{Rails.application.config.app_domain}/graphs?team_id=#{@team.id}"
     sleep 5
-    session.save_screenshot('debug.png', full: true)
-    session.find_by_id('graph_image_url').text
+    page = Nokogiri::HTML.parse(session.html)
+    {
+      legends: page.css('#graph_legends').to_html(),
+      image: page.css('#graph_image_url').text()
+    }
   end
 end
