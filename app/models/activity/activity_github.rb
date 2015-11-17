@@ -36,7 +36,7 @@ class ActivityGithub < ActiveRecord::Base
 
   def self.daily_summary(integration)
     obj = {}
-    obj[:main] = super(integration)
+    obj[:main] = daily_time_series(integration)
 
     commit_obj = {}
     GithubCommit.

@@ -60,9 +60,7 @@ const IntegrationStore = assign({}, BaseStore, {
       details: json.details,
       status: json.status,
       summary: json.summary,
-      name: function() {
-        return `${this.type}${(this.label && this.label.length > 0 ? ` : ${this.label}` : '')}`;
-      }
+      name: json.name
     }
   }
 

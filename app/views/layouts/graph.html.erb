@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= t('identity') %></title>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= csrf_meta_tags %>
+  <%= favicon_link_tag 'favicon.ico' %>
+  <%= javascript_include_tag "i18n" %>
+  <%= javascript_include_tag "translations" %>
+</head>
+<body>
+  <%= yield %>
+  <%= javascript_include_tag 'https://www.google.com/jsapi' %>
+  <%= javascript_include_tag 'dist/graph' %>
+  <%= render 'shared/ga' %>
+</body>
+</html>
