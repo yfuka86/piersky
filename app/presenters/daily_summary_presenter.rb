@@ -11,7 +11,7 @@ class DailySummaryPresenter
   end
 
   def team_daily_graph(team)
-    scraper = ScrapeTeamDailyGraph.new
+    scraper = ScrapeTeamDailyGraph.new(team)
     scraper.execute
   end
 end
