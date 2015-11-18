@@ -54,7 +54,7 @@ class IntegrationsIndex extends React.Component {
     if (!integration) return;
     let width = 300;
     let height = 54;
-    let name = integration.name();
+    let name = integration.name;
 
     let header = ['Day', name];
     let colors = [Constants.colorHexByKey(name)];
@@ -128,7 +128,7 @@ class IntegrationsIndex extends React.Component {
                   </div>
                   <Link to='integration-show' params={{id: integration.id}} className='link'>
                     <p className='name'>
-                      {integration.name()}
+                      {integration.name}
                     </p>
                   </Link>
 
