@@ -24,11 +24,19 @@ class ScrapeTeamDailyGraph
     sleep 5
     data_uri = session.evaluate_script("document.querySelector('#graph').toDataURL('image/png', 0)")
     data = URI::Data.new(data_uri).data.force_encoding("utf-8")
-    File.write('test.png', data)
+
+    path = "#{S3_DAILY_SUMMARY_IMAGE_PATH}_#{Time.now.to_i}_#{rand(1000)}.png"
+    s3 = Aws::S3::Client.new(region: AWS_REGION, credentials: Aws::Credentials.new(AWS_S3_ID, AWS_S3_KEY))
+    s3.put_object(
+      acl: 'public-read',
+      bucket: S3_BUCKET_NAME,
+      key: path,
+      body: data)
+
     page = Nokogiri::HTML.parse(session.html)
     {
       legends: page.css('#graph_legends').to_html(),
-      image: data_uri
+      image: "#{S3_BUCKET_FULLPATH}/#{path}"
     }
   end
 end

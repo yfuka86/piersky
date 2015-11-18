@@ -1,6 +1,6 @@
 class DailySummaryPresenter
 
-  attr_accessor :text
+  attr_accessor :text, :graph
 
   def initialize(user_team_id)
     user_team = UserTeam.find(user_team_id)
