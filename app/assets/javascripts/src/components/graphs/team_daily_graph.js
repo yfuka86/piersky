@@ -31,6 +31,5 @@ export default class TeamDailyGraph {
     let ctx = document.getElementById("graph").getContext("2d");
     let lineChart = new Chart(ctx).Line(data, options);
     document.getElementById('graph_legends').innerHTML = lineChart.generateLegend();
-    document.getElementById('graph_image_url').innerHTML = document.getElementById("graph").toDataURL();
   }
 }
