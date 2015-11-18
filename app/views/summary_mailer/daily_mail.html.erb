@@ -2,9 +2,8 @@
   <tbody><tr>
     <td valign="top">
       <div style="padding:0 12px">
-        <div style="padding:2rem;">
-          <h2>You're invited</h2>
-        </div>
+        <%= image_tag @graph[:image], size: "600x300" %>
+        <%= @graph[:legends].html_safe %>
         <%= @presenter.text %>
       </div>
     </td>

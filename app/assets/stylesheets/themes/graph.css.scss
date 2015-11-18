@@ -1,0 +1,23 @@
+#graph_container {
+  #graph {
+    float: left;
+    display: inline-block;
+    height: 300px;
+    width: 600px;
+  }
+
+  #graph_legends {
+    float: left;
+    display: inline-block;
+    height: 300px;
+    width: 150px;
+    padding: 20px 10px;
+    li span{
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-right: 5px;
+    }
+  }
+}
+

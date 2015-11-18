@@ -40,6 +40,10 @@ class Integration < ActiveRecord::Base
     end
   end
 
+  def name
+    type.split('Integration')[1] + (label.present? ? " : #{label}" : "")
+  end
+
   def create_identity(primary_key, options={})
     #please override
     user_team = UserTeam.find_by(user: self.user, team: self.team)
@@ -56,6 +60,10 @@ class Integration < ActiveRecord::Base
 
   def summary
     self.class.activity_class.summary(self)
+  end
+
+  def daily_time_series
+    self.class.activity_class.daily_time_series(self)
   end
 
   def daily_summary
