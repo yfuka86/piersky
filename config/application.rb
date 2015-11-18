@@ -27,6 +27,7 @@ module Piersky
     config.assets.paths << Rails.root.join('node_modules', 'react-tooltip', 'dist')
 
     config.autoload_paths += Dir["#{config.root}/lib/"]
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
     config.autoload_paths += Dir["#{config.root}/app/models/identity/"]
     config.autoload_paths += Dir["#{config.root}/app/models/integration/"]
     config.autoload_paths += Dir["#{config.root}/app/models/activity/**/"]

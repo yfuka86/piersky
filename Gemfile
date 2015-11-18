@@ -58,6 +58,12 @@ gem 'whenever', :require => false
 
 gem 'rails-erd'
 
+# for scraping graph page itself
+gem 'nokogiri'
+gem 'poltergeist'
+gem 'capybara'
+gem 'data_uri'
+
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.2'
   gem 'factory_girl_rails', '~> 4.4.1'

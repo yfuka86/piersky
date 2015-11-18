@@ -19,7 +19,7 @@ class UserIcon extends React.Component {
     let user = this.props.user;
     let str = user.name || user.email;
     let url = user.imageUrl
-    let style = url ? {background: `url(${url})`, 'background-size': 'cover'} : {}
+    let style = url ? {background: `url(${url})`, backgroundSize: 'cover'} : {}
 
     return (
       <span className={'simple-user-icon ' + Constants.colorByKey(str)} style={style}>

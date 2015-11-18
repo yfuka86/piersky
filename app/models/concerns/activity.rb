@@ -10,8 +10,13 @@ module Concerns::Activity
       SkyModule.get_day_time_series(self.where(identity_id: integration.identities.pluck(:id)))
     end
 
-    def daily_summary(integration)
+    def daily_time_series(integration)
       SkyModule.get_hour_of_yesterday_series(self.where(identity_id: integration.identities.pluck(:id)))
+    end
+
+    def daily_summary(integration)
+      # please override
+      daily_time_series(integration)
     end
 
     def oldest_ts(integration)

@@ -30,4 +30,4 @@ pickle-email-*.html
 *.bowerrc
 bower.json
 
-app/assets/javascripts/dist/application.js
+app/assets/javascripts/dist/
