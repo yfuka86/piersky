@@ -62,6 +62,7 @@ gem 'rails-erd'
 gem 'nokogiri'
 gem 'poltergeist'
 gem 'capybara'
+gem 'data_uri'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.2'
