@@ -40,7 +40,7 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   # General Settings
-  config.app_domain = 'localhost:3000'
+  config.app_domain = 'http://localhost:3000'
 
   # Email Settings
   config.action_mailer.default_url_options = {host: config.app_domain}#, protocol: "https"}

@@ -37,6 +37,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :graphs, only: [:index]
+
   namespace :api, defaults: { format: :json } do
     resources :users, only: [] do
       collection do
