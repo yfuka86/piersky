@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   end
 
   require 'sidekiq/web'
-  authenticate :user, lambda { |u| u.email == 'yuta@piersky.com' } do
+  authenticate :user, lambda { |u| u.email.in?(['yuta@piersky.com', 'yurimatsui37@gmail.com']) } do
     mount Sidekiq::Web, at: "/sidekiq"
   end
 
@@ -65,4 +65,9 @@ Rails.application.routes.draw do
     end
     resources :invitations, only: [:index, :create, :update, :destroy]
   end
+
+  if Rails.env.development?
+    mount MailPreview => 'mail_view'
+  end
+
 end
