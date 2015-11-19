@@ -7,7 +7,7 @@ class IdentityGithub < Identity
       identity.primary_key = gh_user.id
       identity.name = payload["sender"]["login"]
     end
-    set_author_name
+    identity.set_author_name
     identity
   end
 
