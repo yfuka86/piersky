@@ -65,4 +65,9 @@ Rails.application.routes.draw do
     end
     resources :invitations, only: [:index, :create, :update, :destroy]
   end
+
+  if Rails.env.development?
+    mount MailPreview => 'mail_view'
+  end
+
 end
