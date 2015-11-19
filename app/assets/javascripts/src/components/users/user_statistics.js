@@ -79,7 +79,7 @@ class UserStatistics extends React.Component {
     let max = 0;
     let table = [];
     if (length === 1) {
-      let header = [I18n.t('user.stats.period.time_of_day')].concat(stats.integrations.map((i) => {return IntegrationStore.getIntegrationById(i.id).name();}));
+      let header = [I18n.t('user.stats.period.time_of_day')].concat(stats.integrations.map((i) => {return IntegrationStore.getIntegrationById(i.id).name;}));
       table.push(header);
       _.times(this.HOUR_PER_DAY, (i) => {
         let ary = stats.integrations.map((integration) => {
@@ -91,7 +91,7 @@ class UserStatistics extends React.Component {
       })
     } else {
       let end = moment(stats.today);
-      let header = ['Day'].concat(stats.integrations.map((i) => {return IntegrationStore.getIntegrationById(i.id).name();}));
+      let header = ['Day'].concat(stats.integrations.map((i) => {return IntegrationStore.getIntegrationById(i.id).name;}));
       table.push(header);
       _.times(length, (i) => {
         let ary = stats.integrations.map((integration) => {
