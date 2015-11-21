@@ -43,9 +43,14 @@ class ActivityGithub < ActiveRecord::Base
       where(ts: SkyModule.yesterday_range).
       group_by_author(integration).
       count.
-      each{|author, count| commit_obj[
-        IdentityGithub.find_by('secondary_key=? OR name=?', author, author).try(:id)
-      ] = count}
+      each do |author, count|
+        key = IdentityGithub.find_by('secondary_key=? OR name=?', author, author).try(:id)
+        if commit_obj[key].present?
+          commit_obj[key] += count
+        else
+          commit_obj[key] ||= count
+        end
+      end
     obj[:commits] = commit_obj
 
     obj[:comments] = self.
