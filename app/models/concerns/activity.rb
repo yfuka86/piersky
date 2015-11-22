@@ -39,4 +39,8 @@ module Concerns::Activity
       ('Integration' + service_name).constantize
     end
   end
+
+  def summary_sentence
+    # please override
+  end
 end
