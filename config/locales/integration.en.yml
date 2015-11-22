@@ -74,12 +74,14 @@ en:
         last_month: 'last 1 month (default)'
         last_week: 'last 1 week'
       sentence:
-        issues: '#{action} #{count} issues'
-        pr: '#{action} #{count} pull requests'
-        comment: 'published #{count} comments'
-
+        opened_issues: 'opened %{count} issues'
+        closed_issues: 'closed %{count} issues'
+        opened_prs: 'opened %{count} pull requests'
+        closed_prs: 'closed %{count} pull requests'
+        comments: 'published %{count} comments'
+        commits: 'pushed %{count} commits to default branch'
       template:
-        issues: '#{action} #{number} #{name}'
-        pr: '#{action} #{number} #{name}'
-        comment: '#{body} on #{target}'
-        push: '#{commit_message}'
+        issue: '%{action} %{number} %{name}'
+        pr: '%{action} %{number} %{name}'
+        comment: '%{body} on %{target}'
+        push: '%{commit_message}'

@@ -17,7 +17,12 @@ class DailySummaryPresenter
         summary_obj = {}
         summary.each do |k, v|
           if v.is_a?(Hash)
-            summary_obj[k] = {count: v[:count][identity.id], sentence: v[:query].where(identity_id: identity.id).last.summary_sentence}
+            summary_obj[k] = {
+              summary: I18n.t(v[:sentence], count: v[:count][identity.id]),
+              contents: [
+                v[:query].where(identity_id: identity.id).last.content
+              ]
+            }
           end
         end
       end
