@@ -15,7 +15,6 @@ class DailySummaryPresenter
       u.identities.map do |identity|
         summaries = summary[identity.integration_id] || {}
         summaries_obj = {}
-        binding.pry
         summaries.each do |k, v|
           if v.is_a?(Hash)
             summaries_obj[k] = {
