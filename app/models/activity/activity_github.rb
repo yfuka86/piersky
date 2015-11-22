@@ -34,101 +34,119 @@ class ActivityGithub < ActiveRecord::Base
     where("char_length(substring(activity_githubs.ref, github_repositories.default_branch)) != 0")
   }
 
-  def self.daily_summary(integration)
-    obj = {}
-    obj[:main] = daily_time_series(integration)
+  class << self
+    def daily_summary(integration)
+      obj = {}
+      obj[:main] = daily_time_series(integration)
 
-    commit_obj = {}
-    GithubCommit.
-      where(ts: SkyModule.yesterday_range).
-      group_by_author(integration).
-      count.
-      each do |author, count|
-        key = IdentityGithub.find_by('secondary_key=? OR name=?', author, author).try(:id)
-        if commit_obj[key].present?
-          commit_obj[key] += count
+      commit_obj = {}
+      GithubCommit.
+        where(ts: SkyModule.yesterday_range).
+        group_by_author(integration).
+        count.
+        each do |author, count|
+          key = IdentityGithub.find_by('secondary_key=? OR name=?', author, author).try(:id)
+          if commit_obj[key].present?
+            commit_obj[key] += count
+          else
+            commit_obj[key] ||= count
+          end
+        end
+      obj[:commits] = {query: self.where(ts: SkyModule.yesterday_range).pushed_to_default_event(integration), count: commit_obj}
+
+      comment_q = self.
+        where(ts: SkyModule.yesterday_range).
+        comment_event(integration)
+      obj[:comments] = {query: comment_q, count: comment_q.group(:identity_id).count}
+
+      op_q = self.
+        where(ts: SkyModule.yesterday_range, action: 'opened').
+        pr_event(integration)
+      obj[:opened_prs] = {query: op_q, count: op_q.group(:identity_id).count}
+
+      cp_q = self.where(ts: SkyModule.yesterday_range, action: 'closed').
+        pr_event(integration)
+      obj[:closed_prs] = {query: cp_q, count: cp_q.group(:identity_id).count}
+
+      oi_q = self.
+        where(ts: SkyModule.yesterday_range, action: 'opened').
+        issues_event(integration)
+      obj[:opened_issues] = {query: oi_q, count: oi_q.group(:identity_id).count}
+
+      ci_q = self.
+        where(ts: SkyModule.yesterday_range, action: 'closed').
+        issues_event(integration)
+      obj[:closed_issues] = {query: ci_q, count: ci_q.group(:identity_id).count}
+
+      obj
+    end
+
+    def create_with_webhook(payload, webhook)
+      p = payload
+      integration = webhook.integration
+
+      ActiveRecord::Base.transaction do
+        if p["action"] == "created" && p["comment"]
+          if p["issue"]
+            activity = self.create(code: CODES[:issue_comment])
+            activity.issue_id = GithubIssue.find_or_create!(p, integration).id
+          elsif p["pull_request"]
+            activity = self.create(code: CODES[:pr_review_comment])
+            activity.pull_request_id = GithubPullRequest.find_or_create!(p, integration).id
+          else
+            activity = self.create(code: CODES[:commit_comment])
+          end
+          activity.action = p["action"]
+          GithubComment.find_or_create!(p["comment"], integration, activity)
+          activity.ts = p["comment"]["created_at"]
+        end
+
+        if p["action"].in?(ISSUE_EVENTS) && p["issue"]
+          activity = self.create(code: CODES[:issues])
+          activity.action = p["action"]
+          activity.issue_id = GithubIssue.find_or_create!(p, integration).id
+          activity.ts = p["issue"]["updated_at"]
+        end
+
+        if p["action"].in?(PR_EVENTS) && p["pull_request"]
+          activity = self.create(code: CODES[:pr])
+          activity.action = p["action"]
+          activity.pull_request_id = GithubPullRequest.find_or_create!(p, integration).id
+          activity.ts = p["pull_request"]["updated_at"]
+        end
+
+        if p["ref"] && p["commits"]
+          activity = self.create(code: CODES[:push])
+          activity.ref = p["ref"]
+          p["commits"].each{|c| GithubCommit.find_or_create!(c, integration, activity)}
+          activity.ts = p["head_commit"]["timestamp"]
+        end
+
+        if defined?(activity) && activity.class == self
+          # activity.payload = p.to_s
+          activity.repository_id = GithubRepository.find_or_create!(p["repository"], integration).id
+
+          activity.identity_id = IdentityGithub.find_or_initialize_with_payload(payload, integration).tap(&:save!).id
+          activity.save!
+          true
         else
-          commit_obj[key] ||= count
+          false
         end
       end
-    obj[:commits] = commit_obj
-
-    obj[:comments] = self.
-      where(ts: SkyModule.yesterday_range).
-      comment_event(integration).
-      group(:identity_id).count
-
-    obj[:opened_prs] = self.
-      where(ts: SkyModule.yesterday_range, action: 'opened').
-      pr_event(integration).
-      group(:identity_id).count
-    obj[:closed_prs] = self.
-      where(ts: SkyModule.yesterday_range, action: 'closed').
-      pr_event(integration).
-      group(:identity_id).count
-
-    obj[:issues] = self.
-      where(ts: SkyModule.yesterday_range, action: 'opened').
-      issues_event(integration).
-      group(:identity_id).count
-    obj[:issues] = self.
-      where(ts: SkyModule.yesterday_range, action: 'closed').
-      issues_event(integration).
-      group(:identity_id).count
-    obj
+    end
   end
 
-  def self.create_with_webhook(payload, webhook)
-    p = payload
-    integration = webhook.integration
-
-    ActiveRecord::Base.transaction do
-      if p["action"] == "created" && p["comment"]
-        if p["issue"]
-          activity = self.create(code: CODES[:issue_comment])
-          activity.issue_id = GithubIssue.find_or_create!(p, integration).id
-        elsif p["pull_request"]
-          activity = self.create(code: CODES[:pr_review_comment])
-          activity.pull_request_id = GithubPullRequest.find_or_create!(p, integration).id
-        else
-          activity = self.create(code: CODES[:commit_comment])
-        end
-        activity.action = p["action"]
-        GithubComment.find_or_create!(p["comment"], integration, activity)
-        activity.ts = p["comment"]["created_at"]
-      end
-
-      if p["action"].in?(ISSUE_EVENTS) && p["issue"]
-        activity = self.create(code: CODES[:issues])
-        activity.action = p["action"]
-        activity.issue_id = GithubIssue.find_or_create!(p, integration).id
-        activity.ts = p["issue"]["updated_at"]
-      end
-
-      if p["action"].in?(PR_EVENTS) && p["pull_request"]
-        activity = self.create(code: CODES[:pr])
-        activity.action = p["action"]
-        activity.pull_request_id = GithubPullRequest.find_or_create!(p, integration).id
-        activity.ts = p["pull_request"]["updated_at"]
-      end
-
-      if p["ref"] && p["commits"]
-        activity = self.create(code: CODES[:push])
-        activity.ref = p["ref"]
-        p["commits"].each{|c| GithubCommit.find_or_create!(c, integration, activity)}
-        activity.ts = p["head_commit"]["timestamp"]
-      end
-
-      if defined?(activity) && activity.class == self
-        # activity.payload = p.to_s
-        activity.repository_id = GithubRepository.find_or_create!(p["repository"], integration).id
-
-        activity.identity_id = IdentityGithub.find_or_initialize_with_payload(payload, integration).tap(&:save!).id
-        activity.save!
-        true
-      else
-        false
-      end
+  # how to return link?
+  def summary_sentence
+    case code
+    when CODES[:issues] then
+      I18n.t('integration.github.sentence.issues', action: action, number: issue.number, name: issue.title)
+    when CODES[:pr] then
+      I18n.t('integration.github.sentence.pr', action: action, number: pull_request.number, name: pull_request.title)
+    when CODES[:commit_comment], CODES[:issue_comment], CODES[:pr_review_comment] then
+      I18n.t('integration.github.sentence.comment', body: comment.body, target: comment.issue)
+    when CODES[:push] then
+      I18n.t('integration.github.sentence.push', commit_message: commits.last.message)
     end
   end
 end

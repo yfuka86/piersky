@@ -73,3 +73,13 @@ en:
       period:
         last_month: 'last 1 month (default)'
         last_week: 'last 1 week'
+      sentence:
+        issues: '#{action} #{count} issues'
+        pr: '#{action} #{count} pull requests'
+        comment: 'published #{count} comments'
+
+      template:
+        issues: '#{action} #{number} #{name}'
+        pr: '#{action} #{number} #{name}'
+        comment: '#{body} on #{target}'
+        push: '#{commit_message}'
