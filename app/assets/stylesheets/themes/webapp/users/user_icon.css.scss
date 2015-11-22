@@ -1,14 +1,40 @@
 @import "globals/config-loader";
 
-.simple-user-icon {
-  @include icon(36px, 24px);
-
-  text-align: center;
+@mixin simple-user-icon ($area-size: 36px, $font-size: 24px) {
+  display: inline-block;
+  height: $area-size;
+  width: $area-size;
   border-radius: 4px;
   @include lato-normal;
   color: $white;
   cursor: pointer;
-
   @include coloring-back;
   background-size: cover;
+  vertical-align: middle;
+  position: relative;
+
+  .icon-char {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    line-height: $area-size;
+    font-size: $font-size;
+    vertical-align: middle;
+    text-align: center;
+    @include lato-normal;
+    color: $white;
+  }
+
+  img {
+    border-radius: 4px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.simple-user-icon {
+  @include simple-user-icon;
 }
