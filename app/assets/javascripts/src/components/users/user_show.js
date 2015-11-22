@@ -62,6 +62,11 @@ class UserShow extends React.Component {
                   {I18n.t('user.show.tab.profile')}
                 </li>
               </Link>
+              <Link to='user-settings' params={{id: user.id}}>
+                <li className='sky-tab'>
+                  {I18n.t('user.show.tab.settings')}
+                </li>
+              </Link>
             </ul>
             <div className='sky-tab-panel'>
               <RouteHandler user={user} />
