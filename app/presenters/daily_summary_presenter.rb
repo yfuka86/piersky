@@ -22,7 +22,7 @@ class DailySummaryPresenter
               contents: [
                 v[:query].where(identity_id: identity.id).last.try(:content)
               ]
-            }
+            } if v[:count][identity.id].to_i > 0
           end
         end
         summaries_obj
