@@ -20,7 +20,7 @@ class DailySummaryPresenter
             summaries_obj[k] = {
               summary: I18n.t(v[:sentence], count: v[:count][identity.id]),
               contents: [
-                v[:query].where(identity_id: identity.id).last.content
+                v[:query].where(identity_id: identity.id).last.try(:content)
               ]
             }
           end
