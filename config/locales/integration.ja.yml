@@ -1,0 +1,87 @@
+en:
+  integration:
+    api:
+      errors:
+        update_failed: 'failed to update integration'
+        destroy_failed: 'failed to remove integration'
+        not_found: "Couldn't find the integration"
+    breadcrumb:
+      settings: 'Settings'
+    general:
+      connect: 'Connect'
+      no_integrations: 'No integrations to show.'
+      no_activities: 'No activities to show.'
+      setup: 'Would you like to setup?'
+      save: 'Save Integration'
+      remove: 'Remove Integration'
+      removed: 'Integration has been successfully removed'
+      confirm_remove: 'Are you sure you want to remove this integration? This operation cannot be undone.'
+      settings_saved: 'Integration settings have been saved'
+      syncing: 'We are syncing your data now. Please check later!'
+      member: 'Member'
+      total: 'Total'
+      per_day: 'Per Day'
+      activities: 'Activities'
+    board:
+      index: 'Integration Dashboard'
+      new: 'Add New Integration'
+      show_description: 'Added by %{userName} on %{createdAt}'
+      settings: 'Integration Settings'
+    index:
+      last_31_days: 'Last 31 days'
+      view_detail: 'View Detail'
+    list:
+      dashboard: 'Dashboard'
+      add: 'Add new integration'
+    show:
+      tab:
+        stats: 'Stats'
+        settings: 'Settings'
+    settings:
+      label:
+        label: 'Descriptive Label'
+      description:
+        label: 'You can use this label to explain extra context of each integration.'
+    wunderlist:
+      name: 'Wunderlist'
+    asana:
+      name: 'Asana'
+    slack:
+      name: 'Slack'
+      channel:
+        default: 'all channels'
+      period:
+        last_month: 'last 1 month (default)'
+        last_week: 'last 1 week'
+      summary:
+        messages: 'Messages'
+        users: 'Users'
+        avg_per_day: 'Messages / Day'
+        avg_per_day_users: 'Messages a Day / User '
+    github:
+      name: 'Github'
+      repository:
+        label: 'Repositories'
+        description: 'Choose repositories we should track and analyze.'
+        placeholder: 'Choose a repository...'
+      activity:
+        default: 'Choose a sort of activity...'
+        commit_comment: 'Comments on commit'
+        issue_comment: 'Comments on issue'
+        pr_review_comment: 'Comments on pull requests'
+        push: 'Number of pushing'
+      period:
+        last_month: 'last 1 month (default)'
+        last_week: 'last 1 week'
+      sentence:
+        opened_issues: 'opened %{count} issues'
+        closed_issues: 'closed %{count} issues'
+        opened_prs: 'opened %{count} pull requests'
+        closed_prs: 'closed %{count} pull requests'
+        comments: 'published %{count} comments'
+        commits: 'pushed %{count} commits to default branch'
+      template:
+        issue: '%{action} %{number} %{name}'
+        pr: '%{action} %{number} %{name}'
+        comment: '%{body} on %{target}'
+        push: '%{commit_message}'
