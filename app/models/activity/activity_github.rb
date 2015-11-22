@@ -147,7 +147,7 @@ class ActivityGithub < ActiveRecord::Base
     when CODES[:commit_comment], CODES[:issue_comment], CODES[:pr_review_comment] then
       I18n.t('integration.github.template.comment', body: comment.body, target: issue.try(:title) || pull_request.try(:title) || commits.last.try(:message))
     when CODES[:push] then
-      I18n.t('integration.github.template.push', commit_message: commits.last.message)
+      I18n.t('integration.github.template.push', commit_message: commits.last.try(:message))
     end
   end
 end
