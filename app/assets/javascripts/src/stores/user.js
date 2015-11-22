@@ -29,19 +29,11 @@ const UserStore = assign({}, BaseStore, {
       name: json.name,
       email: json.email,
       summary: json.summary,
-      imageUrl: null,
+      imageUrl: json.gravatar_url,
       identity: function() {
         return this.name || this.email;
       }
     }
-    request
-     .get(json.gravatar_url)
-     .end((err, res) => {
-       if (res.status !== 404) {
-        obj.imageUrl = json.gravatar_url;
-        UserStore.emitChange();
-       }
-     });
     return obj;
   }
 });
