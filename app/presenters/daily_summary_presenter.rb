@@ -1,6 +1,6 @@
 class DailySummaryPresenter
 
-  attr_accessor :graph, :text, :users
+  attr_accessor :graph, :users
 
   def initialize(user_team_id)
     user_team = UserTeam.find(user_team_id)
@@ -13,11 +13,12 @@ class DailySummaryPresenter
     end
     @users = team.user_teams.map do |u|
       u.identities.map do |identity|
-        summary = summary[identity.integration_id]
-        summary_obj = {}
-        summary.each do |k, v|
+        summaries = summary[identity.integration_id] || {}
+        summaries_obj = {}
+        binding.pry
+        summaries.each do |k, v|
           if v.is_a?(Hash)
-            summary_obj[k] = {
+            summaries_obj[k] = {
               summary: I18n.t(v[:sentence], count: v[:count][identity.id]),
               contents: [
                 v[:query].where(identity_id: identity.id).last.content
@@ -25,6 +26,7 @@ class DailySummaryPresenter
             }
           end
         end
+        summaries_obj
       end
     end
   end
