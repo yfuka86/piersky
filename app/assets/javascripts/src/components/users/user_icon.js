@@ -19,11 +19,13 @@ class UserIcon extends React.Component {
     let user = this.props.user;
     let str = user.name || user.email;
     let url = user.imageUrl
-    let style = url ? {background: `url(${url})`, backgroundSize: 'cover'} : {}
 
     return (
-      <span className={'simple-user-icon ' + Constants.colorByKey(str)} style={style}>
-        {url ? '' : str[0].toUpperCase()}
+      <span className={'simple-user-icon ' + Constants.colorByKey(str)}>
+        <img src={url} />
+        <span className='icon-char'>
+          {str[0].toUpperCase()}
+        </span>
       </span>
     );
   }

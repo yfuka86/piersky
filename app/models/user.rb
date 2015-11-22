@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   attr_reader :raw_confirmation_token
   include Gravtastic
-  gravtastic rating: 'R', secure: true, default: '404'
+  gravtastic rating: 'R', secure: true, default: 'blank'
 
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable
