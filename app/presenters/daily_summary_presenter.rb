@@ -12,7 +12,7 @@ class DailySummaryPresenter
       summary[i.id] = i.daily_summary
     end
     @users = team.user_teams.map do |u|
-      u.identities.map do |identity|
+      identity_summaries = u.identities.map do |identity|
         summaries = summary[identity.integration_id] || {}
         summaries_obj = {}
         summaries.each do |k, v|
@@ -27,6 +27,8 @@ class DailySummaryPresenter
         end
         summaries_obj
       end
+
+      {user: u, identities: identity_summaries}
     end
   end
 
