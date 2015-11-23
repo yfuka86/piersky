@@ -4,8 +4,11 @@
       <div style="padding:0 12px">
         <%= image_tag @presenter.graph[:image], size: "600x300" %>
         <%= @presenter.graph[:legends].html_safe %>
-        <%= @presenter.users %>
-
+        <ul id='users-list'>
+          <% @presenter.users.map do |user| %>
+            <%= render 'summary_mailer/daily_mails/user', locals: {user: user} %>
+          <% end %>
+        </ul>
       </div>
     </td>
   </tr></tbody>
