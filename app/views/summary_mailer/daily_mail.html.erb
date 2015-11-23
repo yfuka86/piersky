@@ -6,7 +6,7 @@
         <%= @presenter.graph[:legends].html_safe %>
         <ul id='users-list'>
           <% @presenter.users.map do |user| %>
-            <%= render 'summary_mailer/daily_mails/user', locals: {user: user} %>
+            <%= render 'summary_mailer/daily_mails/user', user: user %>
           <% end %>
         </ul>
       </div>

@@ -6,7 +6,8 @@ class DailySummaryPresenter
     user_team = UserTeam.find(user_team_id)
     user = user_team.user
     team = user_team.team
-    @graph = team_daily_graph(team)
+
+    @graph = Rails.env.development? ? {image: '', legends: ''} : team_daily_graph(team)
     summary = {}
     team.integrations.each do |i|
       summary[i.id] = i.daily_summary
