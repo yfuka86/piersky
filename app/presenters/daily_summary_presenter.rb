@@ -15,11 +15,11 @@ class DailySummaryPresenter
     @users = team.user_teams.map do |u|
       identity_summaries = u.identities.map do |identity|
         summaries = summary[identity.integration_id] || {}
-        summaries_obj = {object: identity}
+        summaries_obj = {object: identity, summary: {}}
         summaries.each do |k, v|
           if v.is_a?(Hash)
-            summaries_obj[k] = {
-              summary: I18n.t(v[:sentence], count: v[:count][identity.id]),
+            summaries_obj[:summary][k] = {
+              sentence: I18n.t(v[:sentence], count: v[:count][identity.id]),
               contents: [
                 v[:query].where(identity_id: identity.id).last.try(:content)
               ]

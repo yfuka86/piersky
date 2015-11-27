@@ -8,7 +8,9 @@
   </span>
   <ul class='user-identities-data'>
     <% identities.map do |identity| %>
-      <%= render "summary_mailer/daily/#{identity[:object].class.service_name.underscore}", identity: identity %>
+      <% if identity[:summary].size > 0 %>
+        <%= render "summary_mailer/daily/#{identity[:object].class.service_name.underscore}", identity: identity %>
+      <% end %>
     <% end %>
   </ul>
 </li>

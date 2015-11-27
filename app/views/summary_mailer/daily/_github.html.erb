@@ -2,6 +2,13 @@
   <span class='icon github-logo'></span>
   <span class='service-name'><%= identity[:object].class.service_name %></span>
   <div>
-    <%= identity %>
+    <% identity[:summary].each do |k, v| %>
+      <span class='sentence'>
+        <%= v[:sentence] %>
+      </span>
+      <span class='content'>
+        <%= v[:contents][0] %>
+      </span>
+    <% end %>
   </div>
 </li>
