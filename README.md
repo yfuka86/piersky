@@ -12,10 +12,6 @@ before setup
     createuser piersky
     createdb piersky_development -O piersky
 
-  <!--   brew install cassandra
-    (if you don't have java, install it and alias it)
-    cassandra -f -->
-
 setup
 
     git clone git@github.com:yfuka86/piersky.git
@@ -25,8 +21,6 @@ setup
 
     bin/bundle install --path=vendor/bundle
     bin/rake db:build
-<!--     bin/rake cequel:keyspace:create
-    bin/rake cequel:migrate -->
     npm install
 
     bin/rails s
