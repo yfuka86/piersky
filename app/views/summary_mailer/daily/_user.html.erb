@@ -1,5 +1,9 @@
 <li class='user'>
-  <%= image_tag user.gravatar_url %>
+  <span class="simple-user-icon <%= user_team.color %>">
+    <%= image_tag user.gravatar_url %>
+    <span class="icon-char"><%= user_team.identity[0].upcase %></span>
+  </span>
+  <%= user_team.identity %>
   <% identities.map do |identity| %>
     <%= render "summary_mailer/daily/#{identity[:object].class.service_name.underscore}", identity: identity %>
   <% end %>

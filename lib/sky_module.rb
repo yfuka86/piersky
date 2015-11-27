@@ -56,6 +56,9 @@ module SkyModule
       9
     end
 
+
+
+
     COLORS = [:red, :pink, :purple, :deeppurple, :indigo, :blue, :lightblue, :cyan, :teal, :green,
               :lightgreen, :lime, :yellow, :amber, :orange, :deeporange, :brown, :bluegrey, :grey]
 
