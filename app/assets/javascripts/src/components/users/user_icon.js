@@ -1,6 +1,5 @@
 import React from 'react';
 import _ from 'lodash';
-import Constants from '../../constants/app';
 
 class UserIcon extends React.Component {
   static get defaultProps() {
@@ -17,14 +16,14 @@ class UserIcon extends React.Component {
 
   render() {
     let user = this.props.user;
-    let str = user.name || user.email;
-    let url = user.imageUrl
+    let name = user.identity;
+    let url = user.imageUrl;
 
     return (
-      <span className={'simple-user-icon ' + Constants.colorByKey(str)}>
+      <span className={'simple-user-icon ' + user.color}>
         <img src={url} />
         <span className='icon-char'>
-          {str[0].toUpperCase()}
+          {name[0].toUpperCase()}
         </span>
       </span>
     );

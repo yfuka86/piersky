@@ -1,15 +1,17 @@
 class Api::UserSerializer < ActiveModel::Serializer
 
-  attributes :email, :id, :name, :teams, :summary, :gravatar_url
+  attributes :email, :id, :name, :teams, :summary, :gravatar_url, :identity, :color
+
+  def user_team
+    @user_team ||= if options[:is_me]
+      object.user_teams.find_by(team: current_user.current_team)
+    elsif options[:team]
+      object.user_teams.find_by(team: options[:team])
+    end
+  end
 
   def name
-    if options[:is_me]
-      object.user_teams.find_by(team: current_user.current_team).user_name
-    elsif options[:team]
-      object.user_teams.find_by(team: options[:team]).user_name
-    else
-      ''
-    end
+    user_team.try(:user_name)
   end
 
   def teams
@@ -20,6 +22,14 @@ class Api::UserSerializer < ActiveModel::Serializer
     else
       nil
     end
+  end
+
+  def identity
+    user_team.identity
+  end
+
+  def color
+    user_team.color
   end
 
   def summary
