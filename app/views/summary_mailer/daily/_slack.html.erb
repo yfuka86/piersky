@@ -1,5 +1,7 @@
 <li class='user-identity-data slack'>
-  <span class='icon slack-logo'></span>
+  <span class='icon'>
+    <%= image_tag asset_url('slack_logo.png') %>
+  </span>
   <span class='service-name'><%= identity[:object].class.service_name %></span>
   <div>
     <%= identity %>
