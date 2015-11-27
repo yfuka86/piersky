@@ -1,5 +1,32 @@
 @import 'themes/webapp/users/user_icon';
 
-#daily_mail {
-
+#daily-mail {
+  #users-list {
+    padding-top: 20px;
+    .user {
+      .user-name {
+        font-size: 18px;
+        margin-left: 10px;
+        color: $grey600;
+      }
+      .user-identities-data {
+        padding-top: 15px;
+        .user-identity-data {
+          .icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+          }
+          .service-name {
+            line-height: 24px;
+            font-size: 16px;
+            margin-left: 6px;
+            vertical-align: middle;
+            color: $grey800;
+          }
+        }
+      }
+    }
+  }
 }

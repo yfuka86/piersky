@@ -1,4 +1,7 @@
-<li class='user-identity'>
-  Github
-  <%= identity %>
+<li class='user-identity-data github'>
+  <span class='icon github-logo'></span>
+  <span class='service-name'><%= identity[:object].class.service_name %></span>
+  <div>
+    <%= identity %>
+  </div>
 </li>

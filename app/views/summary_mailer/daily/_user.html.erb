@@ -3,8 +3,12 @@
     <%= image_tag user.gravatar_url %>
     <span class="icon-char"><%= user_team.identity[0].upcase %></span>
   </span>
-  <%= user_team.identity %>
-  <% identities.map do |identity| %>
-    <%= render "summary_mailer/daily/#{identity[:object].class.service_name.underscore}", identity: identity %>
-  <% end %>
+  <span class='user-name'>
+    <%= user_team.identity %>
+  </span>
+  <ul class='user-identities-data'>
+    <% identities.map do |identity| %>
+      <%= render "summary_mailer/daily/#{identity[:object].class.service_name.underscore}", identity: identity %>
+    <% end %>
+  </ul>
 </li>
