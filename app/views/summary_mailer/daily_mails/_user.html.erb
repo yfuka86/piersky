@@ -1,5 +1,0 @@
-<li class='user'>
-  <% user[:identities].map do |identity| %>
-    <%= render "summary_mailer/daily_mails/#{identity[:object].class.service_name.underscore}", identity: identity %>
-  <% end %>
-</li>

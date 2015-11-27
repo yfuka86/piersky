@@ -1,0 +1,6 @@
+<li class='user'>
+  <%= image_tag user.gravatar_url %>
+  <% identities.map do |identity| %>
+    <%= render "summary_mailer/daily/#{identity[:object].class.service_name.underscore}", identity: identity %>
+  <% end %>
+</li>

@@ -28,7 +28,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     yield resource if block_given?
     if resource_saved
-      AuthMailer.setup_mail(resource.id, resource.raw_confirmation_token).deliver_later
+      AuthMailer.setup(resource.id, resource.raw_confirmation_token).deliver_later
 
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_flashing_format?

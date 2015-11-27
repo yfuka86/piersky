@@ -13,5 +13,5 @@ Rails.application.config.assets.precompile += %w( dist/application.js dist/graph
 Rails.application.config.assets.precompile += %w( *.svg *.eot *.woff *.ttf *.otf )
 Rails.application.config.assets.precompile += %w( i18n.js )
 Rails.application.config.assets.precompile += %w( welcome/*.js )
-Rails.application.config.assets.precompile += %w( welcome.css )
+Rails.application.config.assets.precompile += %w( welcome.css mail.css )
 

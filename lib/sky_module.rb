@@ -55,5 +55,27 @@ module SkyModule
     def get_time_zone
       9
     end
+
+    COLORS = [:red, :pink, :purple, :deeppurple, :indigo, :blue, :lightblue, :cyan, :teal, :green,
+              :lightgreen, :lime, :yellow, :amber, :orange, :deeporange, :brown, :bluegrey, :grey]
+
+    COLOR_HEXES = {red: '#ef5350', pink: '#ec407a', purple: '#ab47bc', deeppurple: '#7e57c2', indigo: '#5c6bc0',
+                   blue: '#42a5f5', lightblue: '#29b6f6', cyan: '#26c6da', teal: '#26a69a', green: '#66bb6a',
+                   lightgreen: '#9ccc65', lime: '#d4e157', yellow: '#ffee58', amber: '#ffca28', orange: '#ffa726',
+                   deeporange: '#ff7043', brown: '#8d6e63', bluegrey: '#78909c', grey: '#bdbdbd', identity: '1976d2'}
+
+    def random_color
+      COLORS[rand(COLORS.length)]
+    end
+
+    def color_by_key(key)
+      sum = 0
+      key.each_byte{|c| sum += c}
+      COLORS[sum % COLORS.length]
+    end
+
+    def color_hex_by_key(key)
+      COLOR_HEXES[color_by_key(key).to_sym]
+    end
   end
 end
