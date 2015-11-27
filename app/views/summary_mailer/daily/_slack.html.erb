@@ -1,4 +1,7 @@
-<li class='user-identity'>
-  Slack
-  <%= identity %>
+<li class='user-identity-data slack'>
+  <span class='icon slack-logo'></span>
+  <span class='service-name'><%= identity[:object].class.service_name %></span>
+  <div>
+    <%= identity %>
+  </div>
 </li>
