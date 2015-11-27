@@ -1,6 +1,6 @@
 <li class='user-identity-data github'>
   <span class='icon'>
-    <%= image_tag image_url('github_logo.png') %>
+    <%= image_tag Rails.application.config.app_domain + image_url('github_logo.png') %>
   </span>
   <span class='service-name'><%= identity[:object].class.service_name %></span>
   <div>

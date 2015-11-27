@@ -1,6 +1,6 @@
 <li class='user-identity-data slack'>
   <span class='icon'>
-    <%= image_tag image_url('slack_logo.png') %>
+    <%= image_tag Rails.application.config.app_domain + image_url('slack_logo.png') %>
   </span>
   <span class='service-name'><%= identity[:object].class.service_name %></span>
   <div>
