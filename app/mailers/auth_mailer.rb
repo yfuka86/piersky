@@ -2,7 +2,7 @@ class AuthMailer < ActionMailer::Base
   include Roadie::Rails::Automatic
   layout 'email'
 
-  def setup_mail(user_id, raw_confirmation_token)
+  def setup(user_id, raw_confirmation_token)
     @resource = User.find_by(id: user_id)
     @email = @resource.email
     @token = raw_confirmation_token
@@ -10,11 +10,10 @@ class AuthMailer < ActionMailer::Base
 
     mail(from: MAIL_SENDER, to: @email, subject: @subject) do |format|
       format.html
-      format.text
     end
   end
 
-  def invitation_mail(invitation_id, raw_invitation_token)
+  def invitation(invitation_id, raw_invitation_token)
     @invitation = Invitation.find_by(id: invitation_id)
     @team = @invitation.team
     @inviter = @invitation.inviter
@@ -25,7 +24,6 @@ class AuthMailer < ActionMailer::Base
 
     mail(from: MAIL_SENDER, to: @invitee.email, subject: @subject) do |format|
       format.html
-      format.text
     end
   end
 end

@@ -29,7 +29,7 @@ class UserInfo extends React.Component {
             <span className='user-info-inner'>
               <Link to='user-show' params={{id: user.id}}>
                 <span className='user-name'>
-                  {user.name || user.email}
+                  {user.identity}
                 </span>
               </Link>
             </span>

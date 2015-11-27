@@ -9,17 +9,17 @@ class DailySummaryPresenter
 
     @graph = Rails.env.development? ? {image: '', legends: ''} : team_daily_graph(team)
     summary = {}
-    team.integrations.each do |i|
-      summary[i.id] = i.daily_summary
+    team.integrations.each do |integration|
+      summary[integration.id] = integration.daily_summary
     end
     @users = team.user_teams.map do |u|
       identity_summaries = u.identities.map do |identity|
         summaries = summary[identity.integration_id] || {}
-        summaries_obj = {}
+        summaries_obj = {object: identity, summary: {}}
         summaries.each do |k, v|
           if v.is_a?(Hash)
-            summaries_obj[k] = {
-              summary: I18n.t(v[:sentence], count: v[:count][identity.id]),
+            summaries_obj[:summary][k] = {
+              sentence: I18n.t(v[:sentence], count: v[:count][identity.id]),
               contents: [
                 v[:query].where(identity_id: identity.id).last.try(:content)
               ]
@@ -29,7 +29,7 @@ class DailySummaryPresenter
         summaries_obj
       end
 
-      {user: u, identities: identity_summaries}
+      {user_team: u, identities: identity_summaries}
     end
   end
 

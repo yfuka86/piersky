@@ -30,9 +30,8 @@ const UserStore = assign({}, BaseStore, {
       email: json.email,
       summary: json.summary,
       imageUrl: json.gravatar_url,
-      identity: function() {
-        return this.name || this.email;
-      }
+      identity: json.identity,
+      color: json.color
     }
     return obj;
   }

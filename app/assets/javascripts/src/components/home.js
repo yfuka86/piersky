@@ -76,7 +76,7 @@ class Home extends React.Component {
     if (!user) return;
     let width = 400;
     let height = 54;
-    let name = user.identity();
+    let name = user.identity;
 
     let header = ['Day', name];
     let colors = [Constants.colorHexByKey(name)];
@@ -158,7 +158,7 @@ class Home extends React.Component {
                     </div>
                     <Link to='user-show' params={{id: user.id}} className='link'>
                       <p className='name'>
-                        {user.identity()}
+                        {user.identity}
                       </p>
                     </Link>
 

@@ -13,7 +13,7 @@ class Team < ActiveRecord::Base
       self.find_each do |team|
         team.user_teams.each do |user_team|
           if user_team.user.email.in?(['yuta@piersky.com', 'yurimatsui37@gmail.com'])
-            mail = SummaryMailer.daily_mail(user_team.id).deliver_later
+            mail = SummaryMailer.daily(user_team.id).deliver_later
           end
         end
       end
@@ -23,7 +23,7 @@ class Team < ActiveRecord::Base
       self.find_each do |team|
         team.user_teams.each do |user_team|
           if user_team.user.email.in?(['yuta@piersky.com', 'yurimatsui37@gmail.com'])
-            mail = SummaryMailer.weekly_mail(user_team.id).deliver_later
+            mail = SummaryMailer.weekly(user_team.id).deliver_later
           end
         end
       end

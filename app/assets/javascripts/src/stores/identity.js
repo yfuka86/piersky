@@ -40,7 +40,7 @@ const IdentityStore = assign({}, BaseStore, {
 
   getUserIdentityById(id) {
     let user = this.getUserByIdentityId(id);
-    return user ? user.identity() : this.getIdentityById(id).name;
+    return user ? user.identity : this.getIdentityById(id).name;
   },
 
   parse(json) {

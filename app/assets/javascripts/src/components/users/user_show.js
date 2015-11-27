@@ -48,7 +48,7 @@ class UserShow extends React.Component {
     return (
       <div className='container-main'>
         <div className='user-show'>
-          <p className='title'><UserIcon user={user} />{user.identity()}</p>
+          <p className='title'><UserIcon user={user} />{user.identity}</p>
 
           <div className='user-inner sky-tab-area'>
             <ul className='sky-tab-list'>
