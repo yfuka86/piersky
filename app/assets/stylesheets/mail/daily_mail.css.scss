@@ -2,21 +2,22 @@
 
 #daily-mail {
   .legends {
+    padding-top: 10px;
     ul {
       list-style-type: none;
       padding-left: 0px;
       li {
+        padding-left: 10px;
         display: inline-block;
         color: $grey700;
         font-size: 16px;
-        line-height: 24px;
+        line-height: 20px;
         vertical-align: middle;
         span {
-          width: 24px;
-          height: 24px;
-          margin-right: 5px;
-          margin-left: 5px;
           display: inline-block;
+          width: 14px;
+          height: 14px;
+          margin: 0px 5px;
         }
       }
     }
