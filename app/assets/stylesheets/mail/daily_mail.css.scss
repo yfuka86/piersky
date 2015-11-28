@@ -32,36 +32,36 @@
         font-size: 18px;
         color: $grey600;
       }
-      .user-identities-data {
-        margin-top: 15px;
-        .user-identity-data {
-          img {
-            &.icon {
-              display: inline-block;
-              width: 24px;
-              height: 24px;
-              vertical-align: middle;
-            }
-          }
-          .service-name {
-            margin: 0px;
-            line-height: 24px;
-            font-size: 16px;
-            margin-left: 6px;
+    }
+    .user-identities-data {
+      margin-top: 15px;
+      .user-identity-data {
+        img {
+          &.icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
             vertical-align: middle;
-            color: $grey800;
           }
-          .sentence {
-            margin: 0;
-            font-size: 16px;
-            color: $grey700;
-          }
-          .content {
-            margin: 0;
-            padding-left: 10px;
-            font-size: 14px;
-            color: $grey600;
-          }
+        }
+        .service-name {
+          margin: 0px;
+          line-height: 24px;
+          font-size: 16px;
+          margin-left: 6px;
+          vertical-align: middle;
+          color: $grey800;
+        }
+        .sentence {
+          margin: 0;
+          font-size: 16px;
+          color: $grey700;
+        }
+        .content {
+          margin: 0;
+          padding-left: 10px;
+          font-size: 14px;
+          color: $grey600;
         }
       }
     }
