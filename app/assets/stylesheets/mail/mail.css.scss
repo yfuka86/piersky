@@ -15,18 +15,19 @@ body {
     max-width: 600px;
     margin: 0 auto;
   }
-  #title {
+  .title-link {
     text-decoration: none;
+  }
+  .title {
+    padding: 10px 0;
+    text-align: center;
   }
   h1, h2, h3, h4 {
     color: #EF6C00;
     margin-bottom: 12px;
-    line-height: 26px;
   }
   p, ul, ul li {
     font-size: 17px;
-    margin: 0 0 16px;
-    line-height: 24px;
   }
   ul {
     margin-bottom: 24px;
@@ -70,15 +71,6 @@ body {
     word-break: break-word;
   }
   a {
-    &:link, &:visited, &:active, &:hover {
-      font-weight: bold;
-      color: #439fe0;
-      text-decoration: none;
-      word-break: break-word;
-    }
-    &:active, &:hover {
-      text-decoration: underline;
-    }
     &.main-button {
       display: inline-block;
       padding: 14px 32px;

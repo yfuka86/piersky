@@ -6,7 +6,11 @@
           <h2>You're invited</h2>
 
           <p>
-            Team <strong><%= @team.name %></strong> has started using Piersky. The administrator, <strong><%= @inviter_name %></strong>, has invited you to join.
+            Team <strong><%= @team.name %></strong> has started using Piersky.
+          </p>
+
+          <p>
+            The administrator, <strong><%= @inviter_name %></strong>, has invited you to join.
           </p>
 
           <p>You need to create account if you never sign up before.</p>
@@ -15,7 +19,10 @@
           </p>
 
           <p class='center bold'>
-            Your sign in email is:<br>
+            Your sign in email is:
+          </p>
+
+          <p class='center'>
             <%= link_to @invitee.email, new_user_session_url %>
           </p>
 

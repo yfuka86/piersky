@@ -8,23 +8,17 @@
     <table>
       <tbody>
         <tr>
-          <td valign="top">
-            <table>
-              <tbody><tr>
-                <td valign="bottom" style="padding:20px 16px 12px">
-                  <div style="text-align:center; font-family: Lato">
-                    <%= link_to root_url, id: 'title' do %>
-                      <h1 class='identity-color'><%= @title || 'Piersky' %></h1>
-                    <% end %>
-                  </div>
-                </td>
-              </tr></tbody>
-            </table>
+          <td>
+            <div>
+              <%= link_to root_url, class: 'title-link' do %>
+                <h1 class='title identity-color'><%= @title || 'Piersky' %></h1>
+              <% end %>
+            </div>
           </td>
         </tr>
 
         <tr>
-          <td valign="top">
+          <td>
             <%= yield %>
           </td>
         </tr>

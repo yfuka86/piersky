@@ -14,7 +14,10 @@
           </p>
 
           <p class='center bold'>
-            Your sign up email is:<br>
+            Your sign up email is:
+          </p>
+
+          <p class='center'>
             <%= link_to confirmation_url(@resource, confirmation_token: @token), confirmation_url(@resource, confirmation_token: @token) %>
           </p>
 
