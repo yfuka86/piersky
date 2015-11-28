@@ -9,8 +9,8 @@
     <%= user_team.identity %>
   </td>
 </tr>
-<tr class='user-identities-data'>
-  <td colspan='2'>
+<tr class='user-identities-data-row'>
+  <td class='user-identities-data' colspan='2'>
     <% identities.map do |identity| %>
       <% if identity[:summary].size > 0 %>
         <%= render "summary_mailer/daily/#{identity[:object].class.service_name.underscore}", identity: identity %>
