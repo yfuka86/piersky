@@ -4,7 +4,7 @@
       <%= image_tag Rails.application.config.app_domain + image_url("#{identity[:object].class.service_name.underscore}_logo.png") %>
     </td>
     <td class='service-name'>
-      <%= identity[:object].class.service_name %>
+      <%= identity[:object].integration.name %>
     </td>
   <tr>
   <% identity[:summary].each do |k, v| %>

@@ -26,6 +26,7 @@ class DailySummaryPresenter
                     if v.is_a?(Hash)
                       summaries_obj[:summary][k] = {
                         sentence: I18n.t(v[:sentence], count: v[:count][identity.id]),
+                        # contentはここで使ってる
                         contents: [
                           v[:query].where(identity_id: identity.id).last.try(:content)
                         ]
