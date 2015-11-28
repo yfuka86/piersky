@@ -33,4 +33,7 @@ class Identity < ActiveRecord::Base
     end
   end
 
+  def daily_count
+    self.class.activity_class.daily_count(self)
+  end
 end

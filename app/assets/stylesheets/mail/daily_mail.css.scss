@@ -23,15 +23,17 @@
   }
 
   #users-list {
-    padding-top: 20px;
+    margin-top: 20px;
     .user {
+      .user-icon {
+        width: 50px;
+      }
       .user-name {
         font-size: 18px;
-        margin-left: 10px;
         color: $grey600;
       }
       .user-identities-data {
-        padding-top: 15px;
+        margin-top: 15px;
         .user-identity-data {
           .icon {
             img {
@@ -49,10 +51,12 @@
             color: $grey800;
           }
           .sentence {
+            padding: 0;
             font-size: 16px;
             color: $grey700;
           }
           .content {
+            padding: 0;
             padding-left: 10px;
             font-size: 14px;
             color: $grey600;

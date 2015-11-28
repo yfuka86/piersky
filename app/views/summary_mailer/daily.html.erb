@@ -7,11 +7,11 @@
           <div class='legends'>
             <%= @presenter.graph[:legends].html_safe %>
           </div>
-          <ul id='users-list'>
+          <table id='users-list'>
             <% @presenter.users.map do |user| %>
               <%= render 'summary_mailer/daily/user', user_team: user[:user_team], user: user[:user_team].user, identities: user[:identities] %>
             <% end %>
-          </ul>
+          </table>
         </div>
       </td>
     </tr></tbody>

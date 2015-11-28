@@ -16,4 +16,8 @@ class UserTeam < ActiveRecord::Base
   def color
     SkyModule.color_by_key(identity)
   end
+
+  def daily_activity_count
+    @daily_activity_count ||= identities.map(&:daily_count).sum
+  end
 end

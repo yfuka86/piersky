@@ -1,16 +1,20 @@
-<li class='user'>
-  <span class="simple-user-icon <%= user_team.color %>">
-    <%= image_tag user.gravatar_url %>
-    <!-- <span class="icon-char"><%= user_team.identity[0].upcase %></span> -->
-  </span>
-  <span class='user-name'>
+<tr class='user'>
+  <td class='user-icon'>
+    <span class="simple-user-icon <%= user_team.color %>">
+      <%= image_tag user.gravatar_url %>
+      <!-- <span class="icon-char"><%= user_team.identity[0].upcase %></span> -->
+    </span>
+  </td>
+  <td class='user-name'>
     <%= user_team.identity %>
-  </span>
-  <ul class='user-identities-data'>
+  </td>
+</tr>
+<tr class='user-identities-data'>
+  <td colspan='2'>
     <% identities.map do |identity| %>
       <% if identity[:summary].size > 0 %>
         <%= render "summary_mailer/daily/#{identity[:object].class.service_name.underscore}", identity: identity %>
       <% end %>
     <% end %>
-  </ul>
-</li>
+  </td>
+</tr>

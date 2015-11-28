@@ -19,6 +19,10 @@ module Concerns::Activity
       daily_time_series(integration)
     end
 
+    def daily_count(identity)
+      self.where(identity_id: identity.id, ts: SkyModule.yesterday_range).count
+    end
+
     def oldest_ts(integration)
       self.by_integration(integration).order(ts: :asc).first.try(:ts)
     end
