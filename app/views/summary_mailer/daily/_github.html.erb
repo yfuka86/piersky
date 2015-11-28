@@ -1,7 +1,7 @@
 <table class='user-identity-data github'>
   <tr>
-    <td>
-      <%= image_tag Rails.application.config.app_domain + image_url('github_logo.png'), class: 'icon' %>
+    <td class='icon'>
+      <%= image_tag Rails.application.config.app_domain + image_url('github_logo.png') %>
     </td>
     <td class='service-name'>
       <%= identity[:object].class.service_name %>
@@ -9,7 +9,7 @@
   <tr>
   <% identity[:summary].each do |k, v| %>
     <tr>
-      <td colspan='2'>
+      <td class='identity-summary' colspan='2'>
         <p class='sentence'>
           <%= v[:sentence] %>
         </p>
