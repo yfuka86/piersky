@@ -1,6 +1,10 @@
 @import "globals/config-loader";
 
 #daily-mail {
+  img.main-graph {
+    width: 100%;
+  }
+
   .legends {
     padding-top: 10px;
     ul {

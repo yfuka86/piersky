@@ -1,9 +1,15 @@
 <div id='daily-mail'>
   <table>
-    <tbody><tr>
-      <td valign="top">
-        <div style="padding:0 12px">
-          <%= image_tag @presenter.graph[:image], size: "600x300" %>
+    <tbody>
+      <tr>
+        <td>
+          <div>
+            <%= image_tag @presenter.graph[:image].presence || image_url("welcome_bg.png"), class: 'main-graph' %>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
           <div class='legends'>
             <%= @presenter.graph[:legends].html_safe %>
           </div>
@@ -12,8 +18,8 @@
               <%= render 'summary_mailer/daily/user', user_team: user[:user_team], user: user[:user_team].user, identities: user[:identities] %>
             <% end %>
           </table>
-        </div>
-      </td>
-    </tr></tbody>
+        </td>
+      </tr>
+    </tbody>
   </table>
 </div>
