@@ -7,7 +7,10 @@ class DailySummaryPresenter
     user = user_team.user
     team = user_team.team
 
-    @graph = Rails.env.development? ? {image: '', legends: ''} : team_daily_graph(team)
+    @graph = Rails.env.development? ? {
+      image: '',
+      legends: '<ul class="line-legend"><li><span style="background-color:#7e57c2"></span>Github</li><li><span style="background-color:#ef5350"></span>Slack</li></ul>'.html_safe
+      } : team_daily_graph(team)
     summary = {}
     team.integrations.each do |integration|
       summary[integration.id] = integration.daily_summary
