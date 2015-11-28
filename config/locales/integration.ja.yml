@@ -81,7 +81,7 @@ ja:
         comments: 'published %{count} comments'
         commits: 'pushed %{count} commits to default branch'
       template:
-        issue: '%{action} #%{number} %{name}'
-        pr: '%{action} #%{number} %{name}'
+        issue: '#%{number} %{name}'
+        pr: '#%{number} %{name}'
         comment: '%{body} on %{target}'
         push: '%{commit_message}'

@@ -141,9 +141,9 @@ class ActivityGithub < ActiveRecord::Base
   def content
     case code
     when CODES[:issues] then
-      I18n.t('integration.github.template.issue', action: action, number: issue.number, name: issue.title)
+      I18n.t('integration.github.template.issue', number: issue.number, name: issue.title)
     when CODES[:pr] then
-      I18n.t('integration.github.template.pr', action: action, number: pull_request.number, name: pull_request.title)
+      I18n.t('integration.github.template.pr', number: pull_request.number, name: pull_request.title)
     when CODES[:commit_comment], CODES[:issue_comment], CODES[:pr_review_comment] then
       I18n.t('integration.github.template.comment', body: comment.body, target: issue.try(:title) || pull_request.try(:title) || commits.last.try(:message))
     when CODES[:push] then
