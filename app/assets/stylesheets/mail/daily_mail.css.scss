@@ -42,37 +42,42 @@
     }
     tr.user-identities-data-row {
       td.user-identities-data {
-        padding: 10px 0 15px 10px;
+        padding: 15px 0 15px 10px;
         table.user-identity-data {
-          td.icon {
-            width: 36px;
-            img {
-              display: inline-block;
-              width: 24px;
-              height: 24px;
-              vertical-align: middle;
+          tr.identity-header {
+            padding: 6px 0;
+            td.icon {
+              width: 36px;
+              img {
+                display: inline-block;
+                width: 24px;
+                height: 24px;
+                vertical-align: middle;
+              }
             }
-          }
-          td.service-name {
-            margin: 0px;
-            line-height: 24px;
-            font-size: 16px;
-            margin-left: 6px;
-            vertical-align: middle;
-            color: $grey800;
-          }
-          td.identity-summary {
-            padding: 10px;
-            p.sentence {
-              margin: 0;
+            td.service-name {
+              margin: 0px;
+              line-height: 24px;
               font-size: 16px;
-              color: $grey700;
+              margin-left: 6px;
+              vertical-align: middle;
+              color: $grey800;
             }
-            p.content {
-              margin: 0;
-              padding-left: 10px;
-              font-size: 14px;
-              color: $grey600;
+          }
+          tr.identity-summary-row {
+            td.identity-summary {
+              padding-left: 15px;
+              p.sentence {
+                margin: 0;
+                font-size: 16px;
+                color: $grey700;
+              }
+              p.content {
+                margin: 0;
+                padding-left: 10px;
+                font-size: 14px;
+                color: $grey600;
+              }
             }
           }
         }
