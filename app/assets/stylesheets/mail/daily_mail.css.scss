@@ -1,4 +1,4 @@
-@import 'themes/webapp/users/user_icon';
+@import "globals/config-loader";
 
 #daily-mail {
   .legends {
@@ -27,10 +27,40 @@
     tr.user {
       td.user-icon {
         width: 50px;
+        .simple-user-icon {
+          @include coloring-back;
+          display: inline-block;
+          border-radius: 4px;
+          height: 36px;
+          width: 36px;
+          vertical-align: middle;
+          position: relative;
+          img {
+            border-radius: 4px;
+            width: 36px;
+            height: 36px;
+            position: absolute;
+            z-index: 1;
+          }
+          .icon-char {
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            line-height: 36px;
+            font-size: 24px;
+            vertical-align: middle;
+            text-align: center;
+            position: absolute;
+            z-index: 0;
+            color: $white;
+          }
+        }
       }
       td.user-name {
-        font-size: 18px;
+        font-size: 17px;
         color: $grey600;
+        vertical-align: middle;
       }
     }
     tr.user-identities-data-row {
