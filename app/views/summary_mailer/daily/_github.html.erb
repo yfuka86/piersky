@@ -1,7 +1,7 @@
 <table class='user-identity-data github'>
   <tr>
-    <td class='icon'>
-      <%= image_tag Rails.application.config.app_domain + image_url('github_logo.png') %>
+    <td>
+      <%= image_tag Rails.application.config.app_domain + image_url('github_logo.png'), class: 'icon' %>
     </td>
     <td class='service-name'>
       <%= identity[:object].class.service_name %>
