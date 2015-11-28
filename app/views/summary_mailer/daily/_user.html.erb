@@ -1,16 +1,11 @@
 <tr class='user'>
-  <td class='user-icon'>
-    <span class="simple-user-icon <%= user_team.color %>">
-      <%= image_tag user.gravatar_url %>
-      <span class="icon-char"><%= user_team.identity[0].upcase %></span>
-    </span>
-  </td>
-  <td class='user-name'>
+  <td class='user-info'>
+    <%= image_tag user.gravatar_url(default: 'identicon') %>
     <%= user_team.identity %>
   </td>
 </tr>
 <tr class='user-identities-data-row'>
-  <td class='user-identities-data' colspan='2'>
+  <td class='user-identities-data'>
     <% identities.map do |identity| %>
       <% if identity[:summary].size > 0 %>
         <%= render "summary_mailer/daily/#{identity[:object].class.service_name.underscore}", identity: identity %>

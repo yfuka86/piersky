@@ -104,25 +104,4 @@ body {
     margin-top: 16px;
     font-size: 12px;
   }
-
-  /* Client-specific Styles */
-  #outlook a {padding:0;}
-  body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0 auto; padding:0;}
-  .ExternalClass {width:100%;}
-  .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;}
-  #backgroundTable {margin:0; padding:0; width:100%; line-height: 100% !important;}
-
-  /* Some sensible defaults for images
-  Bring inline: Yes. */
-  img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;}
-  a img {border:none;}
-  .image_fix {display:block;}
-
-  /* Outlook 07, 10 Padding issue fix
-  Bring inline: No.*/
-  table td {border-collapse: collapse;}
-
-  /* Fix spacing around Outlook 07, 10 tables
-  Bring inline: Yes */
-  table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
 }
