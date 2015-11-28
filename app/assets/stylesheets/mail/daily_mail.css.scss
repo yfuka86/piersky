@@ -46,9 +46,10 @@
         table.user-identity-data {
           tr.identity-header {
             padding: 6px 0;
-            height: 24px;
+            height: 40px;
             td.icon {
               width: 36px;
+              vertical-align: middle;
               img {
                 display: inline-block;
                 width: 24px;
