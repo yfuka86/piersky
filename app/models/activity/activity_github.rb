@@ -64,7 +64,8 @@ class ActivityGithub < ActiveRecord::Base
         pr_event(integration)
       obj[:opened_prs] = {sentence: 'integration.github.sentence.opened_prs', query: op_q, count: op_q.group(:identity_id).count}
 
-      cp_q = self.where(ts: SkyModule.yesterday_range, action: 'closed').
+      cp_q = self.
+        where(ts: SkyModule.yesterday_range, action: 'closed').
         pr_event(integration)
       obj[:closed_prs] = {sentence: 'integration.github.sentence.closed_prs', query: cp_q, count: cp_q.group(:identity_id).count}
 
