@@ -45,7 +45,6 @@ class ActivitySlack < ActiveRecord::Base
 
   def content
     message.gsub(/<(.*?)>/) do |word|
-      binding.pry
       if $1[0, 2] == '@U'
         "@#{IdentitySlack.find_by(primary_key: $1[1..-1]).name}"
       elsif $1[0, 2] == '#C'

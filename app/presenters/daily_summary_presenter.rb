@@ -30,9 +30,7 @@ class DailySummaryPresenter
                           {count: v[:count][identity.id]}.merge(v[:options] || {})
                         ),
                         # contentはここで使ってる
-                        contents: [
-                          v[:query].where(identity_id: identity.id).last.try(:content)
-                        ]
+                        contents: v[:query].where(identity_id: identity.id).order(ts: :desc).limit(5).map(&:content)
                       } if v[:count][identity.id].to_i > 0
                     end
                   end
