@@ -27,7 +27,7 @@ class DailySummaryPresenter
                       summaries_obj[:summary][k] = {
                         sentence: I18n.t(
                           v[:sentence],
-                          {count: v[:count][identity.id]}.merge(v[:options])
+                          {count: v[:count][identity.id]}.merge(v[:options] || {})
                         ),
                         # contentはここで使ってる
                         contents: [
