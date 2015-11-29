@@ -25,7 +25,10 @@ class DailySummaryPresenter
                   summaries.each do |k, v|
                     if v.is_a?(Hash)
                       summaries_obj[:summary][k] = {
-                        sentence: I18n.t(v[:sentence], count: v[:count][identity.id]),
+                        sentence: I18n.t(
+                          v[:sentence],
+                          {count: v[:count][identity.id]}.merge(v[:options])
+                        ),
                         # contentはここで使ってる
                         contents: [
                           v[:query].where(identity_id: identity.id).last.try(:content)

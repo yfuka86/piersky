@@ -1,11 +1,8 @@
 class SlackChannel < ActiveRecord::Base
-  # include Cequel::Record
-  # key :integration_id, :int
-  # key :id, :text
-  # column :ts, :timestamp
-  # column :name, :text, index: true
-  # column :creator_id, :text, index: true
-  # column :is_general, :boolean
+  ACTIVITY_CLASS = ActivitySlack
+  FOREIGN_KEY = :channel_id
+  PRIMARY_KEY = :foreign_id
+  include Concerns::ActivityParent
 
   def self.find_or_create(params, integration)
     channel = self.find_by(foreign_id: params["id"], integration_id: integration.id)
