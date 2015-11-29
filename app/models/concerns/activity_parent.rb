@@ -2,7 +2,7 @@ module Concerns::ActivityParent
   extend ActiveSupport::Concern
 
   included do
-    has_many :activities, class_name: self::ACTIVITY_CLASS.name, foreign_key: self::FOREIGN_KEY
+    has_many :activities, class_name: self::ACTIVITY_CLASS.name, foreign_key: self::FOREIGN_KEY, primary_key: defined?(self::PRIMARY_KEY) ? self::PRIMARY_KEY : :id
     belongs_to :integration, class_name: self::ACTIVITY_CLASS.integration_class, foreign_key: :integration_id
   end
 
