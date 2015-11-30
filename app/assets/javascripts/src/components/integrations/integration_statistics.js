@@ -81,7 +81,7 @@ class IntegrationStatistics extends React.Component {
     let integration = this.props.integration;
     let Integration = Statistics[integration.type];
 
-    if (integration.status === Constants.IntegrationStatus[1]) return <IntegrationSyncing />
+    if (integration.status === Constants.IntegrationStatus[1]) return <IntegrationSyncing integration={integration} />
 
     return Integration && this.state.stats ?
       <div className='integration-statistics'>
