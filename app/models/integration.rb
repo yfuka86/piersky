@@ -58,6 +58,15 @@ class Integration < ActiveRecord::Base
     end
   end
 
+  def connect_identities_by_email
+    identities.where(user_team_id: nil).where.not(email_key: nil).each do |i|
+      user_team = team.user_teams.find_by(email: i.email_key)
+      if user_team
+        i.update!(user_team_id: user_team.id)
+      end
+    end
+  end
+
   def summary
     self.class.activity_class.summary(self)
   end
