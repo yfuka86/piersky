@@ -290,7 +290,7 @@ class Slack extends React.Component {
                 </div>
 
                 {this.isExpanded(identity.id) ? (
-                  <div className='expanded-area invitation-actions'>
+                  <div className='expanded-area'>
                     <div className='field'>
 
                     </div>
