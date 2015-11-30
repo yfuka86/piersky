@@ -59,7 +59,7 @@ Rails.application.configure do
     password: 'ykSreiPykSreiP'
   }
 
-  config.active_job.queue_adapter = :sidekiq
+  config.active_job.queue_adapter = :inline
 end
 
 Piersky::Application.config.middleware.use ExceptionNotification::Rack,

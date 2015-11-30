@@ -29,7 +29,7 @@ class IntegrationGithub < Integration
   # end
 
   def fetch_syncables
-    gh_client.repos.list.map(&:full_name)
+    gh_client.repos.list.select{|repo| repo.permissions.admin}.map(&:full_name)
   end
 
   def pull_requests
