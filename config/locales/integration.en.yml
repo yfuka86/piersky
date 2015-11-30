@@ -59,7 +59,7 @@ en:
         avg_per_day: 'Messages / Day'
         avg_per_day_users: 'Messages a Day / User '
       sentence:
-        message: 'in #%{channel}, sent %{count} messagess'
+        message: 'in #%{channel}, sent %{count} messages'
     github:
       name: 'Github'
       repository:
