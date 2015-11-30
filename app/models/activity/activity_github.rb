@@ -168,7 +168,11 @@ class ActivityGithub < ActiveRecord::Base
     when CODES[:commit_comment] then
       "#{base}/commit/#{commits.first.foreign_id}"
     when CODES[:push] then
-      "#{base}/compare/#{commits.first.foreign_id}...#{commits.last.foreign_id}"
+      if commits.first.foreign_id == commits.last.foreign_id
+        "#{base}/commit/#{commits.first.foreign_id}"
+      else
+        "#{base}/compare/#{commits.first.foreign_id}...#{commits.last.foreign_id}"
+      end
     end
   end
 end
