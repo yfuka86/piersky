@@ -5,6 +5,7 @@ import {Link} from 'react-router';
 import Constants from '../../constants/app';
 
 import IntegrationAction from '../../actions/integration';
+import RouteAction from '../../actions/route';
 import IntegrationStore from '../../stores/integration';
 import StatisticsStore from '../../stores/statistics';
 
@@ -50,11 +51,13 @@ class IntegrationStatistics extends React.Component {
 
   componentDidMount() {
     StatisticsStore.onChange(this.onChangeHandler);
+    if (this.props.integration.status === Constants.IntegrationStatus[2]) RouteAction.redirect('integration-settings', {id: this.props.integration.id});
     this._loadIntegrationStats(this.props.integration.id);
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState(this.getParamsFromStores(nextProps));
+    if (nextProps.integration.status === Constants.IntegrationStatus[2]) RouteAction.redirect('integration-settings', {id: nextProps.integration.id});
     this._loadIntegrationStats(nextProps.integration.id);
   }
 
@@ -81,7 +84,7 @@ class IntegrationStatistics extends React.Component {
     let integration = this.props.integration;
     let Integration = Statistics[integration.type];
 
-    if (integration.status === Constants.IntegrationStatus[1]) return <IntegrationSyncing />
+    if (integration.status === Constants.IntegrationStatus[1]) return <IntegrationSyncing integration={integration} />
 
     return Integration && this.state.stats ?
       <div className='integration-statistics'>
