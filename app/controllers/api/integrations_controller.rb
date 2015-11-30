@@ -25,8 +25,7 @@ class Api::IntegrationsController < Api::BaseController
     end
     render json: @integration, serializer: Api::IntegrationSerializer, root: nil, detail_required: true
   rescue => ex
-    fail ex
-    render_error t('integration.api.errors.update_failed'), status: :internal_server_error
+    render_error ex.message.presence || t('integration.api.errors.update_failed'), status: :internal_server_error
   end
 
   def destroy

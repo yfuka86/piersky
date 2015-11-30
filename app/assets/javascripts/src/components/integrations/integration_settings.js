@@ -7,7 +7,6 @@ import Constants from '../../constants/app';
 import IntegrationAction from '../../actions/integration';
 import IntegrationStore from '../../stores/integration';
 import UserStore from '../../stores/user';
-import Breadcrumb from '../../components/common/breadcrumb';
 
 import Slack from '../../components/integrations/settings/slack';
 import Github from '../../components/integrations/settings/github';

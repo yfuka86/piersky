@@ -67,6 +67,10 @@ class SettingBase extends React.Component {
     }).then(() => {
       ViewAction.showNotification({successes: [I18n.t('integration.general.settings_saved')]});
       this.setState({syncing: false});
+    }, (res) => {
+      let error = JSON.parse(res.text).error;
+      ViewAction.showNotification({errors: [error]});
+      this.setState({syncing: false});
     })
   }
 
