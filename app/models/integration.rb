@@ -12,7 +12,7 @@ class Integration < ActiveRecord::Base
   validates_associated :user
   validates_associated :setting
 
-  enum status: [:default, :syncing]
+  enum status: [:default, :syncing, :unset]
 
   class << self
     def create_with_user(auth, user)
@@ -24,6 +24,8 @@ class Integration < ActiveRecord::Base
           secret: auth.credentials.secret)
 
         integration.save!
+
+        integration
       end
     end
 

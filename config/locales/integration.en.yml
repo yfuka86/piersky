@@ -5,8 +5,6 @@ en:
         update_failed: 'failed to update integration'
         destroy_failed: 'failed to remove integration'
         not_found: "Couldn't find the integration"
-    breadcrumb:
-      settings: 'Settings'
     general:
       connect: 'Connect'
       no_integrations: 'No integrations to show.'
@@ -87,3 +85,5 @@ en:
         pr: '#%{number} %{name}'
         comment: '%{body} on %{target}'
         push: '%{commit_message}'
+      errors:
+        no_repository_error: 'You should add at least one repository to this integration.'

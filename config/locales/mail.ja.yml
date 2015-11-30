@@ -1,5 +1,7 @@
 ja:
   summary_mailer:
+    general:
+      activities: 'activities'
     daily_summary:
       subject: 'Daily Summary for %{team}'
     weekly_summary:

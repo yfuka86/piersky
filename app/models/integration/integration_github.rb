@@ -1,20 +1,30 @@
 class IntegrationGithub < Integration
+  class << self
+    def create_with_user(auth, user)
+      integration = super(auth, user)
+      integration.unset!
+      integration
+    end
+  end
+
   def create_identity
     user = gh_client.users.get
     super(user.id, {name: user.login})
   end
 
   def update_setting(params)
-    return if !params || !params[:repositories]
+    raise if !params
     ActiveRecord::Base.transaction do
-      if repositories = params[:repositories].map{|repository| repository[:name]}
+      repositories = params[:repositories].try(:map){|repository| repository[:name]}
+      if repositories.present?
         repositories.each do |repository|
           self.webhooks.create(uid: SecureRandom.hex, name: repository) unless self.webhooks.exists?(name: repository)
         end
         self.webhooks.each { |webhook| webhook.destroy unless webhook.name.in?(repositories) }
       else
-        self.webhooks.each(&:destroy)
+        raise I18n.t('integration.github.errors.no_repository_error')
       end
+      self.default! if self.unset?
     end
   end
 

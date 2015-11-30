@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import changeCase from 'change-case';
 import {Link, RouteHandler} from 'react-router';
+import Constants from '../../constants/app';
 
 import IntegrationAction from '../../actions/integration';
 import IntegrationStore from '../../stores/integration';
@@ -76,7 +77,12 @@ class IntegrationShow extends React.Component {
 
             <div className='integration-inner sky-tab-area'>
               <ul className='sky-tab-list'>
-                <Link to='integration-statistics' params={{id: integration.id}} className={lastRouteName ? '' : 'active'}>
+                <Link to='integration-statistics'
+                      params={{id: integration.id}}
+                      className={lastRouteName ? '' : 'active'}
+                      onClick={(e) => {
+                        if (integration.status === Constants.IntegrationStatus[2]) e.preventDefault();
+                      }}>
                   <li className='sky-tab'>
                     {I18n.t('integration.show.tab.stats')}
                   </li>

@@ -70,7 +70,7 @@ export default {
     SHOW_NOTIFICATION: null
   }),
 
-  IntegrationStatus: ['default', 'syncing'],
+  IntegrationStatus: ['default', 'syncing', 'unset'],
 
   Colors: ['red', 'pink', 'purple', 'deeppurple', 'indigo', 'blue', 'lightblue', 'cyan', 'teal', 'green',
            'lightgreen', 'lime', 'yellow', 'amber', 'orange', 'deeporange', 'brown', 'bluegrey', 'grey'],
