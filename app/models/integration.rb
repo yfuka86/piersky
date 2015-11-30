@@ -60,7 +60,7 @@ class Integration < ActiveRecord::Base
 
   def connect_identities_by_email
     identities.where(user_team_id: nil).where.not(email_key: nil).each do |i|
-      user_team = team.user_teams.find_by(email: i.email_key)
+      user_team = team.user_teams.joins(:user).find_by(users: {email: i.email_key})
       if user_team
         i.update!(user_team_id: user_team.id)
       end
