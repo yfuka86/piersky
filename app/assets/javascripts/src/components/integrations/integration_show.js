@@ -61,6 +61,7 @@ class IntegrationShow extends React.Component {
     let integration = this.state.integration;
     let integrationUser = UserStore.getUserById(integration.userId);
     let lastRouteName = _.last(RouteStore.getRouteNames());
+    let isStatDisabled = integration.status === Constants.IntegrationStatus[2];
     return (
       <div className='container-main'>
         {this.state.loading || !integration.details ? <Loading /> :
@@ -79,10 +80,8 @@ class IntegrationShow extends React.Component {
               <ul className='sky-tab-list'>
                 <Link to='integration-statistics'
                       params={{id: integration.id}}
-                      className={lastRouteName ? '' : 'active'}
-                      onClick={(e) => {
-                        if (integration.status === Constants.IntegrationStatus[2]) e.preventDefault();
-                      }}>
+                      className={isStatDisabled ? 'disabled' : (!lastRouteName ? 'active' : '')}
+                      onClick={(e) => {if (isStatDisabled) e.preventDefault()}}>
                   <li className='sky-tab'>
                     {I18n.t('integration.show.tab.stats')}
                   </li>

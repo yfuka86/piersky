@@ -40,6 +40,16 @@
         cursor: default;
       }
     }
+    a.disabled {
+      li.sky-tab {
+        color: $grey400;
+        &:hover {
+          color: $grey400;
+          text-decoration: none;
+        }
+      }
+      cursor: default;
+    }
   }
   .sky-tab-panel {
     width: 100%;
