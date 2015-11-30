@@ -13,9 +13,11 @@
         <p class='sentence'>
           <%= v[:sentence] %>
         </p>
-        <p class='content'>
-          <%= v[:contents][0] %>
-        </p>
+        <% v[:contents].each do |content| %>
+          <p class='content'>
+            <%= content %>
+          </p>
+        <% end %>
       </td>
     </tr>
   <% end %>
