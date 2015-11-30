@@ -43,6 +43,17 @@
         color: $grey600;
         vertical-align: middle;
       }
+      td.activity-count {
+        text-align: right;
+        font-size: 17px;
+        line-height: 36px;
+        color: $grey600;
+        vertical-align: middle;
+        .number {
+          font-size: 20px;
+          margin-right: 5px;
+        }
+      }
     }
     tr.user-identities-data-row {
       td.user-identities-data {

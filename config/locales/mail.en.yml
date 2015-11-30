@@ -1,5 +1,7 @@
 en:
   summary_mailer:
+    general:
+      activities: 'activities'
     daily_summary:
       subject: 'DailySummary for %{team}'
     weekly_summary:
