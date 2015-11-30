@@ -27,6 +27,7 @@ let routes = (
         <DefaultRoute handler={IntegrationsIndex} />
         <Route name='integrations-index' handler={IntegrationsIndex} path='index' />
         <Route name='integrations-new' handler={IntegrationsNew} path='new' />
+        <Redirect from=":id" to="integration-statistics" />
         <Route name='integration-show' handler={IntegrationShow} path=':id'>
           <DefaultRoute handler={IntegrationStatistics} />
           <Route name='integration-statistics' handler={IntegrationStatistics} path='statistics' />
@@ -41,6 +42,7 @@ let routes = (
           <DefaultRoute handler={InvitationsIndex} />
           <Route name='invitations-new' handler={InvitationsNew} path='new' />
         </Route>
+        <Redirect from=":id" to="user-statistics" />
         <Route name='user-show' handler={UserShow} path=':id' >
           <DefaultRoute handler={UserStatistics} />
           <Route name='user-statistics' handler={UserStatistics} path='statistics' />

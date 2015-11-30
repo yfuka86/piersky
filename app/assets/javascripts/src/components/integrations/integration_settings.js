@@ -29,6 +29,24 @@ class IntegrationSettings extends React.Component {
     };
   }
 
+  componentDidMount() {
+    // this is subview so props won't be changed and will be newly mounted
+    if (this.props.integration.status === Constants.IntegrationStatus[2]) {
+      window.addEventListener("beforeunload", this.alertConfirmation);
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('beforeunload', this.alertConfirmation);
+  }
+
+  alertConfirmation(e) {
+    let confirmationMessage = I18n.t('integration.settings.unset_confirm');
+
+    e.returnValue = confirmationMessage;     // Gecko and Trident
+    return confirmationMessage;              // Gecko and WebKit
+  }
+
   render() {
     let integration = this.props.integration;
     let IntegrationSettings = Settings[integration.type];

@@ -40,6 +40,7 @@ en:
         label: 'Descriptive Label'
       description:
         label: 'You can use this label to explain extra context of each integration.'
+      unset_confirm: "Your integration's settings is not completed. Are you sure you want to back?"
     wunderlist:
       name: 'Wunderlist'
     asana:
