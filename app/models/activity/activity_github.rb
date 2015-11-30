@@ -15,6 +15,8 @@ class ActivityGithub < ActiveRecord::Base
   ISSUE_EVENTS = ['assigned', 'unassigned', 'labeled', 'unlabeled', 'opened', 'closed', 'reopened']
   PR_EVENTS = ISSUE_EVENTS + ['synchronize']
 
+  GITHUB_ROOT = 'https://github.com'
+
   scope :issues_event, -> (integration) {
     by_integration(integration).
     where(code: CODES[:issues])
@@ -140,7 +142,7 @@ class ActivityGithub < ActiveRecord::Base
 
   # how to return link?
   def content
-    case code
+    str = case code
     when CODES[:issues] then
       I18n.t('integration.github.template.issue', number: issue.number, name: issue.title)
     when CODES[:pr] then
@@ -148,7 +150,25 @@ class ActivityGithub < ActiveRecord::Base
     when CODES[:commit_comment], CODES[:issue_comment], CODES[:pr_review_comment] then
       I18n.t('integration.github.template.comment', body: comment.body, target: issue.try(:title) || pull_request.try(:title) || commits.last.try(:message))
     when CODES[:push] then
-      I18n.t('integration.github.template.push', commit_message: commits.last.try(:message))
+      messages = commits.map(&:message).join(', ')
+      messages = messages.length > 100 ? "#{messages[0, 100]}..." : messages
+      I18n.t('integration.github.template.push', commit_message: messages)
+    end
+
+    "<a href='#{url}'>#{str}</a>".html_safe
+  end
+
+  def url
+    base = "#{GITHUB_ROOT}/#{repository.full_name}"
+    case code
+    when CODES[:issues], CODES[:issue_comment] then
+      "#{base}/issues/#{issue.number}"
+    when CODES[:pr], CODES[:pr_review_comment] then
+      "#{base}/pull/#{pull_request.number}"
+    when CODES[:commit_comment] then
+      "#{base}/commit/#{commits.first.foreign_id}"
+    when CODES[:push] then
+      "#{base}/compare/#{commits.first.foreign_id}...#{commits.last.foreign_id}"
     end
   end
 end
