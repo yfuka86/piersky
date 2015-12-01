@@ -34,6 +34,7 @@ en:
     show:
       tab:
         stats: 'Stats'
+        disabled_stats_tooltip: 'Please setup this integration before view stats!'
         settings: 'Settings'
     settings:
       label:

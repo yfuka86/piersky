@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import changeCase from 'change-case';
 import {Link, RouteHandler} from 'react-router';
+import ReactTooltip from 'react-tooltip';
 import Constants from '../../constants/app';
 
 import IntegrationAction from '../../actions/integration';
@@ -80,7 +81,9 @@ class IntegrationShow extends React.Component {
                 <Link to='integration-statistics'
                       params={{id: integration.id}}
                       className={isStatDisabled ? 'disabled' : ''}
-                      onClick={(e) => {if (isStatDisabled) e.preventDefault()}}>
+                      onClick={(e) => {if (isStatDisabled) e.preventDefault()}}
+                      data-tip={I18n.t('integration.show.tab.disabled_stats_tooltip')}>
+                  {isStatDisabled ? <ReactTooltip type='error'/> : <span/>}
                   <li className='sky-tab'>
                     {I18n.t('integration.show.tab.stats')}
                   </li>
