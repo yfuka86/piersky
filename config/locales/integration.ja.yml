@@ -23,7 +23,7 @@ ja:
       per_day: 'Per Day'
       activities: 'Activities'
     board:
-      index: 'Integration Dashboard'
+      index: 'Integrations Dashboard'
       new: 'Add New Integration'
       show_description: 'Added by %{userName} on %{createdAt}'
       settings: 'Integration Settings'
@@ -42,6 +42,7 @@ ja:
         label: 'Descriptive Label'
       description:
         label: 'You can use this label to explain extra context of each integration.'
+      unset_confirm: "Your integration's settings is not completed. Are you sure you want to back?"
     wunderlist:
       name: 'Wunderlist'
     asana:
