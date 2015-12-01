@@ -15,6 +15,12 @@ class Integration < ActiveRecord::Base
   enum status: [:default, :syncing, :unset]
 
   class << self
+    def refresh_all_data
+      self.find_each do |i|
+        i.refresh_data
+      end
+    end
+
     def create_with_user(auth, user)
       self.new(user: user, team: user.current_team).tap do |integration|
         raise ActiveRecordNotFound unless integration
