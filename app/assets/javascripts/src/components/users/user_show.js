@@ -44,7 +44,6 @@ class UserShow extends React.Component {
 
   render() {
     let user = this.state.user;
-    let lastRouteName = _.last(RouteStore.getRouteNames());
     return (
       <div className='container-main'>
         <div className='user-show'>
@@ -52,7 +51,7 @@ class UserShow extends React.Component {
 
           <div className='user-inner sky-tab-area'>
             <ul className='sky-tab-list'>
-              <Link to='user-statistics' params={{id: user.id}} className={lastRouteName ? '' : 'active'}>
+              <Link to='user-statistics' params={{id: user.id}}>
                 <li className='sky-tab'>
                   {I18n.t('user.show.tab.stats')}
                 </li>
