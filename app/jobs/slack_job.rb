@@ -4,8 +4,12 @@ class SlackJob < ActiveJob::Base
   def perform(integration_id)
     ActiveRecord::Base.transaction do
       integration = IntegrationSlack.find_by(id: integration_id)
+      team_info = integration.team_info
+
+      return unless team_info
+
       integration.connect_identities_by_email
-      team = SlackTeam.find_or_create(integration.team_info, integration)
+      team = SlackTeam.find_or_create(team_info, integration)
 
       # fix range of time
       now = DateTime.now.to_f
