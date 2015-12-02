@@ -67,8 +67,12 @@ class ActivitySlack < ActiveRecord::Base
 
   def message_link
     domain = SlackTeam.find_by(integration_id: self.identity.integration.id).domain
-    channel = self.channel.name
+    channel = self.channel.try(:name)
     ts = (self.ts.to_f - 60).to_s.gsub('.', '')
-    "https://#{domain}.slack.com/archives/#{self.channel.name}/s#{ts}"
+    if domain.present? && channel.present? && ts.present?
+      "https://#{domain}.slack.com/archives/#{channel}/s#{ts}"
+    else
+      ""
+    end
   end
 end
