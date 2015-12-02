@@ -61,7 +61,8 @@ class ActivitySlack < ActiveRecord::Base
         m ? m[2] : str
       end
     end
-    m += "<a href='#{self.message_link}'>show</a>"
+    link = self.message_link
+    m += "   <a href='#{self.message_link}'>view</a>" if link
     m.html_safe
   end
 
@@ -72,7 +73,7 @@ class ActivitySlack < ActiveRecord::Base
     if domain.present? && channel.present? && ts.present?
       "https://#{domain}.slack.com/archives/#{channel}/s#{ts}"
     else
-      ""
+      nil
     end
   end
 end
