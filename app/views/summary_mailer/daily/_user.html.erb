@@ -13,7 +13,7 @@
 <tr class='user-identities-data-row'>
   <td class='user-identities-data' colspan='3'>
     <% identities.map do |identity| %>
-      <% if identity[:summary].size > 0 && identity[:object].integration.present? %>
+      <% if identity[:summary].size > 0 %>
         <%= render "summary_mailer/daily/user_identity", identity: identity %>
       <% end %>
     <% end %>
