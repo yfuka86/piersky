@@ -4,8 +4,10 @@ import _ from 'lodash';
 import moment from 'moment';
 import Constants from '../constants/app';
 
+import RouteAction from '../actions/route';
 import UserStore from '../stores/user';
 import TeamStore from '../stores/team';
+import IntegrationStore from '../stores/integration';
 import UserIcon from '../components/users/user_icon';
 
 class Home extends React.Component {
@@ -22,11 +24,13 @@ class Home extends React.Component {
       periodLength: 1,
       data: {
         activities: 0
-      }
+      },
+      hasIntegration: !!IntegrationStore.getIntegrations().length
     };
   }
 
   componentDidMount() {
+    if (!this.state.hasIntegration) RouteAction.redirect('integrations-new');
     TeamStore.onChange(this.onChangeHandler);
     UserStore.onChange(this.onChangeHandler);
     this.calculateSummary();
