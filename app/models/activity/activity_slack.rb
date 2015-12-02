@@ -2,7 +2,7 @@ class ActivitySlack < ActiveRecord::Base
   include Concerns::Activity
   self.inheritance_column = nil
 
-  belongs_to :channel, class_name: 'SlackChannel', foreign_key: :channel_id
+  belongs_to :channel, class_name: 'SlackChannel', foreign_key: :channel_id, primary_key: :foreign_id
 
   scope :by_channel, -> (integration, channel) { by_channel_id(integration, channel.id) }
   scope :by_channel_id, -> (integration, channel_id) { by_integration(integration).where(channel_id: channel_id)}
