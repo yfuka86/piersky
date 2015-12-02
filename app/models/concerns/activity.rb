@@ -2,6 +2,8 @@ module Concerns::Activity
   extend ActiveSupport::Concern
 
   included do
+    belongs_to :identity
+
     scope :by_integration, -> (integration) { where(identity_id: integration.identities.pluck(:id)) }
   end
 

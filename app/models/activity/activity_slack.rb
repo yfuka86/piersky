@@ -44,7 +44,7 @@ class ActivitySlack < ActiveRecord::Base
   end
 
   def content
-    message.gsub(/<(.*?)>/) do |word|
+    m = message.gsub(/<(.*?)>/) do |word|
       if $1[0, 2] == '@U'
         ary = $1.split('|')
         "@#{IdentitySlack.find_by(primary_key: ary[0][1..-1]).try(:name) || ary[1].presence || ary[0][1..-1]}"
@@ -60,6 +60,15 @@ class ActivitySlack < ActiveRecord::Base
         m = $1.match(/(.*)\|(.*)/)
         m ? m[2] : str
       end
-    end.html_safe
+    end
+    m += "<a href='#{self.message_link}'>show</a>"
+    m.html_safe
+  end
+
+  def message_link
+    domain = SlackTeam.find_by(integration_id: self.identity.integration.id).domain
+    channel = self.channel.name
+    ts = (self.ts.to_f - 60).to_s.gsub('.', '')
+    "https://#{domain}.slack.com/archives/#{self.channel.name}/s#{ts}"
   end
 end
