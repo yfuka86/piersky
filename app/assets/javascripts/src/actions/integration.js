@@ -48,13 +48,13 @@ export default {
       .end((error, res) => {
         if (res.status === 200){
           let json = JSON.parse(res.text);
-          resolve();
+          resolve(json);
           Dispatcher.handleServerAction({
             type: ActionTypes.LOAD_INTEGRATION_STATS,
             json: json
           });
         } else {
-          reject();
+          reject(res);
         }
       })
     });

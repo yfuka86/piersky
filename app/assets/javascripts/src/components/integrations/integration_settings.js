@@ -54,7 +54,7 @@ class IntegrationSettings extends React.Component {
 
     return integration.id ?
       <div className='integration-settings'>
-        <p className='section-title'>{I18n.t('integration.board.settings')}</p>
+        <p className='section-title'>{I18n.t('integration.settings.title')}</p>
         {IntegrationSettings ? <IntegrationSettings integration={integration} /> : <span/>}
       </div> : <span/>
   }

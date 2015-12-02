@@ -5,8 +5,6 @@ ja:
         update_failed: 'failed to update integration'
         destroy_failed: 'failed to remove integration'
         not_found: "Couldn't find the integration"
-    breadcrumb:
-      settings: 'Settings'
     general:
       connect: 'Connect'
       no_integrations: 'No integrations to show.'
@@ -22,22 +20,24 @@ ja:
       total: 'Total'
       per_day: 'Per Day'
       activities: 'Activities'
-    board:
-      index: 'Integrations Dashboard'
-      new: 'Add New Integration'
-      show_description: 'Added by %{userName} on %{createdAt}'
-      settings: 'Integration Settings'
+      add: 'Add New Integration'
     index:
+      title: 'Integrations Dashboard'
       last_31_days: 'Last 31 days'
       view_detail: 'View Detail'
+    new:
+      title: 'Add New Integration'
     list:
       dashboard: 'Dashboard'
       add: 'Add new integration'
     show:
+      description: 'Added by %{userName} on %{createdAt}'
       tab:
         stats: 'Stats'
+        disabled_stats_tooltip: 'Please setup this integration before view stats!'
         settings: 'Settings'
     settings:
+      title: 'Integration Settings'
       label:
         label: 'Descriptive Label'
       description:
@@ -60,7 +60,7 @@ ja:
         avg_per_day: 'Messages / Day'
         avg_per_day_users: 'Messages a Day / User '
       sentence:
-        message: 'in #%{channel}, sent %{count} messagess'
+        message: 'in #%{channel}, sent %{count} messages'
     github:
       name: 'Github'
       repository:

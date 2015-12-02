@@ -18,7 +18,7 @@ class IntegrationsNew extends React.Component {
   render() {
     return (
       <div className='container-main'>
-        <p className='title'>{I18n.t('integration.board.new')}</p>
+        <p className='title'>{I18n.t('integration.new.title')}</p>
         <div className='row-list-selector'>
           {_.map(Constants.Integrations, (name) => {
             return (

@@ -123,7 +123,7 @@ class ActivityGithub < ActiveRecord::Base
           activity = self.create(code: CODES[:push])
           activity.ref = p["ref"]
           p["commits"].each{|c| GithubCommit.find_or_create!(c, integration, activity)}
-          activity.ts = p["head_commit"]["timestamp"]
+          activity.ts = p["head_commit"].try(:[], "timestamp") || Time.current
         end
 
         if defined?(activity) && activity.class == self

@@ -71,7 +71,7 @@ class IntegrationShow extends React.Component {
             </div>
             <p className='title'>{integration.name}</p>
             <p className='description'>
-              {I18n.t('integration.board.show_description', {
+              {I18n.t('integration.show.description', {
                 userName: integrationUser.identity,
                 createdAt: integration.createdAt.format('MMMM Do, YYYY')})}
             </p>

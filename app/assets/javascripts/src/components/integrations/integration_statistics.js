@@ -5,8 +5,10 @@ import {Link} from 'react-router';
 import Constants from '../../constants/app';
 
 import IntegrationAction from '../../actions/integration';
+import IdentityAction from '../../actions/identity';
 import RouteAction from '../../actions/route';
 import IntegrationStore from '../../stores/integration';
+import IdentityStore from '../../stores/identity';
 import StatisticsStore from '../../stores/statistics';
 
 import IntegrationSyncing from '../../components/integrations/integration_syncing';
@@ -51,6 +53,7 @@ class IntegrationStatistics extends React.Component {
 
   componentDidMount() {
     StatisticsStore.onChange(this.onChangeHandler);
+    IdentityStore.onChange(this.onChangeHandler);
     if (this.props.integration.status === Constants.IntegrationStatus[2]) RouteAction.redirect('integration-settings', {id: this.props.integration.id});
     this._loadIntegrationStats(this.props.integration.id);
   }
@@ -63,14 +66,24 @@ class IntegrationStatistics extends React.Component {
 
   componentWillUnmount() {
     StatisticsStore.offChange(this.onChangeHandler);
+    IdentityStore.offChange(this.onChangeHandler);
   }
 
   _loadIntegrationStats(id) {
     if (this.props.integration.status === Constants.IntegrationStatus[1]) return;
     if (!StatisticsStore.getIntegrationStatsById(id) && !this.state.loading) {
       this.setState({loading: true}, () => {
-        IntegrationAction.stats(id).then((res) => {
-          this.setState({loading: false});
+        IntegrationAction.stats(id).then((json) => {
+          let hasIdentities = _.every(json.identities, (i) => {
+            return _.size(IdentityStore.getIdentityById(i.id)) > 0;
+          })
+          if (!hasIdentities) {
+            IdentityAction.load().then(() => {
+              this.setState({loading: false});
+            })
+          } else {
+            this.setState({loading: false});
+          }
         });
       });
     }

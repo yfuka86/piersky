@@ -19,9 +19,7 @@ class IntegrationSyncing extends React.Component {
 
   componentDidMount() {
     this.id = setInterval(() => {
-      IdentityAction.load().then(() => {
-        IntegrationAction.show(this.props.integration.id).then(() => {});
-      });
+      IntegrationAction.show(this.props.integration.id).then(() => {});
     }, 5000);
   }
 

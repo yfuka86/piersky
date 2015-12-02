@@ -8,31 +8,34 @@
     padding: 10px 0;
     border-right: 1px solid $grey400;
     min-height: 650px;
-    a.active {
+    a {
       li {
-        color: $blue500;
-      }
-    }
-    li {
-      position: relative;
-      padding: 10px 15px 10px 45px;
-      color: $grey700;
-      cursor: pointer;
-      @include lato-normal;
-      font-size: 16px;
+        position: relative;
+        padding: 10px 15px 10px 45px;
+        color: $grey700;
+        cursor: pointer;
+        @include lato-normal;
+        @include text-ellipsis;
+        font-size: 16px;
 
-      &:hover {
-        color: $grey600;
-      }
-      .icon-area {
-        position: absolute;
-        top: 9px;
-        left: 8px;
-        .icon {
-          @include icon(24px, 20px);
+        &:hover {
+          color: $grey600;
         }
-        .simple-user-icon {
-          @include simple-user-icon(24px, 16px);
+        .icon-area {
+          position: absolute;
+          top: 9px;
+          left: 8px;
+          .icon {
+            @include icon(24px, 20px);
+          }
+          .simple-user-icon {
+            @include simple-user-icon(24px, 16px);
+          }
+        }
+      }
+      &.active {
+        li {
+          color: $blue500;
         }
       }
     }
