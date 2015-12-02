@@ -87,7 +87,12 @@ class UsersIndex extends React.Component {
   render() {
     return (
       <div className='container-main'>
-        <p className='title'>{I18n.t('webapp.users.index')}</p>
+        <p className='title'>
+          {I18n.t('webapp.users.index')}
+          <Link to='invitations' className='title-right'>
+            <button className='flat-button-orange'>{I18n.t('user.general.add')}</button>
+          </Link>
+        </p>
         <div className='users-index'>
           <div className='option-header'>
             <div className='content-area'>

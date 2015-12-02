@@ -21,6 +21,10 @@
         padding: 20px 0;
         @include lato-thin;
         font-size: 36px;
+        a.title-right {
+          float: right;
+          margin-right: 10px;
+        }
       }
       &.subtitle {
         padding: 5px 0;

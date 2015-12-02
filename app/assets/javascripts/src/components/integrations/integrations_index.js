@@ -149,7 +149,12 @@ class IntegrationsIndex extends React.Component {
 
     return (
       <div className='container-main'>
-        <p className='title'>{I18n.t('integration.index.title')}</p>
+        <p className='title'>
+          {I18n.t('integration.index.title')}
+          <Link to='integrations-new' className='title-right'>
+            <button className='flat-button-green'>{I18n.t('integration.general.add')}</button>
+          </Link>
+        </p>
         {integrationList}
       </div>
     );

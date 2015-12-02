@@ -114,7 +114,15 @@ class Home extends React.Component {
   render() {
     return (
       <div className='home container'>
-        <p className='title'>{I18n.t('webapp.home.index')}</p>
+        <p className='title'>
+          {I18n.t('webapp.home.index')}
+          <Link to='invitations' className='title-right'>
+            <button className='flat-button-orange'>{I18n.t('user.general.add')}</button>
+          </Link>
+          <Link to='integrations-new' className='title-right'>
+            <button className='flat-button-green'>{I18n.t('integration.general.add')}</button>
+          </Link>
+        </p>
         <div className='team-summary'>
           <div className='graph-action standard-form-horizontal'>
             <div className='field'>

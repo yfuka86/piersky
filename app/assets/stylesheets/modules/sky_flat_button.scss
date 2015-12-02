@@ -80,7 +80,7 @@
 
 @mixin flat-button-outline {
   @include flat-button-base;
-  @include lato-thin;
+  @include lato-normal;
 
   border: 1px solid;
   color: $white;
@@ -93,11 +93,11 @@
 @mixin flat-button-identity {
   @include flat-button-outline;
   font-size: 16px;
-  border-color: lighten($IDENTITY_COLOR, 5);
-  background-color: lighten($IDENTITY_COLOR, 5);
+  border-color: lighten($blue800, 5);
+  background-color: lighten($blue800, 5);
   &:hover, &:active {
-    border-color: lighten($IDENTITY_COLOR, 10);
-    background-color: lighten($IDENTITY_COLOR, 10);
+    border-color: lighten($blue800, 10);
+    background-color: lighten($blue800, 10);
   }
 }
 
@@ -108,14 +108,44 @@
 @mixin flat-button-red {
   @include flat-button-outline;
   font-size: 16px;
-  border-color: lighten($red500, 5);
-  background-color: lighten($red500, 5);
+  border-color: lighten($red800, 2);
+  background-color: lighten($red800, 2);
   &:hover, &:active {
-    border-color: lighten($red500, 10);
-    background-color: lighten($red500, 10);
+    border-color: lighten($red800, 5);
+    background-color: lighten($red800, 5);
   }
 }
 
 .flat-button-red {
   @include flat-button-red;
+}
+
+@mixin flat-button-orange {
+  @include flat-button-outline;
+  font-size: 16px;
+  border-color: lighten($deeporangeA700, 5);
+  background-color: lighten($deeporangeA700, 5);
+  &:hover, &:active {
+    border-color: lighten($deeporangeA700, 6);
+    background-color: lighten($deeporangeA700, 6);
+  }
+}
+
+.flat-button-orange {
+  @include flat-button-orange;
+}
+
+@mixin flat-button-green {
+  @include flat-button-outline;
+  font-size: 16px;
+  border-color: lighten($teal700, 5);
+  background-color: lighten($teal700, 5);
+  &:hover, &:active {
+    border-color: lighten($teal700, 8);
+    background-color: lighten($teal700, 8);
+  }
+}
+
+.flat-button-green {
+  @include flat-button-green;
 }

@@ -64,7 +64,6 @@
       @include flat-button-normal;
       &[type='submit'] {
         @include flat-button-identity;
-        font-weight: 300;
       }
       &.button-red {
         @include flat-button-red;
