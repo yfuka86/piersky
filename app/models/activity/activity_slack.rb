@@ -46,9 +46,9 @@ class ActivitySlack < ActiveRecord::Base
   def content
     message.gsub(/<(.*?)\|?(.*?)>/) do |word|
       if $1[0, 2] == '@U'
-        "@#{IdentitySlack.find_by(primary_key: $1[1..-1]).try(:name) || ($2).presence || $1[1..-1]}"
+        "@#{IdentitySlack.find_by(primary_key: $1[1..-1]).try(:name) || $1[1..-1]}"
       elsif $1[0, 2] == '#C'
-        "##{SlackChannel.find_by(foreign_id: $1[1..-1]).try(:name) || ($2).presence || $1[1..-1]}"
+        "##{SlackChannel.find_by(foreign_id: $1[1..-1]).try(:name) || $1[1..-1]}"
       elsif $1[0, 4] == 'http'
         str = $1
         m = $1.match(/(.*)\|(.*)/)
