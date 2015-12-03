@@ -13,8 +13,8 @@ import StatisticsStore from '../../stores/statistics';
 
 import IntegrationSyncing from '../../components/integrations/integration_syncing';
 import Loading from '../../components/common/loading';
-import Slack from '../../components/statistics/slack';
-import Github from '../../components/statistics/github';
+import Slack from '../../components/statistics/integrations/slack';
+import Github from '../../components/statistics/integrations/github';
 
 const Statistics = {
   Slack: Slack,

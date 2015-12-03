@@ -59,6 +59,10 @@
         border-color: $blue500;
         @include box-shadow(0, 0, 3px, 0, $blue200 inset);
       }
+      &:disabled {
+        border-color: $grey300;
+        color: $grey500;
+      }
     }
     button {
       @include flat-button-normal;

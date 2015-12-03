@@ -123,11 +123,11 @@
 @mixin flat-button-orange {
   @include flat-button-outline;
   font-size: 16px;
-  border-color: lighten($deeporangeA700, 5);
-  background-color: lighten($deeporangeA700, 5);
+  border-color: lighten($orangeA700, 5);
+  background-color: lighten($orangeA700, 5);
   &:hover, &:active {
-    border-color: lighten($deeporangeA700, 10);
-    background-color: lighten($deeporangeA700, 10);
+    border-color: lighten($orangeA700, 10);
+    background-color: lighten($orangeA700, 10);
   }
 }
 

@@ -4,13 +4,12 @@
   .users-stats {
     .content-area {
       .total, .avg {
+        display: table-cell;
         width: 80px;
         text-align: right;
       }
       .user-graph {
-        display: inline-block;
-        height: 100%;
-        width: 360px;
+        display: table-cell;
         vertical-align: middle;
       }
     }

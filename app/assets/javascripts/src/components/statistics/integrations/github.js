@@ -1,11 +1,11 @@
 import React from 'react';
 import _ from 'lodash';
 import moment from 'moment';
-import Constants from '../../constants/app';
-import {getTicks} from '../../utils/app_module';
+import Constants from '../../../constants/app';
+import {getTicks} from '../../../utils/app_module';
 
-import IdentityStore from '../../stores/identity';
-import UserStore from '../../stores/user';
+import IdentityStore from '../../../stores/identity';
+import UserStore from '../../../stores/user';
 
 class Github extends React.Component {
   static get defaultProps() {
@@ -30,7 +30,7 @@ class Github extends React.Component {
   get initialState() {
     return {
       activity: 'default',
-      periodLength: 31,
+      periodLength: 28,
       periodEndAt: moment(this.props.stats.today)
     }
   }
@@ -124,7 +124,7 @@ class Github extends React.Component {
           </div>
           <div className='field'>
             <select onChange={this.changePeriod.bind(this)}>
-              <option value={31} >{I18n.t('integration.github.period.last_month')}</option>
+              <option value={28} >{I18n.t('integration.github.period.last_month')}</option>
               <option value={7} >{I18n.t('integration.github.period.last_week')}</option>
             </select>
           </div>
