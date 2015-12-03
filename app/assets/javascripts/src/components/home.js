@@ -148,12 +148,11 @@ class Home extends React.Component {
           <div className='users'>
             <div className='option-header'>
               <div className='content-area'>
+                <div className='icon-area' />
                 <p className='main-content name'>{I18n.t('webapp.home.users.member')}</p>
-                <span className='right-content'>
-                  <p className='main-content activity'>{I18n.t('webapp.home.users.activities')}</p>
-                  <div className='user-graph' />
-                  <div className='link' />
-                </span>
+                <p className='main-content activity'>{I18n.t('webapp.home.users.activities')}</p>
+                <div className='user-graph' />
+                <div className='view-detail' />
               </div>
             </div>
 
@@ -165,30 +164,33 @@ class Home extends React.Component {
                     <div className='icon-area'>
                       <UserIcon user={user} />
                     </div>
-                    <Link to='user-show' params={{id: user.id}} className='link'>
-                      <p className='name'>
-                        {user.identity}
-                      </p>
-                    </Link>
 
-                    <span className='right-content'>
-                      <p className='main-content activity'>
-                        {this.state.periodLength === 1 ?
-                         (user.summary.recent.Slack || 0) + (user.summary.recent.Github || 0) :
-                         _.sum(user.summary.count.slice(0, this.state.periodLength))}
-                      </p>
+                    <div className='name'>
+                      <Link to='user-show' params={{id: user.id}} className='link'>
+                        <p>{user.identity}</p>
+                      </Link>
+                    </div>
+
+                    <p className='main-content activity'>
                       {this.state.periodLength === 1 ?
-                        <div className='user-graph recent'>
-                          <span className={['icon', 'slack-logo'].join(' ')} />
-                          {user.summary.recent.Slack || 0}
-                          <span className={['icon', 'github-logo'].join(' ')} />
-                          {user.summary.recent.Github || 0}
-                        </div> :
-                        <div className='user-graph' id={`user_graph_${user.id}`} />}
+                       (user.summary.recent.Slack || 0) + (user.summary.recent.Github || 0) :
+                       _.sum(user.summary.count.slice(0, this.state.periodLength))}
+                    </p>
+
+                    {this.state.periodLength === 1 ?
+                      <div className='user-graph recent'>
+                        <span className={['icon', 'slack-logo'].join(' ')} />
+                        {user.summary.recent.Slack || 0}
+                        <span className={['icon', 'github-logo'].join(' ')} />
+                        {user.summary.recent.Github || 0}
+                      </div> :
+                      <div className='user-graph' id={`user_graph_${user.id}`} />}
+
+                    <div className='view-detail'>
                       <Link to='user-show' params={{id: user.id}} className='link'>
                         <button>{I18n.t('user.index.view_detail')}</button>
                       </Link>
-                    </span>
+                    </div>
                   </div>
                 </div>
               );
