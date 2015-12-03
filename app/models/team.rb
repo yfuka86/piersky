@@ -11,6 +11,7 @@ class Team < ActiveRecord::Base
   class << self
     def send_daily_summary
       self.find_each do |team|
+        next if team.integrations.blank?
         team.user_teams.each do |user_team|
           mail = SummaryMailer.daily(user_team.id).deliver_later
         end
@@ -19,6 +20,7 @@ class Team < ActiveRecord::Base
 
     def test_send_daily_summary
       self.find_each do |team|
+        next if team.integrations.blank?
         team.user_teams.each do |user_team|
           if user_team.user.email.in?(['yuta@piersky.com', 'yurimatsui37@gmail.com'])
             mail = SummaryMailer.daily(user_team.id).deliver_later
