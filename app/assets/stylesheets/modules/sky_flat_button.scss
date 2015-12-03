@@ -126,8 +126,8 @@
   border-color: lighten($deeporangeA700, 5);
   background-color: lighten($deeporangeA700, 5);
   &:hover, &:active {
-    border-color: lighten($deeporangeA700, 6);
-    background-color: lighten($deeporangeA700, 6);
+    border-color: lighten($deeporangeA700, 10);
+    background-color: lighten($deeporangeA700, 10);
   }
 }
 

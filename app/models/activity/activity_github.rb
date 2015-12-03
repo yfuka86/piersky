@@ -155,7 +155,11 @@ class ActivityGithub < ActiveRecord::Base
       I18n.t('integration.github.template.push', commit_message: messages)
     end
 
-    "<a href='#{url}'>#{str}</a>".html_safe
+    if url.present?
+      "<a href='#{url}'>#{str}</a>".html_safe
+    else
+      "#{str}"
+    end
   end
 
   def url
@@ -168,11 +172,14 @@ class ActivityGithub < ActiveRecord::Base
     when CODES[:commit_comment] then
       "#{base}/commit/#{commits.first.foreign_id}"
     when CODES[:push] then
-      if commits.first.foreign_id == commits.last.foreign_id
-        "#{base}/commit/#{commits.first.foreign_id}"
+      if commits.first.present?
+        if commits.first.foreign_id == commits.last.foreign_id
+          "#{base}/commit/#{commits.first.foreign_id}"
+        else
+          "#{base}/compare/#{commits.first.foreign_id}...#{commits.last.foreign_id}"
+        end
       else
-        "#{base}/compare/#{commits.first.foreign_id}...#{commits.last.foreign_id}"
-      end
+        ""
     end
   end
 end
