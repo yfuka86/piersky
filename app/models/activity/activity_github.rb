@@ -180,6 +180,7 @@ class ActivityGithub < ActiveRecord::Base
         end
       else
         ""
+      end
     end
   end
 end
