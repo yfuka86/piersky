@@ -49,7 +49,7 @@ const IdentityStore = assign({}, BaseStore, {
     this.setIdentities(identities);
   },
 
-  replaceIntegration(identity) {
+  replaceIdentity(identity) {
     let idx = _.findIndex(this.getIdentities(), (i) => {
       return i.id === identity.id;
     })

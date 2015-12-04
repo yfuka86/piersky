@@ -7,18 +7,6 @@ import Constants from '../../constants/app';
 import UserStore from '../../stores/user';
 
 class UserSelect extends React.Component {
-  static get defaultProps() {
-    return {
-      callback: () => {}
-    };
-  }
-
-  static get propTypes() {
-    return {
-      callback: React.PropTypes.func
-    };
-  }
-
   constructor(props) {
     super(props);
     this.state = this.initialState;
@@ -33,13 +21,13 @@ class UserSelect extends React.Component {
 
   onChangeSelect(e) {
     this.setState({value: e.target.value});
-    this.props.callback(e);
+    if (_.isFunction(this.props.onChange)) this.props.onChange(e);
   }
 
   render() {
     return (
       <div className='user-select field'>
-        <select onChange={this.props.callback} value={this.state.value}>
+        <select onChange={this.onChangeSelect.bind(this)} value={this.state.value}>
           {[
             <option key={-1} value='-1'>{I18n.t('user.identity.placeholder')}</option>
           ].concat(

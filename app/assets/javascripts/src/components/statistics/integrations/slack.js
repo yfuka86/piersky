@@ -224,7 +224,7 @@ class Slack extends React.Component {
     let updateIdentity = (identityId, e) => {
       let userId = parseInt(e.target.value, 10);
       IdentityAction.update({id: identityId, user_id: userId}).then(() => {}, (res) => {
-
+        // todo
       });
     }
 
@@ -244,7 +244,7 @@ class Slack extends React.Component {
             </div>
 
             <div className='user-select-form'>
-              <UserSelect callback={updateIdentity.bind(this, identity.id)} value={!!user ? user.id : null} />
+              <UserSelect onChange={updateIdentity.bind(this, identity.id)} value={!!user ? user.id : null} />
             </div>
 
             <p className='main-content total'>{total}</p>
