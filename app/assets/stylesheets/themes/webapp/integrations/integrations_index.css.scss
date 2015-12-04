@@ -18,13 +18,13 @@
       }
       .name {
         display: table-cell;
-        font-size: 24px;
         width: 180px;
         vertical-align: middle;
         a {
           width: 100%;
           color: $grey600;
           p {
+            font-size: 20px;
             width: 100%;
             @include lato-normal;
             @include text-ellipsis;
