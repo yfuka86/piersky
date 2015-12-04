@@ -26,14 +26,20 @@ class UserSelect extends React.Component {
 
   get initialState() {
     return {
-      users: UserStore.getUsers()
+      users: UserStore.getUsers(),
+      value: this.props.value || '-1'
     };
+  }
+
+  onChangeSelect(e) {
+    this.setState({value: e.target.value});
+    this.props.callback(e);
   }
 
   render() {
     return (
       <div className='user-select field'>
-        <select onChange={this.props.callback} {...this.props}>
+        <select onChange={this.props.callback} value={this.state.value}>
           {[
             <option key={-1} value='-1'>{I18n.t('user.identity.placeholder')}</option>
           ].concat(

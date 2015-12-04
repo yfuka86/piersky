@@ -25,7 +25,7 @@ export default {
   update(params) {
     return new Promise((resolve, reject) => {
       request
-      .put(`${APIEndpoints.IDENTITY}/${params.id}`)
+      .put(`${APIEndpoints.IDENTITIES}/${params.id}`)
       .set('X-CSRF-Token', CSRFToken())
       .send(params)
       .end((error, res) => {
