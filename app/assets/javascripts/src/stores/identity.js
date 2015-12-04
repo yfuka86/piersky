@@ -43,6 +43,23 @@ const IdentityStore = assign({}, BaseStore, {
     return user ? user.identity : this.getIdentityById(id).name;
   },
 
+  addIdentity(identity) {
+    let identities = this.getIdentities();
+    identities.push(identity);
+    this.setIdentities(identities);
+  },
+
+  replaceIdentity(identity) {
+    let idx = _.findIndex(this.getIdentities(), (i) => {
+      return i.id === identity.id;
+    })
+    if (idx >= 0) {
+      this.getIdentities()[idx] = identity;
+    } else {
+      this.addIdentity(identity);
+    }
+  },
+
   parse(json) {
     return {
       id: json.id,
@@ -67,6 +84,11 @@ IdentityStore.dispatchToken = Dispatcher.register(payload => {
       IdentityStore.setIdentities(_.map(action.json.identities, (identityJson) => {
         return IdentityStore.parse(identityJson);}
       ));
+      IdentityStore.emitChange();
+      break;
+
+    case ActionTypes.UPDATE_IDENTITY:
+      IdentityStore.replaceIdentity(IdentityStore.parse(action.json));
       IdentityStore.emitChange();
       break;
 

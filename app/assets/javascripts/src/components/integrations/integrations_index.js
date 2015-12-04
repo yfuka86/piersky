@@ -108,12 +108,11 @@ class IntegrationsIndex extends React.Component {
         <div className='integrations-index'>
           <div className='option-header'>
             <div className='content-area'>
+              <div className='icon-area' />
               <div className='name' />
-              <span className='right-content'>
-                <p className='main-content activity'>{I18n.t('integration.general.activities')}<br/>{I18n.t('integration.index.last_31_days')}</p>
-                <div className='integration-graph' />
-                <div className='link' />
-              </span>
+              <p className='main-content activity'>{I18n.t('integration.general.activities')}<br/>{I18n.t('integration.index.last_31_days')}</p>
+              <div className='integration-graph' />
+              <div className='view-detail' />
             </div>
           </div>
 
@@ -126,19 +125,21 @@ class IntegrationsIndex extends React.Component {
                   <div className='icon-area'>
                     <span className={['icon', changeCase.snakeCase(integration.type) + '-logo'].join(' ')} />
                   </div>
-                  <Link to='integration-show' params={{id: integration.id}} className='link'>
-                    <p className='name'>
-                      {integration.name}
-                    </p>
-                  </Link>
 
-                  <span className='right-content'>
-                    <p className='main-content activity'>{_.sum(integration.summary)}</p>
-                    <div className='integration-graph' id={`integration_graph_${integration.id}`} />
+                  <div className='name'>
+                    <Link to='integration-show' params={{id: integration.id}} className='link'>
+                      <p>{integration.name}</p>
+                    </Link>
+                  </div>
+
+                  <p className='main-content activity'>{_.sum(integration.summary)}</p>
+                  <div className='integration-graph' id={`integration_graph_${integration.id}`} />
+
+                  <div className='view-detail'>
                     <Link to='integration-show' params={{id: integration.id}} className='link'>
                       <button>{I18n.t('integration.index.view_detail')}</button>
                     </Link>
-                  </span>
+                  </div>
                 </div>
               </div>
             );
