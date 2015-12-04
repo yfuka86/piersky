@@ -17,14 +17,18 @@
         }
       }
       .name {
-        @include lato-normal;
-        @include text-ellipsis;
         display: table-cell;
         font-size: 24px;
         width: 180px;
         vertical-align: middle;
         a {
+          width: 100%;
           color: $grey600;
+          p {
+            width: 100%;
+            @include lato-normal;
+            @include text-ellipsis;
+          }
         }
         &:hover {
           text-decoration: underline;
