@@ -156,7 +156,9 @@ class Home extends React.Component {
               </div>
             </div>
 
-            {this.state.users.map((user) => {
+            {_.sortBy(this.state.users, (user) => {
+              return -((user.summary.recent.Slack || 0) + (user.summary.recent.Github || 0));
+            }).map((user) => {
               let summary = user.summary
               return (
                 <div className='option' key={user.id}>
