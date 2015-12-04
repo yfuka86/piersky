@@ -1,10 +1,10 @@
 import React from 'react';
 import _ from 'lodash';
-import request from 'superagent';
 import moment from 'moment';
 import Constants from '../../../constants/app';
 import {getTicks} from '../../../utils/app_module';
 
+import IdentityAction from '../../../actions/identity';
 import IdentityStore from '../../../stores/identity';
 import UserStore from '../../../stores/user';
 import UserInfo from '../../../components/users/user_info';
@@ -221,6 +221,13 @@ class Slack extends React.Component {
   }
 
   render() {
+    let updateIdentity = (identityId, e) => {
+      let userId = parseInt(e.target.value, 10);
+      IdentityAction.update({id: identityId, user_id: userId}).then(() => {}, (res) => {
+
+      });
+    }
+
     let usersList = _.sortBy(this.props.stats.identities, (identityData) => {
       return -_.sum(identityData[this.state.channelId].slice(0, this.state.periodLength));
     }).map((identityData) =>{
@@ -237,7 +244,7 @@ class Slack extends React.Component {
             </div>
 
             <div className='user-select-form'>
-              <UserSelect callback={() => {}} value={!!user ? user.id : null} />
+              <UserSelect callback={updateIdentity.bind(this, identity.id)} value={!!user ? user.id : null} />
             </div>
 
             <p className='main-content total'>{total}</p>

@@ -1,6 +1,6 @@
 import request from 'superagent';
 import Dispatcher from '../dispatcher';
-import {APIRoot, APIEndpoints, ActionTypes} from '../constants/app';
+import {APIRoot, APIEndpoints, ActionTypes, CSRFToken} from '../constants/app';
 
 export default {
   load() {
@@ -20,5 +20,26 @@ export default {
         }
       })
     });
-  }
+  },
+
+  update(params) {
+    return new Promise((resolve, reject) => {
+      request
+      .put(`${APIEndpoints.IDENTITY}/${params.id}`)
+      .set('X-CSRF-Token', CSRFToken())
+      .send(params)
+      .end((error, res) => {
+        if (res.status === 200){
+          let json = JSON.parse(res.text);
+          resolve(res);
+          Dispatcher.handleServerAction({
+            type: ActionTypes.UPDATE_IDENTITY,
+            json: json
+          });
+        } else {
+          reject(res);
+        }
+      })
+    });
+  },
 }

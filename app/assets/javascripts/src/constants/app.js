@@ -47,6 +47,7 @@ export default {
 
     //identities
     LOAD_IDENTITIES: null,
+    UPDATE_IDENTITY: null,
 
     //invitation
     LOAD_INVITATIONS: null,

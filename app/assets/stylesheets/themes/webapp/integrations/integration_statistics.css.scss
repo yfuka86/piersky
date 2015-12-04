@@ -27,7 +27,7 @@
   }
 
   #main_graph .no-activities {
-    padding-top: 100px;
+    padding-top: 130px;
     text-align: center;
     @include lato-ultrabold;
     font-size: 24px;
@@ -55,6 +55,16 @@
           min-width: 150px;
         }
       }
+    }
+    .total, .avg {
+      display: table-cell;
+      width: 80px;
+      text-align: right;
+      vertical-align: middle;
+    }
+    .user-graph {
+      display: table-cell;
+      vertical-align: middle;
     }
   }
 }
