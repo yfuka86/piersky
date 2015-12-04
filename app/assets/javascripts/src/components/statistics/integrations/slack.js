@@ -33,7 +33,7 @@ class Slack extends React.Component {
   get initialState() {
     return {
       channelId: 'default',
-      periodLength: 31,
+      periodLength: 28,
       expandedId: null,
       data: {
         messages: 0,
@@ -277,7 +277,7 @@ class Slack extends React.Component {
           </div>
           <div className='field'>
             <select onChange={this.changePeriod.bind(this)}>
-              <option value={31} >{I18n.t('integration.slack.period.last_month')}</option>
+              <option value={28} >{I18n.t('integration.slack.period.last_month')}</option>
               <option value={7} >{I18n.t('integration.slack.period.last_week')}</option>
             </select>
           </div>

@@ -31,7 +31,7 @@ class UserStatistics extends React.Component {
       user: user,
       identities: IdentityStore.getIdentitiesByUserId(user.id),
       stats: stats,
-      periodLength: 31
+      periodLength: 28
     };
   }
 
@@ -122,12 +122,51 @@ class UserStatistics extends React.Component {
   }
 
   render() {
+    let userIdentities;
+    if (false && this.state.stats) {
+      userIdentities = _.sortBy(this.state.stats.identities, (identityData) => {
+        return -_.sum(identityData[this.state.activity].slice(0, this.state.periodLength));
+      }).map((identityData) =>{
+        let identity = IdentityStore.getIdentityById(identityData.id);
+        let user = IdentityStore.getUserByIdentityId(identityData.id);
+        let total = _.sum(identityData[this.state.activity].slice(0, this.state.periodLength));
+        let avg = Math.round(total / this.state.periodLength * 100) / 100;
+        return (
+          <div className={`option ${this.isExpanded(identity.id) ? 'expanded' : ''}`} key={identityData.id}>
+            <div className='toggle' onClick={this.toggleExpantion.bind(this, identity.id)} />
+            <div className='content-area'>
+              <div className='user-info-area'>
+                {user ? <UserInfo user={user} /> : <p className='main-content'>{identity.name}</p>}
+              </div>
+
+              <div className='user-select-form'>
+                <UserSelect onChange={updateIdentity.bind(this, identity.id)} value={!!user ? user.id : null} />
+              </div>
+
+              <p className='main-content total'>{total}</p>
+              <p className='main-content avg'>{avg}</p>
+              <div className='user-graph' id={`user_graph_${identity.id}`} />
+            </div>
+
+            {this.isExpanded(identity.id) ? (
+              <div className='expanded-area'>
+                <div className='field'>
+                </div>
+                <div className='field'>
+                </div>
+              </div>
+            ) : (<div />)}
+          </div>
+        );
+      });
+    }
+
     return this.state.loading ? <Loading /> :
       <div className='user-statistics'>
         <div className='graph-action standard-form-horizontal'>
           <div className='field'>
             <select onChange={this.changePeriod.bind(this)}>
-              <option value={31} >{I18n.t('user.stats.period.last_month')}</option>
+              <option value={28} >{I18n.t('user.stats.period.last_month')}</option>
               <option value={7} >{I18n.t('user.stats.period.last_week')}</option>
               <option value={1} >{I18n.t('user.stats.period.time_of_day')}</option>
             </select>
@@ -136,10 +175,8 @@ class UserStatistics extends React.Component {
 
         <div id='main_graph' />
 
-        <div className='identities'>
-          {this.state.identities.map((identity) => {
-            return <span className={['icon', changeCase.snakeCase(identity.type) + '-logo'].join(' ')} key={identity.id} />
-          })}
+        <div class='user-identities'>
+          {userIdentities}
         </div>
       </div>;
   }

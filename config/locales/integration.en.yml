@@ -23,7 +23,7 @@ en:
       add: 'Add New Integration'
     index:
       title: 'Integrations Dashboard'
-      last_31_days: 'Last 31 days'
+      last_month: 'Last 4 weeks'
       view_detail: 'View Detail'
     new:
       title: 'Add New Integration'
@@ -52,7 +52,7 @@ en:
       channel:
         default: 'all channels'
       period:
-        last_month: 'last 1 month (default)'
+        last_month: 'last 4 weeks (default)'
         last_week: 'last 1 week'
       summary:
         messages: 'Messages'
@@ -74,7 +74,7 @@ en:
         pr_review_comment: 'Comments on pull requests'
         push: 'Number of pushing'
       period:
-        last_month: 'last 1 month (default)'
+        last_month: 'last 4 weeks (default)'
         last_week: 'last 1 week'
       sentence:
         opened_issues: 'opened %{count} issues'

@@ -98,7 +98,7 @@ class UsersIndex extends React.Component {
             <div className='content-area'>
               <div className='icon-area' />
               <div className='name' />
-              <p className='main-content activity'>{I18n.t('integration.general.activities')}<br/>{I18n.t('integration.index.last_31_days')}</p>
+              <p className='main-content activity'>{I18n.t('integration.general.activities')}<br/>{I18n.t('integration.index.last_month')}</p>
               <div className='user-graph' />
               <div className='view-detail' />
             </div>
