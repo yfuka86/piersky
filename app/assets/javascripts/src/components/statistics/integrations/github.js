@@ -4,6 +4,7 @@ import moment from 'moment';
 import Constants from '../../../constants/app';
 import {getTicks} from '../../../utils/app_module';
 
+import IdentityAction from '../../../actions/identity';
 import IdentityStore from '../../../stores/identity';
 import UserStore from '../../../stores/user';
 import UserInfo from '../../../components/users/user_info';
@@ -38,12 +39,12 @@ class Github extends React.Component {
   }
 
   componentDidMount() {
-    this.drawChart();
-    window.onresize = this.drawChart.bind(this);
+    this.drawCharts();
+    window.onresize = this.drawCharts.bind(this);
   }
 
   componentDidUpdate() {
-    this.drawChart();
+    this.drawCharts();
   }
 
   componentWillUnmount() {
@@ -70,7 +71,12 @@ class Github extends React.Component {
     return this.state.expandedId === id;
   }
 
-  drawChart() {
+  drawCharts() {
+    this.drawMainChart();
+    this.drawUsersChart();
+  }
+
+  drawMainChart() {
     if (!this.props) return;
     let activity = this.state.activity;
     let end = this.state.periodEndAt;
@@ -122,6 +128,52 @@ class Github extends React.Component {
     } else {
       React.findDOMNode(this).querySelector('#main_graph').innerHTML = `<div class="no-activities" style="height: ${height}px">${I18n.t('integration.general.no_activities')}</div>`;
     }
+  }
+
+  drawUsersChart() {
+    _.each(this.props.stats.identities, (identity) => {this.drawUserChart(identity.id)});
+  }
+
+  drawUserChart(identityId) {
+    if (!this.props) return;
+    // set variables
+    let activity = this.state.activity;
+    let end = moment(this.props.stats.today);
+    let length = this.state.periodLength;
+
+    let width = 280;
+    let height = 54;
+
+    // extract users activities
+    let identityData = _.find(this.props.stats.identities, (identityData) => {return identityData.id === identityId});
+
+    let userName = IdentityStore.getUserIdentityById(identityId);
+    let header = ['Day', userName];
+    let colors = [Constants.colorHexByKey(userName)];
+    let data = [header];
+
+    _.times(length, (i) => {
+      let count = identityData[activity][length - (i + 1)];
+      data.push([moment(end).subtract(length - (i + 1), 'days').format("MMM Do"), count]);
+    })
+
+    let tableData = google.visualization.arrayToDataTable(data);
+
+    let options = {
+      isStacked: true,
+      width: width,
+      height: height,
+      legend: {position: 'none'},
+      colors: colors,
+      // curveType: 'function',
+      vAxis: {
+        ticks: [],
+        minValue: 0
+      }
+    };
+
+    let chart = new google.visualization.LineChart(React.findDOMNode(this).querySelector(`#user_graph_${identityId}`));
+    chart.draw(tableData, options);
   }
 
   render() {
