@@ -104,7 +104,9 @@ class UsersIndex extends React.Component {
             </div>
           </div>
 
-          {this.props.users.map((user) =>{
+          {_.sortBy(this.props.users, (user) => {
+            return -_.sum(user.summary.count);
+          }).map((user) =>{
             let summary = user.summary
             return (
               <div className='option' key={user.id}>
