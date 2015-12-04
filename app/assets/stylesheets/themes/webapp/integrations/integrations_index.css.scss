@@ -10,7 +10,7 @@
     .content-area {
       .icon-area {
         display: table-cell;
-        width: 45px;
+        width: 40px;
         vertical-align: middle;
         .icon {
           @include icon(30px, 58px);
@@ -18,14 +18,16 @@
       }
       .name {
         display: table-cell;
-        width: 180px;
+        width: 200px;
         vertical-align: middle;
         a {
           width: 100%;
           color: $grey600;
+          display: inline-block;
           p {
-            font-size: 20px;
             width: 100%;
+            font-size: 18px;
+            display: inline-block;
             @include lato-normal;
             @include text-ellipsis;
           }
