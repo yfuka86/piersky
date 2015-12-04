@@ -91,18 +91,20 @@ class InvitationsIndex extends React.Component {
                   <div className='toggle' onClick={this._toggleExpantion.bind(this, invitation.id)} />
                 }
                 <div className='content-area'>
-                  <p className='sub-content'>{I18n.t('webapp.invitations.index.to')}</p>
-                  {invitee ? <UserInfo user={invitee} /> : <p className='main-content'>{invitation.inviteeEmail}</p>}
-                  <p className='sub-content'>
+                  <p className='sub-content to'>{I18n.t('webapp.invitations.index.to')}</p>
+                  <div className='invitee'>
+                    {invitee ? <UserInfo user={invitee} /> : <p className='main-content'>{invitation.inviteeEmail}</p>}
+                  </div>
+                  <p className='sub-content at'>
                     {invitation.acceptedAt ?
                       I18n.t('webapp.invitations.index.accepted_at', {time: invitation.acceptedAt.format('MMMM Do, YYYY')}) :
                       I18n.t('webapp.invitations.index.sent_at', {time: invitation.sentAt.format('MMMM Do, YYYY')})}
                   </p>
 
-                  <span className='right-content'>
-                    <p className='sub-content'>{I18n.t('webapp.invitations.index.from')}</p>
+                  <p className='sub-content from'>{I18n.t('webapp.invitations.index.from')}</p>
+                  <div className='inviter'>
                     {inviter ? <UserInfo user={inviter} /> : <p className='main-content'>{invitation.inviterEmail}</p>}
-                  </span>
+                  </div>
                 </div>
                 {this._isExpanded(invitation.id) ? (
                   <div className='expanded-area invitation-actions'>
