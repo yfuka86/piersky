@@ -157,7 +157,9 @@ class Home extends React.Component {
             </div>
 
             {_.sortBy(this.state.users, (user) => {
-              return -((user.summary.recent.Slack || 0) + (user.summary.recent.Github || 0));
+              return -(this.state.periodLength === 1 ?
+                      (user.summary.recent.Slack || 0) + (user.summary.recent.Github || 0) :
+                      _.sum(user.summary.count.slice(0, this.state.periodLength)));
             }).map((user) => {
               let summary = user.summary
               return (
