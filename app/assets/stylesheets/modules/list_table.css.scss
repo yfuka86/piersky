@@ -12,10 +12,13 @@
     padding: 0;
 
     .content-area {
+      display: table;
+      table-layout: fixed;
+      width: 100%;
       height: $height;
       vertical-align: middle;
       p {
-        display: inline-block;
+        display: table-cell;
         padding: 0 10px;
         line-height: $height;
         vertical-align: middle;
@@ -28,15 +31,6 @@
           font-size: 16px;
           color: $grey500;
         }
-      }
-      .right-content {
-        float: right;
-        display: inline-block;
-        height: $height;
-      }
-      .user-info-container {
-        $user-info-container-height: 44px;
-        margin-top: ($height - 44px) / 2;
       }
     }
     .right-area {

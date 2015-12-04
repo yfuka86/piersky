@@ -9,8 +9,9 @@
   .option, .option-header {
     .content-area {
       .icon-area {
-        display: inline-block;
+        display: table-cell;
         width: 45px;
+        vertical-align: middle;
         .icon {
           @include icon(30px, 58px);
         }
@@ -18,9 +19,13 @@
       .name {
         @include lato-normal;
         @include text-ellipsis;
+        display: table-cell;
         font-size: 24px;
-        color: $grey600;
-        max-width: 180px;
+        width: 180px;
+        vertical-align: middle;
+        a {
+          color: $grey600;
+        }
         &:hover {
           text-decoration: underline;
         }
@@ -28,15 +33,17 @@
       .activity {
         width: 108px;
         text-align: right;
+        vertical-align: middle;
       }
       .integration-graph {
-        display: inline-block;
+        display: table-cell;
         width: 300px;
         vertical-align: middle;
       }
-      .link {
-        display: inline-block;
-        width: 130px;
+      .view-detail {
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
         button {
           @include flat-button-identity;
         }

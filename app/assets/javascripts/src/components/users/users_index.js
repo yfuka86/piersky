@@ -96,12 +96,11 @@ class UsersIndex extends React.Component {
         <div className='users-index'>
           <div className='option-header'>
             <div className='content-area'>
+              <div className='icon-area' />
               <div className='name' />
-              <span className='right-content'>
-                <p className='main-content activity'>{I18n.t('integration.general.activities')}<br/>{I18n.t('integration.index.last_31_days')}</p>
-                <div className='user-graph' />
-                <div className='link' />
-              </span>
+              <p className='main-content activity'>{I18n.t('integration.general.activities')}<br/>{I18n.t('integration.index.last_31_days')}</p>
+              <div className='user-graph' />
+              <div className='view-detail' />
             </div>
           </div>
 
@@ -113,19 +112,19 @@ class UsersIndex extends React.Component {
                   <div className='icon-area'>
                     <UserIcon user={user} />
                   </div>
-                  <Link to='user-show' params={{id: user.id}} className='link'>
-                    <p className='name'>
-                      {user.identity}
-                    </p>
-                  </Link>
+                  <div className='name'>
+                    <Link to='user-show' params={{id: user.id}} className='link'>
+                      <p>{user.identity}</p>
+                    </Link>
+                  </div>
 
-                  <span className='right-content'>
-                    <p className='main-content activity'>{_.sum(user.summary.count)}</p>
-                    <div className='user-graph' id={`user_graph_${user.id}`} />
+                  <p className='main-content activity'>{_.sum(user.summary.count)}</p>
+                  <div className='user-graph' id={`user_graph_${user.id}`} />
+                  <div className='view-detail'>
                     <Link to='user-show' params={{id: user.id}} className='link'>
                       <button>{I18n.t('user.index.view_detail')}</button>
                     </Link>
-                  </span>
+                  </div>
                 </div>
               </div>
             );

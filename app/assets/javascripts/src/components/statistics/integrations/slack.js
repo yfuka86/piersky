@@ -1,13 +1,14 @@
 import React from 'react';
 import _ from 'lodash';
-import request from 'superagent';
 import moment from 'moment';
-import Constants from '../../constants/app';
-import {getTicks} from '../../utils/app_module';
+import Constants from '../../../constants/app';
+import {getTicks} from '../../../utils/app_module';
 
-import IdentityStore from '../../stores/identity';
-import UserStore from '../../stores/user';
-import UserInfo from '../../components/users/user_info';
+import IdentityAction from '../../../actions/identity';
+import IdentityStore from '../../../stores/identity';
+import UserStore from '../../../stores/user';
+import UserInfo from '../../../components/users/user_info';
+import UserSelect from '../../../components/users/user_select';
 
 class Slack extends React.Component {
   static get defaultProps() {
@@ -184,7 +185,7 @@ class Slack extends React.Component {
     let end = moment(this.props.stats.today);
     let length = this.state.periodLength;
 
-    let width = 360;
+    let width = 280;
     let height = 54;
 
     // extract users activities
@@ -220,6 +221,49 @@ class Slack extends React.Component {
   }
 
   render() {
+    let updateIdentity = (identityId, e) => {
+      let userId = parseInt(e.target.value, 10);
+      IdentityAction.update({id: identityId, user_id: userId}).then(() => {}, (res) => {
+        // todo
+      });
+    }
+
+    let usersList = _.sortBy(this.props.stats.identities, (identityData) => {
+      return -_.sum(identityData[this.state.channelId].slice(0, this.state.periodLength));
+    }).map((identityData) =>{
+      let identity = IdentityStore.getIdentityById(identityData.id);
+      let user = IdentityStore.getUserByIdentityId(identityData.id);
+      let total = _.sum(identityData[this.state.channelId].slice(0, this.state.periodLength));
+      let avg = Math.round(total / this.state.periodLength * 100) / 100;
+      return (
+        <div className={`option ${this.isExpanded(identity.id) ? 'expanded' : ''}`} key={identityData.id}>
+          <div className='toggle' onClick={this.toggleExpantion.bind(this, identity.id)} />
+          <div className='content-area'>
+            <div className='user-info-area'>
+              {user ? <UserInfo user={user} /> : <p className='main-content'>{identity.name}</p>}
+            </div>
+
+            <div className='user-select-form'>
+              <UserSelect onChange={updateIdentity.bind(this, identity.id)} value={!!user ? user.id : null} />
+            </div>
+
+            <p className='main-content total'>{total}</p>
+            <p className='main-content avg'>{avg}</p>
+            <div className='user-graph' id={`user_graph_${identity.id}`} />
+          </div>
+
+          {this.isExpanded(identity.id) ? (
+            <div className='expanded-area'>
+              <div className='field'>
+              </div>
+              <div className='field'>
+              </div>
+            </div>
+          ) : (<div />)}
+        </div>
+      );
+    });
+
     return (
       <div className='statistics-slack'>
         <div className='main-graph-action standard-form-horizontal'>
@@ -262,46 +306,15 @@ class Slack extends React.Component {
         <div className='users-stats'>
           <div className='option-header'>
             <div className='content-area'>
-              <p className='main-content'>{I18n.t('integration.general.member')}</p>
-              <span className='right-content'>
-                <p className='main-content total'>{I18n.t('integration.general.total')}</p>
-                <p className='main-content avg'>{I18n.t('integration.general.per_day')}</p>
-                <div className='user-graph' />
-              </span>
+              <p className='user-info-area main-content'>{I18n.t('integration.general.member')}</p>
+              <div className='user-select-form' />
+              <p className='main-content total'>{I18n.t('integration.general.total')}</p>
+              <p className='main-content avg'>{I18n.t('integration.general.per_day')}</p>
+              <div className='user-graph' />
             </div>
           </div>
 
-          {this.props.stats.identities.map((identityData) =>{
-            let identity = IdentityStore.getIdentityById(identityData.id);
-            let user = IdentityStore.getUserByIdentityId(identityData.id);
-            let total = _.sum(identityData[this.state.channelId].slice(0, this.state.periodLength));
-            let avg = Math.round(total / this.state.periodLength * 100) / 100;
-            return (
-              <div className={`option ${this.isExpanded(identity.id) ? 'expanded' : ''}`} key={identityData.id}>
-                <div className='toggle' onClick={this.toggleExpantion.bind(this, identity.id)} />
-                <div className='content-area'>
-                  {user ? <UserInfo user={user} /> : <p className='main-content'>{identity.name}</p>}
-
-                  <span className='right-content'>
-                    <p className='main-content total'>{total}</p>
-                    <p className='main-content avg'>{avg}</p>
-                    <div className='user-graph' id={`user_graph_${identity.id}`} />
-                  </span>
-                </div>
-
-                {this.isExpanded(identity.id) ? (
-                  <div className='expanded-area'>
-                    <div className='field'>
-
-                    </div>
-                    <div className='field'>
-
-                    </div>
-                  </div>
-                ) : (<div />)}
-              </div>
-            );
-          })}
+          {usersList}
         </div>
       </div>
     );

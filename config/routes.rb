@@ -57,7 +57,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :identities, only: [:index]
+    resources :identities, only: [:index, :update]
     resources :integrations, only: [:index, :show, :update, :destroy] do
       member do
         get 'stats'
