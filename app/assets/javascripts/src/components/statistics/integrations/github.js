@@ -103,8 +103,8 @@ class Github extends React.Component {
         let ary = identitiesData.map((data) => {
           return data[activity][length - (i + 1)];
         });
-        let sum = _.sum(ary);
-        if (sum > max) max = sum;
+        let maxTemp = _.max(ary);
+        if (maxTemp > max) max = maxTemp;
         data.push([moment(end).subtract(length - (i + 1), 'days').format("MMM Do")].concat(ary));
       })
 

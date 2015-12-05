@@ -129,7 +129,7 @@ class Home extends React.Component {
               <select onChange={this.changePeriod.bind(this)}>
                 <option value={1} >{I18n.t('webapp.home.period.last_24_hours')}</option>
                 <option value={7} >{I18n.t('webapp.home.period.last_7_days')}</option>
-                <option value={31} >{I18n.t('webapp.home.period.last_1_month')}</option>
+                <option value={28} >{I18n.t('webapp.home.period.last_1_month')}</option>
               </select>
             </div>
           </div>

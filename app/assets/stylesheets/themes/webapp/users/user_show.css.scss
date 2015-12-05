@@ -7,4 +7,12 @@
       margin-right: 20px;
     }
   }
+  .sky-tab-area .sky-tab-panel {
+    .section-title {
+      @include lato-normal;
+      font-size: 24px;
+      padding: 0;
+      color: $grey700;
+    }
+  }
 }

@@ -18,10 +18,7 @@
       color: $grey400;
     }
   }
-  .identities {
-    .icon {
-      @include icon(24px, 24px);
-      margin-right: 20px;
-    }
+  .user-identities {
+    padding-top: 30px;
   }
 }
