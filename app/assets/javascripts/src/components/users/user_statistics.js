@@ -176,6 +176,7 @@ class UserStatistics extends React.Component {
         <div id='main_graph' />
 
         <div class='user-identities'>
+          <p class='section-title'>Activities last 24 hour</p>
           {userIdentities}
         </div>
       </div>;

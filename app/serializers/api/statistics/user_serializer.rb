@@ -23,4 +23,24 @@ class Api::Statistics::UserSerializer < ActiveModel::Serializer
       }
     end
   end
+
+  def identities
+    u.identities.map do |identity|
+      summaries = summary[identity.integration_id] || {}
+      summaries_obj = {object: identity, summary: {}}
+      summaries.each do |k, v|
+        if v.is_a?(Hash)
+          summaries_obj[:summary][k] = {
+            sentence: I18n.t(
+              v[:sentence],
+              {count: v[:count][identity.id]}.merge(v[:options] || {})
+            ),
+            # contentはここで使ってる
+            contents: v[:query].where(identity_id: identity.id).order(ts: :desc).limit(5).reverse.map(&:content)
+          } if v[:count][identity.id].to_i > 0
+        end
+      end
+      summaries_obj
+    end
+  end
 end

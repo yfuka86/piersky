@@ -21,7 +21,11 @@ class SlackJob < ActiveJob::Base
 
         oldest_in_fetching = now
         until (messages = integration.show_messages(channel, oldest: latest_persisted, latest: oldest_in_fetching)) && messages.length == 0
-          messages.each do |m|
+          messages.each_with_index do |m, i|
+            last_in_channel = channel.activities.order(ts: :desc).first
+            next if last_in_channel.ts.to_f == m["ts"].to_f &&
+             (last_in_channel.message[0, 20] == m["text"][0, 20] || last_in_channel.long_message[0, 20] == m["text"][0, 20])
+
             ActivitySlack.create_with_integration(m, channel, integration)
           end
           oldest_in_fetching = messages.last["ts"].to_f
