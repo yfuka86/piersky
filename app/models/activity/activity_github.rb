@@ -104,12 +104,10 @@ class ActivityGithub < ActiveRecord::Base
       obj
     end
 
-    def identity_summary(integration, identity)
-      obj = {}
+    def identity_summary(integration, identity, range = SkyModule.yesterday_range)
 
       commit_obj = {}
-      GithubCommit.
-        where(ts: SkyModule.yesterday_range).
+      self.where(identity: identity, ts: range).
         group_by_author(integration).
         count.
         each do |author, count|
@@ -120,7 +118,7 @@ class ActivityGithub < ActiveRecord::Base
             commit_obj[key] ||= count
           end
         end
-      obj[:commits] = {sentence: 'integration.github.sentence.commits', query: self.where(ts: SkyModule.yesterday_range).pushed_to_default_event(integration), count: commit_obj}
+      obj[:commits] = {sentence: 'integration.github.sentence.commits', query: self.where(ts: SkyModule.yesterday_range).push_event(integration), count: commit_obj}
 
       comment_q = self.
         where(ts: SkyModule.yesterday_range).
