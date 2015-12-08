@@ -86,7 +86,7 @@ ja:
       template:
         issue: '#%{number} %{name}'
         pr: '#%{number} %{name}'
-        comment: '%{body} on %{target}'
+        comment: '%{body}'
         push: '%{commit_message}'
       errors:
         no_repository_error: 'You should add at least one repository to this integration.'
