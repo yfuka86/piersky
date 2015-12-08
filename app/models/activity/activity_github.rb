@@ -161,6 +161,7 @@ class ActivityGithub < ActiveRecord::Base
       "#{str} on <a href='#{url}'>#{issue.try(:title) || pull_request.try(:title) || commits.last.try(:message)}</a>"
     else
       "#{str}"
+    end
   end
 
   def url
