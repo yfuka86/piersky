@@ -14,7 +14,8 @@ module Concerns::ActivityRelated
       raise if params[:foreign_id].blank?
       record = self.find_by(foreign_id: params[:foreign_id], integration_id: integration.id)
       record ||= self.new()
-      record.assign_attributes(params.merge({integration: integration, activities: [activity]}))
+      record.assign_attributes(params.merge({integration: integration}))
+      record.activities << activity
       record
     end
 

@@ -105,13 +105,23 @@ class ActivityGithub < ActiveRecord::Base
     end
 
     def identity_summary(integration, identity, range = SkyModule.yesterday_range)
-
+      commit_obj = {}
       GithubCommit.
-        where(ts: range).by_identity(identity)
-      obj[:commits] = {sentence: 'integration.github.sentence.commits', count: commit_obj}
+        where(ts: range).
+        group_by_author(integration).
+        count.
+        each do |author, count|
+          key = IdentityGithub.find_by('secondary_key=? OR name=?', author, author).try(:id)
+          if commit_obj[key].present?
+            commit_obj[key] += count
+          else
+            commit_obj[key] ||= count
+          end
+        end
+      obj[:commits] = {sentence: 'integration.github.sentence.commits', count: commit_obj[identity.id]}
 
       comment_q = self.
-        where(ts: SkyModule.yesterday_range).
+        where(ts: range).
         comment_event(integration)
       obj[:comments] = {sentence: 'integration.github.sentence.comments', query: comment_q, count: comment_q.group(:identity_id).count}
 
@@ -194,7 +204,6 @@ class ActivityGithub < ActiveRecord::Base
     end
   end
 
-  # how to return link?
   def content
     str = case code
     when CODES[:issues] then
