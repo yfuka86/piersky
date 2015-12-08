@@ -3,6 +3,11 @@ class GithubCommit < ActiveRecord::Base
   ACTIVITY_CLASS = ActivityGithub
   include Concerns::ActivityRelated
 
+  scope :by_identity, (identity) -> {
+    joins(:activities).
+    where('activities.identity_id = ?', identity.id)
+  }
+
   scope :default_branch, -> {
     joins(activities: [:repository]).
     where("char_length(substring(activity_githubs.ref, github_repositories.default_branch)) != 0")

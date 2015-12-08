@@ -106,19 +106,9 @@ class ActivityGithub < ActiveRecord::Base
 
     def identity_summary(integration, identity, range = SkyModule.yesterday_range)
 
-      commit_obj = {}
-      self.where(identity: identity, ts: range).
-        group_by_author(integration).
-        count.
-        each do |author, count|
-          key = IdentityGithub.find_by('secondary_key=? OR name=?', author, author).try(:id)
-          if commit_obj[key].present?
-            commit_obj[key] += count
-          else
-            commit_obj[key] ||= count
-          end
-        end
-      obj[:commits] = {sentence: 'integration.github.sentence.commits', query: self.where(ts: SkyModule.yesterday_range).push_event(integration), count: commit_obj}
+      GithubCommit.
+        where(ts: range).by_identity(identity)
+      obj[:commits] = {sentence: 'integration.github.sentence.commits', count: commit_obj}
 
       comment_q = self.
         where(ts: SkyModule.yesterday_range).
@@ -222,7 +212,7 @@ class ActivityGithub < ActiveRecord::Base
     if !code.in?([CODES[:commit_comment], CODES[:issue_comment], CODES[:pr_review_comment]])
       "<a href='#{url}'>#{str}</a>".html_safe
     elsif code.in?([CODES[:commit_comment], CODES[:issue_comment], CODES[:pr_review_comment]])
-      "#{str} on <a href='#{url}'>#{issue.try(:title) || pull_request.try(:title) || commits.last.try(:message)}</a>".html_safe
+      "#{str} <a href='#{url}'>#{issue.try(:title) || pull_request.try(:title) || commits.last.try(:message)}</a>".html_safe
     else
       "#{str}"
     end
