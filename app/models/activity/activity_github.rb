@@ -148,18 +148,19 @@ class ActivityGithub < ActiveRecord::Base
     when CODES[:pr] then
       I18n.t('integration.github.template.pr', number: pull_request.number, name: pull_request.title)
     when CODES[:commit_comment], CODES[:issue_comment], CODES[:pr_review_comment] then
-      I18n.t('integration.github.template.comment', body: comment.body, target: issue.try(:title) || pull_request.try(:title) || commits.last.try(:message))
+      I18n.t('integration.github.template.comment', body: comment.body)
     when CODES[:push] then
       messages = commits.map(&:message).reverse.join(', ')
       messages = messages.length > 100 ? "#{messages[0, 100]}..." : messages
       I18n.t('integration.github.template.push', commit_message: messages)
     end
 
-    if url.present?
+    if !code.in?([CODES[:commit_comment], CODES[:issue_comment], CODES[:pr_review_comment]])
       "<a href='#{url}'>#{str}</a>".html_safe
+    elsif code.in?([CODES[:commit_comment], CODES[:issue_comment], CODES[:pr_review_comment]])
+      "#{str} on <a href='#{url}'>#{issue.try(:title) || pull_request.try(:title) || commits.last.try(:message)}</a>"
     else
       "#{str}"
-    end
   end
 
   def url
