@@ -29,7 +29,11 @@ class ActivityGithub < ActiveRecord::Base
     by_integration(integration).
     where(code: [CODES[:commit_comment], CODES[:issue_comment], CODES[:pr_review_comment]])
   }
-  scope :pushed_to_default_event, -> (integration) {
+  scope :push_event, -> (integration) {
+    by_integration(integration).
+    where(code: CODES[:push])
+  }
+  scope :push_to_default_event, -> (integration) {
     by_integration(integration).
     where(code: CODES[:push]).
     joins(:repository).
@@ -40,6 +44,68 @@ class ActivityGithub < ActiveRecord::Base
     def daily_summary(integration)
       obj = {}
       obj[:main] = daily_time_series(integration)
+
+      # commit_obj = {}
+      # GithubCommit.
+      #   where(ts: SkyModule.yesterday_range).
+      #   default_branch,
+      #   group_by_author(integration).
+      #   count.
+      #   each do |author, count|
+      #     key = IdentityGithub.find_by('secondary_key=? OR name=?', author, author).try(:id)
+      #     if commit_obj[key].present?
+      #       commit_obj[key] += count
+      #     else
+      #       commit_obj[key] ||= count
+      #     end
+      #   end
+      # obj[:commits] = {sentence: 'integration.github.sentence.commits_to_default', query: self.where(ts: SkyModule.yesterday_range).push_to_default_event(integration), count: commit_obj}
+
+      commit_obj = {}
+      GithubCommit.
+        where(ts: SkyModule.yesterday_range).
+        group_by_author(integration).
+        count.
+        each do |author, count|
+          key = IdentityGithub.find_by('secondary_key=? OR name=?', author, author).try(:id)
+          if commit_obj[key].present?
+            commit_obj[key] += count
+          else
+            commit_obj[key] ||= count
+          end
+        end
+      obj[:commits] = {sentence: 'integration.github.sentence.commits', query: self.where(ts: SkyModule.yesterday_range).push_event(integration), count: commit_obj}
+
+      comment_q = self.
+        where(ts: SkyModule.yesterday_range).
+        comment_event(integration)
+      obj[:comments] = {sentence: 'integration.github.sentence.comments', query: comment_q, count: comment_q.group(:identity_id).count}
+
+      op_q = self.
+        where(ts: SkyModule.yesterday_range, action: 'opened').
+        pr_event(integration)
+      obj[:opened_prs] = {sentence: 'integration.github.sentence.opened_prs', query: op_q, count: op_q.group(:identity_id).count}
+
+      cp_q = self.
+        where(ts: SkyModule.yesterday_range, action: 'closed').
+        pr_event(integration)
+      obj[:closed_prs] = {sentence: 'integration.github.sentence.closed_prs', query: cp_q, count: cp_q.group(:identity_id).count}
+
+      oi_q = self.
+        where(ts: SkyModule.yesterday_range, action: 'opened').
+        issues_event(integration)
+      obj[:opened_issues] = {sentence: 'integration.github.sentence.opened_issues', query: oi_q, count: oi_q.group(:identity_id).count}
+
+      ci_q = self.
+        where(ts: SkyModule.yesterday_range, action: 'closed').
+        issues_event(integration)
+      obj[:closed_issues] = {sentence: 'integration.github.sentence.closed_issues', query: ci_q, count: ci_q.group(:identity_id).count}
+
+      obj
+    end
+
+    def identity_summary(integration, identity)
+      obj = {}
 
       commit_obj = {}
       GithubCommit.

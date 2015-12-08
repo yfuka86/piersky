@@ -1,5 +1,5 @@
 class Api::Statistics::UserSerializer < ActiveModel::Serializer
-  attributes :user_id, :today, :integrations
+  attributes :user_id, :today, :integrations, :identities
 
   def user_id
     object.id
@@ -21,26 +21,6 @@ class Api::Statistics::UserSerializer < ActiveModel::Serializer
         default: SkyModule.get_day_time_series(q),
         day: SkyModule.get_hour_of_day_series(q)
       }
-    end
-  end
-
-  def identities
-    u.identities.map do |identity|
-      summaries = summary[identity.integration_id] || {}
-      summaries_obj = {object: identity, summary: {}}
-      summaries.each do |k, v|
-        if v.is_a?(Hash)
-          summaries_obj[:summary][k] = {
-            sentence: I18n.t(
-              v[:sentence],
-              {count: v[:count][identity.id]}.merge(v[:options] || {})
-            ),
-            # contentはここで使ってる
-            contents: v[:query].where(identity_id: identity.id).order(ts: :desc).limit(5).reverse.map(&:content)
-          } if v[:count][identity.id].to_i > 0
-        end
-      end
-      summaries_obj
     end
   end
 end

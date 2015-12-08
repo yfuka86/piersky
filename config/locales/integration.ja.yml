@@ -82,7 +82,8 @@ ja:
         opened_prs: 'opened %{count} pull requests'
         closed_prs: 'closed %{count} pull requests'
         comments: 'published %{count} comments'
-        commits: 'pushed %{count} commits to default branch'
+        commits: 'pushed %{count} commits'
+        commits_to_default: 'pushed %{count} commits to default branch'
       template:
         issue: '#%{number} %{name}'
         pr: '#%{number} %{name}'

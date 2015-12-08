@@ -11,4 +11,8 @@ class Api::IdentitiesController < Api::BaseController
     render json: @identity, serializer: Api::IdentitySerializer, root: nil
   end
 
+  def stats
+    @identity = Identity.includes(:integration).joins(:integration).where(integrations: {team_id: valid_team.id}).find_by(id: params[:id])
+    render json: @identity, serializer: Api::Statistics::IdentitySerializer, root: nil
+  end
 end
