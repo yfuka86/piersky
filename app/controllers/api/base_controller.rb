@@ -13,7 +13,7 @@ class Api::BaseController < ApplicationController
     )
   end
 
-  def render_error(error, options = {})
+  def render_error(error='error', options = {})
     message = ''
     messages = nil
     if error.is_a?(Exception)

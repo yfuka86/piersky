@@ -43,10 +43,11 @@ class ActivitySlack < ActiveRecord::Base
     end
 
     def identity_summary(identity, range = SkyModule.yesterday_range)
-      integration = identity.integration
-
       obj = {}
       obj[:count] = self.where(ts: range, identity: identity).count
+
+      integration = identity.integration
+      return obj if integration.blank?
 
       channels = self.
         where(ts: range, identity: identity).

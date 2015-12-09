@@ -1,7 +1,7 @@
 import keyMirror from 'keymirror';
 import _ from 'lodash';
 
-let Root = window.location.origin;
+let Root = window.location.origin || `${window.location.protocol}//${window.location.hostname}`;
 let APIRoot = Root + '/api';
 
 export default {
@@ -65,6 +65,7 @@ export default {
     LOAD_INTEGRATION_STATS: null,
     LOAD_USER_STATS: null,
     LOAD_IDENTITY_STATS: null,
+    LOAD_USER_IDENTITIES_STATS: null,
 
     //view
     SHOW_BALLOON: null,

@@ -4,6 +4,7 @@ class Identity < ActiveRecord::Base
 
   scope :by_team, -> (team) { joins(:integration).where(integrations: {team_id: team.id}) }
   scope :by_email_key, -> (email) { where(email_key: email) }
+  scope :by_user, -> (user) { by_team(user.current_team).where(user_team_id: user.user_teams.find_by(team: user.current_team).id) }
 
   class << self
     def service_name
@@ -35,5 +36,9 @@ class Identity < ActiveRecord::Base
 
   def daily_count
     self.class.activity_class.daily_count(self)
+  end
+
+  def activities
+    self.class.activity_class.where(identity: self)
   end
 end

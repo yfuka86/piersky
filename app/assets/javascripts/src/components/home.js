@@ -184,9 +184,7 @@ class Home extends React.Component {
                     </p>
 
                     {this.state.periodLength === 1 ?
-                      <div className='user-graph recent'>
-                        <UserIdentities user={user} />
-                      </div> :
+                      <UserIdentities user={user} range={this.state.periodLength} /> :
                       <div className='user-graph' id={`user_graph_${user.id}`} />}
 
                     <div className='view-detail'>

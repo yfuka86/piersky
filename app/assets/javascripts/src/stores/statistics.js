@@ -57,6 +57,7 @@ const StatisticsStore = assign({}, BaseStore, {
   },
 
   getIdentityStatsById(id, range) {
+    if (!identityStats[id]) identityStats[id] = {};
     return this.getIdentityStats()[id][range];
   },
 
@@ -86,6 +87,13 @@ StatisticsStore.dispatchToken = Dispatcher.register(payload => {
 
     case ActionTypes.LOAD_IDENTITY_STATS:
       StatisticsStore.addIdentityStats(action.json.id, action.json.range, action.json);
+      StatisticsStore.emitChange();
+      break;
+
+    case ActionTypes.LOAD_USER_IDENTITIES_STATS:
+      _.each(action.json.identities, (i) => {
+        StatisticsStore.addIdentityStats(i.id, i.range, i);
+      });
       StatisticsStore.emitChange();
       break;
 

@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   after_create :create_or_set_team
 
   def current_team
+    return nil if self.teams.blank?
     if team = self.user_teams.find_by(is_logging_in: true).try(:team)
       team
     else

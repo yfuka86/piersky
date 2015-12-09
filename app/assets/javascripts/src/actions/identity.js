@@ -43,10 +43,11 @@ export default {
     });
   },
 
-  stats(id) {
+  stats(id, range) {
     return new Promise((resolve, reject) => {
       request
       .get(`${APIEndpoints.IDENTITIES}/${id}/stats`)
+      .query({range: range})
       .end((error, res) => {
         if (res.status === 200){
           let json = JSON.parse(res.text);

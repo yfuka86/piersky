@@ -47,6 +47,7 @@ Rails.application.routes.draw do
 
       member do
         get 'stats'
+        get 'identities_stats'
       end
     end
 

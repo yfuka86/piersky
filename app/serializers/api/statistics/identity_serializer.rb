@@ -1,5 +1,9 @@
 class Api::Statistics::IdentitySerializer < ActiveModel::Serializer
-  attributes :count, :contents
+  attributes :id, :range, :count, :contents
+
+  def range
+    options[:range_length]
+  end
 
   def count
     summary[:count]
