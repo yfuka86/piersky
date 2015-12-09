@@ -13,6 +13,6 @@ class Api::IdentitiesController < Api::BaseController
 
   def stats
     @identity = Identity.includes(:integration).joins(:integration).where(integrations: {team_id: valid_team.id}).find_by(id: params[:id])
-    render json: @identity, serializer: Api::Statistics::IdentitySerializer, root: nil
+    render json: @identity, serializer: Api::Statistics::IdentitySerializer, root: nil, range: (SkyModule.today - (params[:range].to_i || 1).day)..SkyModule.today
   end
 end

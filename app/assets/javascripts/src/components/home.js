@@ -7,7 +7,9 @@ import Constants from '../constants/app';
 import RouteAction from '../actions/route';
 import UserStore from '../stores/user';
 import TeamStore from '../stores/team';
+import IdentityStore from '../stores/identity';
 import UserIcon from '../components/users/user_icon';
+import UserIdentities from '../components/users/user_identities';
 
 class Home extends React.Component {
   constructor(props) {
@@ -183,10 +185,7 @@ class Home extends React.Component {
 
                     {this.state.periodLength === 1 ?
                       <div className='user-graph recent'>
-                        <span className={['icon', 'slack-logo'].join(' ')} />
-                        {user.summary.recent.Slack || 0}
-                        <span className={['icon', 'github-logo'].join(' ')} />
-                        {user.summary.recent.Github || 0}
+                        <UserIdentities user={user} />
                       </div> :
                       <div className='user-graph' id={`user_graph_${user.id}`} />}
 

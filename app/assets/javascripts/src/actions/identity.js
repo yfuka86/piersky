@@ -42,4 +42,23 @@ export default {
       })
     });
   },
+
+  stats(id) {
+    return new Promise((resolve, reject) => {
+      request
+      .get(`${APIEndpoints.IDENTITIES}/${id}/stats`)
+      .end((error, res) => {
+        if (res.status === 200){
+          let json = JSON.parse(res.text);
+          resolve(json);
+          Dispatcher.handleServerAction({
+            type: ActionTypes.LOAD_IDENTITY_STATS,
+            json: json
+          });
+        } else {
+          reject(res);
+        }
+      })
+    });
+  },
 }

@@ -1,18 +1,27 @@
 class Api::Statistics::IdentitySerializer < ActiveModel::Serializer
-  attributes :count, :summary
+  attributes :count, :contents
 
   def count
-
+    summary[:count]
   end
 
+  def contents
+    summary.map do |k, v|
+      if v.is_a?(Hash) && v[:count].to_i > 0
+        {
+          sentence: I18n.t(v[:sentence], {count: v[:count]}.merge(v[:options] || {})),
+          # contentはここで使ってる
+          contents: v[:query].order(ts: :desc).limit(1).map(&:content)
+        }
+      else
+        nil
+      end
+    end.compact
+  end
+
+  private
+
   def summary
-    {
-      sentence: I18n.t(
-        v[:sentence],
-        {count: v[:count][identity.id]}.merge(v[:options] || {})
-      ),
-      # contentはここで使ってる
-      contents: v[:query].where(identity_id: identity.id).order(ts: :desc).limit(5).reverse.map(&:content)
-    }
+    @summary ||= object.class.activity_class.identity_summary(object, options[:range])
   end
 end

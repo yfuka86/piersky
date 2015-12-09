@@ -45,6 +45,26 @@ const StatisticsStore = assign({}, BaseStore, {
     let userStats = this.getUserStats();
     userStats[id] = stats;
     this.setUserStats(userStats);
+  },
+
+  getIdentityStats() {
+    if (!this.get('identityStats')) this.set('identityStats', {});
+    return this.get('identityStats');
+  },
+
+  setIdentityStats(stats) {
+    this.set('identityStats', stats);
+  },
+
+  getIdentityStatsById(id, range) {
+    return this.getIdentityStats()[id][range];
+  },
+
+  addIdentityStats(id, range, stats) {
+    let identityStats = this.getIdentityStats();
+    if (!identityStats[id]) identityStats[id] = {};
+    identityStats[id][range] = stats;
+    this.setIdentityStats(identityStats);
   }
 });
 
@@ -61,6 +81,11 @@ StatisticsStore.dispatchToken = Dispatcher.register(payload => {
 
     case ActionTypes.LOAD_USER_STATS:
       StatisticsStore.addUserStats(action.json.user_id, action.json);
+      StatisticsStore.emitChange();
+      break;
+
+    case ActionTypes.LOAD_IDENTITY_STATS:
+      StatisticsStore.addIdentityStats(action.json.id, action.json.range, action.json);
       StatisticsStore.emitChange();
       break;
 

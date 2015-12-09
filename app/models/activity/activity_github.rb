@@ -104,7 +104,12 @@ class ActivityGithub < ActiveRecord::Base
       obj
     end
 
-    def identity_summary(integration, identity, range = SkyModule.yesterday_range)
+    def identity_summary(identity, range = SkyModule.yesterday_range)
+      integration = identity.integration
+
+      obj = {}
+      obj[:count] = self.where(ts: range, identity: identity).count
+
       commit_obj = {}
       GithubCommit.
         where(ts: range).
@@ -118,32 +123,32 @@ class ActivityGithub < ActiveRecord::Base
             commit_obj[key] ||= count
           end
         end
-      obj[:commits] = {sentence: 'integration.github.sentence.commits', count: commit_obj[identity.id]}
+      obj[:commits] = {sentence: 'integration.github.sentence.commits', query: self.where(ts: SkyModule.yesterday_range).push_event(integration), count: commit_obj[identity.id] || 0}
 
       comment_q = self.
-        where(ts: range).
+        where(ts: range, identity: identity).
         comment_event(integration)
-      obj[:comments] = {sentence: 'integration.github.sentence.comments', query: comment_q, count: comment_q.group(:identity_id).count}
+      obj[:comments] = {sentence: 'integration.github.sentence.comments', query: comment_q, count: comment_q.count}
 
       op_q = self.
-        where(ts: SkyModule.yesterday_range, action: 'opened').
+        where(ts: range, action: 'opened', identity: identity).
         pr_event(integration)
-      obj[:opened_prs] = {sentence: 'integration.github.sentence.opened_prs', query: op_q, count: op_q.group(:identity_id).count}
+      obj[:opened_prs] = {sentence: 'integration.github.sentence.opened_prs', query: op_q, count: op_q.count}
 
       cp_q = self.
-        where(ts: SkyModule.yesterday_range, action: 'closed').
+        where(ts: range, action: 'closed', identity: identity).
         pr_event(integration)
-      obj[:closed_prs] = {sentence: 'integration.github.sentence.closed_prs', query: cp_q, count: cp_q.group(:identity_id).count}
+      obj[:closed_prs] = {sentence: 'integration.github.sentence.closed_prs', query: cp_q, count: cp_q.count}
 
       oi_q = self.
-        where(ts: SkyModule.yesterday_range, action: 'opened').
+        where(ts: range, action: 'opened', identity: identity).
         issues_event(integration)
-      obj[:opened_issues] = {sentence: 'integration.github.sentence.opened_issues', query: oi_q, count: oi_q.group(:identity_id).count}
+      obj[:opened_issues] = {sentence: 'integration.github.sentence.opened_issues', query: oi_q, count: oi_q.count}
 
       ci_q = self.
-        where(ts: SkyModule.yesterday_range, action: 'closed').
+        where(ts: range, action: 'closed', identity: identity).
         issues_event(integration)
-      obj[:closed_issues] = {sentence: 'integration.github.sentence.closed_issues', query: ci_q, count: ci_q.group(:identity_id).count}
+      obj[:closed_issues] = {sentence: 'integration.github.sentence.closed_issues', query: ci_q, count: ci_q.count}
 
       obj
     end
