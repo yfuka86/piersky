@@ -23,6 +23,16 @@ class UserIdentities extends React.Component {
     };
   }
 
+  constructor(props) {
+    super(props);
+    this.state = this.initialState;
+  }
+
+  get initialState() {
+    return {};
+  }
+
+
   componentDidMount() {
     UserAction.identities_stats(this.props.user.id, this.props.range).then((json) => this.setState({
       loaded: true,

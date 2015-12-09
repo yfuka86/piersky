@@ -57,6 +57,7 @@ const StatisticsStore = assign({}, BaseStore, {
   },
 
   getIdentityStatsById(id, range) {
+    let identityStats = this.getIdentityStats();
     if (!identityStats[id]) identityStats[id] = {};
     return this.getIdentityStats()[id][range];
   },

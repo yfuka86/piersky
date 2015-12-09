@@ -10,13 +10,15 @@ import Loading from '../../components/common/loading';
 class UserIdentity extends React.Component {
   static get defaultProps() {
     return {
-      identity: {}
+      identity: {},
+      range: 1
     };
   }
 
   static get propTypes() {
     return {
-      identity: React.PropTypes.object
+      identity: React.PropTypes.object,
+      range: React.PropTypes.number
     };
   }
 

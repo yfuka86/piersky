@@ -23,6 +23,6 @@ class Api::UsersController < Api::BaseController
     @identities = @identities[0, 3]
     render json: @identities,
            each_serializer: Api::Statistics::IdentitySerializer,
-           root: :identities, range: range, length: range_length
+           root: :identities, range: range, range_length: range_length
   end
 end
