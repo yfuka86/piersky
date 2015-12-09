@@ -115,7 +115,8 @@
             vertical-align: top;
             width: 30%;
             .user-identity-inner {
-              padding: 2px;
+              padding: 6px 2px;
+              overflow: hidden;
               .header {
                 .icon {
                   @include icon(20px, 20px);
