@@ -19,8 +19,8 @@ class Api::UsersController < Api::BaseController
     range = (SkyModule.now - range_length.day)..SkyModule.now
     @user = User.find_by(id: params[:id])
     render_error and return if @user.blank? || @user.current_team.blank?
-    @identities = Identity.by_user(@user).sort{|i| -i.activities.where(ts: range).count}
-    @identities = @identities[0, 3].reverse
+    @identities = Identity.by_user(@user, valid_team).sort{|i| -i.activities.where(ts: range).count}
+    @identities = @identities[0, 3]
     render json: @identities,
            each_serializer: Api::Statistics::IdentitySerializer,
            root: :identities, range: range, range_length: range_length
