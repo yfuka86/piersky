@@ -14,6 +14,7 @@ en:
       users: 'Users'
     home:
       index: "Team's Summary"
+      description: "We send you an email about your team's activities at 9AM on daily basis!"
       period:
         last_24_hours: 'last 24 hours (default)'
         last_7_days: 'last 7 days'

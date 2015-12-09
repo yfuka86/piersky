@@ -41,6 +41,31 @@ class ActivitySlack < ActiveRecord::Base
 
       obj
     end
+
+    def identity_summary(identity, range = SkyModule.yesterday_range)
+      obj = {}
+      obj[:count] = self.where(ts: range, identity: identity).count
+
+      integration = identity.integration
+      return obj if integration.blank?
+
+      channels = self.
+        where(ts: range, identity: identity).
+        group(:channel_id).
+        count.
+        sort_by{|k, v| -v}.
+        map{|c| c[0]}
+
+      channels.each do |c|
+        channel_name = SlackChannel.find_by(foreign_id: c).name
+        q = self.
+          by_channel_id(integration, c).
+          where(ts: range, identity: identity)
+        obj[c.to_sym] = {sentence: 'integration.slack.sentence.message', options: {channel: channel_name}, query: q, count: q.count}
+      end
+
+      obj
+    end
   end
 
   def content
