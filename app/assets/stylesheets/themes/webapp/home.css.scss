@@ -36,6 +36,7 @@
   }
   .team-summary {
     @include list-table-expandable;
+    margin-bottom: 150px;
 
     .summary {
       .panel {

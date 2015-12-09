@@ -1,5 +1,5 @@
 class Api::Statistics::UserSerializer < ActiveModel::Serializer
-  attributes :user_id, :today, :integrations, :identities
+  attributes :user_id, :today, :integrations
 
   def user_id
     object.id
