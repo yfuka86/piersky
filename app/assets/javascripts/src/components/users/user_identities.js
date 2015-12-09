@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import _ from 'lodash';
 import Constants from '../../constants/app';
+import Spinner from 'spin.js';
 
 import UserAction from '../../actions/user';
 import IdentityStore from '../../stores/identity';
@@ -32,12 +33,18 @@ class UserIdentities extends React.Component {
     return {};
   }
 
-
   componentDidMount() {
     UserAction.identities_stats(this.props.user.id, this.props.range).then((json) => this.setState({
       loaded: true,
       identities: _.map(json.identities, (i) => {return IdentityStore.getIdentityById(i.id)})
     }))
+    this.spin();
+  }
+
+  spin() {
+    let spinner = new Spinner().spin();
+    let target = React.findDOMNode(this).querySelector('.loading');
+    if (target) target.appendChild(spinner.el)
   }
 
   render() {
@@ -46,7 +53,7 @@ class UserIdentities extends React.Component {
         {_.map(this.state.identities, (identity) => {
           return <UserIdentity identity={identity} range={this.props.range} />
         })}
-      </span>) : <Loading />;
+      </span>) : <div className='loading' />;
   }
 }
 

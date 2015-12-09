@@ -77,7 +77,7 @@ class Home extends React.Component {
 
   drawUserChart(user) {
     if (!user) return;
-    let width = 400;
+    let width = 720;
     let height = 54;
     let name = user.identity;
 
@@ -124,6 +124,9 @@ class Home extends React.Component {
           <Link to='integrations-new' className='title-right'>
             <button className='flat-button-green'>{I18n.t('integration.general.add')}</button>
           </Link>
+        </p>
+        <p className='subtitle'>
+          {I18n.t('webapp.home.description')}
         </p>
         <div className='team-summary'>
           <div className='graph-action standard-form-horizontal'>
@@ -184,7 +187,9 @@ class Home extends React.Component {
                     </p>
 
                     {this.state.periodLength === 1 ?
-                      <UserIdentities user={user} range={this.state.periodLength} /> :
+                      <div className='user-identities'>
+                        <UserIdentities user={user} range={this.state.periodLength} />
+                      </div> :
                       <div className='user-graph' id={`user_graph_${user.id}`} />}
 
                     <div className='view-detail'>

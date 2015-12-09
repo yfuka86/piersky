@@ -35,7 +35,7 @@ class Header extends React.Component {
     let dropdown = <Dropdown defaultContent={defaultContent}
                              options={[{title: I18n.t('auth.title.logout'), callback: SessionAction.logout}]} />
     return (
-      <div className="header">
+      <div id="header">
         <div className="container">
           <div className="navbar-header">
             <Link to="app" className="navbar-brand">
