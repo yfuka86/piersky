@@ -4,6 +4,7 @@ en:
       no_invitations: 'No invitations to show.'
       setup: 'Would you like to invite another member?'
       add: 'Invite Another Member'
+      this_is_you: 'this is you'
     identity:
       placeholder: 'Who is this?'
     list:

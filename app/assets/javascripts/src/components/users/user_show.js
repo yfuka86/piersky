@@ -5,6 +5,7 @@ import {Link, RouteHandler} from 'react-router';
 
 import RouteStore from '../../stores/route';
 import UserStore from '../../stores/user';
+import SessionStore from '../../stores/session';
 import UserIcon from '../../components/users/user_icon';
 
 class UserShow extends React.Component {
@@ -48,6 +49,7 @@ class UserShow extends React.Component {
       <div className='container-main'>
         <div className='user-show'>
           <p className='title'><UserIcon user={user} />{user.identity}</p>
+          {user.id === SessionStore.getUser().id ? <p className='description'>{I18n.t('user.general.this_is_you')}</p> : <span/>}
 
           <div className='user-inner sky-tab-area'>
             <ul className='sky-tab-list'>
