@@ -89,7 +89,7 @@ class UsersIndex extends React.Component {
       <div className='container-main'>
         <p className='title'>
           {I18n.t('webapp.users.index')}
-          <Link to='invitations' className='title-right'>
+          <Link to='invitations-new' className='title-right'>
             <button className='flat-button-orange'>{I18n.t('user.general.add')}</button>
           </Link>
         </p>

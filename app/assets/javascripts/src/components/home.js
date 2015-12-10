@@ -124,7 +124,7 @@ class Home extends React.Component {
       <div className='home container'>
         <p className='title'>
           {I18n.t('webapp.home.index')}
-          <Link to='invitations' className='title-right'>
+          <Link to='invitations-new' className='title-right'>
             <button className='flat-button-orange'>{I18n.t('user.general.add')}</button>
           </Link>
           <Link to='integrations-new' className='title-right'>
