@@ -34,7 +34,18 @@ class UserIdentities extends React.Component {
   }
 
   componentDidMount() {
-    UserAction.identities_stats(this.props.user.id, this.props.range).then((json) => this.setState({
+    this.reload(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // this.reload(nextProps);
+  }
+
+  reload(props) {
+    UserAction.identities_stats(
+      props.user.id,
+      {range: props.range, limit: props.limit, each_limit: props.eachLimit}
+    ).then((json) => this.setState({
       loaded: true,
       identities: _.map(json.identities, (i) => {return IdentityStore.getIdentityById(i.id)})
     }))
@@ -51,7 +62,7 @@ class UserIdentities extends React.Component {
     return this.state.loaded ? (
       <span>
         {_.map(this.state.identities, (identity) => {
-          return <UserIdentity identity={identity} range={this.props.range} />
+          return <UserIdentity identity={identity} range={this.props.range} eachLimit={this.props.eachLimit} />
         })}
       </span>) : <div className='loading' />;
   }

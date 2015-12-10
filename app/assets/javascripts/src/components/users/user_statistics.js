@@ -10,6 +10,7 @@ import IdentityStore from '../../stores/identity';
 import IntegrationStore from '../../stores/integration';
 import StatisticsStore from '../../stores/statistics';
 import Loading from '../../components/common/loading';
+import UserIdentities from '../../components/users/user_identities';
 
 class UserStatistics extends React.Component {
   constructor(props) {
@@ -122,45 +123,6 @@ class UserStatistics extends React.Component {
   }
 
   render() {
-    let userIdentities;
-    if (false && this.state.stats) {
-      userIdentities = _.sortBy(this.state.stats.identities, (identityData) => {
-        return -_.sum(identityData[this.state.activity].slice(0, this.state.periodLength));
-      }).map((identityData) =>{
-        let identity = IdentityStore.getIdentityById(identityData.id);
-        let user = IdentityStore.getUserByIdentityId(identityData.id);
-        let total = _.sum(identityData[this.state.activity].slice(0, this.state.periodLength));
-        let avg = Math.round(total / this.state.periodLength * 100) / 100;
-        return (
-          <div className={`option ${this.isExpanded(identity.id) ? 'expanded' : ''}`} key={identityData.id}>
-            <div className='toggle' onClick={this.toggleExpantion.bind(this, identity.id)} />
-            <div className='content-area'>
-              <div className='user-info-area'>
-                {user ? <UserInfo user={user} /> : <p className='main-content'>{identity.name}</p>}
-              </div>
-
-              <div className='user-select-form'>
-                <UserSelect onChange={updateIdentity.bind(this, identity.id)} value={!!user ? user.id : null} />
-              </div>
-
-              <p className='main-content total'>{total}</p>
-              <p className='main-content avg'>{avg}</p>
-              <div className='user-graph' id={`user_graph_${identity.id}`} />
-            </div>
-
-            {this.isExpanded(identity.id) ? (
-              <div className='expanded-area'>
-                <div className='field'>
-                </div>
-                <div className='field'>
-                </div>
-              </div>
-            ) : (<div />)}
-          </div>
-        );
-      });
-    }
-
     return this.state.loading ? <Loading /> :
       <div className='user-statistics'>
         <div className='graph-action standard-form-horizontal'>
@@ -177,7 +139,9 @@ class UserStatistics extends React.Component {
 
         <div className='user-identities'>
           <p className='section-title'>Activities last 24 hour</p>
-          {userIdentities}
+          <div className='user-identities'>
+            <UserIdentities user={this.state.user} range={1} limit={50} eachLimit={100} />
+          </div>
         </div>
       </div>;
   }

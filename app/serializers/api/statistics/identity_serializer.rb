@@ -15,7 +15,7 @@ class Api::Statistics::IdentitySerializer < ActiveModel::Serializer
         {
           sentence: I18n.t(v[:sentence], {count: v[:count]}.merge(v[:options] || {})),
           # contentはここで使ってる
-          contents: v[:query].order(ts: :desc).limit(1).map(&:content)
+          contents: v[:query].order(ts: :desc).limit(options[:each_limit]).map(&:content)
         }
       else
         nil
