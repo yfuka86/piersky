@@ -2,7 +2,7 @@ ja:
   welcome_header:
     about: "PierSkyで出来ること"
   welcome:
-    intro_first_html: "チームをよりよく知るために<br>全自動のアクティビティ収集・共有・分析ツール"
+    intro_first_html: "チームをよりよく知るために<br>全自動のアクティビティ収集・分析ツール"
     description:
       title_html: "メンバーひとりひとり、<br>チーム全体をよりよく知るために"
       body_html: "今日のチームは様々なツールを使いこなす分、<br>全体の動き、関係性、進捗を確認する手間が増えています。<br>PierSkyは様々なツールと連携しチームの情報をひとつにまとめ、<br>改善につなげるための可視化・分析をします。<br>"
