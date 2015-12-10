@@ -70,6 +70,8 @@ const StatisticsStore = assign({}, BaseStore, {
   }
 });
 
+StatisticsStore.setMaxListeners(100);
+
 StatisticsStore.dispatchToken = Dispatcher.register(payload => {
   const action = payload.action;
   Dispatcher.waitFor([

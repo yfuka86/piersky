@@ -116,6 +116,7 @@
             vertical-align: top;
             width: 45%;
             margin-right: 20px;
+            position: relative;
             .user-identity-inner {
               padding: 6px 10px;
               max-height: 120px;
@@ -160,6 +161,14 @@
                   color: $grey700;
                 }
               }
+            }
+            .user-identity-grad {
+              position: absolute;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              height: 10px;
+              @include linear-gradient(transparent, $white);
             }
           }
         }

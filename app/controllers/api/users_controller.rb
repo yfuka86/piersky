@@ -20,7 +20,7 @@ class Api::UsersController < Api::BaseController
     @user = User.find_by(id: params[:id])
     render_error and return if @user.blank? || @user.current_team.blank?
     @identities = Identity.by_user(@user, valid_team).sort{|i| -i.activities.where(ts: range).count}
-    @identities = @identities[0, 3]
+    @identities = @identities[0, 2]
     render json: @identities,
            each_serializer: Api::Statistics::IdentitySerializer,
            root: :identities, range: range, range_length: range_length

@@ -78,6 +78,7 @@ class UserIdentity extends React.Component {
               })}
           </div>
         </div>
+        <div className='user-identity-grad' />
       </div>
     );
   }
