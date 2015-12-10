@@ -119,30 +119,40 @@
             position: relative;
             .user-identity-inner {
               padding: 6px 10px;
-              max-height: 120px;
+              max-height: 140px;
               overflow: hidden;
               .header {
+                height: 30px;
                 padding-bottom: 5px;
+                position: relative;
                 .icon {
                   @include icon(20px, 20px);
                   vertical-align: middle;
                 }
                 .title {
-                  padding-left: 8px;
+                  display: inline-block;
+                  max-width: 80%;
+                  @include text-ellipsis;
                   @include lato-normal;
+                  padding-left: 8px;
                   font-size: 18px;
                   vertical-align: middle;
                 }
                 .count {
-                  float: right;
-                  vertical-align: middle;
+                  position: absolute;
+                  top: -2px;
+                  right: 5px;
                   font-size: 20px;
                   color: $grey700;
                 }
               }
               .body {
+                max-height: 110px;
+                padding-bottom: 20px;
                 @include lato-normal;
-                overflow: scroll;
+                overflow-x: hidden;
+                overflow-y: scroll;
+                display: inline-block;
                 .activity {
                   .sentence {
                     font-size: 16px;
