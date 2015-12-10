@@ -38,7 +38,7 @@ class UserIdentities extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.reload(nextProps);
+    // this.reload(nextProps);
   }
 
   reload(props) {

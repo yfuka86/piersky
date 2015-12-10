@@ -72,7 +72,9 @@ class UserIdentity extends React.Component {
                     <div className='sentence'>
                       {obj.sentence}
                     </div>
-                    <div className='contents' dangerouslySetInnerHTML={{__html: obj.contents}} />
+                    {_.map(obj.contents, (content) => {
+                      return <div className='contents' dangerouslySetInnerHTML={{__html: content}} />
+                    })}
                   </div>
                 );
               })}
