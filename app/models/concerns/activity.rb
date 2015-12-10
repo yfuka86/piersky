@@ -21,6 +21,10 @@ module Concerns::Activity
       daily_time_series(integration)
     end
 
+    def identity_summary(identity, range = SkyModule.yesterday_range)
+      {}
+    end
+
     def daily_count(identity)
       self.where(identity_id: identity.id, ts: SkyModule.yesterday_range).count
     end
