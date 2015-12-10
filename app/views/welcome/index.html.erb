@@ -4,9 +4,9 @@
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
           <p class="intro-text"><%= t('welcome.intro_first_html') %></p>
-          <a href="#about" class="btn btn-circle page-scroll">
-            <i class="fa fa-angle-double-down animated"></i>
-          </a>
+            <%= link_to new_user_registration_path, class: 'btn-intro' do %>
+              無料で登録する
+            <% end %>
         </div>
       </div>
     </div>
@@ -53,7 +53,7 @@
     </div>
   </div>
 
-  <div class="row feature">
+  <div class="row feature" style="margin-bottom: 27px;">
     <div class="col-xs-12 col-sm-6 col-md-6 column">
       <%= image_tag 'integration-stats.jpg', class: "feature-image"%>
     </div>
@@ -62,6 +62,9 @@
       <div class="feature-body"><p><%= t('welcome.feature2.body_html')%></p></div>
     </div>
   </div>
+    <%= link_to new_user_registration_path, class: 'btn-register' do %>
+      無料で登録する
+    <% end %>
 </section>
 
 
