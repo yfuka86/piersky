@@ -38,7 +38,7 @@ class UserIdentity extends React.Component {
 
   componentDidMount() {
     if (!this.state.stats) {
-      IdentityAction.stats(this.props.identity.id, this.props.range);
+      IdentityAction.stats(this.props.identity.id, {range: this.props.range, each_limit: this.props.eachLimit});
     }
     StatisticsStore.onChange(this.onChangeHandler);
   }
@@ -72,7 +72,9 @@ class UserIdentity extends React.Component {
                     <div className='sentence'>
                       {obj.sentence}
                     </div>
-                    <div className='contents' dangerouslySetInnerHTML={{__html: obj.contents}} />
+                    {_.map(obj.contents, (content) => {
+                      return <div className='contents' dangerouslySetInnerHTML={{__html: content}} />
+                    })}
                   </div>
                 );
               })}
