@@ -65,16 +65,14 @@ class UserIdentity extends React.Component {
             </span>
           </div>
           <div className='body'>
-            {this.state.stats.contents.length === 0 ? I18n.t('integration.general.no_activities') :
+            {this.state.stats.contents.length === 0 ? <div className='no-activity'>{I18n.t('integration.general.no_activities')}</div> :
               _.map(this.state.stats.contents, (obj) => {
                 return (
-                  <div class='activity'>
-                    <div class='sentence'>
+                  <div className='activity'>
+                    <div className='sentence'>
                       {obj.sentence}
                     </div>
-                    <div class='contents'>
-                      {obj.contents}
-                    </div>
+                    <div className='contents' dangerouslySetInnerHTML={{__html: obj.contents}} />
                   </div>
                 );
               })}

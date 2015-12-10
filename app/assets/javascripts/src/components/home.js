@@ -71,13 +71,19 @@ class Home extends React.Component {
   }
 
   drawUsersChart() {
-    if (this.state.periodLength === 1) return;
+    if (this.state.periodLength === 1) {
+      let graphs = React.findDOMNode(this).querySelectorAll('.user-graph');
+      _.each(graphs, (el) => {
+        el.innerHTML = '';
+      });
+      return;
+    }
     _.each(this.state.users, (user) => {this.drawUserChart(user)});
   }
 
   drawUserChart(user) {
     if (!user) return;
-    let width = 720;
+    let width = 600;
     let height = 54;
     let name = user.identity;
 
@@ -155,7 +161,7 @@ class Home extends React.Component {
               <div className='content-area'>
                 <div className='icon-area' />
                 <p className='main-content name'>{I18n.t('webapp.home.users.member')}</p>
-                <p className='main-content activity'>{I18n.t('webapp.home.users.activities')}</p>
+                <p className='main-content activity-count'>{I18n.t('webapp.home.users.activities')}</p>
                 <div className='user-graph' />
                 <div className='view-detail' />
               </div>
@@ -180,7 +186,7 @@ class Home extends React.Component {
                       </Link>
                     </div>
 
-                    <p className='main-content activity'>
+                    <p className='main-content activity-count'>
                       {this.state.periodLength === 1 ?
                        (user.summary.recent.Slack || 0) + (user.summary.recent.Github || 0) :
                        _.sum(user.summary.count.slice(0, this.state.periodLength))}
@@ -190,7 +196,7 @@ class Home extends React.Component {
                       <div className='user-identities'>
                         <UserIdentities user={user} range={this.state.periodLength} />
                       </div> :
-                      <div className='user-graph' id={`user_graph_${user.id}`} />}
+                      <div className='user-graph'><div id={`user_graph_${user.id}`} /></div>}
 
                     <div className='view-detail'>
                       <Link to='user-show' params={{id: user.id}} className='link'>
