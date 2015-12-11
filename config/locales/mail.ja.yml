@@ -1,4 +1,7 @@
 ja:
+  mail:
+    unsubscribe: '配信停止・設定機能は準備中です。'
+    unsubscribe_explanation: '希望される方は、大変お手数ですが yuta@piersky.com までご連絡ください。'
   summary_mailer:
     general:
       activities: 'activities'

@@ -1,4 +1,7 @@
 en:
+  mail:
+    unsubscribe: 'unsubscribe'
+    unsubscribe_explanation: ''
   summary_mailer:
     general:
       activities: 'activities'
