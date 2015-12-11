@@ -20,6 +20,17 @@
           </table>
         </td>
       </tr>
+      <tr>
+        <td>
+          <p>
+            Can't you see your team mate in this mail? Invite your team member!!
+          </p>
+
+          <p class='center' style="margin:2rem 0">
+            <%= link_to 'Get started', confirmation_url(@resource, confirmation_token: @token), class: 'main-button', target: '_blank' %>
+          </p>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>

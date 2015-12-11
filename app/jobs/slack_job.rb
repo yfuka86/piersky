@@ -23,7 +23,7 @@ class SlackJob < ActiveJob::Base
         # oldest: latest_persisted,
         until (messages = integration.show_messages(channel, latest: oldest_in_fetching)) && messages.length == 0
           messages.each_with_index do |m, i|
-            next if channel.activities.find_by(ts: Time.at(m["ts"]), message: m["text"]).present?
+            next if channel.activities.find_by(ts: Time.at(m["ts"].to_f), message: m["text"]).present?
 
             ActivitySlack.create_with_integration(m, channel, integration)
           end
