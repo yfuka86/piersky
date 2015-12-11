@@ -13,7 +13,7 @@ class Team < ActiveRecord::Base
       self.find_each do |team|
         next if team.integrations.blank?
         team.user_teams.each do |user_team|
-          mail = SummaryMailer.daily(user_team.id).deliver_later
+          mail = SummaryMailer.daily(user_team.id, false).deliver_later
         end
       end
     end
@@ -21,7 +21,7 @@ class Team < ActiveRecord::Base
     def test_send_daily_summary
       self.find_each do |team|
         next if team.integrations.blank?
-        mail = SummaryMailer.test_daily(team.user_teams.first.id).deliver_later
+        mail = SummaryMailer.daily(team.user_teams.first.id).deliver_later
       end
     end
 

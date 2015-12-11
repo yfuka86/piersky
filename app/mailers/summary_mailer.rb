@@ -2,7 +2,7 @@ class SummaryMailer < ActionMailer::Base
   include Roadie::Rails::Automatic
   layout 'email'
 
-  def daily(user_team_id)
+  def daily(user_team_id, test = true)
     @presenter = DailySummaryPresenter.new(user_team_id)
     user_team = UserTeam.find(user_team_id)
     @email = user_team.user.email
@@ -10,20 +10,7 @@ class SummaryMailer < ActionMailer::Base
     @subject = I18n.t('summary_mailer.daily_summary.subject', team: team_name)
     @title = @subject
 
-    mail(from: I18n.t('identity'), to: @email, subject: @subject) do |format|
-      format.html
-    end
-  end
-
-  def test_daily(user_team_id)
-    @presenter = DailySummaryPresenter.new(user_team_id)
-    user_team = UserTeam.find(user_team_id)
-    @email = user_team.user.email
-    team_name = user_team.team.name.presence || I18n.t('general.your_team')
-    @subject = I18n.t('summary_mailer.daily_summary.subject', team: team_name)
-    @title = @subject
-
-    mail(from: I18n.t('identity'), to: 'yuta@piersky.com', subject: @subject) do |format|
+    mail(from: I18n.t('identity'), to: (test ? 'yuta@piersky.com' : @email), subject: @subject) do |format|
       format.html
     end
   end

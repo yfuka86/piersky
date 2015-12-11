@@ -14,6 +14,11 @@ class MailPreview < MailView
     SummaryMailer.daily(user_team_id)
   end
 
+  def test_daily_summary_mail
+    user_team_id = 1
+    SummaryMailer.test_daily(user_team_id)
+  end
+
   def weekly_summary_mail
     user_team_id = 1
     SummaryMailer.weekly(user_team_id)
