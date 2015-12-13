@@ -225,9 +225,9 @@ class ActivityGithub < ActiveRecord::Base
     end
 
     if !code.in?([CODES[:commit_comment], CODES[:issue_comment], CODES[:pr_review_comment]])
-      "<a href='#{url}'>#{str}</a>".html_safe
+      "<a href='#{SkyModule.mail_log_link(url)}'>#{str}</a>".html_safe
     elsif code.in?([CODES[:commit_comment], CODES[:issue_comment], CODES[:pr_review_comment]])
-      "#{str} <a href='#{url}'>#{issue.try(:title) || pull_request.try(:title) || commits.last.try(:message)}</a>".html_safe
+      "#{str} <a href='#{SkyModule.mail_log_link(url)}'>#{issue.try(:title) || pull_request.try(:title) || commits.last.try(:message)}</a>".html_safe
     else
       "#{str}"
     end

@@ -79,7 +79,7 @@ class ActivitySlack < ActiveRecord::Base
       elsif $1[0, 4] == 'http'
         str = $1
         m = $1.match(/(.*)\|(.*)/)
-        m ? "<a href='#{m[1]}'>#{m[2]}</a>" : "<a href='#{str}'>#{str}</a>"
+        m ? "<a href='#{SkyModule.mail_log_link(m[1])}'>#{m[2]}</a>" : "<a href='#{SkyModule.mail_log_link(str)}'>#{str}</a>"
       else
         str = $1
         m = $1.match(/(.*)\|(.*)/)
@@ -87,7 +87,7 @@ class ActivitySlack < ActiveRecord::Base
       end
     end
     link = self.message_link
-    m += "   <a href='#{self.message_link}'>view</a>" if link
+    m += "   <a href='#{SkyModule.mail_log_link(self.message_link)}'>view</a>" if link
     m.html_safe
   end
 

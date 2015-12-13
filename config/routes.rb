@@ -40,7 +40,7 @@ Rails.application.routes.draw do
 
   resources :graphs, only: [:index]
 
-  resources :logs do
+  resources :via do
     collection do
       get 'mail'
     end

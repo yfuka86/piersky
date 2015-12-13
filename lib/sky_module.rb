@@ -80,5 +80,9 @@ module SkyModule
     def color_hex_by_key(key)
       COLOR_HEXES[color_by_key(key).to_sym]
     end
+
+    def mail_log_link(url)
+      "#{Rails.application.config.app_domain}/via/mail?url=#{url}"
+    end
   end
 end

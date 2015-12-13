@@ -10,7 +10,7 @@
         <tr>
           <td>
             <div>
-              <%= link_to root_url, class: 'title-link' do %>
+              <%= link_to SkyModule.mail_log_link(root_url), class: 'title-link' do %>
                 <h1 class='title identity-color'><%= @title || 'Piersky' %></h1>
               <% end %>
             </div>
