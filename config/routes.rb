@@ -40,6 +40,12 @@ Rails.application.routes.draw do
 
   resources :graphs, only: [:index]
 
+  resources :logs do
+    collection do
+      get 'mail'
+    end
+  end
+
   namespace :api, defaults: { format: :json } do
     resources :users, only: [] do
       collection do

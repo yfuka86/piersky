@@ -6,6 +6,6 @@ every 3.hour do
   runner "Integration.refresh_all_data"
 end
 
-every 1.day, :at => '8:00 am' do
+every 1.day, :at => '9:00 am' do
   runner "Team.send_daily_summary"
 end
