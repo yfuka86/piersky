@@ -39,7 +39,7 @@ class Header extends React.Component {
         <div className="container">
           <div className="navbar-header">
             <Link to="app" className="navbar-brand">
-              {I18n.t('identity')}
+              {I18n.t('identity') + 'β'}
             </Link>
           </div>
 
