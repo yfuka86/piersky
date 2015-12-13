@@ -10,7 +10,7 @@ class SummaryMailer < ActionMailer::Base
     @subject = I18n.t('summary_mailer.daily_summary.subject', team: team_name)
     @title = @subject
 
-    mail(from: I18n.t('identity'), to: (test ? 'yuta@piersky.com' : @emails), subject: @subject) do |format|
+    mail(from: I18n.t('identity'), to: (test ? 'yfuka86@gmail.com' : @emails), subject: @subject) do |format|
       format.html
     end
   end
