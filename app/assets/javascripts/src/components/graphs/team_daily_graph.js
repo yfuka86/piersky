@@ -29,6 +29,11 @@ export default class TeamDailyGraph {
     };
 
     let ctx = document.getElementById("graph").getContext("2d");
+
+    Chart.defaults.global.onAnimationComplete = () => {
+      document.getElementById('graph_depicted').innerHTML = 'true';
+    }
+
     let lineChart = new Chart(ctx).Line(data, options);
     document.getElementById('graph_legends').innerHTML = lineChart.generateLegend();
   }
