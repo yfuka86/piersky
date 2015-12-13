@@ -21,7 +21,7 @@ class ScrapeTeamDailyGraph
 
     session.driver.headers = { 'User-Agent' => "Mozilla/5.0 (Macintosh; Intel Mac OS X)" }
     session.visit "#{Rails.application.config.app_domain}/graphs?team_id=#{@team.id}"
-    sleep 5
+    sleep 30
     data_uri = session.evaluate_script("document.querySelector('#graph').toDataURL('image/png', 0)")
     data = URI::Data.new(data_uri).data.force_encoding("utf-8")
 
