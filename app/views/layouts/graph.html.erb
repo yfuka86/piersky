@@ -7,12 +7,10 @@
   <%= favicon_link_tag 'favicon.ico' %>
   <%= javascript_include_tag "i18n" %>
   <%= javascript_include_tag "translations" %>
-  <%= render 'shared/zopim' %>
 </head>
 <body>
   <%= yield %>
   <%= javascript_include_tag 'https://www.google.com/jsapi' %>
   <%= javascript_include_tag 'dist/graph' %>
-  <%= render 'shared/ga' %>
 </body>
 </html>
