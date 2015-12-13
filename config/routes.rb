@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   end
 
   require 'sidekiq/web'
+  Sidekiq::Web.use(Rack::Session::Cookie, secret: 'piersky33')
   authenticate :user, lambda { |u| u.email.in?(['yuta@piersky.com', 'yurimatsui37@gmail.com']) } do
     mount Sidekiq::Web, at: "/sidekiq"
   end
