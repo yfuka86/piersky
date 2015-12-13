@@ -32,31 +32,31 @@ Rails.application.configure do
   config.action_mailer.default_url_options = {host: config.app_domain, protocol: "https"}
   config.action_mailer.default(from: "mail@piersky.com")
   config.action_mailer.perform_deliveries = true
-  # config.action_mailer.delivery_method = :smtp
-  # config.action_mailer.raise_delivery_errors = true
-
-  # config.action_mailer.smtp_settings = {
-  #   enable_starttls_auto: true,
-  #   address: 'smtp.gmail.com',
-  #   port: '587',
-  #   domain: 'smtp.gmail.com',
-  #   authentication: :plain,
-  #   user_name: 'mail@piersky.com',
-  #   password: 'ykSreiPykSreiP'
-  # }
-  config.action_mailer.delivery_method = :ses
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.raise_delivery_errors = true
+
   config.action_mailer.smtp_settings = {
     enable_starttls_auto: true,
-    address: 'email-smtp.us-west-2.amazonaws.com',
-    port: 465,
-    domain: 'piersky.com',
-    authentication: 'login',
-    user_name: 'AKIAJLQQTFP6VFWQR4WA',
-    password: 'At0w9LC0aYyFnrzCkqkbt5mY8rW07YxCmHWl/8a/G0K8',
-    ssl: true,
-    tls: true
+    address: 'smtp.gmail.com',
+    port: '587',
+    domain: 'smtp.gmail.com',
+    authentication: :plain,
+    user_name: 'mail@piersky.com',
+    password: 'ykSreiPykSreiP'
   }
+  # config.action_mailer.delivery_method = :ses
+  # config.action_mailer.raise_delivery_errors = true
+  # config.action_mailer.smtp_settings = {
+  #   enable_starttls_auto: true,
+  #   address: 'email-smtp.us-west-2.amazonaws.com',
+  #   port: 465,
+  #   domain: 'piersky.com',
+  #   authentication: 'login',
+  #   user_name: 'AKIAJLQQTFP6VFWQR4WA',
+  #   password: 'At0w9LC0aYyFnrzCkqkbt5mY8rW07YxCmHWl/8a/G0K8',
+  #   ssl: true,
+  #   tls: true
+  # }
 
   config.active_job.queue_adapter = :sidekiq
 end
