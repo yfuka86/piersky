@@ -21,7 +21,7 @@ class ScrapeTeamDailyGraph
 
     session.driver.headers = { 'User-Agent' => "Mozilla/5.0 (Macintosh; Intel Mac OS X)" }
     session.visit "#{Rails.application.config.app_domain}/graphs?team_id=#{@team.id}"
-    while(session.find('#graph_depicted').text() != 'true') do
+    while(session.find(:css, 'div#graph_depicted').text != 'true') do
       sleep(3)
     end
     data_uri = session.evaluate_script("document.querySelector('#graph').toDataURL('image/png', 0)")
