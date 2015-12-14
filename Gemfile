@@ -54,7 +54,7 @@ gem 'mail_view', :git => 'https://github.com/basecamp/mail_view.git'
 gem 'faker'
 gem 'rb-readline'
 
-gem 'whenever', :require => false
+gem 'whenever', require: false
 
 gem 'rails-erd'
 
@@ -65,6 +65,8 @@ gem 'capybara'
 gem 'data_uri'
 
 gem 'aws-sdk'
+
+gem 'rack-mini-profiler', require: false, group: :development
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.2'
