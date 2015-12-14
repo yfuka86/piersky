@@ -3,7 +3,7 @@ class IntegrationWebhook < ActiveRecord::Base
   belongs_to :integration
 
   after_create do |webhook|
-    # webhook.integration.create_external_webhook(webhook)
+    webhook.integration.create_external_webhook(webhook)
   end
 
   after_destroy do |webhook|
