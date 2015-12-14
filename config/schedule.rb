@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + "/environment")
 set :output, 'log/cron.log'
 set :environment, :production
 
-every 3.hour do
+every 4.hour do
   runner "Integration.refresh_all_data"
 end
 
