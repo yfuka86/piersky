@@ -10,7 +10,7 @@ Rails.application.config.assets.version = '1.0'
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
 Rails.application.config.assets.paths << Rails.root.join('node_modules', '**', 'dist')
-Rails.application.config.assets.precompile += %w( dist/application.js dist/graph.js )
+Rails.application.config.assets.precompile += %w( dist/app.js dist/graph.js )
 Rails.application.config.assets.precompile += %w( *.svg *.eot *.woff *.ttf *.otf )
 Rails.application.config.assets.precompile += %w( i18n.js )
 Rails.application.config.assets.precompile += %w( welcome.css mail.css )

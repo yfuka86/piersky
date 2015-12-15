@@ -34,7 +34,7 @@ function map_error(err) {
 /* */
 
 var assetsPath = {
-  src: ['app/assets/javascripts/src/application.js', 'app/assets/javascripts/src/graph.js'],
+  src: ['app/assets/javascripts/src/app.js', 'app/assets/javascripts/src/graph.js'],
   dest:'app/assets/javascripts/dist/'
 };
 
