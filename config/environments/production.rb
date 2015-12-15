@@ -11,7 +11,7 @@ Rails.application.configure do
       string
     end
   end
-  config.assets.js_compressor = Uglifier.new(:mangle => false)
+  config.assets.js_compressor = :uglifier # Uglifier.new(:mangle => false)
 
   config.assets.digest = true
 
