@@ -1,0 +1,19 @@
+<!-- <tr class='user'>
+  <td class='user-info'>
+    <%= image_tag user.gravatar_url(default: 'identicon') %>
+  </td>
+  <td class='user-identity'>
+    <%= user_team.identity %>
+  </td>
+  <td class='activity-count'>
+    <span class='number'><%= user_team.daily_activity_count %></span>
+    <%= t('summary_mailer.general.activities') %>
+  </td>
+</tr> -->
+<tr class='user-identities-data-row'>
+  <td class='user-identities-data' colspan='3'>
+    <% if identity[:summary].size > 0 %>
+      <%= render "summary_mailer/daily/user_identity", identity: identity %>
+    <% end %>
+  </td>
+</tr>
