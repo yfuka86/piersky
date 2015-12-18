@@ -12,7 +12,7 @@ class Integration < ActiveRecord::Base
   validates_associated :user
   validates_associated :setting
 
-  enum status: [:default, :syncing, :unset]
+  enum status: [:default, :syncing, :unset, :updating]
 
   class << self
     def refresh_all_data

@@ -9,12 +9,15 @@ class IntegrationSlack < Integration
   end
 
   def initialize_data
+    return unless self.default?
     self.syncing!
     Rails.configuration.active_job.queue_adapter = :sidekiq
     SlackJob.perform_later(self.id)
   end
 
   def refresh_data
+    return unless self.default?
+    self.updating!
     SlackJob.perform_later(self.id)
   end
 
