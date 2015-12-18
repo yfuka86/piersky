@@ -7,18 +7,20 @@
       <%= identity[:object].integration.name %>
     </td>
   <tr>
-  <% identity[:summary][0..(defined?(limit) ? (limit - 1) : -1)].each do |k, v| %>
-    <tr class='identity-summary-row'>
-      <td class='identity-summary' colspan='2'>
-        <p class='sentence'>
-          <%= v[:sentence] %>
-        </p>
-        <% v[:contents][0..(defined?(each_limit) ? (each_limit - 1) : -1)].each do |content| %>
-          <p class='content'>
-            <%= content %>
+  <% identity[:summary].each_with_index do |k, index| %>
+    <% if !defined?(limit) || index < limit %>
+      <tr class='identity-summary-row'>
+        <td class='identity-summary' colspan='2'>
+          <p class='sentence'>
+            <%= k[1][:sentence] %>
           </p>
-        <% end %>
-      </td>
-    </tr>
+          <% k[1][:contents][0..(defined?(each_limit) ? (each_limit - 1) : -1)].each do |content| %>
+            <p class='content'>
+              <%= content %>
+            </p>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
   <% end %>
 </table>
