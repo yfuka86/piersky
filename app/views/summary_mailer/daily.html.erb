@@ -21,7 +21,7 @@
                 identities: user[:identities] %>
             <% end %>
             <% @presenter.no_user_identities.map do |identity| %>
-              <% if identity[:summary].values.map(&:length).sum %>
+              <% if identity[:summary].values.map(&:length).sum > 0 %>
                 <%= render 'summary_mailer/daily/no_user_identity',
                   identity: identity %>
               <% end %>

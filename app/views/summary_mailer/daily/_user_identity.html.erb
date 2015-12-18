@@ -7,13 +7,13 @@
       <%= identity[:object].integration.name %>
     </td>
   <tr>
-  <% identity[:summary].each do |k, v| %>
+  <% identity[:summary][0..(defined?(limit) ? (limit - 1) : -1)].each do |k, v| %>
     <tr class='identity-summary-row'>
       <td class='identity-summary' colspan='2'>
         <p class='sentence'>
           <%= v[:sentence] %>
         </p>
-        <% v[:contents][0..(defined?(limit) ? (limit - 1) : -1)].each do |content| %>
+        <% v[:contents][0..(defined?(each_limit) ? (each_limit - 1) : -1)].each do |content| %>
           <p class='content'>
             <%= content %>
           </p>
