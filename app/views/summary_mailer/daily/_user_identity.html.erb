@@ -13,7 +13,7 @@
         <p class='sentence'>
           <%= v[:sentence] %>
         </p>
-        <% v[:contents].each do |content| %>
+        <% v[:contents][0..(defined?(limit) ? (limit - 1) : -1)].each do |content| %>
           <p class='content'>
             <%= content %>
           </p>

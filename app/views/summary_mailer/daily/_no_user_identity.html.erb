@@ -1,6 +1,6 @@
 <tr class='user'>
   <td class='user-info'>
-    <%# image_tag user.gravatar_url(default: 'identicon') %>
+    <%= image_tag 'https://secure.gravatar.com/avatar/default.png?d=mm&r=R' %>
   </td>
   <td class='user-identity'>
     <%= (identity[:object].name || identity[:object].email_key) %>
@@ -13,7 +13,7 @@
 <tr class='user-identities-data-row'>
   <td class='user-identities-data' colspan='3'>
     <% if identity[:summary].size > 0 %>
-      <%= render "summary_mailer/daily/user_identity", identity: identity %>
+      <%= render "summary_mailer/daily/user_identity", identity: identity, limit: 1 %>
     <% end %>
   </td>
 </tr>

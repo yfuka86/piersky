@@ -15,10 +15,16 @@
           </div>
           <table id='users-list'>
             <% @presenter.users.map do |user| %>
-              <%= render 'summary_mailer/daily/user', user_team: user[:user_team], user: user[:user_team].user, identities: user[:identities] %>
+              <%= render 'summary_mailer/daily/user',
+                user_team: user[:user_team],
+                user: user[:user_team].user,
+                identities: user[:identities] %>
             <% end %>
             <% @presenter.no_user_identities.map do |identity| %>
-              <%= render 'summary_mailer/daily/no_user_identity', identity: identity %>
+              <% if identity[:summary].values.map(&:length).sum %>
+                <%= render 'summary_mailer/daily/no_user_identity',
+                  identity: identity %>
+              <% end %>
             <% end %>
           </table>
         </td>
