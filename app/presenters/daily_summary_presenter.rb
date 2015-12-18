@@ -42,7 +42,10 @@ class DailySummaryPresenter
 
     @no_user_identities = team.
       integrations.map do |i|
-        i.identities.map do |identity|
+        i.
+        identities.
+        where(user_team_id: nil).
+        map do |identity|
           summaries = summary[identity.integration_id] || {}
           summaries_obj = {object: identity, summary: {}}
           summaries.each do |k, v|
