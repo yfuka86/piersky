@@ -46,7 +46,6 @@ td.name {
 td.count {
   text-align: right;
   font-size: 17px;
-  color: $grey600;
   vertical-align: middle;
   .number {
     font-size: 20px;
@@ -87,7 +86,6 @@ td.identities {
       p.sentence {
         margin-bottom: 8px;
         font-size: 16px;
-        color: $grey800;
       }
       p.content {
         margin-bottom: 8px;
@@ -101,7 +99,6 @@ td.identities {
 
 .invite-instruction {
   padding: 80px 0 40px;
-  color: $grey700;
   p {
     margin-bottom: 10px;
   }
