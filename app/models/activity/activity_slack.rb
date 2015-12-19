@@ -69,7 +69,8 @@ class ActivitySlack < ActiveRecord::Base
   end
 
   def content
-    m = message.gsub(/<(.*?)>/) do |word|
+    m = message.presence || long_message
+    m = m.gsub(/<(.*?)>/) do |word|
       if $1[0, 2] == '@U'
         ary = $1.split('|')
         "@#{IdentitySlack.find_by(primary_key: ary[0][1..-1]).try(:name) || ary[1].presence || ary[0][1..-1]}"

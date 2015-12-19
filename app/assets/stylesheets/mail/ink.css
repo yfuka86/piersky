@@ -78,15 +78,7 @@ td {
 
 table, tr, td {
   padding: 0;
-  vertical-align: top;
   text-align: left;
-}
-
-hr {
-  color: #d9d9d9;
-  background-color: #d9d9d9;
-  height: 1px;
-  border: none;
 }
 
 /* Typography */
