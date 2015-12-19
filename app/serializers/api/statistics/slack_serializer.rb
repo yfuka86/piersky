@@ -16,7 +16,9 @@ class Api::Statistics::SlackSerializer < ActiveModel::Serializer
   def identities
     object.identities.map do |identity|
       q = ActivitySlack.where(identity_id: identity.id)
-      next if q.count == 0
+
+      default = SkyModule.get_day_time_series(q)
+      next if default.sum == 0
 
       channels_obj = {}
       channels.keys.each do |cid|
@@ -25,7 +27,7 @@ class Api::Statistics::SlackSerializer < ActiveModel::Serializer
 
       {
         id: identity.id,
-        default: SkyModule.get_day_time_series(q)
+        default: default
       }.merge(channels_obj)
     end.compact
   end
