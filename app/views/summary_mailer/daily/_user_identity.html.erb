@@ -7,14 +7,14 @@
       <%= identity[:object].integration.name %>
     </td>
   <tr>
-  <% identity[:summary].each_with_index do |k, index| %>
+  <% identity[:summary].each_with_index do |obj, index| %>
     <% if !defined?(limit) || index < limit %>
       <tr class='identity-summary-row'>
         <td class='identity-summary' colspan='2'>
           <p class='sentence'>
-            <%= k[1][:sentence] %>
+            <%= obj[1][:sentence] %>
           </p>
-          <% k[1][:contents][0..(defined?(each_limit) ? (each_limit - 1) : -1)].each do |content| %>
+          <% obj[1][:contents][0..(defined?(each_limit) ? (each_limit - 1) : -1)].each do |content| %>
             <p class='content'>
               <%= content %>
             </p>
