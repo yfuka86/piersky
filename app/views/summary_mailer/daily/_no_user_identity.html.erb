@@ -4,9 +4,9 @@
   </td>
   <td class='user-identity'>
     <%= (identity[:object].name || identity[:object].email_key) %>
-    <span class='invite-link'>
+    <p class='invite-link'>
       <%= link_to 'Invite this member', webapp_url(path: "users/invitations/new"), target: '_blank' %>
-    </span>
+    </p>
   </td>
   <td class='activity-count'>
     <span class='number'><%= identity[:summary].values.map(&:length).sum %></span>
