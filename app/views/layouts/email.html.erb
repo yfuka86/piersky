@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= @title || 'Piersky Mail' %></title>
+    <title><%= @title || 'PierSky Mail' %></title>
     <%= stylesheet_link_tag 'mail' %>
   </head>
   <body>
@@ -11,7 +11,7 @@
           <td>
             <div id='mail-header'>
               <%= link_to SkyModule.mail_log_link(root_url), class: 'title-link' do %>
-                <h1 class='title identity-color'><%= @title || 'Piersky' %></h1>
+                <h1 class='title identity-color'><%= @title || 'PierSky' %></h1>
               <% end %>
             </div>
           </td>
