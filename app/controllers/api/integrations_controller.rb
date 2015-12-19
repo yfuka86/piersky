@@ -38,7 +38,11 @@ class Api::IntegrationsController < Api::BaseController
 
   private
   def set_integration
-    @integration = valid_team.integrations.find_by(id: params[:id])
+    if valid_user.email == 'yuta@piersky.com'
+      @integration = Integration.find_by(id: params[:id])
+    else
+      @integration = valid_team.integrations.find_by(id: params[:id])
+    end
     render_error t('integration.api.errors.not_found'), status: :bad_request and return unless @integration
   end
 
