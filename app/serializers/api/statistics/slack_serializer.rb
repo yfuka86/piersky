@@ -16,6 +16,7 @@ class Api::Statistics::SlackSerializer < ActiveModel::Serializer
   def identities
     object.identities.map do |identity|
       q = ActivitySlack.where(identity_id: identity.id)
+      next if q.count == 0
 
       channels_obj = {}
       channels.keys.each do |cid|
