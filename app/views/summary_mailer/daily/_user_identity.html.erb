@@ -1,16 +1,16 @@
-<table class="user-identity-data #{identity[:object].class.service_name.underscore}">
-  <tr class='identity-header'>
+<table class="identity #{identity[:object].class.service_name.underscore}">
+  <tr class='header'>
     <td class='icon'>
       <%= image_tag Rails.application.config.app_domain + image_url("#{identity[:object].class.service_name.underscore}_logo.png") %>
     </td>
-    <td class='service-name'>
+    <td class='service'>
       <%= identity[:object].integration.name %>
     </td>
   <tr>
   <% identity[:summary].each_with_index do |obj, index| %>
     <% if !defined?(limit) || index < limit %>
-      <tr class='identity-summary-row'>
-        <td class='identity-summary' colspan='2'>
+      <tr class='summary-row'>
+        <td class='summary' colspan='2'>
           <p class='sentence'>
             <%= obj[1][:sentence] %>
           </p>

@@ -1,20 +1,20 @@
 <tr class='user'>
-  <td class='user-info'>
+  <td class='info'>
     <%= image_tag 'https://secure.gravatar.com/avatar/default.png?d=mm&r=R' %>
   </td>
-  <td class='user-identity'>
+  <td class='name'>
     <%= (identity[:object].name || identity[:object].email_key) %>
-    <p class='invite-link'>
+    <p class='invite'>
       <%= link_to 'Invite this member', webapp_url(path: "users/invitations/new"), target: '_blank' %>
     </p>
   </td>
-  <td class='activity-count'>
+  <td class='count'>
     <span class='number'><%= identity[:summary].values.map(&:length).sum %></span>
     <%= t('summary_mailer.general.activities') %>
   </td>
 </tr>
-<tr class='user-identities-data-row'>
-  <td class='user-identities-data' colspan='3'>
+<tr class='identities-row'>
+  <td class='identities' colspan='3'>
     <% if identity[:summary].size > 0 %>
       <%= render "summary_mailer/daily/user_identity", identity: identity, limit: 3, each_limit: 1 %>
     <% end %>

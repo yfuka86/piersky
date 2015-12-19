@@ -14,7 +14,7 @@ class Api::IntegrationsController < Api::BaseController
     render json: @integration,
            serializer: "Api::Statistics::#{@integration.class.name.split('Integration')[1]}Serializer".constantize,
            root: nil
-    # @integration.refresh_data
+    @integration.refresh_data
   end
 
   def update
@@ -38,11 +38,7 @@ class Api::IntegrationsController < Api::BaseController
 
   private
   def set_integration
-    if valid_user.email == 'yuta@piersky.com'
-      @integration = Integration.find_by(id: params[:id])
-    else
-      @integration = valid_team.integrations.find_by(id: params[:id])
-    end
+    @integration = valid_team.integrations.find_by(id: params[:id])
     render_error t('integration.api.errors.not_found'), status: :bad_request and return unless @integration
   end
 
