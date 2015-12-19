@@ -27,6 +27,6 @@ class Api::Statistics::SlackSerializer < ActiveModel::Serializer
         id: identity.id,
         default: SkyModule.get_day_time_series(q)
       }.merge(channels_obj)
-    end
+    end.compact
   end
 end
