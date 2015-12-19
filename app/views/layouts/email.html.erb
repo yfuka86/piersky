@@ -9,7 +9,7 @@
       <tbody>
         <tr>
           <td>
-            <div>
+            <div id='mail-header'>
               <%= link_to SkyModule.mail_log_link(root_url), class: 'title-link' do %>
                 <h1 class='title identity-color'><%= @title || 'Piersky' %></h1>
               <% end %>
@@ -19,13 +19,17 @@
 
         <tr>
           <td>
-            <%= yield %>
+            <div id='mail-body'>
+              <%= yield %>
+            </div>
           </td>
         </tr>
 
         <tr>
           <td>
-            <%= render 'mailer/footer' %>
+            <div id='mail-footer'>
+              <%= render 'mailer/footer' %>
+            </div>
           </td>
         </tr>
       </tbody>

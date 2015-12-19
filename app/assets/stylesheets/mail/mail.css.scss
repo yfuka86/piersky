@@ -11,7 +11,7 @@ body {
     width: 100%;
     margin: 0 auto;
   }
-  div {
+  #mail-header, #mail-body, #mail-footer {
     max-width: 600px;
     margin: 0 auto;
   }
@@ -24,18 +24,9 @@ body {
   }
   h1, h2, h3, h4 {
     color: #EF6C00;
-    margin-bottom: 12px;
   }
   p, ul, ul li {
     font-size: 17px;
-  }
-  ul {
-    margin-bottom: 24px;
-    padding-left: 0px;
-    list-style-type: none;
-  }
-  ul li {
-    margin-bottom: 8px;
   }
   p {
     &.mini {
@@ -68,8 +59,6 @@ body {
     font-weight: bold;
     color: #439fe0;
     text-decoration: none;
-  }
-  a {
     &.main-button {
       display: inline-block;
       padding: 14px 32px;
