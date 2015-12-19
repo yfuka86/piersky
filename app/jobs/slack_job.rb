@@ -20,7 +20,8 @@ class SlackJob < ActiveJob::Base
         channel = SlackChannel.find_or_create(c, integration)
 
         oldest_in_fetching = now
-        until (messages = integration.show_messages(channel, oldest: latest_persisted, latest: oldest_in_fetching)) && messages.length == 0
+        # oldest: latest_persisted,
+        until (messages = integration.show_messages(channel, latest: oldest_in_fetching)) && messages.length == 0
           messages.each_with_index do |m, i|
             next if m.blank? || channel.activities.find_by(ts: Time.at(m["ts"].to_f), message: m["text"]).present?
 
