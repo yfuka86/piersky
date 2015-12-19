@@ -105,4 +105,7 @@ td.identities {
 .invite-instruction {
   padding: 80px 0 40px;
   color: $grey700;
+  p {
+    margin-bottom: 10px;
+  }
 }
