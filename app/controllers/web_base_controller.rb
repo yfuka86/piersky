@@ -4,7 +4,6 @@ class WebBaseController < ApplicationController
   before_action :authenticate_user!
 
   private
-
   def current_team
     return @_team ||= current_user.current_team
   end
